@@ -1,0 +1,9 @@
+{% extends "master.html" %}
+{% block content %}
+    <form action='/cmdb/login' method="post">
+    用户：<input type="text" name="username">
+    密码：<input type="password" name="password">
+    <input type="submit" name="submit">
+    </form>
+    aa {{ ret.status }}
+{% endblock %}

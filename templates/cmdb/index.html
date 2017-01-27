@@ -1,0 +1,23 @@
+{% extends "master.html" %}
+{% block content %}
+    <table border="1" cellpadding="1" bgcolor="#faebd7">
+        <tr>
+            <td>主机名</td>
+            <td>IP</td>
+            <td>操作系统</td>
+            <td>IDC</td>
+        </tr>
+    {% if host_list %}
+        {% for host in host_list %}
+            <tr>
+                <td>{{ host.hostname }} </td>
+                <td>{{ host.ip }}</td>
+                <td>{{ host.os }}</td>
+                <td>{{ host.idc }}</td>
+            </tr>
+        {% endfor %}
+    {% else %}
+        <p>No host are available.</p>
+    {% endif %}
+    </table>
+{% endblock %}
