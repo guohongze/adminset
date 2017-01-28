@@ -46,7 +46,7 @@ def collect(request):
     else:
         return HttpResponse("no any post data!")
 
-"""
+'''
 def gethostsjson(req):
     if req.GET:
         d = []
@@ -55,45 +55,45 @@ def gethostsjson(req):
             ret_hg = {'hostgroup': hg.name, 'members': []}
             members = hg.members.all()
             for h in members:
-                ret_h = {'hostname': h.hostname, 'ipaddr':[i.ipaddr for i in h.ipaddr_set.all()]}
+                ret_h = {'hostname': h.hostname, 'ipaddr': h.ip}
                 ret_hg['members'].append(ret_h)
             d.append(ret_hg)
         ret = {'status': 1, 'data': d, 'message': 'OK'}
         return HttpResponse(json.dumps(ret))
     else:
         return HttpResponse('Nothing of hosts to json.dumps!')
-"""
+'''
 
 
-def getj(request):
-    d = []
-    hostgroups = HostGroup.objects.all()
-    for hg in hostgroups:
-        ret_hg = {'hostgroup': hg.name, 'members': []}
-        members = hg.members.all()
+def get_group(request):
+    if request.GET:
+        d = []
+        try:
+            name = request.GET['name']
+        except:
+            return HttpResponse('you have no data')
+        host_groups = HostGroup.objects.get(name=name)
+        ret_hg = {'host_group': host_groups.name, 'members': []}
+        members = host_groups.members.all()
         for h in members:
-            #ret_h = {'hostname': h.hostname, 'ipaddr':[i.ipaddr for i in h.ipaddr_set.all()]}
-            ips = [i.ipaddr for i in h.ipaddr_set.all()]
-            if ips:
-                ret_h = {'hostname': h.hostname, 'ipaddr': ips[0]}
-                ret_hg['members'].append(ret_h)
+            ret_h = {'hostname': h.hostname, 'ipaddr': h.ip}
+            ret_hg['members'].append(ret_h)
         d.append(ret_hg)
-    ret = {'status': 1, 'data': d, 'message': 'OK'}
-    return HttpResponse(json.dumps(ret))
+        return HttpResponse(json.dumps(d))
+    else:
+        d = []
+        host_groups = HostGroup.objects.all()
+        for hg in host_groups:
+            ret_hg = {'host_group': hg.name, 'members': []}
+            members = hg.members.all()
+            for h in members:
+                ret_h = {'hostname': h.hostname, 'ipaddr': h.ip}
+                ret_hg['members'].append(ret_h)
+            d.append(ret_hg)
+        return HttpResponse(json.dumps(d))
 
 
-def gett(request):
-    d=""
-    hostgroups = HostGroup.objects.all()
-    for hg in hostgroups:
-        members = hg.members.all()
-        for h in members:
-            ips = ','.join([i.ipaddr for i in h.ipaddr_set.all()])
-            d += "%s %s %s\n" % (hg.name, h.hostname, ips)
-    return HttpResponse(d)
-
-
-def geti(request):
+def get_host(request):
     try:
         hostname = request.GET['hostname']
     except:

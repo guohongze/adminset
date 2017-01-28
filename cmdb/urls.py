@@ -12,7 +12,7 @@ urlpatterns = [
     url(r'^execl', views.execl, name='execl'),
     url(r'^login', views.login, name='login'),
     url(r'^collect', api.collect, name='update api'),
-    url(r'^gett', api.gett, name='gett'),
-    url(r'^geti', api.geti, name='geti'),
-    url(r'^getj', api.getj, name='getj'),
+    #url(r'^api/gethostsjson', api.gethostsjson, name='gethostsjson'),
+    url(r'^api/host', api.get_host, name='get_host'),
+    url(r'^api/group', api.get_group, name='get_group'),
 ]
