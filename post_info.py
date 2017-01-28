@@ -3,6 +3,7 @@
 
 from subprocess import Popen, PIPE
 import re
+import json
 import urllib
 import urllib2
 import platform
@@ -77,6 +78,39 @@ def parserCpu(stdout):
         cpu_info[k] = v
     return cpu_info
 
+
+def getDiskInfo():
+    ret = {}
+    disk_dev = re.compile(r'Disk\s/dev/sd[a-z]{1}')
+    disk_name = re.compile(r'/dev/sd[a-z]{1}')
+    pcmd = Popen(['fdisk','-l'],shell=False,stdout=PIPE)
+    stdout, stderr = pcmd.communicate()
+    for i in stdout.split('\n'):
+        disk = re.match(disk_dev,i)
+        if disk:
+            dk = re.search(disk_name,disk.group()).group()
+            n = Popen('smartctl -i %s' % dk,shell=True,stdout=PIPE)
+            p = n.communicate()
+            ret[dk] = p
+    return ret
+def parserDiskInfo(diskdata):
+    pd = {}
+    disknum = diskdata.keys()
+    device_model = re.compile(r'(Device Model):(\s+.*)')
+    serial_number = re.compile(r'(Serial Number):(\s+[\d\w]{1,30})')
+    firmware_version = re.compile(r'(Firmware Version):(\s+[\w]{1,20})')
+    user_capacity = re.compile(r'(User Capacity):(\s+[\d,]{1,50})')
+    for num in disknum:
+        t = str(diskdata[num])
+        for line in t.split('\n'):
+            user = re.search(user_capacity,line)
+            if user:
+                diskvo = user.groups()[1].strip()
+                nums = int(diskvo.replace(',',''))
+                endnum = str(nums/1000/1000/1000)
+                pd[num] = endnum + 'G'
+    return pd
+
 def postData(data):
     postdata = urllib.urlencode(data)
     req = urllib2.urlopen('http://192.168.47.141:8000/cmdb/collect',postdata)
@@ -90,7 +124,7 @@ def main():
     """
     memtotal = int(round(int(getMemTotal())/1024.0/1024.0, 0))
     data_info['memory'] = memtotal
-    
+    data_info['disk'] = parserDiskInfo()
     cpuinfo = parserCpu(getCpu())
     data_info['cpu_num'] = int(cpuinfo['processor']) + 1
     data_info['cpu_model'] = cpuinfo['vendor_id']

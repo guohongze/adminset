@@ -15,7 +15,7 @@ def collect(request):
     req = request
     if req.POST:
         vendor = req.POST.get('vendor')
-        product = req.POST.get('product')
+        group = req.POST.get('group')
         cpu_model = req.POST.get('cpu_model')
         cpu_num = req.POST.get('cpu_num')
         memory = req.POST.get('memory')
@@ -33,7 +33,7 @@ def collect(request):
         except:
             host = Host()
         host.hostname = hostname
-        host.product = product
+        host.group = group
         host.cpu_num = int(cpu_num)
         host.cpu_model = cpu_model
         host.memory = int(memory)
