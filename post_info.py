@@ -7,34 +7,12 @@ import json
 import urllib
 import urllib2
 import platform
+import socket
 
-def getIpaddr():
-    p = Popen(['ifconfig'],shell=False,stdout=PIPE)
-    stdout, stderr = p.communicate()
-    return stdout.strip()
-
-
-def parserIpaddr(ipdata):
-    device = re.compile(r'^(eno\d{0,9})')
-    mac = re.compile(r'(ether\s[0-9A-Fa-f:]{17})')
-    ip = re.compile(r'inet ([\d.]{7,15})')
-    for lines in ipdata.split('\n\n'):
-        pd = {}
-        eth_device = re.search(device,lines)
-        hw = re.search(mac,lines)
-        ips = re.search(ip,lines)
-        if eth_device:
-            if eth_device:
-                Device = eth_device.groups()[0]
-            if hw:
-                Mac = hw.groups()[0].split()[1]
-            if ips:
-                Ip = ips.groups()[0]
-            pd['Device'] = Device
-            pd['Mac'] = Mac
-            pd['Ip'] = Ip
-            yield pd
-
+def get_ip():
+    hostname = socket.getfqdn(socket.gethostname())
+    ipaddr = socket.gethostbyname(hostname)
+    return ipaddr
 
 def getDMI():
     p = Popen('dmidecode', stdout=PIPE, shell=True)
@@ -60,14 +38,15 @@ def getMemTotal():
     p = Popen(cmd, stdout = PIPE, shell = True)
     data = p.communicate()[0]
     mem_total = data.split()[1]
-    return mem_total
+    memtotal = int(round(int(mem_total)/1024.0/1024.0, 0))
+    return memtotal
 
 def getCpu():
     cmd = "cat /proc/cpuinfo"
     p = Popen(cmd, stdout = PIPE, stderr = PIPE, shell = True)
     stdout, stderr = p.communicate()
     return stdout
-     
+
 def parserCpu(stdout):
     groups = [i for i in stdout.split('\n\n')]
     group = groups[-2]
@@ -77,7 +56,6 @@ def parserCpu(stdout):
         k, v = [i.strip() for i in x.split(':')]
         cpu_info[k] = v
     return cpu_info
-
 
 def getDiskInfo():
     ret = {}
@@ -113,23 +91,18 @@ def parserDiskInfo(diskdata):
 
 def postData(data):
     postdata = urllib.urlencode(data)
-    req = urllib2.urlopen('http://192.168.47.141:8000/cmdb/collect',postdata)
+    req = urllib2.urlopen('http://192.168.47.1:8000/cmdb/collect',postdata)
     req.read()
     return True
 
 def main():
     data_info = {}
-    """
-    data_info = {'ipaddrs':'192.168.3.123','memory':16,'cpu_model':'Intel','cpu_num':4,'sn':'R9NBEZA','vendor':'LENOVO','product':'ThinkPad X220','osver':'Fedora 16 x86_64','hostname':'Sibiao Luo'}
-    """
-    memtotal = int(round(int(getMemTotal())/1024.0/1024.0, 0))
-    data_info['memory'] = memtotal
-    data_info['disk'] = parserDiskInfo()
+    data_info['memory'] = getMemTotal()
+    data_info['disk'] = parserDiskInfo(getDiskInfo())
     cpuinfo = parserCpu(getCpu())
-    data_info['cpu_num'] = int(cpuinfo['processor']) + 1
-    data_info['cpu_model'] = cpuinfo['vendor_id']
-    for i in parserIpaddr(getIpaddr()):
-        data_info['ip'] = i['Ip']
+    data_info['cpu_num'] = cpuinfo['cpu cores']
+    data_info['cpu_model'] = cpuinfo['model name']
+    data_info['ip'] = get_ip()
     data_info['sn'] = parserDMI(getDMI())['Serial Number']
     data_info['vendor'] = parserDMI(getDMI())['Manufacturer']
     data_info['product'] = parserDMI(getDMI())['Version']

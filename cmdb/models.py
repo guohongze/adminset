@@ -14,7 +14,7 @@ class UserInfo(models.Model):
 
 class Idc(models.Model):
     name = models.CharField(max_length=30,null=True)
-    address = models.CharField(max_length=30,null=True)
+    address = models.CharField(max_length=100,null=True)
     tel = models.CharField(max_length=30,null=True)
     contact = models.CharField(max_length=30,null=True)
 
@@ -27,7 +27,7 @@ class Host(models.Model):
     os = models.CharField(max_length=50,null=True)
     vendor = models.CharField(max_length=30,null=True)
     group = models.CharField(max_length=30,null=True)
-    cpu_model = models.CharField(max_length=30,null=True)
+    cpu_model = models.CharField(max_length=100,null=True)
     cpu_num = models.IntegerField(null=True)
     memory = models.IntegerField(null=True)
     disk = models.CharField(max_length=255,null=True)

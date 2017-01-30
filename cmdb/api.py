@@ -16,6 +16,7 @@ def collect(request):
     if req.POST:
         vendor = req.POST.get('vendor')
         group = req.POST.get('group')
+        disk = req.POST.get('disk')
         cpu_model = req.POST.get('cpu_model')
         cpu_num = req.POST.get('cpu_num')
         memory = req.POST.get('memory')
@@ -38,6 +39,7 @@ def collect(request):
         host.cpu_model = cpu_model
         host.memory = int(memory)
         host.sn = sn
+        host.disk = disk
         host.os = osver
         host.vendor = vendor
         host.ip = ip

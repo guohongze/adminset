@@ -12,7 +12,10 @@ def getIpaddr():
 
 
 def parserIpaddr(ipdata):
-    device = re.compile(r'^(eno\d{0,9})')
+    try:
+        device = re.compile(r'^(eth\d{0,9})')
+    except ImportError,e:
+        device = re.compile(r'^(eno\d{0,9})')
     mac = re.compile(r'(ether\s[0-9A-Fa-f:]{17})')
     ip = re.compile(r'inet ([\d.]{7,15})')
     for lines in ipdata.split('\n\n'):

@@ -1,40 +1,46 @@
+#! /usr/bin/env python
+# -*- coding: utf-8 -*-
 from django.views import generic
 from .models import Host
 from django.http import HttpResponse
 from django.shortcuts import render_to_response,redirect
 import csv
 import models
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 
-def index1(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
-
-
-def index2(request):
+def cmdb(request):
     hosts = Host.objects.all()
-    return render_to_response('cmdb/index.html', {'host_list':hosts})
+    return render_to_response('cmdb.html', {'host_list':hosts})
 
 
 def index3(request):
     host_list = Host.objects.all()
-    return render_to_response('cmdb/index.html',locals())
+    return render_to_response('index.html',locals())
 
 
 class IndexView(generic.ListView):
-    template_name = 'cmdb/index.html'
+    template_name = 'index.html'
     context_object_name = 'host_list'
 
     def get_queryset(self):
         return Host.objects.order_by('hostname')
 
 
-def execl(request):
+def excel(request):
+    host = Host.objects.all()
     response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="somefilename.csv"'
+    response['Content-Disposition'] = 'attachment; filename="cmdb.csv"'
     writer = csv.writer(response)
-    writer.writerow(['First row', 'Foo', 'Bar', 'Baz'])
-    writer.writerow(['Second row', 'A', 'B', 'C', '"Testing"', "Here's a quote"])
+    writer.writerow(['HostName', 'IP ADDRESS', 'Group', 'Memory', 'Disk', 'CPU', 'Cpu Cores', 'OS', 'IDC'])
+    for h in host:
+        writer.writerow([h.hostname, h.ip, h.group, h.memory, h.disk, h.cpu_model, h.cpu_num, h.os, str(h.idc).encode('gb2312')])
     return response
+
+    def __str__(self):
+        return self.name
 
 
 def login(request):
