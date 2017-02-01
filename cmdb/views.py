@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 from django.views import generic
-from .models import Host
+from .models import Host, HostGroup
 from django.http import HttpResponse
 from django.shortcuts import render_to_response,redirect
 import csv
@@ -12,14 +12,18 @@ sys.setdefaultencoding('utf8')
 
 
 def cmdb(request):
-    hosts = Host.objects.all()
-    return render_to_response('cmdb.html', {'host_list':hosts})
+    host_list = Host.objects.all()
+    return render_to_response('cmdb.html', locals())
 
 
 def index3(request):
     host_list = Host.objects.all()
     return render_to_response('index.html',locals())
 
+def ansible(request):
+    host_list = Host.objects.all()
+    hostgroup = HostGroup.objects.all()
+    return render_to_response('ansible.html',locals())
 
 class IndexView(generic.ListView):
     template_name = 'index.html'

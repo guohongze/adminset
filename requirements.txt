@@ -1,1 +1,2 @@
 django==1.9.8
+pymysql=0.7.2

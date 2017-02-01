@@ -5,8 +5,6 @@ from django.conf import settings
 
 urlpatterns = [
     url(r'^cmdb/', include('cmdb.urls')),
-    url(r'^api/', include('app01.urls')),
-    url(r'^token/', include('app02.urls')),
     url(r'^admin/', admin.site.urls),
 ]
-urlpatterns+=static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
+#urlpatterns+=static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)

@@ -3,16 +3,19 @@
     
     <head>
         <title>Admin Home Page</title>
+        <meta charset="UTF-8">
         <!-- Bootstrap -->
-        <link href="static/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-        <link href="static/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
-        <link href="static/vendors/easypiechart/jquery.easy-pie-chart.css" rel="stylesheet" media="screen">
-        <link href="static/assets/styles.css" rel="stylesheet" media="screen">
+        <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="/static/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
+        <link href="/static/vendors/easypiechart/jquery.easy-pie-chart.css" rel="stylesheet" media="screen">
+        <link href="/static/assets/styles.css" rel="stylesheet" media="screen">
+        <link href="/static/assets/DT_bootstrap.css" rel="stylesheet" media="screen">
         <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
         <!--[if lt IE 9]>
             <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
-        <script src="static/vendors/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+        <script src="/static/vendors/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+        <script src="/static/vendors/jquery-1.9.1.min.js"></script>
     </head>
     
     <body>
@@ -137,7 +140,7 @@
                             <a href="cmdb"><i class="icon-chevron-right"></i> CMDB</a>
                         </li>
                         <li >
-                            <a href="stats.html"><i class="icon-chevron-right"></i> Statistics (Charts)</a>
+                            <a href="ansible"><i class="icon-chevron-right"></i> Ansible</a>
                         </li>
                         <li onclick="showhide(3)">
                             <a href="form.html"><i class="icon-chevron-right"></i> Forms</a>
@@ -185,18 +188,40 @@
             </div>
             <hr>
             <footer>
-                <p>&copy; Vincent Gabriel 2013</p>
+                <p>&copy; guohongze</p>
             </footer>
         </div>
         <!--/.fluid-container-->
-        <script src="static/vendors/jquery-1.9.1.min.js"></script>
-        <script src="static/bootstrap/js/bootstrap.min.js"></script>
-        <script src="static/vendors/easypiechart/jquery.easy-pie-chart.js"></script>
-        <script src="static/assets/scripts.js"></script>
+        <script src="/static/vendors/datatables/js/jquery.dataTables.min.js"></script>
+        <script src="/static/assets/DT_bootstrap.js"></script>
+        <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/static/vendors/easypiechart/jquery.easy-pie-chart.js"></script>
+        <script src="/static/assets/scripts.js"></script>
+        <link href="/static/vendors/datepicker.css" rel="stylesheet" media="screen">
+        <link href="/static/vendors/uniform.default.css" rel="stylesheet" media="screen">
+        <link href="/static/vendors/chosen.min.css" rel="stylesheet" media="screen">
+        <link href="/static/vendors/wysiwyg/bootstrap-wysihtml5.css" rel="stylesheet" media="screen">
+        <script src="/static/vendors/jquery.uniform.min.js"></script>
+        <script src="/static/vendors/chosen.jquery.min.js"></script>
+        <script src="/static/vendors/bootstrap-datepicker.js"></script>
+        <script src="/static/vendors/wysiwyg/wysihtml5-0.3.0.js"></script>
+        <script src="/static/vendors/wysiwyg/bootstrap-wysihtml5.js"></script>
+        <script src="/static/vendors/wizard/jquery.bootstrap.wizard.min.js"></script>
+	    <script type="text/javascript" src="/static/vendors/jquery-validation/dist/jquery.validate.min.js"></script>
+	    <script src="/static/assets/form-validation.js"></script>
         <script>
         $(function() {
             // Easy pie charts
             $('.chart').easyPieChart({animate: 1000});
+        });
+        </script>
+    <script>
+        //ansbile table search
+	jQuery(document).ready(function() {
+	   FormValidation.init();
+	});
+        $(function() {
+            $(".chzn-select").chosen();
         });
         </script>
     </body>
