@@ -1,0 +1,41 @@
+{% extends "master.html" %}
+{% block content %}
+    <script>
+        window.onload=init;
+        function init() {
+            showhide(0);
+        }
+        function showhide(n) {
+            var box = document.getElementById("sidebar");
+            var allLi=box.getElementsByTagName("li");
+            allLi[n].className="active";
+        }
+    </script>
+                    <!--/span-->
+                    <div class="span9" id="content">
+                    <div class="row-fluid">
+                        <!-- block -->
+                        <div class="block">
+                            <div class="navbar navbar-inner block-header">
+                                <div class="pull-right">
+                                    <a href="/navi"> <button class="btn">配置条目</button></a>
+                                </div>
+                            </div>
+                            <div class="block-content collapse in">
+                                <div class="row-fluid padd-bottom">
+                                    {% if allnavi %}
+                                    {% for navi in allnavi %}
+                                  <div class="span3" style="margin-left: 14px;margin-bottom: 24px;"  style="width: 160px; height: 120px;">
+                                      <a href="{{ navi.url }}" target="view_window" class="thumbnail" style="text-align:center" >
+                                          <h2><b>{{ navi.name }}</b></h2>
+                                      </a>
+                                  </div>
+                                    {% endfor %}
+                                {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /block -->
+                    </div>
+                </div>
+{% endblock %}

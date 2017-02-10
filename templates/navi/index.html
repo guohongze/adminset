@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block content %}
+<script>
+    window.onload=init;
+    function init() {
+        showhide(1);
+    }
+    function showhide(n) {
+        var box = document.getElementById("sidebar-menu");
+        var allLi=box.getElementsByTagName("li");
+        allLi[n].className="active";
+    }
+</script>
+
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Page Header
+        <small>Optional description</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
+        <li class="active">Here</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        {% if allnavi %}
+        {% for navi in allnavi %}
+            <a href="{{ navi.url }}" target="view_window">
+        <div class="col-md-3">
+          <div class="box box-solid box-info">
+            <div class="box-header">
+                    <h3 class="box-title">{{ navi.name }}</h3>
+            </div><!-- /.box-header -->
+            <div class="box-body">
+              {{ navi.description }}
+            </div><!-- /.box-body -->
+          </div><!-- /.box -->
+        </div>
+            </a>
+        {% endfor %}
+        {% endif %}
+      <!-- Your Page Content Here -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+{% endblock %}

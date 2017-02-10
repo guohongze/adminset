@@ -31,6 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'ansible',
+    'navi',
     'cmdb.apps.CmdbConfig',
     'django.contrib.admin',
     'django.contrib.auth',

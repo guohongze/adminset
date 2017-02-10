@@ -5,13 +5,12 @@ from . import views, api
 
 app_name = 'cmdb'
 urlpatterns = [
-    url(r'^$', views.IndexView.as_view(), name='index'),
-    url(r'^cmdb', views.cmdb, name='cmdb'),
-    url(r'^ansible', views.ansible, name='ansible'),
-    url(r'^index3', views.index3, name='index3'),
+    #url(r'^$', views.IndexView.as_view(), name='index'),
+    url(r'^$', views.cmdb, name='cmdb'),
     url(r'^excel', views.excel, name='excel'),
     url(r'^login', views.login, name='login'),
-    url(r'^collect', api.collect, name='update api'),
+    url(r'^sync', views.hostsync, name='sync'),
+    url(r'^collect', api.collect, name='update_api'),
     url(r'^api/host', api.get_host, name='get_host'),
     url(r'^api/group', api.get_group, name='get_group'),
 ]

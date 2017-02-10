@@ -1,0 +1,64 @@
+{% extends "master.html" %}
+{% block content %}
+    <script>
+        window.onload=init;
+        function init()
+        {
+            showhide(0);
+        }
+        function showhide(n)
+        {
+            var box = document.getElementById("sidebar");
+            var allLi=box.getElementsByTagName("li");
+            var len = allLi.length;
+            allLi[n].className="active";
+        }
+    </script>
+<div class="span9" id="content">
+	 <div class="row-fluid">
+		<!-- block -->
+		<div class="block">
+			<div class="navbar navbar-inner block-header">
+				<div class="muted pull-left">Devices List</div>
+			</div>
+			<div class="block-content collapse in">
+
+
+					  <div class="btn-group">
+						 <a href="/admin/navi/navi/add/"><button class="btn btn-success">Add Navi <i class="icon-plus icon-white"></i></button></a>
+					  </div>
+					  <div class="btn-group">
+						 <a href="/admin/navi/navi/"><button class="btn btn-success">Manage Navi </button></a>
+					  </div>
+				   </div>
+					
+					<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="example2">
+						<thead>
+							<tr>
+								<th>标签名</th>
+								<th>图片</th>
+								<th>URL</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% if allnavi %}
+							{% for navi in allnavi %}
+								<tr class="even gradeA">
+									<td><a href="/admin/navi/navi/{{  navi.id }}">{{ navi.name }} </a></td>
+									<td>{{ navi.img }}</td>
+									<td>{{ navi.url }}</td>
+								</tr>
+							{% endfor %}
+							{% else %}
+								<p>No Item are available.</p>
+							{% endif %}
+                            </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /block -->
+                    </div>
+                </div>
+            </div>
+{% endblock %}

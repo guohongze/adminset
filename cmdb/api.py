@@ -28,11 +28,12 @@ def collect(request):
             host = Host.objects.get(hostname=hostname)
         except:
             host = Host()
-        identity = req.POST.get('identity')
-        try:
-            host = Host.objects.get(identity=identity)
-        except:
-            host = Host()
+        if req.POST.get('identity'):
+            identity = req.POST.get('identity')
+            try:
+                host = Host.objects.get(identity=identity)
+            except:
+                host = Host()
         host.hostname = hostname
         host.group = group
         host.cpu_num = int(cpu_num)
@@ -47,24 +48,6 @@ def collect(request):
         return HttpResponse("post data successfully!")
     else:
         return HttpResponse("no any post data!")
-
-'''
-def gethostsjson(req):
-    if req.GET:
-        d = []
-        hostgroups = HostGroup.objects.all()
-        for hg in hostgroups:
-            ret_hg = {'hostgroup': hg.name, 'members': []}
-            members = hg.members.all()
-            for h in members:
-                ret_h = {'hostname': h.hostname, 'ipaddr': h.ip}
-                ret_hg['members'].append(ret_h)
-            d.append(ret_hg)
-        ret = {'status': 1, 'data': d, 'message': 'OK'}
-        return HttpResponse(json.dumps(ret))
-    else:
-        return HttpResponse('Nothing of hosts to json.dumps!')
-'''
 
 
 def get_group(request):

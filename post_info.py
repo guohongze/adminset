@@ -1,6 +1,7 @@
 #!/usr/bin/python
 #coding=utf-8
 
+import os
 from subprocess import Popen, PIPE
 import re
 import json
@@ -91,7 +92,7 @@ def parserDiskInfo(diskdata):
 
 def postData(data):
     postdata = urllib.urlencode(data)
-    req = urllib2.urlopen('http://192.168.47.1:8000/cmdb/collect',postdata)
+    req = urllib2.urlopen('http://192.168.47.130:8000/cmdb/collect',postdata)
     req.read()
     return True
 
@@ -119,10 +120,14 @@ def main():
     return data_info
 
 if __name__ == "__main__":
+    osenv = os.environ["LANG"]
+    os.environ["LANG"] = "us_EN.UTF8"
     result = main()
+    os.environ["LANG"] = osenv
     print 'Get the hardwave and softwave infos from host:'
     print result
     print '----------------------------------------------------------'
     postData(result)
     print 'Post the hardwave and softwave infos to CMDB successfully!'
+
 

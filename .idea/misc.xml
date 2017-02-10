@@ -10,5 +10,19 @@
     <ConfirmationsSetting value="0" id="Add" />
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 2.7.12 (C:\Python27\python2.exe)" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 2.7.12 virtualenv at D:\11_WOSS\jump" project-jdk-type="Python SDK" />
+  <component name="SvnBranchConfigurationManager">
+    <option name="myConfigurationMap">
+      <map>
+        <entry key="$PROJECT_DIR$">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="trunkUrl" value="svn://192.168.47.130/ops" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="mySupportsUserInfoFilter" value="true" />
+  </component>
 </project>

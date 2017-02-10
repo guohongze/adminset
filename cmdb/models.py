@@ -20,11 +20,14 @@ class Idc(models.Model):
 
     def __unicode__(self):
         return self.name
+    class Meta:
+        verbose_name = u'数据中心'
+        verbose_name_plural = verbose_name
 
 
 class Host(models.Model):
     hostname = models.CharField(max_length=30, verbose_name=u"主机名")
-    os = models.CharField(max_length=50,null=True)
+    os = models.CharField(u"操作系统",max_length=50,null=True)
     vendor = models.CharField(max_length=30,null=True)
     group = models.CharField(max_length=30,null=True)
     cpu_model = models.CharField(max_length=100,null=True)

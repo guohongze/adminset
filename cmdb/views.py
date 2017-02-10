@@ -16,23 +16,6 @@ def cmdb(request):
     return render_to_response('cmdb.html', locals())
 
 
-def index3(request):
-    host_list = Host.objects.all()
-    return render_to_response('index.html',locals())
-
-def ansible(request):
-    host_list = Host.objects.all()
-    hostgroup = HostGroup.objects.all()
-    return render_to_response('ansible.html',locals())
-
-class IndexView(generic.ListView):
-    template_name = 'index.html'
-    context_object_name = 'host_list'
-
-    def get_queryset(self):
-        return Host.objects.order_by('hostname')
-
-
 def excel(request):
     host = Host.objects.all()
     response = HttpResponse(content_type='text/csv')
@@ -43,7 +26,7 @@ def excel(request):
         writer.writerow([h.hostname, h.ip, h.group, h.memory, h.disk, h.cpu_model, h.cpu_num, h.os, str(h.idc).encode('gb2312')])
     return response
 
-    def __str__(self):
+    def __unicode__(self):
         return self.name
 
 
@@ -57,6 +40,21 @@ def login(request):
             return redirect('/cmdb')
         else:
             ret['status'] = 'user or password error'
-            return render_to_response('cmdb/login.html', locals())
+            return render_to_response('login2.html', locals())
     else:
-        return render_to_response('cmdb/login.html', locals())
+        return render_to_response('login2.html', locals())
+
+
+def hostsync(request):
+    group = HostGroup.objects.all()
+    ansible_file = open("/etc/ansible/hosts","wb")
+    for h in group:
+        group_name = "["+h.name+"]"+"\n"
+        ansible_file.write(group_name)
+        members = h.members.all()
+        for m in members:
+            #gitlab ansible_host=10.100.1.76 host_name=gitlab
+            host_item = m.hostname+" "+"ansible_host="+m.ip+" "+"host_name="+m.hostname+"\n"
+            ansible_file.write(host_item)
+    ansible_file.close()
+    return HttpResponse("ok")

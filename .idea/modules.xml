@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../AdminLTE-2.3.11 (1)/.idea/AdminLTE-2.3.11 (1).iml" filepath="$PROJECT_DIR$/../AdminLTE-2.3.11 (1)/.idea/AdminLTE-2.3.11 (1).iml" />
       <module fileurl="file://$PROJECT_DIR$/../django_hello/.idea/django_hello.iml" filepath="$PROJECT_DIR$/../django_hello/.idea/django_hello.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../jumpserver/.idea/jumpserver.iml" filepath="$PROJECT_DIR$/../jumpserver/.idea/jumpserver.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/woss2.iml" filepath="$PROJECT_DIR$/.idea/woss2.iml" />
     </modules>
   </component>
