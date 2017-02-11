@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% block content %}
+<script>
+    window.onload=init;
+    function init() {
+        showhide(1);
+    }
+    function showhide(n) {
+        var box = document.getElementById("sidebar-menu");
+        var allLi=box.getElementsByTagName("li");
+        allLi[n].className="active";
+    }
+</script>
+
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        <small></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-link"></i> Level</a></li>
+        <li class="active">Here</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+    <div class="box">
+                <div class="box-header">
+                  <div class="btn-group">
+						 <a href="{% url 'add' %}"><button class="btn btn-success" style="width: 60pt;font-size: medium"><b>添加</b></button></a>
+					  </div>
+					  <div class="btn-group">
+						 <a href="{% url 'manage' %}"><button class="btn btn-primary" style="width: 60pt;font-size: medium"><b>删除</b></button></a>
+					  </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                  <table class="table table-striped table-bordered" id="example1">
+                            <thead>
+                                <tr>
+                                            <th>
+            <input type="checkbox" onclick="checkAll(this, 'item1');" />
+        </th>
+                                    <th>名称</th>
+                                    <th>注释</th>
+                                    <th>URL</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if allnavi %}
+                                {% for navi in allnavi %}
+                                    <tr class="even gradeA">
+                                        <td><input type="checkbox" class="item1" /></td>
+                                        <td><a href="/admin/navi/navi/{{  navi.id }}">{{ navi.name }} </a></td>
+                                        <td>{{ navi.description }}</td>
+                                        <td>{{ navi.url }}</td>
+                                    </tr>
+                                {% endfor %}
+                                {% else %}
+                                    <p>No Item are available.</p>
+                                {% endif %}
+                            </tbody>
+                  </table>
+                </div>
+                <!-- /.box-body -->
+              </div>
+
+        </section>
+        <!-- /.content -->
+      </div>
+<script>
+function checkAll(sender, checkClass) {
+    var checkItems = document.getElementsByTagName('input');
+    for (var i = 0; i < checkItems.length; i++) {
+        var checkItem = checkItems[i];
+        if (checkItem.type === 'checkbox' && checkItem.className === 'item1') {
+            checkItem.checked = sender.checked;
+        }
+    }
+}
+</script>
+<script src="/static/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="/static/plugins/datatables/dataTables.bootstrap.min.js"></script>
+<script>
+  $(function () {
+    $("#example1").DataTable();
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": true
+    });
+  });
+</script>
+{% endblock %}

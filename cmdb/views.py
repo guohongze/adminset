@@ -13,7 +13,7 @@ sys.setdefaultencoding('utf8')
 
 def cmdb(request):
     host_list = Host.objects.all()
-    return render_to_response('cmdb.html', locals())
+    return render_to_response('bak/cmdb.html', locals())
 
 
 def excel(request):

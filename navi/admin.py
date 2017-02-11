@@ -4,6 +4,7 @@ from .models import navi
 class NaviAdmin(admin.ModelAdmin):
     list_display = [
         'name',
+        'description',
         'url',
         ]
 

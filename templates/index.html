@@ -93,15 +93,4 @@
     </section>
     <!-- /.content -->
   </div>
-<script>
-    window.onload=init;
-    function init() {
-        showhide(0);
-    }
-    function showhide(n) {
-        var box = document.getElementById("sidebar-menu");
-        var allLi=box.getElementsByTagName("li");
-        allLi[n].className="active";
-    }
-</script>
 {% endblock %}
