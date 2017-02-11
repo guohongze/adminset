@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block content %}
+<script>
+    window.onload=init;
+    function init() {
+        showhide(1);
+    }
+    function showhide(n) {
+        var box = document.getElementById("sidebar-menu");
+        var allLi=box.getElementsByTagName("li");
+        allLi[n].className="active";
+    }
+</script>
+
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        <small></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-link"></i> Level</a></li>
+        <li class="active">Here</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+
+    <section class="content">
+
+<div id="dialog">
+        <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">{{ obj.name }}信息修改</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form class="form-horizontal" action="{% url 'save' %}" method="POST">
+              <div class="box-body">
+                <div class="form-group">
+                  <label for="navi_name" class="col-sm-2 control-label">名称</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name="name" value="{{ obj.name }}">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="navi_desc" class="col-sm-2 control-label">描述</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name="desc" value="{{ obj.description }}">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="navi_url" class="col-sm-2 control-label">URL</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name="url" value="{{ obj.url }}">
+                  </div>
+                </div>
+                <input type="hidden" name="id" value="{{ obj.id }}">
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <a href="#" onclick="closeBg();"><li class="btn btn-default">退出</li></a>
+                <button type="submit" class="btn btn-info pull-right">保存</button>
+              </div>
+              <!-- /.box-footer -->
+            </form>
+</div>
+    </div>
+
+    </section>
+
+  </div>
+{% endblock %}

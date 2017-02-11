@@ -3,7 +3,6 @@
 
 from django import forms
 from .models import navi
-from django.core.exceptions import ValidationError
 
 
 class navi_form(forms.ModelForm):

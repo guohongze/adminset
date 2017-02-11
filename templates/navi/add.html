@@ -16,9 +16,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-          {{ tips }}
         <small></small>
       </h1>
+        <div class="alert alert-info alert-dismissible" style="display: {{ display_control }};">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4>{{ tips }}</h4>
+              </div>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-link"></i> Level</a></li>
         <li class="active">Here</li>
@@ -51,7 +54,7 @@
         </div>
         <!-- /.box-body -->
         <div class="box-footer">
-          Footer
+          <i class="fa fa-info-circle"></i> 请勿重复添加条目
         </div>
         <!-- /.box-footer-->
       </div>

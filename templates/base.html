@@ -12,6 +12,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     {% include 'link_css.html' %}
     {% include 'head_script.html' %}
+    {% block self_head_css_js %} {% endblock %}
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -41,4 +42,5 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- ./wrapper -->
 
 </body>
+{% block self_footer_js %} {% endblock %}
 </html>
