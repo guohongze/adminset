@@ -5,7 +5,7 @@
 <script>
     window.onload=init;
     function init() {
-        showhide(1);
+        showhide(2);
     }
     function showhide(n) {
         var box = document.getElementById("sidebar-menu");
@@ -13,6 +13,7 @@
         allLi[n].className="active";
     }
 </script>
+
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -27,11 +28,11 @@
 
     <!-- Main content -->
     <section class="content">
-        <form action="{% url 'delete' %}" method="post">
+        <form action="/cmdb/asset_del" method="post">
             <div class="box">
                 <div class="box-header">
                   <div class="btn-group">
-						 <a href="{% url 'add' %}"><li class="btn btn-success" style="width: 60pt;font-size: medium" ><b>添加</b></li></a>
+						 <a href="/cmdb/asset_add"><li class="btn btn-success" style="width: 60pt;font-size: medium" ><b>添加</b></li></a>
                   </div>
                   <div class="btn-group">
 						 <button class="btn btn-primary" style="width: 60pt;font-size: medium" onclick="return checkSubmit()"><b>删除</b></button>
@@ -45,20 +46,24 @@
                             <th>
                                 <input type="checkbox" onclick="checkAll(this, 'item1');" />
                             </th>
-                                    <th>名称</th>
-                                    <th>注释</th>
-                                    <th>URL</th>
+                                    <th>主机名</th>
+                                    <th>IP</th>
+                                    <th>CPU</th>
+                                    <th>内存</th>
+                                    <th>机房</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {% if allnavi %}
-                                {% for navi in allnavi %}
+                                {% if host_list %}
+                                {% for host in host_list %}
                                     <tr class="even gradeA">
-                                        <td><input type="checkbox" id="u_id" class="item1" value="{{ navi.id }}" name="navi_check" /></td>
-                                        <input type="hidden" name="u_name" value="{{ navi.name }}">
-                                        <td><a href="/navi/edit?id={{ navi.id }}">{{ navi.name }} </a></td>
-                                        <td>{{ navi.description }}</td>
-                                        <td>{{ navi.url }}</td>
+                                        <td><input type="checkbox" id="u_id" class="item1" value="{{ host.id }}" name="host_check" /></td>
+                                        <input type="hidden" name="u_name" value="{{ host.hostname }}">
+                                        <td><a href="/cmdb/edit?id={{ host.id }}">{{ host.hostname }} </a></td>
+                                        <td>{{ host.ip }}</td>
+                                        <td>{{ host.cpu_num }}</td>
+                                        <td>{{ host.memory }}</td>
+                                        <td>{{ host.idc }}</td>
                                     </tr>
                                 {% endfor %}
                                 {% else %}

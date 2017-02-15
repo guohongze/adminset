@@ -14,7 +14,7 @@ class HostAdmin(admin.ModelAdmin):
         'cpu_model',
         'cpu_num',
         'sn',
-        'identity',
+        #'identity',
         ]
 
 

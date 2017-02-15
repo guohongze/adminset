@@ -28,12 +28,12 @@ def collect(request):
             host = Host.objects.get(hostname=hostname)
         except:
             host = Host()
-        if req.POST.get('identity'):
-            identity = req.POST.get('identity')
-            try:
-                host = Host.objects.get(identity=identity)
-            except:
-                host = Host()
+        # if req.POST.get('identity'):
+        #     identity = req.POST.get('identity')
+        #     try:
+        #         host = Host.objects.get(identity=identity)
+        #     except:
+        #         host = Host()
         host.hostname = hostname
         host.group = group
         host.cpu_num = int(cpu_num)

@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block content %}
+<script>
+    window.onload=init;
+    function init() {
+        showhide(1);
+    }
+    function showhide(n) {
+        var box = document.getElementById("sidebar-menu");
+        var allLi=box.getElementsByTagName("li");
+        allLi[n].className="active";
+    }
+</script>
+
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        <small></small>
+      </h1>
+        <div class="alert alert-info alert-dismissible" style="display: {{ display_control }};">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4>{{ tips }}</h4>
+              </div>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-link"></i> Level</a></li>
+        <li class="active">Here</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="box">
+        <div class="box-header with-border">
+          <h3 class="box-title">添加导航条目</h3>
+
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+              <i class="fa fa-minus"></i></button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+              <i class="fa fa-times"></i></button>
+          </div>
+        </div>
+        <div class="box-body">
+      <form action="{% url 'add' %}" method="post">
+        {% csrf_token %}
+        {{ n_form.as_p }}
+        <input type="submit" class="btn btn-primary" style="width: 60pt" value="提交">&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="reset"  class="btn btn-primary" style="width: 60pt" value="重置" /><br>
+      </form>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+          <i class="fa fa-info-circle"></i> 请勿重复添加条目
+        </div>
+        <!-- /.box-footer-->
+      </div>
+      <!-- /.box -->
+
+    </section>
+
+  </div>
+{% endblock %}

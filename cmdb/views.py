@@ -11,9 +11,10 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 
 
-def cmdb(request):
+def index(request):
+    temp_name = "cmdb/cmdb-header.html"
     host_list = Host.objects.all()
-    return render_to_response('bak/cmdb.html', locals())
+    return render_to_response('cmdb/index.html', locals())
 
 
 def excel(request):
@@ -58,3 +59,15 @@ def hostsync(request):
             ansible_file.write(host_item)
     ansible_file.close()
     return HttpResponse("ok")
+
+
+def asset_add(request):
+    return HttpResponse("ok")
+
+
+def asset_del(request):
+    pass
+
+
+def asset_edit(request):
+    pass

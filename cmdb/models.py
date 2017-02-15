@@ -36,7 +36,7 @@ class Host(models.Model):
     disk = models.CharField(max_length=255,null=True)
     sn = models.CharField(max_length=60)
     ip = models.GenericIPAddressField(max_length=15)
-    identity = models.CharField(max_length=32,null=True)
+    #identity = models.CharField(max_length=32,null=True)
     idc = models.ForeignKey(Idc, verbose_name=u"所在机房",null=True)
 
     def __unicode__(self):
