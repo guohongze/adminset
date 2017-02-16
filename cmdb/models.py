@@ -13,10 +13,13 @@ class UserInfo(models.Model):
 
 
 class Idc(models.Model):
-    name = models.CharField(max_length=30, null=True)
-    address = models.CharField(max_length=100, null=True)
-    tel = models.CharField(max_length=30, null=True)
-    contact = models.CharField(max_length=30, null=True)
+    name = models.CharField(u"机房名称", max_length=30, null=True)
+    address = models.CharField(u"机房地址", max_length=100, null=True)
+    tel = models.CharField(u"机房电话", max_length=30, null=True)
+    contact = models.CharField(u"客户经理", max_length=30, null=True)
+    contact_phone = models.CharField(u"移动电话", max_length=30, null=True)
+    jigui = models.CharField(u"机柜信息", max_length=30, null=True)
+    bandwidth = models.CharField(u"接入带宽", max_length=30, null=True)
 
     def __unicode__(self):
         return self.name
@@ -37,7 +40,6 @@ class Host(models.Model):
     memory = models.IntegerField(u"内存型号", null=True)
     disk = models.CharField(u"硬盘信息", max_length=255,null=True)
     sn = models.CharField(u"SN号 码", max_length=60)
-    #identity = models.CharField(max_length=32,null=True)
     idc = models.ForeignKey(Idc, verbose_name=u"所在机房", null=True)
 
     def __unicode__(self):

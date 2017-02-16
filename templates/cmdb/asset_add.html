@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
+{% block self_head_css_js %}
+    <script src="/static/layer/layer.js"></script>
+{% endblock %}
 {% block content %}
 <script>
     window.onload=init;
@@ -45,11 +48,11 @@
           </div>
         </div>
         <div class="box-body">
-      <form action="/cmdb/asset_add/" method="post">
+      <form action="{% url 'asset_add' %}" method="post">
         {% csrf_token %}
         {{ a_form.as_p }}
         <input type="submit" class="btn btn-primary" style="width: 60pt" value="提交">&nbsp;&nbsp;&nbsp;&nbsp;
-        <li  class="btn btn-success" style="width: 60pt" >机房 <i class="fa fa-plus-circle"></i></li><br>
+        <li  id="idc_add" class="btn btn-success" style="width: 60pt" >机房 <i class="fa fa-plus-circle"></i></li><br>
       </form>
         </div>
         <!-- /.box-body -->
@@ -59,8 +62,23 @@
         <!-- /.box-footer-->
       </div>
       <!-- /.box -->
-
     </section>
 
   </div>
+
+<script>
+$('#idc_add').on('click', function(){
+  layer.open({
+  type: 2,
+  title: '添加机房',
+  closeBtn: 1,
+  area: ['500px', '450px'],
+  shadeClose: true, //点击遮罩关闭
+  content: ['/cmdb/idc_add',],
+    end: function () {
+        location.reload();
+    }
+  });
+});
+</script>
 {% endblock %}

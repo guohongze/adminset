@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block self_head_css_js %}
+    <script src="/static/layer/layer.js"></script>
 {% endblock %}
 {% block content %}
 <script>
@@ -28,14 +29,14 @@
 
     <!-- Main content -->
     <section class="content">
-        <form action="/cmdb/asset_del" method="post">
+        <form action="{% url 'asset_del' %}" method="post">
             <div class="box">
                 <div class="box-header">
                     <div class="btn-group">
-						 <a href="/cmdb/idc_add"><li class="btn btn-success" ><b>新增机房</b></li></a>
+						 <li class="btn btn-success" id="idc_add"><b>新增机房</b></li></a>
                   </div>
                     <div class="btn-group">
-						 <a href="/cmdb/asset_add"><li class="btn btn-success" ><b>新增主机</b></li></a>
+						 <a href="{% url 'asset_add' %}"><li class="btn btn-success" ><b>新增主机</b></li></a>
                   </div>
                 </div>
                 <!-- /.box-header -->
@@ -60,8 +61,7 @@
                                 {% for host in host_list %}
                                     <tr class="even gradeA">
                                         <td><input type="checkbox" id="u_id" class="item1" value="{{ host.id }}" name="host_check" /></td>
-                                        <input type="hidden" name="u_name" value="{{ host.hostname }}">
-                                        <td><a href="/cmdb/edit?id={{ host.id }}">{{ host.hostname }} </a></td>
+                                        <td><a href="#"><li style="list-style-type:none" onclick="return tanchu(this.value)" value="{{ host.id }}"> {{ host.hostname }}</li></a></td>
                                         <td>{{ host.ip }}</td>
                                         <td>{{ host.group }}</td>
                                         <td>{{ host.cpu_num }}</td>
@@ -117,6 +117,17 @@ function checkSubmit() {
     if (!confirm("确定删除？")) {
         window.event.returnValue = false;
     }
+}
+</script>
+<script>
+function tanchu(n){
+  layer.open({
+  type: 2,
+  title: false,
+  area: ['600px', '450px'],
+  shadeClose: true, //点击遮罩关闭
+  content: ['/cmdb/asset_edit?hostid=' + n,]
+  });
 }
 </script>
 {% endblock %}

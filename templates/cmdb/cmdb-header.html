@@ -1,7 +1,7 @@
 <header class="main-header">
 
     <!-- Logo -->
-    <a href="index2.html" class="logo">
+    <a href="{% url 'index' %}" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>AST</b></span>
       <!-- logo for regular state and mobile devices -->
@@ -16,9 +16,10 @@
       </a>
         <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
           <ul class="nav navbar-nav">
-            <li style="font-size: medium"><a href="{% url 'manage' %}"><b>主机管理</b></a></li>
-            <li style="font-size: medium"><a href="{% url 'manage' %}"><b>网络管理</b></a></li>
-            <li style="font-size: medium"><a href="{% url 'manage' %}"><b>应用管理</b></a></li>
+            <li style="font-size: medium"><a href="{% url 'cmdb' %}"><b>主机管理</b></a></li>
+            <li style="font-size: medium"><a href=""><b>机房管理</b></a></li>
+            <li style="font-size: medium"><a href=""><b>网络管理</b></a></li>
+            <li style="font-size: medium"><a href=""><b>应用管理</b></a></li>
           </ul>
         </div>
       <!-- Navbar Right Menu -->

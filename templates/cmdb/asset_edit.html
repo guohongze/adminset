@@ -1,62 +1,112 @@
-{% extends 'base.html' %}
-{% block content %}
-<script>
-    window.onload=init;
-    function init() {
-        showhide(1);
-    }
-    function showhide(n) {
-        var box = document.getElementById("sidebar-menu");
-        var allLi=box.getElementsByTagName("li");
-        allLi[n].className="active";
-    }
-</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% include 'link_css.html' %}
+    {% include 'head_script.html' %}
+</head>
+<body>
+<div class="content-wrapper">
 
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        <small></small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-link"></i> Level</a></li>
-        <li class="active">Here</li>
-      </ol>
-    </section>
-
-    <!-- Main content -->
 
     <section class="content">
 
 <div id="dialog">
         <div class="box box-info">
             <div class="box-header with-border">
-              <h3 class="box-title">{{ obj.name }}信息修改</h3>
+              <h3 class="box-title"><b>{{ obj.hostname }}</b>信息修改</h3>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form class="form-horizontal" action="{% url 'save' %}" method="POST">
+            <form class="form-horizontal" action="{% url 'asset_save' %}" method="POST">
               <div class="box-body">
                 <div class="form-group">
-                  <label for="navi_name" class="col-sm-2 control-label">名称</label>
+                  <label for="hostname" class="col-sm-2 control-label">主机名:</label>
 
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" name="name" value="{{ obj.name }}">
+                    <input type="text" class="form-control" name="hostname" value="{{ obj.hostname }}">
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="navi_desc" class="col-sm-2 control-label">描述</label>
+                  <label for="ip" class="col-sm-2 control-label">IP地址:</label>
 
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" name="desc" value="{{ obj.description }}">
+                    <input type="text" class="form-control" name="ip" value="{{ obj.ip }}">
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="navi_url" class="col-sm-2 control-label">URL</label>
+                  <label for="group" class="col-sm-2 control-label">设备组:</label>
 
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" name="url" value="{{ obj.url }}">
+                    <input type="text" class="form-control" name="group" value="{{ obj.group }}">
                   </div>
+                </div>
+                <div class="form-group">
+                  <label for="os" class="col-sm-2 control-label">操作系统:</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name="os" value="{{ obj.os }}">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="vendor" class="col-sm-2 control-label">设备厂商:</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name="vendor" value="{{ obj.vendor }}">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="cpu_model" class="col-sm-2 control-label">CPU型号:</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name="cpu_model" value="{{ obj.cpu_model }}">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="cpu_num" class="col-sm-2 control-label">CPU数量:</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name="cpu_num" value="{{ obj.cpu_num }}">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="memory" class="col-sm-2 control-label">内存大小:</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name="memory" value="{{ obj.memory }}">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="disk" class="col-sm-2 control-label">硬盘信息:</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name="disk" value="{{ obj.disk }}">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="sn" class="col-sm-2 control-label">SN号码:</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name="sn" value="{{ obj.sn }}">
+                  </div>
+                </div>
+                <div class="form-group">
+                 <label for="id_idc" class="col-sm-2 control-label">所在机房:</label>
+                <div class="col-sm-10">
+                     <select class="form-control" id="id_idc" name="idc" style="width:250px;">
+                    <option value="{{ obj.idc_id }}" selected="selected">
+                        {% if obj.idc_id %}
+                        {{ obj.idc }}
+                        {% else %}
+                        ----------
+                        {% endif %}
+                    </option>
+                         {% for idc in allidc %}
+                    <option value="{{ idc.id }}">{{ idc }}</option>
+                         {% endfor %}
+                         </select>
+                </div>
                 </div>
                 <input type="hidden" name="id" value="{{ obj.id }}">
               </div>
@@ -70,7 +120,9 @@
 </div>
     </div>
 
+
     </section>
 
   </div>
-{% endblock %}
+</body>
+</html>

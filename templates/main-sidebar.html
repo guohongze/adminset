@@ -31,9 +31,9 @@
       <ul class="sidebar-menu" id="sidebar-menu">
 {#        <li class="header">HEADER</li>#}
         <!-- Optionally, you can add icons to the links -->
-        <li><a href="/"><i class="fa fa-dashboard"></i> <span>Dashbord</span></a></li>
-        <li><a href="/navi"><i class="fa fa-link"></i> <span>站点导航</span></a></li>
-        <li><a href="/cmdb"><i class="fa fa-database"></i> <span>资产管理</span></a></li>
+        <li><a href="{% url 'index' %}"><i class="fa fa-dashboard"></i> <span>Dashbord</span></a></li>
+        <li><a href="{% url 'navi' %}"><i class="fa fa-link"></i> <span>站点导航</span></a></li>
+        <li><a href="{% url 'cmdb' %}"><i class="fa fa-database"></i> <span>资产管理</span></a></li>
         <li><a href="#"><i class="fa fa-cogs"></i> <span>Ansible</span></a></li>
         <li><a href="#"><i class="fa fa-file-code-o"></i> <span>Shell</span></a></li>
         <li><a href="#"><i class="fa fa-television"></i> <span>Monitor</span></a></li>
