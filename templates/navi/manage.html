@@ -33,9 +33,6 @@
                   <div class="btn-group">
 						 <a href="{% url 'add' %}"><li class="btn btn-success" style="width: 60pt;font-size: medium" ><b>添加</b></li></a>
                   </div>
-                  <div class="btn-group">
-						 <button class="btn btn-primary" style="width: 60pt;font-size: medium" onclick="return checkSubmit()"><b>删除</b></button>
-                  </div>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -64,8 +61,12 @@
                                 {% else %}
                                     <p>No Item are available.</p>
                                 {% endif %}
+
                             </tbody>
                   </table>
+                <div class="btn-group">
+						 <button class="btn btn-danger" style="width: 60pt;font-size: medium" onclick="return checkSubmit()"><b>删除</b></button>
+                  </div>
                 </div>
             </div>
         </form>

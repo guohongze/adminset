@@ -31,11 +31,11 @@
         <form action="/cmdb/asset_del" method="post">
             <div class="box">
                 <div class="box-header">
-                  <div class="btn-group">
-						 <a href="/cmdb/asset_add"><li class="btn btn-success" style="width: 60pt;font-size: medium" ><b>添加</b></li></a>
+                    <div class="btn-group">
+						 <a href="/cmdb/idc_add"><li class="btn btn-success" ><b>新增机房</b></li></a>
                   </div>
-                  <div class="btn-group">
-						 <button class="btn btn-primary" style="width: 60pt;font-size: medium" onclick="return checkSubmit()"><b>删除</b></button>
+                    <div class="btn-group">
+						 <a href="/cmdb/asset_add"><li class="btn btn-success" ><b>新增主机</b></li></a>
                   </div>
                 </div>
                 <!-- /.box-header -->
@@ -48,8 +48,10 @@
                             </th>
                                     <th>主机名</th>
                                     <th>IP</th>
+                                    <th>属组</th>
                                     <th>CPU</th>
                                     <th>内存</th>
+                                    <th>硬盘</th>
                                     <th>机房</th>
                                 </tr>
                             </thead>
@@ -61,8 +63,10 @@
                                         <input type="hidden" name="u_name" value="{{ host.hostname }}">
                                         <td><a href="/cmdb/edit?id={{ host.id }}">{{ host.hostname }} </a></td>
                                         <td>{{ host.ip }}</td>
+                                        <td>{{ host.group }}</td>
                                         <td>{{ host.cpu_num }}</td>
                                         <td>{{ host.memory }}</td>
+                                        <td>{{ host.disk }}</td>
                                         <td>{{ host.idc }}</td>
                                     </tr>
                                 {% endfor %}
@@ -71,6 +75,9 @@
                                 {% endif %}
                             </tbody>
                   </table>
+                    <div class="btn-group">
+						 <button class="btn btn-danger" style="width: 60pt;font-size: medium" onclick="return checkSubmit()"><b>删除</b></button>
+                    </div>
                 </div>
             </div>
         </form>

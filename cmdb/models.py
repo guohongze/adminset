@@ -13,13 +13,14 @@ class UserInfo(models.Model):
 
 
 class Idc(models.Model):
-    name = models.CharField(max_length=30,null=True)
-    address = models.CharField(max_length=100,null=True)
-    tel = models.CharField(max_length=30,null=True)
-    contact = models.CharField(max_length=30,null=True)
+    name = models.CharField(max_length=30, null=True)
+    address = models.CharField(max_length=100, null=True)
+    tel = models.CharField(max_length=30, null=True)
+    contact = models.CharField(max_length=30, null=True)
 
     def __unicode__(self):
         return self.name
+
     class Meta:
         verbose_name = u'数据中心'
         verbose_name_plural = verbose_name
@@ -27,17 +28,17 @@ class Idc(models.Model):
 
 class Host(models.Model):
     hostname = models.CharField(max_length=30, verbose_name=u"主机名")
+    ip = models.GenericIPAddressField(u"IP地址", max_length=15)
+    group = models.CharField(u"设备组", max_length=30,null=True)
     os = models.CharField(u"操作系统",max_length=50,null=True)
-    vendor = models.CharField(max_length=30,null=True)
-    group = models.CharField(max_length=30,null=True)
-    cpu_model = models.CharField(max_length=100,null=True)
-    cpu_num = models.IntegerField(null=True)
-    memory = models.IntegerField(null=True)
-    disk = models.CharField(max_length=255,null=True)
-    sn = models.CharField(max_length=60)
-    ip = models.GenericIPAddressField(max_length=15)
+    vendor = models.CharField(u"设备厂商",max_length=30,null=True)
+    cpu_model = models.CharField(u"CPU型号", max_length=100,null=True)
+    cpu_num = models.IntegerField(u"CPU数量", null=True)
+    memory = models.IntegerField(u"内存型号", null=True)
+    disk = models.CharField(u"硬盘信息", max_length=255,null=True)
+    sn = models.CharField(u"SN号 码", max_length=60)
     #identity = models.CharField(max_length=32,null=True)
-    idc = models.ForeignKey(Idc, verbose_name=u"所在机房",null=True)
+    idc = models.ForeignKey(Idc, verbose_name=u"所在机房", null=True)
 
     def __unicode__(self):
         return self.hostname

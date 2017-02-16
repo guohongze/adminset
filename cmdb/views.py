@@ -3,7 +3,8 @@
 from django.views import generic
 from .models import Host, HostGroup
 from django.http import HttpResponse
-from django.shortcuts import render_to_response,redirect
+from forms import AssetForm
+from django.shortcuts import render_to_response, redirect
 import csv
 import models
 import sys
@@ -62,7 +63,21 @@ def hostsync(request):
 
 
 def asset_add(request):
-    return HttpResponse("ok")
+    temp_name = "cmdb/cmdb-header.html"
+    if request.method == "POST":
+        a_form = AssetForm(request.POST)
+        if a_form.is_valid():
+            a_form.save()
+            tips = u"增加成功！"
+            display_control = ""
+        else:
+            tips = u"增加失败！"
+            display_control = ""
+        return render_to_response("cmdb/asset_add.html", locals())
+    else:
+        display_control = "none"
+        a_form = AssetForm()
+        return render_to_response("cmdb/asset_add.html", locals())
 
 
 def asset_del(request):

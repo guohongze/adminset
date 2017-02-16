@@ -3,7 +3,7 @@
 <script>
     window.onload=init;
     function init() {
-        showhide(1);
+        showhide(2);
     }
     function showhide(n) {
         var box = document.getElementById("sidebar-menu");
@@ -35,7 +35,7 @@
       <!-- Default box -->
       <div class="box">
         <div class="box-header with-border">
-          <h3 class="box-title">添加导航条目</h3>
+          <h3 class="box-title">添加主机条目</h3>
 
           <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -45,16 +45,16 @@
           </div>
         </div>
         <div class="box-body">
-      <form action="{% url 'add' %}" method="post">
+      <form action="/cmdb/asset_add/" method="post">
         {% csrf_token %}
-        {{ n_form.as_p }}
+        {{ a_form.as_p }}
         <input type="submit" class="btn btn-primary" style="width: 60pt" value="提交">&nbsp;&nbsp;&nbsp;&nbsp;
-        <input type="reset"  class="btn btn-primary" style="width: 60pt" value="重置" /><br>
+        <li  class="btn btn-success" style="width: 60pt" >机房 <i class="fa fa-plus-circle"></i></li><br>
       </form>
         </div>
         <!-- /.box-body -->
         <div class="box-footer">
-          <i class="fa fa-info-circle"></i> 请勿重复添加条目
+          <i class="fa fa-info-circle"></i> 请勿重复添加条目，请在增加主机之前保证已经录入机房信息。
         </div>
         <!-- /.box-footer-->
       </div>
