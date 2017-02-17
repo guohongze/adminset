@@ -12,6 +12,9 @@
         var box = document.getElementById("sidebar-menu");
         var allLi=box.getElementsByTagName("li");
         allLi[n].className="active";
+        var box = document.getElementById("navbar-collapse");
+        var ali=box.getElementsByTagName("li");
+        ali[n-2].className="active";
     }
 </script>
 
@@ -74,7 +77,7 @@ $('#idc_add').on('click', function(){
   closeBtn: 1,
   area: ['500px', '450px'],
   shadeClose: true, //点击遮罩关闭
-  content: ['/cmdb/idc_add',],
+  content: ['/cmdb/idc_add_mini',],
     end: function () {
         location.reload();
     }

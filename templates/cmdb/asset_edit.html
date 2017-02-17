@@ -14,9 +14,6 @@
 
 <div id="dialog">
         <div class="box box-info">
-            <div class="box-header with-border">
-              <h3 class="box-title"><b>{{ obj.hostname }}</b>信息修改</h3>
-            </div>
             <!-- /.box-header -->
             <!-- form start -->
             <form class="form-horizontal" action="{% url 'asset_save' %}" method="POST">
@@ -112,8 +109,7 @@
               </div>
               <!-- /.box-body -->
               <div class="box-footer">
-                <a href="{% url 'manage' %}"><li class="btn btn-default">退出</li></a>
-                <button type="submit" class="btn btn-info pull-right">保存</button>
+                <button type="submit" class="btn btn-info pull-right" style="width: 60px">保存</button>
               </div>
               <!-- /.box-footer -->
             </form>
@@ -124,5 +120,17 @@
     </section>
 
   </div>
+{#回传参数至父层#}
+<script type="text/javascript">
+        var index = parent.layer.getFrameIndex(window.name);
+        var success = {{ status }};
+        if ( success == '1' ) {
+            parent.$("#handle_status").val('1');
+              parent.layer.close(index);
+        } else if( success == '2' ) {
+            parent.$("#handle_status").val('2');
+            parent.layer.close(index);
+        }
+</script>
 </body>
 </html>

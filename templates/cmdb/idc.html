@@ -14,7 +14,7 @@
         allLi[n].className="active";
         var box = document.getElementById("navbar-collapse");
         var ali=box.getElementsByTagName("li");
-        ali[n-2].className="active";
+        ali[n-1].className="active";
     }
 </script>
 
@@ -33,11 +33,11 @@
 
     <!-- Main content -->
     <section class="content">
-        <form action="{% url 'asset_del' %}" method="post">
+        <form action="{% url 'idc_del' %}" method="post">
             <div class="box">
                 <div class="box-header">
                     <div class="btn-group">
-						 <a href="{% url 'asset_add' %}"><li class="btn btn-success" ><b>添加主机</b></li></a>
+						 <a href="{% url 'idc_add' %}"><li class="btn btn-success" ><b>添加机房</b></li></a>
                   </div>
                 </div>
                 <!-- /.box-header -->
@@ -48,27 +48,27 @@
                             <th>
                                 <input type="checkbox" onclick="checkAll(this, 'item1');" />
                             </th>
-                                    <th>主机名</th>
-                                    <th>IP</th>
-                                    <th>属组</th>
-                                    <th>CPU</th>
-                                    <th>内存</th>
-                                    <th>硬盘</th>
-                                    <th>机房</th>
+                                    <th>机房名称</th>
+                                    <th>机房地址</th>
+                                    <th>机房电话</th>
+                                    <th>客户经理</th>
+                                    <th>移动电话</th>
+                                    <th>机架信息</th>
+                                    <th>接入带宽</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {% if host_list %}
-                                {% for host in host_list %}
+                                {% if idc_info %}
+                                {% for idc in idc_info %}
                                     <tr class="even gradeA">
-                                        <td><input type="checkbox" id="u_id" class="item1" value="{{ host.id }}" name="host_check" /></td>
-                                        <td><a href="#"><li style="list-style-type:none" onclick="return tanchu(this.value)" value="{{ host.id }}"> {{ host.hostname }}</li></a></td>
-                                        <td>{{ host.ip }}</td>
-                                        <td>{{ host.group }}</td>
-                                        <td>{{ host.cpu_num }}</td>
-                                        <td>{{ host.memory }}</td>
-                                        <td>{{ host.disk }}</td>
-                                        <td>{{ host.idc }}</td>
+                                        <td><input type="checkbox" id="u_id" class="item1" value="{{ idc.id }}" name="idc_check" /></td>
+                                        <td><a href="#"><li style="list-style-type:none" onclick="return tanchu(this.value)" value="{{ idc.id }}"> {{ idc.name }}</li></a></td>
+                                        <td>{{ idc.address }}</td>
+                                        <td>{{ idc.tel }}</td>
+                                        <td>{{ idc.contact }}</td>
+                                        <td>{{ idc.contact_phone }}</td>
+                                        <td>{{ idc.jigui }}</td>
+                                        <td>{{ idc.bandwidth }}</td>
                                     </tr>
                                 {% endfor %}
                                 {% else %}
@@ -82,11 +82,10 @@
                 </div>
             </div>
         </form>
+
     </section>
         <!-- /.content -->
-{#用于接收asset_edit.html中layui子层的传值#}
-<input id="handle_status" value="" hidden="hidden">
-</div>
+      </div>
 
 <script>
 function checkAll(sender, checkClass) {
@@ -123,31 +122,12 @@ function checkSubmit() {
 </script>
 <script>
 function tanchu(n){
-    layer.open({
-    type: 2,
-    title: '修改主机信息',
-    closeBtn: 1,
-    area: ['600px', '450px'],
-    shadeClose: true, //点击遮罩关闭
-    content: ['/cmdb/asset_edit?hostid=' + n,],
-    end:function(){
-            var handle_status = $("#handle_status").val();
-            if ( handle_status == '1' ) {
-                layer.msg('修改成功！',{
-                    icon: 1,
-                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
-                },function(){
-                    history.go(0);
-                });
-            } else if ( handle_status == '2' ) {
-                layer.msg('修改失败！',{
-                    icon: 2,
-                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
-                },function(){
-                    history.go(0);
-                });
-            }
-        }
+  layer.open({
+  type: 2,
+  title: '机房信息修改',
+  area: ['600px', '450px'],
+  shadeClose: true, //点击遮罩关闭
+  content: ['/cmdb/idc_edit?idcid=' + n,]
   });
 }
 </script>

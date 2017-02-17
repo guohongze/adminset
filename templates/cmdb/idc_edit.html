@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% include 'link_css.html' %}
+    {% include 'head_script.html' %}
+</head>
+<body>
+<div class="content-wrapper">
+
+
+    <section class="content">
+
+<div id="dialog">
+        <div class="box box-info">
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form class="form-horizontal" action="{% url 'idc_save' %}" method="POST">
+              <div class="box-body">
+                <div class="form-group">
+                  <label for="name" class="col-sm-2 control-label">机房名称:</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name="name" value="{{ obj.name }}">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="address" class="col-sm-2 control-label">机房地址:</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name="address" value="{{ obj.address }}">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="tel" class="col-sm-2 control-label">机房电话:</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name="tel" value="{{ obj.tel }}">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="contact" class="col-sm-2 control-label">客户经理:</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name="contact" value="{{ obj.contact }}">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="contact_phone" class="col-sm-2 control-label">移动电话:</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name="contact_phone" value="{{ obj.contact_phone }}">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="jigui" class="col-sm-2 control-label">机柜信息:</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name="jigui" value="{{ obj.jigui }}">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="bandwidth" class="col-sm-2 control-label">接入带宽:</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name="bandwidth" value="{{ obj.bandwidth }}">
+                  </div>
+                </div>
+                <input type="hidden" name="id" value="{{ obj.id }}">
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                <a href="javascript:window.opener=null;window.open('','_self');window.close();"><li class="btn btn-default">退出</li></a>
+                <button type="submit" class="btn btn-info pull-right">保存</button>
+              </div>
+              <!-- /.box-footer -->
+            </form>
+</div>
+    </div>
+
+
+    </section>
+
+  </div>
+</body>
+</html>

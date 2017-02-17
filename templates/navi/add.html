@@ -49,8 +49,7 @@
         {% csrf_token %}
         {{ n_form.as_p }}
         <input type="submit" class="btn btn-primary" style="width: 60pt" value="提交">&nbsp;&nbsp;&nbsp;&nbsp;
-        <input type="reset"  class="btn btn-primary" style="width: 60pt" value="重置" /><br>
-      </form>
+        <a href="{% url 'manage' %}"><li style="width: 60pt" class="btn btn-primary" value="">返回</li></a><br>      </form>
         </div>
         <!-- /.box-body -->
         <div class="box-footer">
