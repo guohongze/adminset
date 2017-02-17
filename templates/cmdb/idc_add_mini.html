@@ -15,11 +15,12 @@
               </div>
         </div>
         <div class="box-body">
-      <form action="{% url 'idc_add' %}" method="post">
+      <form action="{% url 'idc_add_mini' %}" method="post">
         {% csrf_token %}
         {{ idc_form.as_p }}
         <input type="submit" class="btn btn-primary" style="width: 60pt" value="提交">&nbsp;&nbsp;&nbsp;&nbsp;
         <input type="reset"  class="btn btn-primary" style="width: 60pt" value="重置" /><br>
+        <input type="hidden" value="1" name="idc_mini">
           </form>
         </div>
         <!-- /.box-body -->
@@ -28,5 +29,17 @@
         </div>
         <!-- /.box-footer-->
       </div>
+{#回传参数至父层#}
+<script type="text/javascript">
+        var index = parent.layer.getFrameIndex(window.name);
+        var success = {{ status }};
+        if ( success == '1' ) {
+            parent.$("#handle_status").val('1');
+              parent.layer.close(index);
+        } else if( success == '2' ) {
+            parent.$("#handle_status").val('2');
+            parent.layer.close(index);
+        }
+</script>
 </body>
 </html>

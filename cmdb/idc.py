@@ -38,6 +38,7 @@ def idc_add_mini(request):
             idc_form.save()
             tips = u"增加成功！"
             display_control = ""
+            status = 1
         else:
             tips = u"增加失败！"
             display_control = ""
@@ -71,7 +72,8 @@ def idc_edit(request):
 def idc_save(request):
     temp_name = "cmdb/cmdb-header.html"
     if request.method == 'POST':
-        id = request.POST.get('id')
+        idc_id = request.POST.get('id')
+        mini = request.POST.get('idc_mini')
         name = request.POST.get('name')
         address = request.POST.get('address')
         tel = request.POST.get('tel')
@@ -79,7 +81,7 @@ def idc_save(request):
         contact_phone = request.POST.get('contact_phone')
         jigui = request.POST.get('jigui')
         bandwidth = request.POST.get('bandwidth')
-        idc_item = Idc.objects.get(id=id)
+        idc_item = Idc.objects.get(id=idc_id)
         idc_item.name = name
         idc_item.address = address
         idc_item.tel = tel
@@ -89,4 +91,7 @@ def idc_save(request):
         idc_item.bandwidth = bandwidth
         idc_item.save()
         obj = idc_item
-    return render_to_response("cmdb/idc_edit.html",locals())
+        status = 1
+    else:
+        status = 2
+    return render_to_response("cmdb/idc_edit.html", locals())

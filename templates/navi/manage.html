@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block self_head_css_js %}
+    <script src="/static/layer/layer.js"></script>
 {% endblock %}
 {% block content %}
 <script>
@@ -56,7 +57,7 @@
                                     <tr class="even gradeA">
                                         <td><input type="checkbox" id="u_id" class="item1" value="{{ navi.id }}" name="navi_check" /></td>
                                         <input type="hidden" name="u_name" value="{{ navi.name }}">
-                                        <td><a href="/navi/edit?id={{ navi.id }}">{{ navi.name }} </a></td>
+                                        <td><a href="#"><li style="list-style-type:none" onclick="return tanchu(this.value)" value="{{ navi.id }}">{{ navi.name }}</li></a></td>
                                         <td>{{ navi.description }}</td>
                                         <td>{{ navi.url }}</td>
                                     </tr>
@@ -77,7 +78,7 @@
     </section>
         <!-- /.content -->
       </div>
-
+<input id="handle_status" value="" hidden="hidden">
 <script>
 function checkAll(sender, checkClass) {
     var checkItems = document.getElementsByTagName('input');
@@ -109,6 +110,36 @@ function checkSubmit() {
     if (!confirm("确定删除？")) {
         window.event.returnValue = false;
     }
+}
+</script>
+<script>
+function tanchu(n){
+    layer.open({
+    type: 2,
+    title: '修改信息',
+    closeBtn: 1,
+    area: ['600px', '400px'],
+    shadeClose: true, //点击遮罩关闭
+    content: ['/navi/edit?id=' + n,],
+    end:function(){
+            var handle_status = $("#handle_status").val();
+            if ( handle_status == '1' ) {
+                layer.msg('保存成功！',{
+                    icon: 1,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                },function(){
+                    history.go(0);
+                });
+            } else if ( handle_status == '2' ) {
+                layer.msg('修改失败！',{
+                    icon: 2,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                },function(){
+                    history.go(0);
+                });
+            }
+        }
+  });
 }
 </script>
 {% endblock %}

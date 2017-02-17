@@ -50,9 +50,10 @@ def manage(request):
 def edit(request):
     temp_name = "navi/navi-header.html"
     if request.method == 'GET':
-        id = request.GET.get("id")
-        obj = navi.objects.get(id=id)
+        item = request.GET.get("id")
+        obj = navi.objects.get(id=item)
     return render_to_response("navi/edit.html", locals())
+
 
 def save(request):
     temp_name = "navi/navi-header.html"
@@ -66,5 +67,8 @@ def save(request):
         n_item.description = desc
         n_item.url = url
         n_item.save()
+        status = 1
+    else:
+        status = 2
     allnavi = navi.objects.all()
-    return render_to_response("navi/manage.html",locals())
+    return render_to_response("navi/edit.html",locals())

@@ -86,7 +86,8 @@
     </section>
         <!-- /.content -->
       </div>
-
+{#接收子层回传参数#}
+<input id="handle_status" value="" hidden="hidden">
 <script>
 function checkAll(sender, checkClass) {
     var checkItems = document.getElementsByTagName('input');
@@ -127,7 +128,25 @@ function tanchu(n){
   title: '机房信息修改',
   area: ['600px', '450px'],
   shadeClose: true, //点击遮罩关闭
-  content: ['/cmdb/idc_edit?idcid=' + n,]
+  content: ['/cmdb/idc_edit?idcid=' + n,],
+  end:function(){
+        var handle_status = $("#handle_status").val();
+        if ( handle_status == '1' ) {
+            layer.msg('保存成功！',{
+                icon: 1,
+                time: 2000 //2秒关闭（如果不配置，默认是3秒）
+            },function(){
+                history.go(0);
+            });
+        } else if ( handle_status == '2' ) {
+            layer.msg('修改失败！',{
+                icon: 2,
+                time: 2000 //2秒关闭（如果不配置，默认是3秒）
+            },function(){
+                history.go(0);
+            });
+        }
+    }
   });
 }
 </script>

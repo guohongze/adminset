@@ -71,7 +71,6 @@
               </div>
               <!-- /.box-body -->
               <div class="box-footer">
-                <a href="javascript:window.opener=null;window.open('','_self');window.close();"><li class="btn btn-default">退出</li></a>
                 <button type="submit" class="btn btn-info pull-right">保存</button>
               </div>
               <!-- /.box-footer -->
@@ -83,5 +82,17 @@
     </section>
 
   </div>
+{#回传参数至父层#}
+<script type="text/javascript">
+        var index = parent.layer.getFrameIndex(window.name);
+        var success = {{ status }};
+        if ( success == '1' ) {
+            parent.$("#handle_status").val('1');
+              parent.layer.close(index);
+        } else if( success == '2' ) {
+            parent.$("#handle_status").val('2');
+            parent.layer.close(index);
+        }
+</script>
 </body>
 </html>

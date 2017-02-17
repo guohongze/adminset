@@ -68,19 +68,35 @@
     </section>
 
   </div>
+<input id="handle_status" value="" hidden="hidden">
 
 <script>
 $('#idc_add').on('click', function(){
-  layer.open({
-  type: 2,
-  title: '添加机房',
-  closeBtn: 1,
-  area: ['500px', '450px'],
-  shadeClose: true, //点击遮罩关闭
-  content: ['/cmdb/idc_add_mini',],
-    end: function () {
-        location.reload();
-    }
+    layer.open({
+    type: 2,
+    title: '添加机房',
+    closeBtn: 1,
+    area: ['500px', '450px'],
+    shadeClose: true, //点击遮罩关闭
+    content: ['/cmdb/idc_add_mini'],
+    end:function(){
+            var handle_status = $("#handle_status").val();
+            if ( handle_status == '1' ) {
+                layer.msg('提交成功！',{
+                    icon: 1,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                },function(){
+                    history.go(0);
+                });
+            } else if ( handle_status == '2' ) {
+                layer.msg('提交失败！',{
+                    icon: 2,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                },function(){
+                    history.go(0);
+                });
+            }
+        }
   });
 });
 </script>
