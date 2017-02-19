@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^asset_del/', asset.asset_del, name='asset_del'),
     url(r'^asset_edit/', asset.asset_edit, name='asset_edit'),
     url(r'^asset_save/', asset.asset_save, name='asset_save'),
+    url(r'^asset_group/', asset.asset_group, name='asset_group'),
     url(r'^idc/', idc.idc, name='idc'),
     url(r'^idc_add/', idc.idc_add, name='idc_add'),
     url(r'^idc_add_mini/', idc.idc_add_mini, name='idc_add_mini'),

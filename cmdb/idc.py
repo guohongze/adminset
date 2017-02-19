@@ -80,6 +80,7 @@ def idc_save(request):
         contact = request.POST.get('contact')
         contact_phone = request.POST.get('contact_phone')
         jigui = request.POST.get('jigui')
+        ip_range = request.POST.get('ip_range')
         bandwidth = request.POST.get('bandwidth')
         idc_item = Idc.objects.get(id=idc_id)
         idc_item.name = name
@@ -88,6 +89,7 @@ def idc_save(request):
         idc_item.contact = contact
         idc_item.contact_phone = contact_phone
         idc_item.jigui = jigui
+        idc_item.ip_range = ip_range
         idc_item.bandwidth = bandwidth
         idc_item.save()
         obj = idc_item

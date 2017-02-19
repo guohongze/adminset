@@ -23,17 +23,21 @@ class AssetForm(forms.ModelForm):
         model = Host
         exclude = ("id",)
         widgets = {
-            'hostname': TextInput(attrs={'class': 'form-control', 'style': 'width:250px;'}),
-            'ip': TextInput(attrs={'class': 'form-control', 'style': 'width:250px;'}),
-            'group': TextInput(attrs={'class': 'form-control', 'style': 'width:250px;'}),
-            'os': TextInput(attrs={'class': 'form-control', 'style': 'width:250px;'}),
-            'vendor': TextInput(attrs={'class': 'form-control', 'style': 'width:250px;'}),
-            'cpu_model': TextInput(attrs={'class': 'form-control', 'style': 'width:250px;'}),
-            'cpu_num': TextInput(attrs={'class': 'form-control', 'style': 'width:250px;'}),
-            'memory': TextInput(attrs={'class': 'form-control', 'style': 'width:250px;'}),
-            'disk': TextInput(attrs={'class': 'form-control', 'style': 'width:250px;'}),
-            'sn': TextInput(attrs={'class': 'form-control', 'style': 'width:250px;'}),
-            'idc': Select(attrs={'class': 'form-control', 'style': 'width:250px;'}),
+            'hostname': TextInput(attrs={'class': 'form-control', 'style': 'width:350px;', 'placeholder': u'必填项'}),
+            'ip': TextInput(attrs={'class': 'form-control', 'style': 'width:350px;', 'placeholder': u'必填项'}),
+            'other_ip': TextInput(attrs={'class': 'form-control', 'style': 'width:350px;'}),
+            'host_type': TextInput(attrs={'class': 'form-control', 'style': 'width:350px;', 'placeholder': u'物理机/虚机/容器'}),
+            'group': TextInput(attrs={'class': 'form-control', 'style': 'width:350px;', 'placeholder': u'备注'}),
+            'os': TextInput(attrs={'class': 'form-control', 'style': 'width:350px;'}),
+            'vendor': TextInput(attrs={'class': 'form-control', 'style': 'width:350px;'}),
+            'cpu_model': TextInput(attrs={'class': 'form-control', 'style': 'width:350px;'}),
+            'cpu_num': TextInput(attrs={'class': 'form-control', 'style': 'width:350px;'}),
+            'memory': TextInput(attrs={'class': 'form-control', 'style': 'width:350px;'}),
+            'disk': TextInput(attrs={'class': 'form-control', 'style': 'width:350px;'}),
+            'sn': TextInput(attrs={'class': 'form-control', 'style': 'width:350px;'}),
+            'idc': Select(attrs={'class': 'form-control', 'style': 'width:350px;'}),
+            'position': TextInput(attrs={'class': 'form-control', 'style': 'width:350px;', 'placeholder': u'物理机写位置，虚机写宿主'}),
+            'memo': TextInput(attrs={'class': 'form-control', 'style': 'width:350px;'}),
         }
 
 
@@ -54,11 +58,11 @@ class IdcForm(forms.ModelForm):
         exclude = ("id",)
 
         widgets = {
-            'name': TextInput(attrs={'style': 'width:250px;'}),
-            'address': TextInput(attrs={'style': 'width:250px;'}),
-            'tel': TextInput(attrs={'style': 'width:250px;'}),
-            'contact': TextInput(attrs={'style': 'width:250px;'}),
-            'contact_phone': TextInput(attrs={'style': 'width:250px;'}),
-            'jigui': TextInput(attrs={'style': 'width:250px;'}),
-            'bandwidth': TextInput(attrs={'style': 'width:250px;'}),
+            'name': TextInput(attrs={'style': 'width:350px;'}),
+            'address': TextInput(attrs={'style': 'width:350px;'}),
+            'tel': TextInput(attrs={'style': 'width:350px;'}),
+            'contact': TextInput(attrs={'style': 'width:350px;'}),
+            'contact_phone': TextInput(attrs={'style': 'width:350px;'}),
+            'jigui': TextInput(attrs={'style': 'width:350px;'}),
+            'bandwidth': TextInput(attrs={'style': 'width:350px;'}),
         }

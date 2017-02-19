@@ -49,11 +49,11 @@
                                 <input type="checkbox" onclick="checkAll(this, 'item1');" />
                             </th>
                                     <th>主机名</th>
-                                    <th>IP</th>
+                                    <th>管理IP</th>
                                     <th>属组</th>
+                                    <th>设备类型</th>
                                     <th>CPU</th>
-                                    <th>内存</th>
-                                    <th>硬盘</th>
+                                    <th>内存(G)</th>
                                     <th>机房</th>
                                 </tr>
                             </thead>
@@ -65,9 +65,9 @@
                                         <td><a href="#"><li style="list-style-type:none" onclick="return tanchu(this.value)" value="{{ host.id }}"> {{ host.hostname }}</li></a></td>
                                         <td>{{ host.ip }}</td>
                                         <td>{{ host.group }}</td>
+                                        <td>{{ host.host_type }}</td>
                                         <td>{{ host.cpu_num }}</td>
                                         <td>{{ host.memory }}</td>
-                                        <td>{{ host.disk }}</td>
                                         <td>{{ host.idc }}</td>
                                     </tr>
                                 {% endfor %}

@@ -54,8 +54,11 @@
       <form action="{% url 'asset_add' %}" method="post">
         {% csrf_token %}
         {{ a_form.as_p }}
-        <input type="submit" class="btn btn-primary" style="width: 60pt" value="提交">&nbsp;&nbsp;&nbsp;&nbsp;
-        <li  id="idc_add" class="btn btn-success" style="width: 60pt" >机房 <i class="fa fa-plus-circle"></i></li><br>
+        <input type="submit" class="btn btn-primary" style="width: 60pt" value="提交">&nbsp;&nbsp;
+        <a href="{% url 'cmdb' %}"> <li class="btn btn-primary" style="width: 60pt">返回</li></a>
+        &nbsp;&nbsp;<li  id="idc_add" class="btn btn-success" style="width: 60pt" >机房 <i class="fa fa-plus-circle"></i></li>
+
+          <br>
       </form>
         </div>
         <!-- /.box-body -->
