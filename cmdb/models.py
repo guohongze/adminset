@@ -1,7 +1,24 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
+
 from __future__ import unicode_literals
 from django.db import models
+
+
+ASSET_STATUS = (
+    (1, u"使用中"),
+    (2, u"未使用"),
+    (3, u"维修中"),
+    (3, u"其它"),
+    )
+
+ASSET_TYPE = (
+    (1, u"物理机"),
+    (2, u"虚拟机"),
+    (3, u"容器"),
+    (4, u"网络设备"),
+    (5, u"其他")
+    )
 
 
 class UserInfo(models.Model):
@@ -30,34 +47,34 @@ class Idc(models.Model):
         verbose_name_plural = verbose_name
 
 
+class HostGroup(models.Model):
+    name = models.CharField(u"组名", max_length=30, unique=True)
+    desc = models.CharField(u"描述", max_length=100, null=True, blank=True)
+
+    def __unicode__(self):
+        return self.name
+
+
 class Host(models.Model):
     hostname = models.CharField(max_length=50, verbose_name=u"主机名")
     ip = models.GenericIPAddressField(u"管理IP", max_length=15)
     other_ip = models.CharField(u"其它IP", max_length=100, null=True, blank=True)
-    host_type = models.CharField(u"设备类型", max_length=50, null=True, blank=True)
-    group = models.CharField(u"设备组", max_length=30,null=True, blank=True)
+    group = models.ForeignKey(HostGroup, verbose_name=u"设备组", on_delete=models.SET_NULL, null=True, blank=True)
+    asset_type = models.CharField(u"设备类型", choices=ASSET_TYPE, max_length=30, null=True, blank=True)
+    status = models.CharField(u"设备状态", choices=ASSET_STATUS, max_length=30, null=True, blank=True)
     os = models.CharField(u"操作系统", max_length=50, null=True, blank=True)
     vendor = models.CharField(u"设备厂商", max_length=30, null=True, blank=True)
     cpu_model = models.CharField(u"CPU型号", max_length=100, null=True, blank=True)
     cpu_num = models.CharField(u"CPU数量", max_length=100, null=True, blank=True)
-    memory = models.IntegerField(u"内存大小", null=True, blank=True)
+    memory = models.CharField(u"内存大小", max_length=30, null=True, blank=True)
     disk = models.CharField(u"硬盘信息", max_length=255, null=True, blank=True)
     sn = models.CharField(u"SN号 码", max_length=60, blank=True)
-    idc = models.ForeignKey(Idc, verbose_name=u"所在机房", null=True, blank=True)
+    idc = models.ForeignKey(Idc, verbose_name=u"所在机房", on_delete=models.SET_NULL, null=True, blank=True)
     position = models.CharField(u"所在位置", max_length=100, null=True, blank=True)
     memo = models.TextField(u"备注信息", max_length=200, null=True, blank=True)
 
     def __unicode__(self):
         return self.hostname
-
-
-class HostGroup(models.Model):
-    name = models.CharField(u"组名", max_length=30)
-    members = models.ManyToManyField(Host, verbose_name=u"组成员")
-    desc = models.CharField(u"描述", max_length=100, null=True, blank=True)
-
-    def __unicode__(self):
-        return self.name
 
 
 class IpSource(models.Model):

@@ -33,11 +33,11 @@
 
     <!-- Main content -->
     <section class="content">
-        <form action="{% url 'idc_del' %}" method="post">
+        <form action="{% url 'group_del' %}" method="post">
             <div class="box">
                 <div class="box-header">
                     <div class="btn-group">
-						 <a href="{% url 'idc_add' %}"><li class="btn btn-success" ><b>添加机房</b></li></a>
+						 <a href="{% url 'group_add' %}"><li class="btn btn-success" ><b>添加组</b></li></a>
                   </div>
                 </div>
                 <!-- /.box-header -->
@@ -48,29 +48,19 @@
                             <th>
                                 <input type="checkbox" onclick="checkAll(this, 'item1');" />
                             </th>
-                                    <th>机房名称</th>
-                                    <th>机房地址</th>
-                                    <th>机房电话</th>
-                                    <th>客户经理</th>
-                                    <th>移动电话</th>
-                                    <th>机柜信息</th>
-                                    <th>IP范围</th>
-                                    <th>接入带宽</th>
+                                    <th>组名</th>
+                                    <th>描述</th>
+                                    <th>成员</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {% if idc_info %}
-                                {% for idc in idc_info %}
+                                {% if group_info %}
+                                {% for g in group_info %}
                                     <tr class="even gradeA">
-                                        <td><input type="checkbox" id="u_id" class="item1" value="{{ idc.id }}" name="idc_check" /></td>
-                                        <td><a href="#"><li style="list-style-type:none" onclick="return tanchu(this.value)" value="{{ idc.id }}"> {{ idc.name }}</li></a></td>
-                                        <td>{{ idc.address }}</td>
-                                        <td>{{ idc.tel }}</td>
-                                        <td>{{ idc.contact }}</td>
-                                        <td>{{ idc.contact_phone }}</td>
-                                        <td>{{ idc.jigui }}</td>
-                                        <td>{{ idc.ip_range }}</td>
-                                        <td>{{ idc.bandwidth }}</td>
+                                        <td><input type="checkbox" id="u_id" class="item1" value="{{ g.id }}" name="g_check" /></td>
+                                        <td><a href="#"><li style="list-style-type:none" onclick="return tanchu(this.value)" value="{{ g.id }}"> {{ g.name }}</li></a></td>
+                                        <td>{{ g.desc }}</td>
+                                        <td>{{ g.members }}</td>
                                     </tr>
                                 {% endfor %}
                                 {% else %}
@@ -130,7 +120,7 @@ function tanchu(n){
   title: '机房信息修改',
   area: ['600px', '450px'],
   shadeClose: true, //点击遮罩关闭
-  content: ['/cmdb/idc_edit?idcid=' + n,],
+  content: ['/cmdb/group_edit?gid=' + n,],
   end:function(){
         var handle_status = $("#handle_status").val();
         if ( handle_status == '1' ) {

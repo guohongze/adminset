@@ -2,8 +2,9 @@
 # -*- coding: utf-8 -*-
 
 from forms import AssetForm
-from django.shortcuts import render_to_response
-from models import Host, Idc, HostGroup
+from django.shortcuts import render_to_response, redirect
+from models import Host, Idc, HostGroup, ASSET_STATUS, ASSET_TYPE
+from api import get_object
 
 
 def asset_add(request):
@@ -31,16 +32,21 @@ def asset_del(request):
         if asset_items:
             for n in asset_items:
                 Host.objects.filter(id=n).delete()
-    host_list = Host.objects.all()
-    return render_to_response("cmdb/index.html", locals())
+    #host_list = Host.objects.all()
+    return redirect("/cmdb", locals())
 
 
 def asset_edit(request):
+    asset_id = request.GET.get('hostid', '')
+    asset = get_object(Host, id=asset_id)
+    af = AssetForm(instance=asset)
     temp_name = "cmdb/cmdb-header.html"
     if request.method == 'GET':
         hostid = request.GET.get("hostid")
         obj = Host.objects.get(id=hostid)
         allidc = Idc.objects.all()
+        allgroup = HostGroup.objects.all()
+        asset_types = ASSET_TYPE
     return render_to_response("cmdb/asset_edit.html", locals())
 
 
@@ -51,8 +57,9 @@ def asset_save(request):
         hostname = request.POST.get('hostname')
         ip = request.POST.get('ip')
         other_ip = request.POST.get('other_ip')
-        host_type = request.POST.get('host_type')
         group = request.POST.get('group')
+        asset_type = request.POST.get('asset_type')
+        status = request.POST.get('status')
         os = request.POST.get('os')
         vendor = request.POST.get('vendor')
         cpu_model = request.POST.get('cpu_model')
@@ -67,12 +74,14 @@ def asset_save(request):
         h_item.hostname = hostname
         h_item.ip = ip
         h_item.other_ip = other_ip
-        h_item.host_type = host_type
-        h_item.group = group
+        h_item.group_id = group
+        h_item.asset_type = asset_type
+        h_item.status = status
         h_item.os = os
         h_item.vendor = vendor
         h_item.cpu_model = cpu_model
         h_item.cpu_num = cpu_num
+        h_item.memory = memory
         h_item.disk = disk
         h_item.sn = sn
         h_item.idc_id = idc
@@ -88,5 +97,21 @@ def asset_save(request):
 
 def asset_group(request):
     temp_name = "cmdb/cmdb-header.html"
-    group_list = HostGroup.objects.all()
+    group_info = HostGroup.objects.all()
     return render_to_response('cmdb/group.html', locals())
+
+
+def group_del(request):
+    pass
+
+
+def group_add(request):
+    pass
+
+
+def group_edit(request):
+    pass
+
+
+def group_save(request):
+    pass

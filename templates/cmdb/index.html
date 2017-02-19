@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load mytags %}
 {% block self_head_css_js %}
     <script src="/static/layer/layer.js"></script>
 {% endblock %}
@@ -33,13 +34,67 @@
 
     <!-- Main content -->
     <section class="content">
-        <form action="{% url 'asset_del' %}" method="post">
+        <form action="{% url 'asset_del' %}" method="post" id="asset_form">
             <div class="box">
                 <div class="box-header">
-                    <div class="btn-group">
+                    <div class="col-sm-3" style="padding-left: 0">
 						 <a href="{% url 'asset_add' %}"><li class="btn btn-success" ><b>添加主机</b></li></a>
                   </div>
+                <div class="col-sm-7" style="padding-left: 0px">
+                            <label>
+                                <select name="idc" class="form-control m-b input-sm" onchange="change_info()">
+                                    <option value="">机房</option>
+                                    {% for idc in idc_info %}
+                                        {% ifequal idc.name idc_name %}
+                                            <option value="{{idc.name}}" selected> {{ idc.name|slice:":20" }}</option>
+                                        {% else %}
+                                            <option value="{{idc.name}}"> {{ idc.name|slice:":20" }}</option>
+                                        {% endifequal %}
+                                    {% endfor %}
+                                </select>
+                            </label>
+
+                            <label>
+                                <select name="group" class="form-control m-b input-sm" onchange="change_info()">
+                                    <option value="">主机组</option>
+                                    {% for asset_group in group_info %}
+                                        {% ifequal asset_group.name group_name %}
+                                            <option value="{{ asset_group.name }}" selected> {{ asset_group.name|slice:":20" }} </option>
+                                        {% else %}
+                                            <option value="{{ asset_group.name }}"> {{ asset_group.name|slice:":20" }} </option>
+                                        {% endifequal %}
+                                    {% endfor %}
+                                </select>
+                            </label>
+
+                            <label>
+                                <select name="asset_type" class="form-control m-b input-sm" onchange="change_info()">
+                                    <option value="">资产类型</option>
+                                    {% for type in asset_types %}
+                                        {% ifequal type.0|int2str asset_type %}
+                                            <option value="{{ type.0 }}" selected> {{ type.1 }}</option>
+                                        {% else %}
+                                            <option value="{{ type.0 }}"> {{ type.1 }}</option>
+                                        {% endifequal %}
+                                    {% endfor %}
+                                </select>
+                            </label>
+
+                            <label>
+                                <select name="status" class="form-control m-b input-sm" onchange="change_info()">
+                                    <option value="">资产状态</option>
+                                    {% for s in asset_status %}
+                                        {% ifequal s.0|int2str status %}
+                                            <option value="{{ s.0 }}" selected> {{ s.1 }}</option>
+                                        {% else %}
+                                            <option value="{{ s.0 }}"> {{ s.1 }}</option>
+                                        {% endifequal %}
+                                    {% endfor %}
+                                </select>
+                            </label>
+                        </div>
                 </div>
+
                 <!-- /.box-header -->
                 <div class="box-body">
                   <table class="table table-striped table-bordered" id="dataform">
@@ -51,29 +106,23 @@
                                     <th>主机名</th>
                                     <th>管理IP</th>
                                     <th>属组</th>
-                                    <th>设备类型</th>
                                     <th>CPU</th>
                                     <th>内存(G)</th>
                                     <th>机房</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {% if host_list %}
-                                {% for host in host_list %}
+                                {% for host in assets.object_list %}
                                     <tr class="even gradeA">
                                         <td><input type="checkbox" id="u_id" class="item1" value="{{ host.id }}" name="host_check" /></td>
                                         <td><a href="#"><li style="list-style-type:none" onclick="return tanchu(this.value)" value="{{ host.id }}"> {{ host.hostname }}</li></a></td>
                                         <td>{{ host.ip }}</td>
                                         <td>{{ host.group }}</td>
-                                        <td>{{ host.host_type }}</td>
                                         <td>{{ host.cpu_num }}</td>
                                         <td>{{ host.memory }}</td>
                                         <td>{{ host.idc }}</td>
                                     </tr>
                                 {% endfor %}
-                                {% else %}
-                                    <p>No Item are available.</p>
-                                {% endif %}
                             </tbody>
                   </table>
                     <div class="btn-group">
@@ -150,5 +199,17 @@ function tanchu(n){
         }
   });
 }
+</script>
+<script>
+    function change_info(){
+        var args = $("#asset_form").serialize();
+        window.location = "{% url 'cmdb' %}?" + args
+    }
+
+    $("#search_input").keydown(function(e) {
+        if (e.keyCode == 13) {
+            change_info()
+        }
+        });
 </script>
 {% endblock %}
