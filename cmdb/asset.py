@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from forms import AssetForm
-from django.shortcuts import render_to_response, redirect
+from django.shortcuts import render_to_response, redirect, HttpResponse
 from models import Host, Idc, HostGroup, ASSET_STATUS, ASSET_TYPE
 from api import get_object
 
@@ -25,15 +25,33 @@ def asset_add(request):
         return render_to_response("cmdb/asset_add.html", locals())
 
 
+# def asset_del(request):
+#     temp_name = "cmdb/cmdb-header.html"
+#     print request
+#     if request.method == 'POST':
+#         asset_items = request.POST.getlist('host_check', [])
+#         if asset_items:
+#             for n in asset_items:
+#                 Host.objects.filter(id=n).delete()
+#     #host_list = Host.objects.all()
+#     return redirect("/cmdb", locals())
+
+
 def asset_del(request):
-    temp_name = "cmdb/cmdb-header.html"
+    asset_id = request.GET.get('id', '')
+    if asset_id:
+        Host.objects.filter(id=asset_id).delete()
+
     if request.method == 'POST':
-        asset_items = request.POST.getlist('host_check', [])
-        if asset_items:
-            for n in asset_items:
-                Host.objects.filter(id=n).delete()
-    #host_list = Host.objects.all()
-    return redirect("/cmdb", locals())
+        asset_batch = request.GET.get('arg', '')
+        asset_id_all = str(request.POST.get('asset_id_all', ''))
+
+        if asset_batch:
+            for asset_id in asset_id_all.split(','):
+                asset = get_object(Host, id=asset_id)
+                asset.delete()
+
+    return HttpResponse(u'删除成功')
 
 
 def asset_edit(request):
