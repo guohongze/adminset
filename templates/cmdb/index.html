@@ -14,9 +14,8 @@
         var box = document.getElementById("sidebar-menu");
         var allLi=box.getElementsByTagName("li");
         allLi[n].className="active";
-        var box = document.getElementById("navbar-collapse");
-        var ali=box.getElementsByTagName("li");
-        ali[n-2].className="active";
+        var box = document.getElementById("cmdb");
+        box.className="active";
     }
 </script>
 
@@ -123,6 +122,7 @@
                                     <th>CPU</th>
                                     <th>内存(G)</th>
                                     <th>机房</th>
+                                    <th class="text-center">功能</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -135,6 +135,11 @@
                                         <td>{{ host.cpu_num }}</td>
                                         <td>{{ host.memory }}</td>
                                         <td>{{ host.idc }}</td>
+                                        <td class="text-center" data-editable='false'>
+{#                                        <a href="{% url 'asset_edit' %}?id={{ host.id }}" class="btn btn-xs btn-info">编辑</a>#}
+                                        <a href="#"><li class="btn btn-sm btn-info" onclick="return tanchu(this.value)" value="{{ host.id }}">编辑</li></a>
+                                        <a value="{% url 'asset_del' %}?id={{ host.id }}" class="btn btn-sm btn-danger asset_del">删除</a>
+                                    </td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
@@ -179,7 +184,7 @@ function tanchu(n){
     type: 2,
     title: '修改主机信息',
     closeBtn: 1,
-    area: ['600px', '450px'],
+    area: ['700px', '550px'],
     shadeClose: true, //点击遮罩关闭
     content: ['/cmdb/asset_edit?hostid=' + n,],
     end:function(){

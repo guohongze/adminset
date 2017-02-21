@@ -12,7 +12,7 @@
         var box = document.getElementById("sidebar-menu");
         var allLi=box.getElementsByTagName("li");
         allLi[n].className="active";
-        var box = document.getElementById("idc");
+        var box = document.getElementById("group");
         box.className="active";
     }
 </script>
@@ -42,11 +42,11 @@
         <div class="box-header with-border">
         </div>
         <div class="box-body">
-      <form action="{% url 'idc_add' %}" method="post">
+      <form action="{% url 'group_add' %}" method="post">
         {% csrf_token %}
-        {{ idc_form.as_p }}
+        {{ group_form.as_p }}
         <input type="submit" class="btn btn-primary" style="width: 60pt" value="提交">&nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="{% url 'idc' %}"><li style="width: 60pt" class="btn btn-primary" value="">返回</li></a><br>
+        <a href="{% url 'group' %}"><li style="width: 60pt" class="btn btn-primary" value="">返回</li></a><br>
           </form>
         </div>
         <!-- /.box-body -->

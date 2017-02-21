@@ -89,10 +89,12 @@ def cmdb_index(request):
                 if h.asset_type:
                     at_num = int(h.asset_type)
                     a_type = ASSET_TYPE[at_num-1][1]
+                else:
+                    a_type = ""
+                if h.status:
                     at_as = int(h.status)
                     a_status = ASSET_STATUS[at_as-1][1]
                 else:
-                    a_type = ""
                     a_status = ""
                 writer.writerow([str2gb(h.hostname), h.ip, h.other_ip, str2gb(h.group), str2gb(a_type), str2gb(a_status), str2gb(h.os), str2gb(h.vendor), str2gb(h.cpu_model), str2gb(h.cpu_num), str2gb(h.memory), str2gb(h.disk), str2gb(h.sn), str2gb(h.idc), str2gb(h.position), str2gb(h.memo)])
             return response
@@ -109,10 +111,12 @@ def cmdb_index(request):
             if h.asset_type:
                 at_num = int(h.asset_type)
                 a_type = ASSET_TYPE[at_num-1][1]
+            else:
+                a_type = ""
+            if h.status:
                 at_as = int(h.status)
                 a_status = ASSET_STATUS[at_as-1][1]
             else:
-                a_type = ""
                 a_status = ""
             writer.writerow([str2gb(h.hostname), h.ip, h.other_ip, str2gb(h.group), str2gb(a_type), str2gb(a_status), str2gb(h.os), str2gb(h.vendor), str2gb(h.cpu_model), str2gb(h.cpu_num), str2gb(h.memory), str2gb(h.disk), str2gb(h.sn), str2gb(h.idc), str2gb(h.position), str2gb(h.memo)])
         return response

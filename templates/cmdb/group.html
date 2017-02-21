@@ -12,9 +12,8 @@
         var box = document.getElementById("sidebar-menu");
         var allLi=box.getElementsByTagName("li");
         allLi[n].className="active";
-        var box = document.getElementById("navbar-collapse");
-        var ali=box.getElementsByTagName("li");
-        ali[n-2].className="active";
+        var box = document.getElementById("group");
+        box.className="active";
     }
 </script>
 
@@ -54,8 +53,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {% if group_info %}
-                                {% for g in group_info %}
+                                {% if allgroup %}
+                                {% for g in allgroup %}
                                     <tr class="even gradeA">
                                         <td><input type="checkbox" id="u_id" class="item1" value="{{ g.id }}" name="g_check" /></td>
                                         <td><a href="#"><li style="list-style-type:none" onclick="return tanchu(this.value)" value="{{ g.id }}"> {{ g.name }}</li></a></td>
@@ -69,7 +68,7 @@
                             </tbody>
                   </table>
                     <div class="btn-group">
-						 <button class="btn btn-danger" style="width: 60pt;font-size: medium" onclick="return checkSubmit()"><b>删除</b></button>
+						 <button class="btn btn-danger " onclick="return checkSubmit()"><b>删除组</b></button>
                     </div>
                 </div>
             </div>
@@ -120,7 +119,7 @@ function tanchu(n){
   title: '机房信息修改',
   area: ['600px', '450px'],
   shadeClose: true, //点击遮罩关闭
-  content: ['/cmdb/group_edit?gid=' + n,],
+  content: ['/cmdb/group_edit?id=' + n,],
   end:function(){
         var handle_status = $("#handle_status").val();
         if ( handle_status == '1' ) {

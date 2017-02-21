@@ -25,18 +25,6 @@ def asset_add(request):
         return render_to_response("cmdb/asset_add.html", locals(), context_instance=RequestContext(request))
 
 
-# def asset_del(request):
-#     temp_name = "cmdb/cmdb-header.html"
-#     print request
-#     if request.method == 'POST':
-#         asset_items = request.POST.getlist('host_check', [])
-#         if asset_items:
-#             for n in asset_items:
-#                 Host.objects.filter(id=n).delete()
-#     #host_list = Host.objects.all()
-#     return redirect("/cmdb", locals())
-
-
 def asset_del(request):
     asset_id = request.GET.get('id', '')
     if asset_id:
@@ -55,6 +43,8 @@ def asset_del(request):
 
 
 def asset_edit(request):
+    #传参给layui script避免一个status为空的报错
+    status = 0
     asset_id = request.GET.get('hostid', '')
     asset = get_object(Host, id=asset_id)
     af = AssetForm(instance=asset)
@@ -62,8 +52,6 @@ def asset_edit(request):
     if request.method == 'GET':
         hostid = request.GET.get("hostid")
         obj = Host.objects.get(id=hostid)
-        allidc = Idc.objects.all()
-        allgroup = HostGroup.objects.all()
         asset_types = ASSET_TYPE
     return render_to_response("cmdb/asset_edit.html", locals())
 
@@ -107,11 +95,31 @@ def asset_save(request):
         h_item.memo = memo
         h_item.save()
         obj = h_item
+        #传参给lyaui以触发回调
         status = 1
     else:
         status = 2
     return render_to_response("cmdb/asset_edit.html", locals())
 
+
+# def asset_save(request):
+#     temp_name = "cmdb/cmdb-header.html"
+#     if request.method == "POST":
+#         a_form = AssetForm(request.POST)
+#         if a_form.is_valid():
+#             a_form.save()
+#             tips = u"成功！"
+#             display_control = ""
+#             status = 1
+#         else:
+#         #     tips = u"失败！"
+#         #     display_control = ""
+#         #     status = 2
+#         return render_to_response("cmdb/asset_edit.html", locals(), context_instance=RequestContext(request))
+#     else:
+#         display_control = "none"
+#         a_form = AssetForm()
+#         return render_to_response("cmdb/asset_edit.html", locals(), context_instance=RequestContext(request))
 
 def asset_group(request):
     temp_name = "cmdb/cmdb-header.html"
