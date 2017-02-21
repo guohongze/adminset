@@ -38,10 +38,10 @@
         <form action="" method="post" id="asset_form">
             <div class="box">
                 <div class="box-header">
-                    <div class="col-sm-3" style="padding-left: 0">
-						 <a href="{% url 'asset_add' %}"><li class="btn btn-success" ><b>添加主机</b></li></a>
+                    <div class="col-sm-1" style="padding-left: 0">
+						 <a href="{% url 'asset_add' %}"><li class="btn btn-success" ><b>添加设备</b></li></a>
                   </div>
-                <div class="col-sm-7" style="padding-left: 0px">
+                <div class="col-sm-5" style="padding-left: 0px">
                             <label>
                                 <select name="idc" class="form-control m-b input-sm" onchange="change_info()">
                                     <option value="">机房</option>
@@ -70,7 +70,7 @@
 
                             <label>
                                 <select name="asset_type" class="form-control m-b input-sm" onchange="change_info()">
-                                    <option value="">资产类型</option>
+                                    <option value="">设备类型</option>
                                     {% for type in asset_types %}
                                         {% ifequal type.0|int2str asset_type %}
                                             <option value="{{ type.0 }}" selected> {{ type.1 }}</option>
@@ -83,7 +83,7 @@
 
                             <label>
                                 <select name="status" class="form-control m-b input-sm" onchange="change_info()">
-                                    <option value="">资产状态</option>
+                                    <option value="">设备状态</option>
                                     {% for s in asset_status %}
                                         {% ifequal s.0|int2str status %}
                                             <option value="{{ s.0 }}" selected> {{ s.1 }}</option>
@@ -94,6 +94,19 @@
                                 </select>
                             </label>
                         </div>
+                    <div class="col-sm-4" style="padding-right: 0;">
+                             <div class="input-group inline-group padding-right: 10px">
+                                <input type="text" class="form-control m-b " id="search_input" name="keyword" value="{{ keyword }}" placeholder="Search">
+                                <input type="text" style="display: none">
+                                <div class="input-group-btn ">
+                                    <button id='search_btn' href="{% url 'cmdb' %}?search=true" type="button" class="btn btn-primary "  onclick="change_info()">
+                                        <b>&nbsp;搜索&nbsp;</b>
+                                    </button>
+                                    <a href="#" onclick="return export_excel()"><li name="export" class="btn btn-success search-btn-excel"><b>&nbsp;导出&nbsp;</b></li></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="export"></div>
                 </div>
 
                 <!-- /.box-header -->
@@ -127,7 +140,7 @@
                             </tbody>
                   </table>
                     <div class="btn-group">
-                        <input type="button" id="asset_del" class="btn btn-danger" style="width: 60pt;font-size: medium"  name="del_button" value="删除"/>
+                        <input type="button" id="asset_del" class="btn btn-danger"   name="del_button" value="删除设备"/>
                     </div>
                 </div>
             </div>
@@ -146,7 +159,7 @@
     $('#dataform').DataTable({
       "paging": true,
       "lengthChange": true,
-      "searching": true,
+      "searching": false,
       "ordering": true,
       "info": true,
       "autoWidth": true
@@ -196,6 +209,20 @@ function tanchu(n){
         window.location = "{% url 'cmdb' %}?" + args
     }
 
+    function export_excel(){
+        var asset_id_all = getIDall();
+        if (asset_id_all == ''){
+            if(confirm('您没有勾选，是否导出全部信息？')){
+                var args = $("#asset_form").serialize();
+                window.location = "{% url 'cmdb' %}?export=all&" + args
+                }else{
+                    return false;
+                }
+            }else{
+                var args = $("#asset_form").serialize();
+                window.location = "{% url 'cmdb' %}?export=true&" + args
+            }
+    }
     $("#search_input").keydown(function(e) {
         if (e.keyCode == 13) {
             change_info()
@@ -216,7 +243,6 @@ function tanchu(n){
                 )
             }
         });
-
 
     $('#asset_del').click(function () {
         var asset_id_all = getIDall();
