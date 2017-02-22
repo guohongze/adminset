@@ -31,25 +31,14 @@
       <ul class="sidebar-menu" id="sidebar-menu">
 {#        <li class="header">HEADER</li>#}
         <!-- Optionally, you can add icons to the links -->
-        <li><a href="{% url 'index' %}"><i class="fa fa-dashboard"></i> <span>Dashbord</span></a></li>
+        <li><a href="{% url 'index' %}"><i class="fa fa-dashboard"></i> <span>首页面板</span></a></li>
         <li><a href="{% url 'navi' %}"><i class="fa fa-link"></i> <span>站点导航</span></a></li>
         <li><a href="{% url 'cmdb' %}"><i class="fa fa-database"></i> <span>资产管理</span></a></li>
-        <li><a href="#"><i class="fa fa-cogs"></i> <span>Ansible</span></a></li>
-        <li><a href="#"><i class="fa fa-file-code-o"></i> <span>Shell</span></a></li>
-        <li><a href="#"><i class="fa fa-television"></i> <span>Monitor</span></a></li>
-        <li><a href="#"><i class="fa fa-file-text-o"></i> <span>Scripts</span></a></li>
-        <li><a href="#"><i class="fa fa-users"></i> <span>Contacts</span></a></li>
-        <li class="treeview">
-          <a href="#"><i class="fa fa-cog"></i> <span>Configration</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="#">Link in level 2</a></li>
-            <li><a href="#">Link in level 2</a></li>
-          </ul>
-        </li>
+        <li><a href="{% url 'ansible' %}"><i class="fa fa-cogs"></i> <span>运维任务</span></a></li>
+        <li><a href="#"><i class="fa fa-file-code-o"></i> <span>自动部署</span></a></li>
+        <li><a href="#"><i class="fa fa-television"></i> <span>监控平台</span></a></li>
+        <li><a href="#"><i class="fa fa-file-text-o"></i> <span>文件管理</span></a></li>
+        <li><a href="#"><i class="fa fa fa-cog"></i> <span>系统配置</span></a></li>
       </ul>
       <!-- /.sidebar-menu -->
     </section>

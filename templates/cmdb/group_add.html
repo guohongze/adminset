@@ -45,13 +45,14 @@
       <form action="{% url 'group_add' %}" method="post">
         {% csrf_token %}
         {{ group_form.as_p }}
+          <!-- onclick="CheckChinese('test',this.value)" -->
         <input type="submit" class="btn btn-primary" style="width: 60pt" value="提交">&nbsp;&nbsp;&nbsp;&nbsp;
         <a href="{% url 'group' %}"><li style="width: 60pt" class="btn btn-primary" value="">返回</li></a><br>
           </form>
         </div>
         <!-- /.box-body -->
         <div class="box-footer">
-          <i class="fa fa-info-circle"></i> 请勿重复添加条目
+          <i class="fa fa-info-circle"></i> 请勿重复添加条目,组名不要使用中文。
         </div>
         <!-- /.box-footer-->
       </div>
@@ -59,4 +60,15 @@
     </section>
 
   </div>
+<script language="javascript" type="text/javascript">
+  function CheckChinese(obj,val){
+　　var reg = new RegExp("[\\u4E00-\\u9FFF]+","g");
+　　if(reg.test(val)){
+       alert("不能输入汉字！");
+       var strObj = document.getElementById(obj);
+       strObj.value = "";
+       strObj.focus();
+　　}
+  }
+</script>
 {% endblock %}
