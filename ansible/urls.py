@@ -6,5 +6,5 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.ansible, name='ansible'),
-    url(r'^ansible_exec', views.ansible_exec, name='ansible_exec'),
+    url(r'^playbook', views.playbook, name='playbook'),
 ]

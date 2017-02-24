@@ -43,12 +43,12 @@
         </div>
         <!-- /.box-header -->
         <div class="box-body">
-         <form action="{% url 'ansible_exec' %}" method="post">
+         <form action="{% url 'playbook' %}" method="post">
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
                 <label>选择主机</label>
-                <select id="mserver" name="mserver" class="form-control select2" multiple="multiple" data-placeholder="选择主机" style="width: 100%;">
+                <select id="mserver" name="mserver" class="form-control select2" multiple="multiple" data-placeholder="选择主机(host)" style="width: 100%;">
                     {% for host in all_host %}
                         <option value="{{ host.hostname }}">{{ host.hostname }}</option>
                     {% endfor %}
@@ -56,39 +56,48 @@
               </div>
               <div class="form-group">
                 <label>选主机组</label>
-                <select id="mgroup" name="mgroup" class="form-control" multiple="multiple" data-placeholder="选择组" style="width: 100%;">
+                <select id="mgroup" name="mgroup" class="form-control" multiple="multiple" data-placeholder="选择组(group)" style="width: 100%;">
                     {% for group in all_group %}
                         <option value="{{ group.name }}">{{ group.name }}</option>
                     {% endfor %}
                 </select>
               </div>
               <div class="form-group">
-                <label>Playbook Roles</label>
-                <select id="mplaybook" name="mplaybook" class="form-control" multiple="multiple" data-placeholder="选择PlayBook" style="width: 100%;">
-                  <option value="Alabama">Alabama</option>
-                    <option value="Alabama1">Alabama1</option>
-                    <option value="Alabama2">Alabama2</option>
+                <label>Roles</label>
+                <select id="mplaybook" name="mplaybook" class="form-control" multiple="multiple" data-placeholder="Playbook Roles" style="width: 100%;">
+                    {% for dir in all_dir %}
+                        <option value="{{ dir }}">{{ dir}}</option>
+                    {% endfor %}
                 </select>
               </div>
               <div class="form-group">
-                <label>独立playbook</label>
-                <select id="splaybook" name="splaybook" class="form-control" multiple="multiple" data-placeholder="选择PlayBook" style="width: 100%;">
-                  <option value="Alabama">Alabama</option>
-                    <option value="Alabama1">Alabama1</option>
-                    <option value="Alabama2">Alabama2</option>
+                <label>Playbook</label>
+                <select id="splaybook" name="splaybook" class="form-control" multiple="multiple" data-placeholder="Playbook" style="width: 100%;">
+                    {% for file in all_pbook %}
+                        <option value="{{ file }}">{{ file}}</option>
+                    {% endfor %}
                 </select>
               </div>
               <!-- /.form-group -->
-              <div class="form-group ">
-                  <label>Ansible Command</label>
-                  <input onblur="checkBlur();" onfocus="checkFocus();" id="mcommand" name="mcommand" type="text" class="form-control" placeholder="Enter ...">
-                </div>
                   <input type="submit" onclick="return checkSubmit();" class="btn btn-primary" style="width: 60pt; font-size: medium;" value="执行">
                 <!-- /.form-group -->
             </div>
             <!-- /.col -->
+
+            <div class="col-md-6">
+              <div class="form-group">
+              <!-- /.form-group -->
+              <div class="form-group ">
+                  <label>Ansible Command</label>
+                  <textarea style="padding-bottom: 15px;" id="mcommand" name="mcommand" rows="11" class="form-control" placeholder="Enter entire ansible command like: ansible web -a 'ls'"></textarea>
+                </div>
+                  <input type="submit" onclick="return checkCommand();" class="btn btn-primary" style="width: 60pt; font-size: medium;" value="执行">
+                <!-- /.form-group -->
+            </div>
             <!-- /.col -->
           </div>
+          </div>
+
          </form>
           <!-- /.row -->
         </div>
@@ -97,7 +106,6 @@
             <ul id="events"></ul>
         </div>
       </div>
-
 
     </section>
         <!-- /.content -->
@@ -109,10 +117,10 @@
     $("#mserver").select2().on("select2:unselect", function () { $("#mgroup").prop("disabled", false); });
     $("#mgroup").select2().on("select2:select", function () { $("#mserver").prop("disabled", true); });
     $("#mgroup").select2().on("select2:unselect", function () { $("#mserver").prop("disabled", false); });
-    $("#mplaybook").select2().on("select2:select", function () { $("#mcommand,#splaybook").prop("disabled", true); });
-    $("#mplaybook").select2().on("select2:unselect", function () { $("#mcommand,#splaybook").prop("disabled", false); });
-    $("#splaybook").select2().on("select2:select", function () { $("#mcommand,#mplaybook").prop("disabled", true); });
-    $("#splaybook").select2().on("select2:unselect", function () { $("#mcommand,#mplaybook").prop("disabled", false); });
+    $("#mplaybook").select2().on("select2:select", function () { $("#splaybook").prop("disabled", true); });
+    $("#mplaybook").select2().on("select2:unselect", function () { $("#splaybook").prop("disabled", false); });
+    $("#splaybook").select2().on("select2:select", function () { $("#mplaybook").prop("disabled", true); });
+    $("#splaybook").select2().on("select2:unselect", function () { $("#mplaybook").prop("disabled", false); });
 
   });
 </script>
@@ -122,13 +130,25 @@
                     alert("请选目标服务器或组!");
                     return false;
                 }
-                if ($('#splaybook').val() == null && $('#mplaybook').val() == null && $('#mcommand').val() == "") {
-                    alert("请选要执行的Playbook或命令!");
+                if ($('#splaybook').val() == null && $('#mplaybook').val() == "") {
+                    alert("请选要执行的Roles或Playbook!");
                     return false;
                 }
                 var obj = $('#mserver').val() || $('#mgroup').val()
-                var act = $('#mplaybook').val() || $('#mcommand').val() || $('#splaybook').val()
+                var act = $('#mplaybook').val() || $('#splaybook').val()
                 if (!confirm("确定在"+obj+"上执行"+act+"？")) {
+                    window.event.returnValue = false;
+                }
+            }
+</script>
+<script>
+            function checkCommand() {
+                if ($('#mcommand').val() == "") {
+                    alert("请填写正确的ansible命令!");
+                    return false;
+                }
+                var obj = $('#mcommand').val()
+                if (!confirm("确定执行命令"+obj+"？")) {
                     window.event.returnValue = false;
                 }
             }
@@ -138,12 +158,16 @@ function checkBlur(){
     if ($('#mcommand').val() == "") {
         document.getElementById("mplaybook").removeAttribute('disabled')
         document.getElementById("splaybook").removeAttribute('disabled')
+        document.getElementById("mgroup").removeAttribute('disabled')
+        document.getElementById("mserver").removeAttribute('disabled')
     }
 
 }
 function checkFocus(){
     document.getElementById("mplaybook").setAttribute('disabled','disabled')
     document.getElementById("splaybook").setAttribute('disabled','disabled')
+    document.getElementById("mserver").setAttribute('disabled','disabled')
+    document.getElementById("mgroup").setAttribute('disabled','disabled')
 }
 </script>
 {% endblock %}
