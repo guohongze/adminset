@@ -13,3 +13,14 @@ def int2str(value):
     """
     return str(value)
 
+
+@register.filter(name='res_splict')
+def res_split(value):
+    """
+    将结果格式化换行
+    """
+    for v in value:
+        if v != None:
+            data = v.replace('|', '<br>')
+    return str(data)
+

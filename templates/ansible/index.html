@@ -34,8 +34,9 @@
     <section class="content">
       <div class="box box-default">
         <div class="box-header with-border">
-          <h3 class="box-title">Ansible执行</h3>
-
+            <div class="col-sm-2" style="padding-left: 0">
+                 <a href="#" onclick="return sync();"><li class="btn btn-success" ><b>同步数据</b></li></a>
+            </div>
           <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
@@ -43,9 +44,10 @@
         </div>
         <!-- /.box-header -->
         <div class="box-body">
-         <form action="{% url 'playbook' %}" method="post">
           <div class="row">
+
             <div class="col-md-6">
+            <form action="{% url 'playbook' %}" method="post">
               <div class="form-group">
                 <label>选择主机</label>
                 <select id="mserver" name="mserver" class="form-control select2" multiple="multiple" data-placeholder="选择主机(host)" style="width: 100%;">
@@ -79,26 +81,26 @@
                 </select>
               </div>
               <!-- /.form-group -->
-                  <input type="submit" onclick="return checkSubmit();" class="btn btn-primary" style="width: 60pt; font-size: medium;" value="执行">
+            <input type="submit" onclick="return checkSubmit();" class="btn btn-primary" style="width: 60pt; font-size: medium;" value="执行">
                 <!-- /.form-group -->
+            </form>
             </div>
             <!-- /.col -->
 
             <div class="col-md-6">
               <div class="form-group">
               <!-- /.form-group -->
+              <form action="{% url 'ansible_command' %}" method="post">
               <div class="form-group ">
                   <label>Ansible Command</label>
-                  <textarea style="padding-bottom: 15px;" id="mcommand" name="mcommand" rows="11" class="form-control" placeholder="Enter entire ansible command like: ansible web -a 'ls'"></textarea>
+                  <textarea style="padding-bottom: 15px;" id="mcommand" name="mcommand" rows="11" class="form-control" placeholder="use enter spilt and command like: ansible web -a 'ls'"></textarea>
                 </div>
                   <input type="submit" onclick="return checkCommand();" class="btn btn-primary" style="width: 60pt; font-size: medium;" value="执行">
                 <!-- /.form-group -->
+                  </form>
             </div>
             <!-- /.col -->
           </div>
-          </div>
-
-         </form>
           <!-- /.row -->
         </div>
         <!-- /.box-body -->
@@ -106,7 +108,7 @@
             <ul id="events"></ul>
         </div>
       </div>
-
+    </div>
     </section>
         <!-- /.content -->
       </div>
@@ -125,33 +127,33 @@
   });
 </script>
 <script>
-            function checkSubmit() {
-                if ($('#mserver').val() == null && $('#mgroup').val() == null) {
-                    alert("请选目标服务器或组!");
-                    return false;
-                }
-                if ($('#splaybook').val() == null && $('#mplaybook').val() == "") {
-                    alert("请选要执行的Roles或Playbook!");
-                    return false;
-                }
-                var obj = $('#mserver').val() || $('#mgroup').val()
-                var act = $('#mplaybook').val() || $('#splaybook').val()
-                if (!confirm("确定在"+obj+"上执行"+act+"？")) {
-                    window.event.returnValue = false;
-                }
-            }
+function checkSubmit() {
+    if ($('#mserver').val() == null && $('#mgroup').val() == null) {
+        alert("请选目标服务器或组!");
+        return false;
+    }
+    if ($('#splaybook').val() == null && $('#mplaybook').val() == "") {
+        alert("请选要执行的Roles或Playbook!");
+        return false;
+    }
+    var obj = $('#mserver').val() || $('#mgroup').val()
+    var act = $('#mplaybook').val() || $('#splaybook').val()
+    if (!confirm("确定在"+obj+"上执行"+act+"？")) {
+        window.event.returnValue = false;
+    }
+}
 </script>
 <script>
-            function checkCommand() {
-                if ($('#mcommand').val() == "") {
-                    alert("请填写正确的ansible命令!");
-                    return false;
-                }
-                var obj = $('#mcommand').val()
-                if (!confirm("确定执行命令"+obj+"？")) {
-                    window.event.returnValue = false;
-                }
-            }
+function checkCommand() {
+    if ($('#mcommand').val() == "") {
+        alert("请填写正确的ansible命令!");
+        return false;
+    }
+    var obj = $('#mcommand').val()
+    if (!confirm("确定执行命令"+obj+"？")) {
+        window.event.returnValue = false;
+    }
+}
 </script>
 <script>
 function checkBlur(){
@@ -161,7 +163,6 @@ function checkBlur(){
         document.getElementById("mgroup").removeAttribute('disabled')
         document.getElementById("mserver").removeAttribute('disabled')
     }
-
 }
 function checkFocus(){
     document.getElementById("mplaybook").setAttribute('disabled','disabled')
@@ -169,5 +170,21 @@ function checkFocus(){
     document.getElementById("mserver").setAttribute('disabled','disabled')
     document.getElementById("mgroup").setAttribute('disabled','disabled')
 }
+</script>
+<script>
+function sync(){
+    layer.open({
+    title: '同步数据',
+    content: '将资产管理中的数据同步到Ansible Hosts文件',
+    yes:function(){
+        $.ajax({
+                type: "post",
+                url: "{% url 'host_sync' %}",
+            });
+        layer.msg('同步成功！');
+        }
+    });
+}
+
 </script>
 {% endblock %}

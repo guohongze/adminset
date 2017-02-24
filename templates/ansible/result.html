@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load mytags %}
 {% block content %}
 <script>
     window.onload=init;
@@ -37,7 +38,10 @@
         </div>
         <div class="box-body">
         {% for d in ret %}
-        <p>{{ d }}</p>
+        <p>{{ d }}</p><br>
+        {% endfor %}
+        {% for d in ret2 %}
+        <p>{{ d|res_splict|safe }}</p><br>
         {% endfor %}
         </div>
         <!-- /.box-body -->

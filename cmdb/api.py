@@ -121,16 +121,42 @@ def collect(request):
         return HttpResponse("no any post data!")
 
 
+# def get_group(request):
+#     if request.GET:
+#         d = []
+#         try:
+#             name = request.GET['name']
+#         except:
+#             return HttpResponse('you have no data')
+#         host_groups = HostGroup.objects.get(name=name)
+#         ret_hg = {'host_group': host_groups.name, 'members': []}
+#         members = host_groups.members.all()
+#         for h in members:
+#             ret_h = {'hostname': h.hostname, 'ipaddr': h.ip}
+#             ret_hg['members'].append(ret_h)
+#         d.append(ret_hg)
+#         return HttpResponse(json.dumps(d))
+#     else:
+#         d = []
+#         host_groups = HostGroup.objects.all()
+#         for hg in host_groups:
+#             ret_hg = {'host_group': hg.name, 'members': []}
+#             members = hg.members.all()
+#             for h in members:
+#                 ret_h = {'hostname': h.hostname, 'ipaddr': h.ip}
+#                 ret_hg['members'].append(ret_h)
+#             d.append(ret_hg)
+#         return HttpResponse(json.dumps(d))
+
 def get_group(request):
     if request.GET:
         d = []
         try:
-            name = request.GET['name']
+            group_name = request.GET['group_name']
         except:
             return HttpResponse('you have no data')
-        host_groups = HostGroup.objects.get(name=name)
-        ret_hg = {'host_group': host_groups.name, 'members': []}
-        members = host_groups.members.all()
+        ret_hg = {'host_group': group_name, 'members': []}
+        members = Host.objects.filter(group__name=group_name)
         for h in members:
             ret_h = {'hostname': h.hostname, 'ipaddr': h.ip}
             ret_hg['members'].append(ret_h)
@@ -141,7 +167,7 @@ def get_group(request):
         host_groups = HostGroup.objects.all()
         for hg in host_groups:
             ret_hg = {'host_group': hg.name, 'members': []}
-            members = hg.members.all()
+            members = Host.objects.filter(group__name=hg)
             for h in members:
                 ret_h = {'hostname': h.hostname, 'ipaddr': h.ip}
                 ret_hg['members'].append(ret_h)

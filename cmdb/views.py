@@ -138,18 +138,3 @@ def login(request):
             return render_to_response('login2.html', locals())
     else:
         return render_to_response('login2.html', locals())
-
-
-def hostsync(request):
-    group = HostGroup.objects.all()
-    ansible_file = open("/etc/ansible/hosts","wb")
-    for h in group:
-        group_name = "["+h.name+"]"+"\n"
-        ansible_file.write(group_name)
-        members = h.members.all()
-        for m in members:
-            #gitlab ansible_host=10.100.1.76 host_name=gitlab
-            host_item = m.hostname+" "+"ansible_host="+m.ip+" "+"host_name="+m.hostname+"\n"
-            ansible_file.write(host_item)
-    ansible_file.close()
-    return HttpResponse("ok")
