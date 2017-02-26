@@ -5,7 +5,7 @@ from cmdb import views, api, idc, asset, group
 
 
 urlpatterns = [
-    url(r'^$', views.cmdb_index, name='cmdb'),
+    url(r'^$', views.index, name='cmdb'),
     url(r'^asset_add/', asset.asset_add, name='asset_add'),
     url(r'^asset_del/', asset.asset_del, name='asset_del'),
     url(r'^asset_edit/', asset.asset_edit, name='asset_edit'),

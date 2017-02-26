@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load mytags %}
+{% block content %}
+<script>
+    window.onload=init;
+    function init() {
+        showhide(3);
+    }
+    function showhide(n) {
+        var box = document.getElementById("sidebar-menu");
+        var allLi=box.getElementsByTagName("li");
+        allLi[n].className="active";
+        var box = document.getElementById("shell");
+        box.className="active";
+    }
+</script>
+
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+    </section>
+
+    <!-- Main content -->
+
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="box">
+        <div class="box-header with-border">
+          <h3 class="box-title">执行结果</h3>
+
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+              <i class="fa fa-minus"></i></button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+              <i class="fa fa-times"></i></button>
+          </div>
+        </div>
+        <div class="box-body">
+        {% for d in ret %}
+        <p>{{ d }}</p><br>
+        {% endfor %}
+        </div>
+        <!-- /.box-body -->
+       <a href="{% url 'shell' %}"> <li class="btn btn-primary" style="width: 60pt">返回</li></a>
+        <div class="box-footer">
+          <i class="fa fa-info-circle"></i>
+        </div>
+        <!-- /.box-footer-->
+      </div>
+      <!-- /.box -->
+
+    </section>
+
+  </div>
+{% endblock %}

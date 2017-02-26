@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% block self_head_css_js %}
+    <script src="/static/layer/layer.js"></script>
+    <link rel="stylesheet" href="/static/plugins/select2/select2.min.css">
+    <script src="/static/plugins/select2/select2.full.min.js"></script>
+{% endblock %}
+{% block content %}
+<script>
+    window.onload=init;
+    function init() {
+        showhide(3);
+    }
+    function showhide(n) {
+        var box = document.getElementById("sidebar-menu");
+        var allLi=box.getElementsByTagName("li");
+        allLi[n].className="active";
+        var box = document.getElementById("shell");
+        box.className="active";
+    }
+</script>
+
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="box box-default">
+        <div class="box-header with-border">
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+          </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <div class="row">
+
+            <div class="col-md-6">
+            <form action="{% url 'exec_scripts' %}" method="post">
+              <div class="form-group">
+                <label>选择主机</label>
+                <select id="mserver" name="mserver" class="form-control select2" multiple="multiple" data-placeholder="选择主机(host)" style="width: 100%;">
+                    {% for host in all_host %}
+                        <option value="{{ host.hostname }}">{{ host.hostname }}</option>
+                    {% endfor %}
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Scripts</label>
+                <select id="mscripts" name="mscripts" class="form-control" multiple="multiple" data-placeholder="scripts" style="width: 100%;">
+                    {% for script in all_scripts %}
+                        <option value="{{ script }}">{{ script }}</option>
+                    {% endfor %}
+                </select>
+              </div>
+            <div class="form-group ">
+                  <label>Shell Command</label>
+                  <textarea onblur="return checkBlur()" onfocus="checkFocus()" style="padding-bottom: 15px;" id="mcommand" name="mcommand" rows="11" class="form-control" placeholder="use enter spilt and command like: ansible web -a 'ls'"></textarea>
+                </div>
+              <!-- /.form-group -->
+            <input type="submit" onclick="return checkSubmit();" class="btn btn-primary" style="width: 60pt; font-size: medium;" value="执行">
+                <!-- /.form-group -->
+            </form>
+            </div>
+            <!-- /.col -->
+          <!-- /.row -->
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+            <ul id="events"></ul>
+        </div>
+      </div>
+    </div>
+    </section>
+        <!-- /.content -->
+      </div>
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+      $("#mserver").select2();
+    $("#mscripts").select2().on("select2:select", function () { $("#mcommand").prop("disabled", true); });
+    $("#mscripts").select2().on("select2:unselect", function () { $("#mcommand").prop("disabled", false); });
+
+  });
+</script>
+<script>
+function checkSubmit() {
+    if ($('#mserver').val() == null) {
+        alert("请选目标服务器!");
+        return false;
+    }
+    if ($('#mscripts').val() == null && $('#mcommand').val() == "") {
+        alert("请选要执行的Scripts或Command!");
+        return false;
+    }
+    var obj = $('#mserver').val();
+    var act = $('#mscripts').val() || $('#mcommand').val()
+    if (!confirm("确定在"+obj+"上执行"+act+"？")) {
+        window.event.returnValue = false;
+    }
+}
+</script>
+<script>
+function checkBlur(){
+    if ($('#mcommand').val() == "") {
+        document.getElementById("mscripts").removeAttribute('disabled')
+    }
+}
+function checkFocus(){
+    document.getElementById("mscripts").setAttribute('disabled','disabled')
+}
+</script>
+{% endblock %}

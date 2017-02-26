@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'ansible',
+    'setup',
     'navi',
     'cmdb',
     'config',

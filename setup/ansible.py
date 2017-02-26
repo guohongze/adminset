@@ -13,13 +13,13 @@ roles_dir = ansible_dir+"/roles/"
 pbook_dir = ansible_dir+"/pbook/"
 
 
-def ansible(request):
-    temp_name = "ansible/ansible-header.html"
+def index(request):
+    temp_name = "setup/setup-header.html"
     all_host = Host.objects.all()
     all_dir = get_roles(roles_dir)
     all_pbook = get_pbook(pbook_dir)
     all_group = HostGroup.objects.all()
-    return render_to_response('ansible/index.html', locals())
+    return render_to_response('setup/ansible.html', locals())
 
 
 def get_roles(args):
@@ -52,7 +52,7 @@ def get_pbook(args):
 
 def playbook(request):
     ret = []
-    temp_name = "ansible/ansible-header.html"
+    temp_name = "setup/setup-header.html"
     if os.path.exists(ansible_dir + '/gexec.yml'):
         os.remove(ansible_dir + '/gexec.yml')
     else:
@@ -88,15 +88,14 @@ def playbook(request):
                     cmd = "ansible-playbook"+" " + ansible_dir + '/pbook/' + p
                     p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
                     data = p.communicate()[0]
-                    print data
                     ret.append(data)
-        return render_to_response('ansible/result.html', locals())
+        return render_to_response('setup/result.html', locals())
 
 
 def ansible_command(request):
     command_list = []
     ret = []
-    temp_name = "ansible/ansible-header.html"
+    temp_name = "setup/setup-header.html"
     if request.method == 'POST':
         mcommand = request.POST.get('mcommand')
         command_list = mcommand.split('\n')
@@ -110,22 +109,8 @@ def ansible_command(request):
                 data = "your command " + str(count) + "  is invalid!"
                 ret.append(data)
             count += 1
-        return render_to_response('ansible/result.html', locals())
+        return render_to_response('setup/result.html', locals())
 
-
-# def host_sync(request):
-#     group = HostGroup.objects.all()
-#     ansible_file = open(ansible_dir+"/hosts", "wb")
-#     for g in group:
-#         group_name = "["+g.name+"]"+"\n"
-#         ansible_file.write(group_name)
-#         members = Host.objects.filter(group__name=g)
-#         for m in members:
-#             #gitlab ansible_host=10.100.1.76 host_name=gitlab
-#             host_item = m.hostname+" "+"ansible_host="+m.ip+" "+"host_name="+m.hostname+"\n"
-#             ansible_file.write(host_item)
-#     ansible_file.close()
-#     return HttpResponse("ok")
 
 def host_sync(request):
     group = HostGroup.objects.all()
@@ -144,7 +129,3 @@ def host_sync(request):
             ansible_file.write(group_item)
     ansible_file.close()
     return HttpResponse("ok")
-
-
-def shell(request):
-    pass

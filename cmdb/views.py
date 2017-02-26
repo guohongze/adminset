@@ -17,7 +17,7 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 
 
-def cmdb_index(request):
+def index(request):
     temp_name = "cmdb/cmdb-header.html"
     idc_info = Idc.objects.all()
     host_list = Host.objects.all()

@@ -7,7 +7,7 @@ from django.http import HttpResponse
 from django.shortcuts import render_to_response,redirect
 from forms import navi_form
 
-def navi_index(request):
+def index(request):
     temp_name = "navi/navi-header.html"
     allnavi = navi.objects.all()
     return render_to_response("navi/index.html",locals())

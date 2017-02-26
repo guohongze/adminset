@@ -8,5 +8,5 @@ urlpatterns = [
     url(r'^cmdb/', include('cmdb.urls')),
     url(r'^navi/', include('navi.urls')),
     url(r'^admin/', admin.site.urls),
-    url(r'^ansible/', include('ansible.urls')),
+    url(r'^setup/', include('setup.urls')),
 ]
