@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'ansible',
     'navi',
     'cmdb',
+    'config',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

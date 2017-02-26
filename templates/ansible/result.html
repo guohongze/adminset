@@ -40,9 +40,6 @@
         {% for d in ret %}
         <p>{{ d }}</p><br>
         {% endfor %}
-        {% for d in ret2 %}
-        <p>{{ d|res_splict|safe }}</p><br>
-        {% endfor %}
         </div>
         <!-- /.box-body -->
        <a href="{% url 'ansible' %}"> <li class="btn btn-primary" style="width: 60pt">返回</li></a>

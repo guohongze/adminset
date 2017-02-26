@@ -14,6 +14,8 @@
         var box = document.getElementById("sidebar-menu");
         var allLi=box.getElementsByTagName("li");
         allLi[n].className="active";
+        var box = document.getElementById("ansible");
+        box.className="active";
     }
 </script>
 
@@ -176,6 +178,7 @@ function sync(){
     layer.open({
     title: '同步数据',
     content: '将资产管理中的数据同步到Ansible Hosts文件',
+    btn: '确定同步',
     yes:function(){
         $.ajax({
                 type: "post",

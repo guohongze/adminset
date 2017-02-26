@@ -14,6 +14,14 @@
       <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
         <span class="sr-only">Toggle navigation</span>
       </a>
+        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+          <ul class="nav navbar-nav">
+                <li style="font-size: medium" id="ansible"><a href="{% url 'ansible' %}"><b>Ansible</b></a></li>
+                <li class="divider"></li>
+                <li style="font-size: medium" id="shell"><a href="{% url 'shell' %}"><b>Shell</b></a></li>
+          </ul>
+        </div>
+
       <!-- Navbar Right Menu -->
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">

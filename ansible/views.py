@@ -73,10 +73,9 @@ def playbook(request):
                 f.writelines(flist)
                 f.close()
                 cmd = "ansible-playbook"+" " + ansible_dir+'/gexec.yml'
-                p = Popen(cmd, stderr=STDOUT, stdout=PIPE, shell=True)
+                p = Popen(cmd, stderr=PIPE, stdout=PIPE, shell=True)
                 data = p.communicate()[0]
                 ret.append(data)
-            return render_to_response("ansible/result.html", locals())
         else:
             for h in host:
                 for p in pbook:
@@ -86,25 +85,31 @@ def playbook(request):
                     f = open(ansible_dir + '/pbook/' + p, 'w+')
                     f.writelines(flist)
                     f.close()
-                    cmd = "ansible-playbook"+" "+ ansible_dir + '/pbook/' + p
-                    p = Popen(cmd, stdout=PIPE, shell=True)
+                    cmd = "ansible-playbook"+" " + ansible_dir + '/pbook/' + p
+                    p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
                     data = p.communicate()[0]
                     print data
                     ret.append(data)
-            return render_to_response('ansible/result.html', locals())
+        return render_to_response('ansible/result.html', locals())
 
 
 def ansible_command(request):
     command_list = []
-    ret2 = []
+    ret = []
     temp_name = "ansible/ansible-header.html"
     if request.method == 'POST':
         mcommand = request.POST.get('mcommand')
         command_list = mcommand.split('\n')
         for command in command_list:
-            p = Popen(command, stdout=PIPE, shell=True)
-            data = p.communicate()
-            ret2.append(data)
+            count = 1
+            if command.startswith("ansible"):
+                p = Popen(command, stdout=PIPE, stderr=PIPE,shell=True)
+                data = p.communicate()
+                ret.append(data)
+            else:
+                data = "your command " + str(count) + "  is invalid!"
+                ret.append(data)
+            count += 1
         return render_to_response('ansible/result.html', locals())
 
 
@@ -139,3 +144,7 @@ def host_sync(request):
             ansible_file.write(group_item)
     ansible_file.close()
     return HttpResponse("ok")
+
+
+def shell(request):
+    pass
