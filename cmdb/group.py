@@ -68,7 +68,26 @@ def group_edit(request):
         groupid = request.GET.get("id")
         obj = HostGroup.objects.get(id=groupid)
         allgroup = HostGroup.objects.all()
+        unselect = Host.objects.filter(group__name=None)
+        members = Host.objects.filter(group__name=obj.name)
     return render_to_response("cmdb/group_edit.html", locals())
+
+
+# def group_save(request):
+#     temp_name = "cmdb/cmdb-header.html"
+#     if request.method == 'POST':
+#         group_id = request.POST.get('id')
+#         name = request.POST.get('name')
+#         desc = request.POST.get('desc')
+#         group_item = HostGroup.objects.get(id=group_id)
+#         group_item.name = name
+#         group_item.desc = desc
+#         group_item.save()
+#         obj = group_item
+#         status = 1
+#     else:
+#         status = 2
+#     return render_to_response("cmdb/group_edit.html", locals())
 
 
 def group_save(request):
@@ -77,7 +96,21 @@ def group_save(request):
         group_id = request.POST.get('id')
         name = request.POST.get('name')
         desc = request.POST.get('desc')
+        members = request.POST.getlist('members', [])
+        unselect = request.POST.getlist('unselect', [])
         group_item = HostGroup.objects.get(id=group_id)
+        if unselect:
+            for host in unselect:
+                print "unselect: "+host
+                obj = Host.objects.get(hostname=host)
+                obj.group_id = None
+                obj.save()
+        if members:
+            for host in members:
+                print "members: "+host
+                obj = Host.objects.get(hostname=host)
+                obj.group_id = group_id
+                obj.save()
         group_item.name = name
         group_item.desc = desc
         group_item.save()

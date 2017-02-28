@@ -1,0 +1,193 @@
+{% extends 'base.html' %}
+{% block self_head_css_js %}
+    <script src="/static/layer/layer.js"></script>
+    <link rel="stylesheet" href="/static/plugins/select2/select2.min.css">
+    <script src="/static/plugins/select2/select2.full.min.js"></script>
+{% endblock %}
+{% block content %}
+<script>
+    window.onload=init;
+    function init() {
+        showhide(3);
+    }
+    function showhide(n) {
+        var box = document.getElementById("sidebar-menu");
+        var allLi=box.getElementsByTagName("li");
+        allLi[n].className="active";
+        var box = document.getElementById("ansible");
+        box.className="active";
+    }
+</script>
+
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        <small></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-link"></i> Level</a></li>
+        <li class="active">Here</li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="box box-default">
+        <div class="box-header with-border">
+            <div class="col-sm-2" style="padding-left: 0">
+                 <a href="#" onclick="return sync();"><li class="btn btn-success" ><b>同步数据</b></li></a>
+            </div>
+          <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+          </div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <div class="row">
+
+            <div class="col-md-6">
+            <form action="{% url 'playbook' %}" method="post">
+              <div class="form-group">
+                <label>选择主机</label>
+                <select id="mserver" name="mserver" class="form-control select2" multiple="multiple" data-placeholder="选择主机(host)" style="width: 100%;">
+                    {% for host in all_host %}
+                        <option value="{{ host.hostname }}">{{ host.hostname }}</option>
+                    {% endfor %}
+                </select>
+              </div>
+              <div class="form-group">
+                <label>选主机组</label>
+                <select id="mgroup" name="mgroup" class="form-control" multiple="multiple" data-placeholder="选择组(group)" style="width: 100%;">
+                    {% for group in all_group %}
+                        <option value="{{ group.name }}">{{ group.name }}</option>
+                    {% endfor %}
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Roles</label>
+                <select id="mplaybook" name="mplaybook" class="form-control" multiple="multiple" data-placeholder="Playbook Roles" style="width: 100%;">
+                    {% for dir in all_dir %}
+                        <option value="{{ dir }}">{{ dir}}</option>
+                    {% endfor %}
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Playbook</label>
+                <select id="splaybook" name="splaybook" class="form-control" multiple="multiple" data-placeholder="Playbook" style="width: 100%;">
+                    {% for file in all_pbook %}
+                        <option value="{{ file }}">{{ file}}</option>
+                    {% endfor %}
+                </select>
+              </div>
+              <!-- /.form-group -->
+            <input type="submit" onclick="return checkSubmit();" class="btn btn-primary" style="width: 60pt; font-size: medium;" value="执行">
+                <!-- /.form-group -->
+            </form>
+            </div>
+            <!-- /.col -->
+
+            <div class="col-md-6">
+              <div class="form-group">
+              <!-- /.form-group -->
+              <form action="{% url 'acommand' %}" method="post">
+              <div class="form-group ">
+                  <label>Ansible Command</label>
+                  <textarea style="padding-bottom: 15px;" id="mcommand" name="mcommand" rows="11" class="form-control" placeholder="use enter spilt and command like: ansible web -a 'ls'"></textarea>
+                </div>
+                  <input type="submit" onclick="return checkCommand();" class="btn btn-primary" style="width: 60pt; font-size: medium;" value="执行">
+                <!-- /.form-group -->
+                  </form>
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.row -->
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+            <ul id="events"></ul>
+        </div>
+      </div>
+    </div>
+    </section>
+        <!-- /.content -->
+      </div>
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $("#mserver").select2().on("select2:select", function () { $("#mgroup").prop("disabled", true); });
+    $("#mserver").select2().on("select2:unselect", function () { $("#mgroup").prop("disabled", false); });
+    $("#mgroup").select2().on("select2:select", function () { $("#mserver").prop("disabled", true); });
+    $("#mgroup").select2().on("select2:unselect", function () { $("#mserver").prop("disabled", false); });
+    $("#mplaybook").select2().on("select2:select", function () { $("#splaybook").prop("disabled", true); });
+    $("#mplaybook").select2().on("select2:unselect", function () { $("#splaybook").prop("disabled", false); });
+    $("#splaybook").select2().on("select2:select", function () { $("#mplaybook").prop("disabled", true); });
+    $("#splaybook").select2().on("select2:unselect", function () { $("#mplaybook").prop("disabled", false); });
+
+  });
+</script>
+<script>
+function checkSubmit() {
+    if ($('#mserver').val() == null && $('#mgroup').val() == null) {
+        alert("请选目标服务器或组!");
+        return false;
+    }
+    if ($('#splaybook').val() == null && $('#mplaybook').val() == "") {
+        alert("请选要执行的Roles或Playbook!");
+        return false;
+    }
+    var obj = $('#mserver').val() || $('#mgroup').val()
+    var act = $('#mplaybook').val() || $('#splaybook').val()
+    if (!confirm("确定在"+obj+"上执行"+act+"？")) {
+        window.event.returnValue = false;
+    }
+}
+</script>
+<script>
+function checkCommand() {
+    if ($('#mcommand').val() == "") {
+        alert("请填写正确的ansible命令!");
+        return false;
+    }
+    var obj = $('#mcommand').val()
+    if (!confirm("确定执行命令"+obj+"？")) {
+        window.event.returnValue = false;
+    }
+}
+</script>
+<script>
+function checkBlur(){
+    if ($('#mcommand').val() == "") {
+        document.getElementById("mplaybook").removeAttribute('disabled')
+        document.getElementById("splaybook").removeAttribute('disabled')
+        document.getElementById("mgroup").removeAttribute('disabled')
+        document.getElementById("mserver").removeAttribute('disabled')
+    }
+}
+function checkFocus(){
+    document.getElementById("mplaybook").setAttribute('disabled','disabled')
+    document.getElementById("splaybook").setAttribute('disabled','disabled')
+    document.getElementById("mserver").setAttribute('disabled','disabled')
+    document.getElementById("mgroup").setAttribute('disabled','disabled')
+}
+</script>
+<script>
+function sync(){
+    layer.open({
+    title: '同步数据',
+    content: '将资产管理中的数据同步到Ansible Hosts文件',
+    btn: '确定同步',
+    yes:function(){
+        $.ajax({
+                type: "post",
+                url: "{% url 'host_sync' %}",
+            });
+        layer.msg('同步成功！');
+        }
+    });
+}
+
+</script>
+{% endblock %}

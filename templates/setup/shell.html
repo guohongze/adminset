@@ -49,6 +49,14 @@
                 </select>
               </div>
               <div class="form-group">
+                <label>选择属组</label>
+                <select id="mgroup" name="mgroup" class="form-control select2" multiple="multiple" data-placeholder="选择属组(group)" style="width: 100%;">
+                    {% for group in all_group %}
+                        <option value="{{ group.name }}">{{ group.name }}</option>
+                    {% endfor %}
+                </select>
+              </div>
+              <div class="form-group">
                 <label>Scripts</label>
                 <select id="mscripts" name="mscripts" class="form-control" multiple="multiple" data-placeholder="scripts" style="width: 100%;">
                     {% for script in all_scripts %}
@@ -80,23 +88,25 @@
 <script>
   $(function () {
     //Initialize Select2 Elements
-      $("#mserver").select2();
+    $("#mserver").select2().on("select2:select", function () { $("#mgroup").prop("disabled", true); });
+    $("#mserver").select2().on("select2:unselect", function () { $("#mgroup").prop("disabled", false); });
+    $("#mgroup").select2().on("select2:select", function () { $("#mserver").prop("disabled", true); });
+    $("#mgroup").select2().on("select2:unselect", function () { $("#mserver").prop("disabled", false); });
     $("#mscripts").select2().on("select2:select", function () { $("#mcommand").prop("disabled", true); });
     $("#mscripts").select2().on("select2:unselect", function () { $("#mcommand").prop("disabled", false); });
-
   });
 </script>
 <script>
 function checkSubmit() {
-    if ($('#mserver').val() == null) {
-        alert("请选目标服务器!");
+    if ($('#mserver').val() == null && $('#mgroup').val() == null) {
+        alert("请选目标服务器或组!");
         return false;
     }
     if ($('#mscripts').val() == null && $('#mcommand').val() == "") {
-        alert("请选要执行的Scripts或Command!");
+        alert("请选要执行的Scripts或shell command!");
         return false;
     }
-    var obj = $('#mserver').val();
+    var obj = $('#mserver').val() || $('#mgroup').val()
     var act = $('#mscripts').val() || $('#mcommand').val()
     if (!confirm("确定在"+obj+"上执行"+act+"？")) {
         window.event.returnValue = false;
