@@ -125,16 +125,16 @@ def index(request):
     return render_to_response('cmdb/index.html', locals())
 
 
-def login(request):
-    ret = {}
-    if request.method == 'POST':
-        user = request.POST.get('username',None)
-        pwd = request.POST.get('password',None)
-        is_auth = models.UserInfo.objects.filter(username=user,password=pwd).count()
-        if is_auth == 1:
-            return redirect('/cmdb')
-        else:
-            ret['status'] = 'user or password error'
-            return render_to_response('login2.html', locals())
-    else:
-        return render_to_response('login2.html', locals())
+# def login(request):
+#     ret = {}
+#     if request.method == 'POST':
+#         user = request.POST.get('username',None)
+#         pwd = request.POST.get('password',None)
+#         is_auth = models.UserInfo.objects.filter(username=user,password=pwd).count()
+#         if is_auth == 1:
+#             return redirect('/cmdb')
+#         else:
+#             ret['status'] = 'user or password error'
+#             return render_to_response('auser/login2.html', locals())
+#     else:
+#         return render_to_response('auser/login2.html', locals())

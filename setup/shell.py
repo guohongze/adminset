@@ -5,7 +5,8 @@ from django.shortcuts import render_to_response, HttpResponse
 import os
 from subprocess import Popen, PIPE
 import sh
-scripts_dir = "/etc/ansible/scripts/"
+from config.views import get_dir
+scripts_dir = get_dir("s_path")
 
 
 def index(request):

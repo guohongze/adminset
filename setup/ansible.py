@@ -6,11 +6,12 @@ from cmdb.models import Host, HostGroup
 from django.shortcuts import render_to_response, redirect
 from django.http import HttpResponse
 import os
+from config.views import get_dir
 
 
-ansible_dir = "/etc/ansible"
-roles_dir = ansible_dir+"/roles/"
-pbook_dir = ansible_dir+"/pbook/"
+ansible_dir = get_dir("a_path")
+roles_dir = get_dir("r_path")
+pbook_dir = get_dir("p_path")
 
 
 def index(request):

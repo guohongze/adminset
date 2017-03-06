@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 # Application definition
 
@@ -35,6 +36,7 @@ INSTALLED_APPS = [
     'navi',
     'cmdb',
     'config',
+    'auser',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

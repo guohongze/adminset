@@ -9,4 +9,6 @@ urlpatterns = [
     url(r'^navi/', include('navi.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^setup/', include('setup.urls')),
+    url(r'^auser/', include('auser.urls')),
+    url(r'^config/', include('config.urls')),
 ]

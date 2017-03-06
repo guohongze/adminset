@@ -49,7 +49,6 @@
                             </th>
                                     <th>组名</th>
                                     <th>描述</th>
-                                    <th>成员</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -59,7 +58,6 @@
                                         <td><input type="checkbox" id="u_id" class="item1" value="{{ g.id }}" name="g_check" /></td>
                                         <td><a href="#"><li style="list-style-type:none" onclick="return tanchu(this.value)" value="{{ g.id }}"> {{ g.name }}</li></a></td>
                                         <td>{{ g.desc }}</td>
-                                        <td>{{ g.members }}</td>
                                     </tr>
                                 {% endfor %}
                                 {% else %}

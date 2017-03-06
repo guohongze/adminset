@@ -3,6 +3,10 @@
 {% block self_head_css_js %}
     <script src="/static/layer/layer.js"></script>
     <script src="/static/js/base.js"></script>
+    <script src="/static/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="/static/plugins/datatables/dataTables.bootstrap.min.js"></script>
+    <script src="/static/plugins/datatables/dataTables.bootstrap.css"></script>
+
 {% endblock %}
 {% block content %}
 <script>
@@ -155,12 +159,9 @@
 {#用于接收asset_edit.html中layui子层的传值#}
 <input id="handle_status" value="" hidden="hidden">
 </div>
-
-<script src="/static/plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="/static/plugins/datatables/dataTables.bootstrap.min.js"></script>
 <script>
   $(function () {
-{#    $("#example1").DataTable();#}
+    $("#example1").DataTable();
     $('#dataform').DataTable({
       "paging": true,
       "lengthChange": true,

@@ -21,7 +21,6 @@ urlpatterns = [
     url(r'^idc_del/', idc.idc_del, name='idc_del'),
     url(r'^idc_save/', idc.idc_save, name='idc_save'),
     url(r'^idc_edit/', idc.idc_edit, name='idc_edit'),
-    url(r'^login', views.login, name='login'),
     url(r'^collect', api.collect, name='update_api'),
     url(r'^api/host', api.get_host, name='get_host'),
     url(r'^api/group', api.get_group, name='get_group'),
