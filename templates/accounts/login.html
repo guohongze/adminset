@@ -26,37 +26,65 @@
   <div class="login-logo">
     <a href="/"><b>AdminSet</b></a>
   </div>
-  <!-- /.login-logo -->
-  <div class="login-box-body">
-    <p class="login-box-msg"></p>
-
-      <form class="form-horizontal" role="form" action={% url "loginurl" %} method="POST" >
-    {% csrf_token %}
-
-        {% for item in form %}
-            <div class="form-group">
-                <label class="control-label col-md-3">{{item.label}}</label>
-                <div class="col-md-8">
-                    {{item}}
-                </div>
-                <div class="col-md-offset-1 col-md-10">
-                    {{item.errors}} {{error_msg}}
-                </div>
+              <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">用户认证</h3>
             </div>
-        {% endfor %}
+            <!-- /.box-header -->
+            <!-- form start -->
+        <form class="form-horizontal" role="form" action="{% url "loginurl" %}" method="POST" >              <div class="box-body">
+        {% csrf_token %}
+            {% for item in form %}
+                <div class="form-group">
+                    <label class="control-label col-md-3">{{item.label}}</label>
+                    <div class="col-md-8">
+                        {{item}}
+                    </div>
+                    <div class="col-md-offset-1 col-md-10">
+                        {{item.errors}} {{error_msg}}
+                    </div>
+                </div>
+            {% endfor %}
+              </div>
+              <!-- /.box-body -->
+              <div class="box-footer">
+                  <input type="hidden" name="next" value="{{ next }}" />
+                <button style="width: 340px;" type="submit" class="btn btn-info pull-right">登录</button>
+              </div>
+              <!-- /.box-footer -->
+            </form>
+          </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-1 col-md-10">
-                <input type="hidden" name="next" value="{{ next }}" />
-                <button type="submit" class="btn btn-success" style="width: 280px;">登 录</button>
-            <div>
-        </div>
-
-    </form>
-
-    <!-- /.social-auth-links -->
-
-  </div>
+  <!-- /.login-logo -->
+{#  <div class="login-box-body">#}
+{#    <p class="login-box-msg"></p>#}
+{##}
+{#      <form class="form-horizontal" role="form" action="{% url "loginurl" %}" method="POST" >#}
+{#    {% csrf_token %}#}
+{##}
+{#        {% for item in form %}#}
+{#            <div class="form-group">#}
+{#                <label class="control-label col-md-3">{{item.label}}</label>#}
+{#                <div class="col-md-8">#}
+{#                    {{item}}#}
+{#                </div>#}
+{#                <div class="col-md-offset-1 col-md-10">#}
+{#                    {{item.errors}} {{error_msg}}#}
+{#                </div>#}
+{#            </div>#}
+{#        {% endfor %}#}
+{#        <div class="form-group">#}
+{#            <div class="col-md-offset-1 col-md-10">#}
+{#                <input type="hidden" name="next" value="{{ next }}" />#}
+{#                <button type="submit" class="btn btn-primary" style="width: 280px;">登 录</button>#}
+{#            <div>#}
+{#        </div>#}
+{##}
+{#    </form>#}
+{##}
+{#    <!-- /.social-auth-links -->#}
+{##}
+{#  </div>#}
   <!-- /.login-box-body -->
 </div>
 <!-- /.login-box -->

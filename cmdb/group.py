@@ -1,18 +1,20 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from forms import AssetForm
 from django.shortcuts import render_to_response
 from models import Host, HostGroup
 from forms import GroupForm, IdcForm
+from django.contrib.auth.decorators import login_required
 
 
+@login_required()
 def group(request):
     temp_name = "cmdb/cmdb-header.html"
     allgroup = HostGroup.objects.all()
     return render_to_response('cmdb/group.html', locals())
 
 
+@login_required()
 def group_add(request):
     temp_name = "cmdb/cmdb-header.html"
     if request.method == "POST":
@@ -32,6 +34,7 @@ def group_add(request):
         return render_to_response("cmdb/group_add.html", locals())
 
 
+@login_required()
 def group_add_mini(request):
     temp_name = "cmdb/cmdb-header.html"
     if request.method == "POST":
@@ -51,6 +54,7 @@ def group_add_mini(request):
         return render_to_response("cmdb/group_add_mini.html", locals())
 
 
+@login_required()
 def group_del(request):
     temp_name = "cmdb/cmdb-header.html"
     if request.method == 'POST':
@@ -62,6 +66,7 @@ def group_del(request):
     return render_to_response("cmdb/group.html", locals())
 
 
+@login_required()
 def group_edit(request):
     temp_name = "cmdb/cmdb-header.html"
     if request.method == 'GET':
@@ -90,6 +95,7 @@ def group_edit(request):
 #     return render_to_response("cmdb/group_edit.html", locals())
 
 
+@login_required()
 def group_save(request):
     temp_name = "cmdb/cmdb-header.html"
     if request.method == 'POST':

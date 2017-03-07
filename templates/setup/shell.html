@@ -28,10 +28,6 @@
     <section class="content">
       <div class="box box-default">
         <div class="box-header with-border">
-          <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
-          </div>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
@@ -65,7 +61,7 @@
               </div>
             <div class="form-group ">
                   <label>Shell Command</label>
-                  <textarea onblur="return checkBlur()" onfocus="checkFocus()" style="padding-bottom: 15px;" id="mcommand" name="mcommand" rows="8" class="form-control" placeholder="use enter spilt and command like: ansible web -a 'ls'"></textarea>
+                  <textarea onblur="return checkBlur()" onfocus="checkFocus()" style="padding-bottom: 15px;" id="mcommand" name="mcommand" rows="6" class="form-control" placeholder="use enter spilt and command like: ansible web -a 'ls'"></textarea>
                 </div>
               <!-- /.form-group -->
             <input type="submit" onclick="return checkSubmit();" class="btn btn-primary" style="width: 60pt; font-size: medium;" value="执行">
@@ -76,9 +72,6 @@
           <!-- /.row -->
         </div>
         <!-- /.box-body -->
-        <div class="box-footer">
-            <ul id="events"></ul>
-        </div>
       </div>
     </div>
     </section>

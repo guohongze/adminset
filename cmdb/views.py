@@ -2,21 +2,20 @@
 # -*- coding: utf-8 -*-
 
 
-from django.views import generic
 from .models import Host, HostGroup, Idc, ASSET_TYPE, ASSET_STATUS
 from django.http import HttpResponse
-from forms import AssetForm, IdcForm
 from django.shortcuts import render_to_response, redirect
 from django.db.models import Q
 from cmdb.api import get_object
 from cmdb.api import pages, str2gb
 import csv, datetime
-import models
+from django.contrib.auth.decorators import login_required
 import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
 
 
+@login_required()
 def index(request):
     temp_name = "cmdb/cmdb-header.html"
     idc_info = Idc.objects.all()

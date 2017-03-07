@@ -1,11 +1,12 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-from django.shortcuts import render
 from django.shortcuts import render_to_response, HttpResponse, redirect
 import ConfigParser
 import os
+from django.contrib.auth.decorators import login_required
 
 
+@login_required()
 def index(request):
     temp_name = "config/config-header.html"
     # dirs = os.path.split(os.path.realpath(__file__))[0]
@@ -20,6 +21,7 @@ def index(request):
     return render_to_response('config/index.html', locals())
 
 
+@login_required()
 def config_save(request):
     temp_name = "config/config-header.html"
     if request.method == 'POST':

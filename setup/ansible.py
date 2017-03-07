@@ -7,6 +7,7 @@ from django.shortcuts import render_to_response, redirect
 from django.http import HttpResponse
 import os
 from config.views import get_dir
+from django.contrib.auth.decorators import login_required
 
 
 ansible_dir = get_dir("a_path")
@@ -14,6 +15,7 @@ roles_dir = get_dir("r_path")
 pbook_dir = get_dir("p_path")
 
 
+@login_required()
 def index(request):
     temp_name = "setup/setup-header.html"
     all_host = Host.objects.all()
@@ -93,6 +95,7 @@ def playbook(request):
         return render_to_response('setup/result.html', locals())
 
 
+@login_required()
 def ansible_command(request):
     command_list = []
     ret = []
@@ -113,6 +116,7 @@ def ansible_command(request):
         return render_to_response('setup/result.html', locals())
 
 
+@login_required()
 def host_sync(request):
     group = HostGroup.objects.all()
     ansible_file = open(ansible_dir+"/hosts", "wb")

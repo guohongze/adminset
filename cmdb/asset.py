@@ -5,8 +5,10 @@ from forms import AssetForm
 from django.shortcuts import render_to_response, redirect, HttpResponse, RequestContext
 from models import Host, Idc, HostGroup, ASSET_STATUS, ASSET_TYPE
 from api import get_object
+from django.contrib.auth.decorators import login_required
 
 
+@login_required()
 def asset_add(request):
     temp_name = "cmdb/cmdb-header.html"
     if request.method == "POST":
@@ -25,6 +27,7 @@ def asset_add(request):
         return render_to_response("cmdb/asset_add.html", locals(), context_instance=RequestContext(request))
 
 
+@login_required()
 def asset_del(request):
     asset_id = request.GET.get('id', '')
     if asset_id:
@@ -42,6 +45,7 @@ def asset_del(request):
     return HttpResponse(u'删除成功')
 
 
+@login_required()
 def asset_edit(request):
     #传参给layui script避免一个status为空的报错
     status = 0
@@ -56,6 +60,7 @@ def asset_edit(request):
     return render_to_response("cmdb/asset_edit.html", locals())
 
 
+@login_required()
 def asset_save(request):
     temp_name = "cmdb/cmdb-header.html"
     if request.method == 'POST':
@@ -120,24 +125,8 @@ def asset_save(request):
 #         display_control = "none"
 #         a_form = AssetForm()
 #         return render_to_response("cmdb/asset_edit.html", locals(), context_instance=RequestContext(request))
-
+@login_required()
 def asset_group(request):
     temp_name = "cmdb/cmdb-header.html"
     group_info = HostGroup.objects.all()
     return render_to_response('cmdb/group.html', locals())
-
-
-def group_del(request):
-    pass
-
-
-def group_add(request):
-    pass
-
-
-def group_edit(request):
-    pass
-
-
-def group_save(request):
-    pass

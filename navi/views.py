@@ -16,6 +16,7 @@ def index(request):
     return render_to_response("navi/index.html",locals())
 
 
+@login_required()
 def add(request):
     temp_name = "navi/navi-header.html"
     if request.method == "POST":
@@ -33,6 +34,8 @@ def add(request):
         n_form = navi_form()
         return render_to_response("navi/add.html", locals())
 
+
+@login_required()
 def delete(request):
     temp_name = "navi/navi-header.html"
     if request.method == 'POST':
@@ -44,12 +47,14 @@ def delete(request):
     return render_to_response("navi/manage.html", locals())
 
 
+@login_required()
 def manage(request):
     temp_name = "navi/navi-header.html"
     allnavi = navi.objects.all()
     return render_to_response("navi/manage.html", locals())
 
 
+@login_required()
 def edit(request):
     temp_name = "navi/navi-header.html"
     if request.method == 'GET':
@@ -58,6 +63,7 @@ def edit(request):
     return render_to_response("navi/edit.html", locals())
 
 
+@login_required()
 def save(request):
     temp_name = "navi/navi-header.html"
     if request.method == 'POST':

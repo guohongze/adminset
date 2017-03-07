@@ -42,76 +42,51 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
-      <file leaf-file-name="cmdb-header.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/cmdb/cmdb-header.html">
+      <file leaf-file-name="group_edit.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/cmdb/group_edit.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.55814">
-              <caret line="26" column="6" selection-start-line="26" selection-start-column="6" selection-end-line="26" selection-end-column="45" />
+            <state vertical-scroll-proportion="-0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="config-header.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/config/config-header.html">
+      <file leaf-file-name="idc_add.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/cmdb/idc_add.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.55814">
-              <caret line="22" column="45" selection-start-line="22" selection-start-column="45" selection-end-line="22" selection-end-column="45" />
+            <state vertical-scroll-proportion="-4.2325583">
+              <caret line="21" column="36" selection-start-line="21" selection-start-column="36" selection-end-line="21" selection-end-column="36" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="navi-header.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/navi/navi-header.html">
+      <file leaf-file-name="idc_add_mini.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/cmdb/idc_add_mini.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.55814">
-              <caret line="22" column="45" selection-start-line="22" selection-start-column="45" selection-end-line="22" selection-end-column="45" />
+            <state vertical-scroll-proportion="-0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="setup-header.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/setup/setup-header.html">
+      <file leaf-file-name="idc_edit.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/cmdb/idc_edit.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-12.651163">
-              <caret line="25" column="45" selection-start-line="25" selection-start-column="45" selection-end-line="25" selection-end-column="45" />
+            <state vertical-scroll-proportion="-0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="control-sidebar.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/control-sidebar.html">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/cmdb/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="26.093023">
-              <caret line="9" column="57" selection-start-line="9" selection-start-column="57" selection-end-line="9" selection-end-column="57" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="navbar-custom-menu.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/navbar-custom-menu.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.627907">
-              <caret line="137" column="43" selection-start-line="137" selection-start-column="35" selection-end-line="137" selection-end-column="43" />
-              <folding>
-                <element signature="n#li#0;n#ul#0;n#div#0;n#!!top" expanded="false" />
-                <element signature="n#ul#0;n#li#0;n#ul#0;n#div#0;n#!!top" expanded="false" />
-                <element signature="n#li#1;n#ul#0;n#div#0;n#!!top" expanded="false" />
-                <element signature="n#li#2;n#ul#0;n#div#0;n#!!top" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/accounts/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.29310346">
-              <caret line="7" column="15" selection-start-line="7" selection-start-column="15" selection-end-line="7" selection-end-column="15" />
+            <state vertical-scroll-proportion="-8.697675">
+              <caret line="37" column="10" selection-start-line="37" selection-start-column="10" selection-end-line="37" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -121,31 +96,47 @@
         <entry file="file://$PROJECT_DIR$/navi/views.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="15" />
-              <folding>
-                <element signature="e#48#83#0" expanded="true" />
-              </folding>
+              <caret line="65" column="16" selection-start-line="65" selection-start-column="16" selection-end-line="65" selection-end-column="16" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/accounts/urls.py">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/navi/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-6.3255816">
+              <caret line="23" column="37" selection-start-line="23" selection-start-column="37" selection-end-line="23" selection-end-column="57" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="footer.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/footer.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-3.9534883">
+              <caret line="5" column="65" selection-start-line="5" selection-start-column="65" selection-end-line="5" selection-end-column="65" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ansible.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/setup/ansible.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="9" column="38" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="38" />
-              <folding>
-                <element signature="e#47#88#0" expanded="true" />
-              </folding>
+              <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="login.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/accounts/login.html">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/cmdb/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="27.976744">
-              <caret line="9" column="36" selection-start-line="9" selection-start-column="36" selection-end-line="9" selection-end-column="36" />
+            <state vertical-scroll-proportion="-3.7253695">
+              <caret line="11" column="11" selection-start-line="11" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -169,27 +160,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/templates/setup/index.html" />
-        <option value="$PROJECT_DIR$/templates/setup/ansible.html" />
-        <option value="$PROJECT_DIR$/templates/setup/shell.html" />
-        <option value="$PROJECT_DIR$/templates/setup/shell_result.html" />
-        <option value="$PROJECT_DIR$/templates/setup/result.html" />
-        <option value="$PROJECT_DIR$/templates/cmdb/index.html" />
-        <option value="$PROJECT_DIR$/templates/config/index.html" />
-        <option value="$PROJECT_DIR$/templates/cmdb/group.html" />
-        <option value="$PROJECT_DIR$/templates/cmdb/idc.html" />
-        <option value="$PROJECT_DIR$/auser/models.py" />
-        <option value="$PROJECT_DIR$/user_manage/urls.py" />
-        <option value="$PROJECT_DIR$/../sadmin/UserManage/forms.py" />
-        <option value="$PROJECT_DIR$/account/users.py" />
-        <option value="$PROJECT_DIR$/templates/account/login.html" />
-        <option value="$PROJECT_DIR$/auser/views.py" />
-        <option value="$PROJECT_DIR$/account/views.py" />
-        <option value="$PROJECT_DIR$/adminset.conf" />
-        <option value="$PROJECT_DIR$/requirements.txt" />
-        <option value="$PROJECT_DIR$/account/urls.py" />
-        <option value="$PROJECT_DIR$/account/forms.py" />
-        <option value="$PROJECT_DIR$/account/permission.py" />
         <option value="$PROJECT_DIR$/account/role.py" />
         <option value="$PROJECT_DIR$/account/models.py" />
         <option value="$PROJECT_DIR$/account/user.py" />
@@ -209,17 +179,38 @@
         <option value="$PROJECT_DIR$/accounts/users.py" />
         <option value="$PROJECT_DIR$/accounts/models.py" />
         <option value="$PROJECT_DIR$/accounts/forms.py" />
-        <option value="$PROJECT_DIR$/templates/accounts/login.html" />
         <option value="$PROJECT_DIR$/templates/header_status.html" />
         <option value="$PROJECT_DIR$/templates/main-header.html" />
         <option value="$PROJECT_DIR$/templates/cmdb/cmdb-header.html" />
         <option value="$PROJECT_DIR$/templates/config/config-header.html" />
         <option value="$PROJECT_DIR$/templates/navi/navi-header.html" />
         <option value="$PROJECT_DIR$/templates/setup/setup-header.html" />
-        <option value="$PROJECT_DIR$/accounts/views.py" />
         <option value="$PROJECT_DIR$/accounts/urls.py" />
-        <option value="$PROJECT_DIR$/templates/navbar-custom-menu.html" />
+        <option value="$PROJECT_DIR$/adminset/views.py" />
+        <option value="$PROJECT_DIR$/cmdb/views.py" />
+        <option value="$PROJECT_DIR$/cmdb/idc.py" />
+        <option value="$PROJECT_DIR$/cmdb/group.py" />
+        <option value="$PROJECT_DIR$/cmdb/asset.py" />
         <option value="$PROJECT_DIR$/navi/views.py" />
+        <option value="$PROJECT_DIR$/config/views.py" />
+        <option value="$PROJECT_DIR$/setup/shell.py" />
+        <option value="$PROJECT_DIR$/templates/navbar-custom-menu.html" />
+        <option value="$PROJECT_DIR$/templates/accounts/login.html" />
+        <option value="$PROJECT_DIR$/accounts/views.py" />
+        <option value="$PROJECT_DIR$/templates/navi/index.html" />
+        <option value="$PROJECT_DIR$/templates/navi/manage.html" />
+        <option value="$PROJECT_DIR$/templates/cmdb/idc.html" />
+        <option value="$PROJECT_DIR$/templates/cmdb/group.html" />
+        <option value="$PROJECT_DIR$/templates/setup/result.html" />
+        <option value="$PROJECT_DIR$/templates/setup/index.html" />
+        <option value="$PROJECT_DIR$/templates/setup/ansible.html" />
+        <option value="$PROJECT_DIR$/templates/setup/shell_result.html" />
+        <option value="$PROJECT_DIR$/templates/setup/shell.html" />
+        <option value="$PROJECT_DIR$/templates/cmdb/asset_add.html" />
+        <option value="$PROJECT_DIR$/templates/cmdb/group_add.html" />
+        <option value="$PROJECT_DIR$/templates/cmdb/idc_add.html" />
+        <option value="$PROJECT_DIR$/templates/footer.html" />
+        <option value="$PROJECT_DIR$/setup/ansible.py" />
       </list>
     </option>
   </component>
@@ -278,6 +269,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -336,7 +328,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="examples" />
+              <option name="myItemId" value="forms" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -360,84 +352,19 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="adminset" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="adminset" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="navi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="adminset" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="adminset" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="accounts" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="adminset" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="adminset" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="navi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="adminset" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="adminset" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="accounts" />
+              <option name="myItemId" value="cmdb" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="recentsLimit" value="5" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../sadmin" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.django.DjangoModulesConfigurable" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
@@ -793,301 +720,301 @@
       <option name="number" value="Default" />
       <updated>1473831414640</updated>
     </task>
-    <task id="LOCAL-00437" summary="测试">
-      <created>1488821530417</created>
-      <option name="number" value="00437" />
+    <task id="LOCAL-00504" summary="测试">
+      <created>1488872546829</created>
+      <option name="number" value="00504" />
       <option name="project" value="LOCAL" />
-      <updated>1488821530417</updated>
+      <updated>1488872546829</updated>
     </task>
-    <task id="LOCAL-00438" summary="测试">
-      <created>1488821838188</created>
-      <option name="number" value="00438" />
+    <task id="LOCAL-00505" summary="测试">
+      <created>1488872567523</created>
+      <option name="number" value="00505" />
       <option name="project" value="LOCAL" />
-      <updated>1488821838188</updated>
+      <updated>1488872567523</updated>
     </task>
-    <task id="LOCAL-00439" summary="测试">
-      <created>1488821882852</created>
-      <option name="number" value="00439" />
+    <task id="LOCAL-00506" summary="测试">
+      <created>1488872830229</created>
+      <option name="number" value="00506" />
       <option name="project" value="LOCAL" />
-      <updated>1488821882852</updated>
+      <updated>1488872830229</updated>
     </task>
-    <task id="LOCAL-00440" summary="测试">
-      <created>1488821992801</created>
-      <option name="number" value="00440" />
+    <task id="LOCAL-00507" summary="测试">
+      <created>1488873063382</created>
+      <option name="number" value="00507" />
       <option name="project" value="LOCAL" />
-      <updated>1488821992802</updated>
+      <updated>1488873063382</updated>
     </task>
-    <task id="LOCAL-00441" summary="测试">
-      <created>1488822026202</created>
-      <option name="number" value="00441" />
+    <task id="LOCAL-00508" summary="测试">
+      <created>1488873095029</created>
+      <option name="number" value="00508" />
       <option name="project" value="LOCAL" />
-      <updated>1488822026202</updated>
+      <updated>1488873095029</updated>
     </task>
-    <task id="LOCAL-00442" summary="测试">
-      <created>1488822086844</created>
-      <option name="number" value="00442" />
+    <task id="LOCAL-00509" summary="测试">
+      <created>1488873142508</created>
+      <option name="number" value="00509" />
       <option name="project" value="LOCAL" />
-      <updated>1488822086844</updated>
+      <updated>1488873142508</updated>
     </task>
-    <task id="LOCAL-00443" summary="测试">
-      <created>1488822117957</created>
-      <option name="number" value="00443" />
+    <task id="LOCAL-00510" summary="测试">
+      <created>1488873154230</created>
+      <option name="number" value="00510" />
       <option name="project" value="LOCAL" />
-      <updated>1488822117957</updated>
+      <updated>1488873154230</updated>
     </task>
-    <task id="LOCAL-00444" summary="测试">
-      <created>1488822228348</created>
-      <option name="number" value="00444" />
+    <task id="LOCAL-00511" summary="测试">
+      <created>1488873210778</created>
+      <option name="number" value="00511" />
       <option name="project" value="LOCAL" />
-      <updated>1488822228348</updated>
+      <updated>1488873210778</updated>
     </task>
-    <task id="LOCAL-00445" summary="测试">
-      <created>1488822324533</created>
-      <option name="number" value="00445" />
+    <task id="LOCAL-00512" summary="测试">
+      <created>1488873543302</created>
+      <option name="number" value="00512" />
       <option name="project" value="LOCAL" />
-      <updated>1488822324533</updated>
+      <updated>1488873543302</updated>
     </task>
-    <task id="LOCAL-00446" summary="测试">
-      <created>1488822358039</created>
-      <option name="number" value="00446" />
+    <task id="LOCAL-00513" summary="测试">
+      <created>1488873589885</created>
+      <option name="number" value="00513" />
       <option name="project" value="LOCAL" />
-      <updated>1488822358039</updated>
+      <updated>1488873589885</updated>
     </task>
-    <task id="LOCAL-00447" summary="测试">
-      <created>1488822413029</created>
-      <option name="number" value="00447" />
+    <task id="LOCAL-00514" summary="测试">
+      <created>1488873638500</created>
+      <option name="number" value="00514" />
       <option name="project" value="LOCAL" />
-      <updated>1488822413029</updated>
+      <updated>1488873638500</updated>
     </task>
-    <task id="LOCAL-00448" summary="测试">
-      <created>1488822490488</created>
-      <option name="number" value="00448" />
+    <task id="LOCAL-00515" summary="测试">
+      <created>1488873705691</created>
+      <option name="number" value="00515" />
       <option name="project" value="LOCAL" />
-      <updated>1488822490488</updated>
+      <updated>1488873705691</updated>
     </task>
-    <task id="LOCAL-00449" summary="测试">
-      <created>1488849428664</created>
-      <option name="number" value="00449" />
+    <task id="LOCAL-00516" summary="测试">
+      <created>1488873753468</created>
+      <option name="number" value="00516" />
       <option name="project" value="LOCAL" />
-      <updated>1488849428664</updated>
+      <updated>1488873753468</updated>
     </task>
-    <task id="LOCAL-00450" summary="测试">
-      <created>1488850372138</created>
-      <option name="number" value="00450" />
+    <task id="LOCAL-00517" summary="测试">
+      <created>1488873775966</created>
+      <option name="number" value="00517" />
       <option name="project" value="LOCAL" />
-      <updated>1488850372138</updated>
+      <updated>1488873775966</updated>
     </task>
-    <task id="LOCAL-00451" summary="测试">
-      <created>1488852004504</created>
-      <option name="number" value="00451" />
+    <task id="LOCAL-00518" summary="测试">
+      <created>1488873846521</created>
+      <option name="number" value="00518" />
       <option name="project" value="LOCAL" />
-      <updated>1488852004504</updated>
+      <updated>1488873846521</updated>
     </task>
-    <task id="LOCAL-00452" summary="测试">
-      <created>1488852297234</created>
-      <option name="number" value="00452" />
+    <task id="LOCAL-00519" summary="测试">
+      <created>1488873890203</created>
+      <option name="number" value="00519" />
       <option name="project" value="LOCAL" />
-      <updated>1488852297234</updated>
+      <updated>1488873890203</updated>
     </task>
-    <task id="LOCAL-00453" summary="测试">
-      <created>1488852331510</created>
-      <option name="number" value="00453" />
+    <task id="LOCAL-00520" summary="测试">
+      <created>1488873940155</created>
+      <option name="number" value="00520" />
       <option name="project" value="LOCAL" />
-      <updated>1488852331510</updated>
+      <updated>1488873940155</updated>
     </task>
-    <task id="LOCAL-00454" summary="测试">
-      <created>1488852405765</created>
-      <option name="number" value="00454" />
+    <task id="LOCAL-00521" summary="测试">
+      <created>1488873954696</created>
+      <option name="number" value="00521" />
       <option name="project" value="LOCAL" />
-      <updated>1488852405765</updated>
+      <updated>1488873954696</updated>
     </task>
-    <task id="LOCAL-00455" summary="测试">
-      <created>1488852672178</created>
-      <option name="number" value="00455" />
+    <task id="LOCAL-00522" summary="测试">
+      <created>1488873979191</created>
+      <option name="number" value="00522" />
       <option name="project" value="LOCAL" />
-      <updated>1488852672178</updated>
+      <updated>1488873979191</updated>
     </task>
-    <task id="LOCAL-00456" summary="测试">
-      <created>1488853628188</created>
-      <option name="number" value="00456" />
+    <task id="LOCAL-00523" summary="测试">
+      <created>1488873994175</created>
+      <option name="number" value="00523" />
       <option name="project" value="LOCAL" />
-      <updated>1488853628188</updated>
+      <updated>1488873994175</updated>
     </task>
-    <task id="LOCAL-00457" summary="测试">
-      <created>1488853677531</created>
-      <option name="number" value="00457" />
+    <task id="LOCAL-00524" summary="测试">
+      <created>1488874010393</created>
+      <option name="number" value="00524" />
       <option name="project" value="LOCAL" />
-      <updated>1488853677531</updated>
+      <updated>1488874010393</updated>
     </task>
-    <task id="LOCAL-00458" summary="测试">
-      <created>1488853802717</created>
-      <option name="number" value="00458" />
+    <task id="LOCAL-00525" summary="测试">
+      <created>1488874029166</created>
+      <option name="number" value="00525" />
       <option name="project" value="LOCAL" />
-      <updated>1488853802717</updated>
+      <updated>1488874029166</updated>
     </task>
-    <task id="LOCAL-00459" summary="测试">
-      <created>1488854367481</created>
-      <option name="number" value="00459" />
+    <task id="LOCAL-00526" summary="测试">
+      <created>1488874041709</created>
+      <option name="number" value="00526" />
       <option name="project" value="LOCAL" />
-      <updated>1488854367481</updated>
+      <updated>1488874041709</updated>
     </task>
-    <task id="LOCAL-00460" summary="测试">
-      <created>1488854394588</created>
-      <option name="number" value="00460" />
+    <task id="LOCAL-00527" summary="测试">
+      <created>1488874197634</created>
+      <option name="number" value="00527" />
       <option name="project" value="LOCAL" />
-      <updated>1488854394588</updated>
+      <updated>1488874197634</updated>
     </task>
-    <task id="LOCAL-00461" summary="测试">
-      <created>1488854477532</created>
-      <option name="number" value="00461" />
+    <task id="LOCAL-00528" summary="测试">
+      <created>1488874357536</created>
+      <option name="number" value="00528" />
       <option name="project" value="LOCAL" />
-      <updated>1488854477532</updated>
+      <updated>1488874357536</updated>
     </task>
-    <task id="LOCAL-00462" summary="测试">
-      <created>1488855375044</created>
-      <option name="number" value="00462" />
+    <task id="LOCAL-00529" summary="测试">
+      <created>1488874386222</created>
+      <option name="number" value="00529" />
       <option name="project" value="LOCAL" />
-      <updated>1488855375044</updated>
+      <updated>1488874386222</updated>
     </task>
-    <task id="LOCAL-00463" summary="测试">
-      <created>1488855453721</created>
-      <option name="number" value="00463" />
+    <task id="LOCAL-00530" summary="测试">
+      <created>1488874415417</created>
+      <option name="number" value="00530" />
       <option name="project" value="LOCAL" />
-      <updated>1488855453721</updated>
+      <updated>1488874415417</updated>
     </task>
-    <task id="LOCAL-00464" summary="测试">
-      <created>1488855505112</created>
-      <option name="number" value="00464" />
+    <task id="LOCAL-00531" summary="测试">
+      <created>1488874433205</created>
+      <option name="number" value="00531" />
       <option name="project" value="LOCAL" />
-      <updated>1488855505112</updated>
+      <updated>1488874433205</updated>
     </task>
-    <task id="LOCAL-00465" summary="测试">
-      <created>1488855533267</created>
-      <option name="number" value="00465" />
+    <task id="LOCAL-00532" summary="测试">
+      <created>1488874449375</created>
+      <option name="number" value="00532" />
       <option name="project" value="LOCAL" />
-      <updated>1488855533267</updated>
+      <updated>1488874449375</updated>
     </task>
-    <task id="LOCAL-00466" summary="测试">
-      <created>1488855558548</created>
-      <option name="number" value="00466" />
+    <task id="LOCAL-00533" summary="测试">
+      <created>1488874541312</created>
+      <option name="number" value="00533" />
       <option name="project" value="LOCAL" />
-      <updated>1488855558548</updated>
+      <updated>1488874541312</updated>
     </task>
-    <task id="LOCAL-00467" summary="测试">
-      <created>1488855587835</created>
-      <option name="number" value="00467" />
+    <task id="LOCAL-00534" summary="测试">
+      <created>1488874640098</created>
+      <option name="number" value="00534" />
       <option name="project" value="LOCAL" />
-      <updated>1488855587835</updated>
+      <updated>1488874640098</updated>
     </task>
-    <task id="LOCAL-00468" summary="测试">
-      <created>1488855600580</created>
-      <option name="number" value="00468" />
+    <task id="LOCAL-00535" summary="测试">
+      <created>1488875132570</created>
+      <option name="number" value="00535" />
       <option name="project" value="LOCAL" />
-      <updated>1488855600580</updated>
+      <updated>1488875132570</updated>
     </task>
-    <task id="LOCAL-00469" summary="测试">
-      <created>1488855612894</created>
-      <option name="number" value="00469" />
+    <task id="LOCAL-00536" summary="测试">
+      <created>1488875156880</created>
+      <option name="number" value="00536" />
       <option name="project" value="LOCAL" />
-      <updated>1488855612894</updated>
+      <updated>1488875156880</updated>
     </task>
-    <task id="LOCAL-00470" summary="测试">
-      <created>1488855624745</created>
-      <option name="number" value="00470" />
+    <task id="LOCAL-00537" summary="测试">
+      <created>1488875240920</created>
+      <option name="number" value="00537" />
       <option name="project" value="LOCAL" />
-      <updated>1488855624745</updated>
+      <updated>1488875240920</updated>
     </task>
-    <task id="LOCAL-00471" summary="测试">
-      <created>1488855660967</created>
-      <option name="number" value="00471" />
+    <task id="LOCAL-00538" summary="测试">
+      <created>1488875989840</created>
+      <option name="number" value="00538" />
       <option name="project" value="LOCAL" />
-      <updated>1488855660967</updated>
+      <updated>1488875989840</updated>
     </task>
-    <task id="LOCAL-00472" summary="测试">
-      <created>1488855672868</created>
-      <option name="number" value="00472" />
+    <task id="LOCAL-00539" summary="测试">
+      <created>1488876046298</created>
+      <option name="number" value="00539" />
       <option name="project" value="LOCAL" />
-      <updated>1488855672868</updated>
+      <updated>1488876046298</updated>
     </task>
-    <task id="LOCAL-00473" summary="测试">
-      <created>1488855692960</created>
-      <option name="number" value="00473" />
+    <task id="LOCAL-00540" summary="测试">
+      <created>1488876098039</created>
+      <option name="number" value="00540" />
       <option name="project" value="LOCAL" />
-      <updated>1488855692960</updated>
+      <updated>1488876098039</updated>
     </task>
-    <task id="LOCAL-00474" summary="测试">
-      <created>1488855710110</created>
-      <option name="number" value="00474" />
+    <task id="LOCAL-00541" summary="测试">
+      <created>1488876232088</created>
+      <option name="number" value="00541" />
       <option name="project" value="LOCAL" />
-      <updated>1488855710110</updated>
+      <updated>1488876232088</updated>
     </task>
-    <task id="LOCAL-00475" summary="测试">
-      <created>1488855725947</created>
-      <option name="number" value="00475" />
+    <task id="LOCAL-00542" summary="测试">
+      <created>1488876311660</created>
+      <option name="number" value="00542" />
       <option name="project" value="LOCAL" />
-      <updated>1488855725947</updated>
+      <updated>1488876311660</updated>
     </task>
-    <task id="LOCAL-00476" summary="测试">
-      <created>1488855745138</created>
-      <option name="number" value="00476" />
+    <task id="LOCAL-00543" summary="测试">
+      <created>1488876343169</created>
+      <option name="number" value="00543" />
       <option name="project" value="LOCAL" />
-      <updated>1488855745138</updated>
+      <updated>1488876343169</updated>
     </task>
-    <task id="LOCAL-00477" summary="测试">
-      <created>1488855816343</created>
-      <option name="number" value="00477" />
+    <task id="LOCAL-00544" summary="测试">
+      <created>1488876433170</created>
+      <option name="number" value="00544" />
       <option name="project" value="LOCAL" />
-      <updated>1488855816343</updated>
+      <updated>1488876433170</updated>
     </task>
-    <task id="LOCAL-00478" summary="测试">
-      <created>1488856843974</created>
-      <option name="number" value="00478" />
+    <task id="LOCAL-00545" summary="测试">
+      <created>1488876495746</created>
+      <option name="number" value="00545" />
       <option name="project" value="LOCAL" />
-      <updated>1488856843974</updated>
+      <updated>1488876495746</updated>
     </task>
-    <task id="LOCAL-00479" summary="测试">
-      <created>1488857079737</created>
-      <option name="number" value="00479" />
+    <task id="LOCAL-00546" summary="测试">
+      <created>1488876573233</created>
+      <option name="number" value="00546" />
       <option name="project" value="LOCAL" />
-      <updated>1488857079737</updated>
+      <updated>1488876573233</updated>
     </task>
-    <task id="LOCAL-00480" summary="测试">
-      <created>1488857117652</created>
-      <option name="number" value="00480" />
+    <task id="LOCAL-00547" summary="测试">
+      <created>1488876872182</created>
+      <option name="number" value="00547" />
       <option name="project" value="LOCAL" />
-      <updated>1488857117652</updated>
+      <updated>1488876872182</updated>
     </task>
-    <task id="LOCAL-00481" summary="测试">
-      <created>1488857204408</created>
-      <option name="number" value="00481" />
+    <task id="LOCAL-00548" summary="测试">
+      <created>1488877117187</created>
+      <option name="number" value="00548" />
       <option name="project" value="LOCAL" />
-      <updated>1488857204408</updated>
+      <updated>1488877117187</updated>
     </task>
-    <task id="LOCAL-00482" summary="测试">
-      <created>1488857314407</created>
-      <option name="number" value="00482" />
+    <task id="LOCAL-00549" summary="测试">
+      <created>1488877152664</created>
+      <option name="number" value="00549" />
       <option name="project" value="LOCAL" />
-      <updated>1488857314407</updated>
+      <updated>1488877152664</updated>
     </task>
-    <task id="LOCAL-00483" summary="测试">
-      <created>1488857997676</created>
-      <option name="number" value="00483" />
+    <task id="LOCAL-00550" summary="测试">
+      <created>1488877230050</created>
+      <option name="number" value="00550" />
       <option name="project" value="LOCAL" />
-      <updated>1488857997676</updated>
+      <updated>1488877230050</updated>
     </task>
-    <task id="LOCAL-00484" summary="测试">
-      <created>1488858020266</created>
-      <option name="number" value="00484" />
+    <task id="LOCAL-00551" summary="测试">
+      <created>1488877426680</created>
+      <option name="number" value="00551" />
       <option name="project" value="LOCAL" />
-      <updated>1488858020266</updated>
+      <updated>1488877426680</updated>
     </task>
-    <task id="LOCAL-00485" summary="测试">
-      <created>1488858178133</created>
-      <option name="number" value="00485" />
+    <task id="LOCAL-00552" summary="测试">
+      <created>1488878402666</created>
+      <option name="number" value="00552" />
       <option name="project" value="LOCAL" />
-      <updated>1488858178133</updated>
+      <updated>1488878402666</updated>
     </task>
-    <option name="localTasksCounter" value="486" />
+    <option name="localTasksCounter" value="553" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1103,7 +1030,7 @@
     <frame x="-11" y="-11" width="1942" height="1042" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23060344" sideWeight="0.49445325" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21336207" sideWeight="0.49445325" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32799146" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3278302" sideWeight="0.49784482" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32429245" sideWeight="0.50919914" order="10" side_tool="true" content_ui="tabs" />
@@ -1191,82 +1118,97 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../sadmin/UserManage/forms.py">
+    <entry file="file://$PROJECT_DIR$/templates/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="44" column="11" selection-start-line="44" selection-start-column="11" selection-end-line="44" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../jumpserver/jperm/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.589744">
-          <caret line="11" column="18" selection-start-line="11" selection-start-column="18" selection-end-line="11" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../jumpserver/jasset/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.3589745">
-          <caret line="5" column="33" selection-start-line="5" selection-start-column="33" selection-end-line="5" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../jumpserver/jumpserver/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.461538">
-          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../jumpserver/jumpserver/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../jumpserver/jumpserver.conf">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="13" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/requirements.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/adminset.conf">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="8" selection-start-line="9" selection-start-column="8" selection-end-line="9" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmdb/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../jumpserver/jumpserver/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
+        <state vertical-scroll-proportion="-0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../jumpserver/jumpserver/views.py">
+    <entry file="file://$PROJECT_DIR$/templates/main-sidebar.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.395349">
+          <caret line="45" column="29" selection-start-line="45" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/head_script.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/main-header.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-13.44186">
+          <caret line="17" column="6" selection-start-line="17" selection-start-column="6" selection-end-line="17" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/config/config-header.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="22" column="45" selection-start-line="22" selection-start-column="45" selection-end-line="22" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/navi/navi-header.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="22" column="45" selection-start-line="22" selection-start-column="45" selection-end-line="22" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/setup/setup-header.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="25" column="45" selection-start-line="25" selection-start-column="45" selection-end-line="25" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/control-sidebar.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="9" column="57" selection-start-line="9" selection-start-column="57" selection-end-line="9" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/accounts/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/accounts/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="9" column="38" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="38" />
+          <folding>
+            <element signature="e#47#88#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/adminset/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="2" selection-end-line="6" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/auser/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="25" column="17" selection-start-line="25" selection-start-column="17" selection-end-line="25" selection-end-column="17" />
           <folding />
         </state>
       </provider>
@@ -1274,16 +1216,10 @@
     <entry file="file://$PROJECT_DIR$/cmdb/idc.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="1" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/adminset/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <caret line="77" column="16" selection-start-line="77" selection-start-column="16" selection-end-line="77" selection-end-column="16" />
+          <folding>
+            <element signature="e#48#95#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1291,18 +1227,50 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="13" column="23" selection-start-line="13" selection-start-column="23" selection-end-line="13" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmdb/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="52" column="16" selection-start-line="52" selection-start-column="16" selection-end-line="52" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmdb/group.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="6" column="48" selection-start-line="6" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmdb/asset.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="127" column="16" selection-start-line="127" selection-start-column="16" selection-end-line="127" selection-end-column="16" />
           <folding>
-            <element signature="e#47#88#0" expanded="false" />
+            <element signature="e#48#75#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/urls.py">
+    <entry file="file://$PROJECT_DIR$/cmdb/apps.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmdb/api.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#47#88#0" expanded="false" />
+            <element signature="e#48#84#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1317,47 +1285,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/auser/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#47#88#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/auser/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="12" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="12" />
-          <folding>
-            <element signature="e#0#39#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/auser/apps.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#39#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/auser/admin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#32#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmdb/api.py">
+    <entry file="file://$PROJECT_DIR$/setup/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -1365,100 +1293,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cmdb/apps.py">
+    <entry file="file://$PROJECT_DIR$/config/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="49" column="0" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
           <folding>
-            <element signature="e#0#39#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmdb/asset.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/navi/admin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#32#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/navi/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="4" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="4" />
-          <folding>
-            <element signature="e#47#88#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/auser/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="13" column="19" selection-start-line="0" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/accounts/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/adminset/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="41" column="15" selection-start-line="41" selection-start-column="15" selection-end-line="41" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/accounts/tests.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/accounts/apps.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#39#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/accounts/admin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmdb/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="44" column="0" selection-start-line="44" selection-start-column="0" selection-end-line="69" selection-end-column="9" />
-          <folding>
-            <element signature="e#48#72#0" expanded="false" />
+            <element signature="e#47#118#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1466,166 +1306,241 @@
     <entry file="file://$PROJECT_DIR$/accounts/forms.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <caret line="18" column="15" selection-start-line="18" selection-start-column="15" selection-end-line="18" selection-end-column="15" />
           <folding>
-            <element signature="e#47#71#0" expanded="true" />
+            <element signature="e#47#71#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/adminset/urls.py">
+    <entry file="file://$PROJECT_DIR$/templates/navbar-custom-menu.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="13" column="19" selection-start-line="13" selection-start-column="11" selection-end-line="13" selection-end-column="19" />
+        <state vertical-scroll-proportion="-2.3255813">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="2" selection-end-line="96" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../AdminLTE-2.3.11 (1)/AdminLTE-2.3.11/pages/forms/general.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.860465">
+          <caret line="709" column="13" selection-start-line="709" selection-start-column="0" selection-end-line="749" selection-end-column="0" />
           <folding>
-            <element signature="e#0#40#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/accounts/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.744186">
-          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#39#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/cmdb/asset_add.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.7906977">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="3" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.9069767">
-          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="13" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/main-sidebar.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.395349">
-          <caret line="45" column="29" selection-start-line="45" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/head_script.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/main-header.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.44186">
-          <caret line="17" column="6" selection-start-line="17" selection-start-column="6" selection-end-line="17" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/cmdb/cmdb-header.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.55814">
-          <caret line="26" column="6" selection-start-line="26" selection-start-column="6" selection-end-line="26" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/config/config-header.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.55814">
-          <caret line="22" column="45" selection-start-line="22" selection-start-column="45" selection-end-line="22" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/navi/navi-header.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.55814">
-          <caret line="22" column="45" selection-start-line="22" selection-start-column="45" selection-end-line="22" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/setup/setup-header.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.651163">
-          <caret line="25" column="45" selection-start-line="25" selection-start-column="45" selection-end-line="25" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/control-sidebar.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="26.093023">
-          <caret line="9" column="57" selection-start-line="9" selection-start-column="57" selection-end-line="9" selection-end-column="57" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/accounts/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="38" selection-start-line="9" selection-start-column="30" selection-end-line="9" selection-end-column="38" />
-          <folding>
-            <element signature="e#47#88#0" expanded="true" />
+            <element signature="n#div#0;n#div#1;n#div#0;n#section#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/accounts/login.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="27.976744">
-          <caret line="9" column="36" selection-start-line="9" selection-start-column="36" selection-end-line="9" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/navbar-custom-menu.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.627907">
-          <caret line="137" column="43" selection-start-line="137" selection-start-column="35" selection-end-line="137" selection-end-column="43" />
+        <state vertical-scroll-proportion="-15.023255">
+          <caret line="19" column="19" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
           <folding>
-            <element signature="n#li#0;n#ul#0;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#ul#0;n#li#0;n#ul#0;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#li#1;n#ul#0;n#div#0;n#!!top" expanded="false" />
-            <element signature="n#li#2;n#ul#0;n#div#0;n#!!top" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/navi/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="15" />
-          <folding>
-            <element signature="e#48#83#0" expanded="true" />
+            <element signature="n#style#0;n#button#0;n#div#1;n#form#0;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/accounts/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.29310346">
-          <caret line="7" column="15" selection-start-line="7" selection-start-column="15" selection-end-line="7" selection-end-column="15" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="21" column="32" selection-start-line="21" selection-start-column="28" selection-end-line="21" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/cmdb/cmdb-header.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-20.55814">
+          <caret line="26" column="6" selection-start-line="26" selection-start-column="6" selection-end-line="26" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.7906977">
+          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="13" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/navi/manage.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.6976743">
+          <caret line="19" column="36" selection-start-line="19" selection-start-column="36" selection-end-line="19" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/cmdb/idc.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.5813954">
+          <caret line="21" column="36" selection-start-line="21" selection-start-column="36" selection-end-line="21" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/setup/result.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.209302">
+          <caret line="30" column="44" selection-start-line="30" selection-start-column="44" selection-end-line="30" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/setup/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.627907">
+          <caret line="23" column="36" selection-start-line="23" selection-start-column="36" selection-end-line="23" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/setup/ansible.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-12.023255">
+          <caret line="33" column="44" selection-start-line="33" selection-start-column="44" selection-end-line="33" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/setup/shell_result.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.44186">
+          <caret line="30" column="44" selection-start-line="30" selection-start-column="44" selection-end-line="30" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/setup/shell.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="80" column="0" selection-start-line="80" selection-start-column="0" selection-end-line="80" selection-end-column="0" />
+          <folding>
+            <element signature="e#47#86#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/setup/shell.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.44186">
+          <caret line="73" column="27" selection-start-line="73" selection-start-column="27" selection-end-line="73" selection-end-column="27" />
+          <folding>
+            <element signature="e#2528#2557#0#HTML" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/cmdb/asset_add.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.4651165">
+          <caret line="21" column="36" selection-start-line="21" selection-start-column="36" selection-end-line="21" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/cmdb/asset_edit.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/cmdb/group.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.0465117">
+          <caret line="21" column="36" selection-start-line="21" selection-start-column="36" selection-end-line="21" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/cmdb/group_add.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.023256">
+          <caret line="21" column="36" selection-start-line="21" selection-start-column="36" selection-end-line="21" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/cmdb/group_edit.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/cmdb/idc_add.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.2325583">
+          <caret line="21" column="36" selection-start-line="21" selection-start-column="36" selection-end-line="21" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/cmdb/idc_add_mini.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/cmdb/idc_edit.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/cmdb/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.697675">
+          <caret line="37" column="10" selection-start-line="37" selection-start-column="10" selection-end-line="37" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/navi/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="65" column="16" selection-start-line="65" selection-start-column="16" selection-end-line="65" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/navi/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.3255816">
+          <caret line="23" column="37" selection-start-line="23" selection-start-column="37" selection-end-line="23" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/footer.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.9534883">
+          <caret line="5" column="65" selection-start-line="5" selection-start-column="65" selection-end-line="5" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/setup/ansible.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmdb/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.7253695">
+          <caret line="11" column="11" selection-start-line="11" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
           <folding />
         </state>
       </provider>
