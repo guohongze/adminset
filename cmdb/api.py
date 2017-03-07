@@ -7,7 +7,7 @@ from django.core.paginator import Paginator, EmptyPage, InvalidPage
 
 try:
     import json
-except ImportError,e:
+except ImportError, e:
     import simplejson as json
 
 
@@ -77,6 +77,7 @@ def pages(post_objects, request):
 
     # 所有对象， 分页器， 本页对象， 所有页码， 本页页码，是否显示第一页，是否显示最后一页
     return post_objects, paginator, page_objects, page_range, current_page, show_first, show_end
+
 
 def collect(request):
     req = request

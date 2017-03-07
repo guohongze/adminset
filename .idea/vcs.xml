@@ -3,5 +3,7 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="svn" />
     <mapping directory="$PROJECT_DIR$/../jumpserver" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../sadmin" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../sadmin" vcs="Git" />
   </component>
 </project>

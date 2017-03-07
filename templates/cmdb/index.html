@@ -15,10 +15,9 @@
         showhide(2);
     }
     function showhide(n) {
-        var box = document.getElementById("sidebar-menu");
-        var allLi=box.getElementsByTagName("li");
-        allLi[n].className="active";
         var box = document.getElementById("cmdb");
+        box.className="active";
+        var box = document.getElementById("cmdb_navibar");
         box.className="active";
     }
 </script>
@@ -27,13 +26,6 @@
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1>
-        <small></small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-link"></i> Level</a></li>
-        <li class="active">Here</li>
-      </ol>
     </section>
 
     <!-- Main content -->

@@ -1,3 +1,4 @@
 django==1.9.8
 sh==1.12.9
 Celery==4.0.2
+mysql-python==1.2.5

@@ -9,12 +9,10 @@
         showhide(1);
     }
     function showhide(n) {
-        var box = document.getElementById("sidebar-menu");
-        var allLi=box.getElementsByTagName("li");
-        allLi[n].className="active";
-        var box = document.getElementById("navbar-collapse");
-        var ali=box.getElementsByTagName("li");
-        ali[n-1].className="active";
+        var box = document.getElementById("navi");
+        box.className="active";
+        var box = document.getElementById("navi_manage");
+        box.className="active";
     }
 </script>
 <div class="content-wrapper">

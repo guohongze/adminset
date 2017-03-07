@@ -16,7 +16,6 @@ def login(request):
         is_auth = SysUser.objects.filter(username=user, password=pwd).count()
         if is_auth == 1:
             request.session['is_login'] = {'user': user}
-            print request.user
             return redirect('/auser/')
         else:
             ret['status'] = 'user or password error!'

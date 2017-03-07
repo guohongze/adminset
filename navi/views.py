@@ -6,7 +6,10 @@ from .models import navi
 from django.http import HttpResponse
 from django.shortcuts import render_to_response,redirect
 from forms import navi_form
+from django.contrib.auth.decorators import login_required
 
+
+@login_required
 def index(request):
     temp_name = "navi/navi-header.html"
     allnavi = navi.objects.all()
@@ -41,11 +44,11 @@ def delete(request):
     return render_to_response("navi/manage.html", locals())
 
 
-
 def manage(request):
     temp_name = "navi/navi-header.html"
     allnavi = navi.objects.all()
     return render_to_response("navi/manage.html", locals())
+
 
 def edit(request):
     temp_name = "navi/navi-header.html"
