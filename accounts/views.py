@@ -41,6 +41,6 @@ def login(request):
 
 
 @login_required
-def loginout(request):
+def logout(request):
     auth.logout(request)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))

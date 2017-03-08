@@ -32,7 +32,7 @@
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-        <form class="form-horizontal" role="form" action="{% url "loginurl" %}" method="POST" >              <div class="box-body">
+        <form class="form-horizontal" role="form" action="{% url "login" %}" method="POST" >              <div class="box-body">
         {% csrf_token %}
             {% for item in form %}
                 <div class="form-group">

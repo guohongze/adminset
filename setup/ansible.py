@@ -98,20 +98,20 @@ def playbook(request):
 @login_required()
 def ansible_command(request):
     command_list = []
-    ret = []
+    ret2 = []
+    count = 1
     temp_name = "setup/setup-header.html"
     if request.method == 'POST':
         mcommand = request.POST.get('mcommand')
         command_list = mcommand.split('\n')
         for command in command_list:
-            count = 1
             if command.startswith("ansible"):
                 p = Popen(command, stdout=PIPE, stderr=PIPE,shell=True)
                 data = p.communicate()
-                ret.append(data)
+                ret2.append(data)
             else:
                 data = "your command " + str(count) + "  is invalid!"
-                ret.append(data)
+                ret2.append(data)
             count += 1
         return render_to_response('setup/result.html', locals())
 

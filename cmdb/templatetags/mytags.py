@@ -19,8 +19,13 @@ def res_split(value):
     """
     将结果格式化换行
     """
-    for v in value:
-        if v != None:
-            data = v.replace('|', '<br>')
-    return str(data)
+    res = []
+    if isinstance(value, tuple):
+        for v in value:
+            if v is not None:
+                data = v.replace('\n', '<br>')
+                res.append(data)
+        return res
+    else:
+        return value
 
