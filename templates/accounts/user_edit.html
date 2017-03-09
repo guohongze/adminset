@@ -13,30 +13,32 @@
     <section class="content">
 
 <div id="dialog">
-        <div class="box box-info">
+        <div class="box">
             <!-- /.box-header -->
             <!-- form start -->
     <form class="form-horizontal" role="form" action={% url "user_edit" ids %} method="POST" >
     {% csrf_token %}
-
+              <div class="box-body">
         {% for item in form %}
             <div class="form-group">
-                <label class="control-label col-md-1">{{item.label}}</label>
-                <div class="col-md-2">
+                <label class="col-sm-2 control-label">{{item.label}}</label>
+
+                <div class="col-ms-10" style="margin-left: 10px;">
                     {{item}}
                 </div>
-                <div class="col-md-offset-1 col-md-10">
+                <div class="col-ms-10" style="margin-left: 10px;">
                     {{item.errors}}
                 </div>
-                    <input type="hidden" name="id" value="{{ item.id }}">
             </div>
+            <input type="hidden" name="id" value="{{ item.id }}">
         {% endfor %}
         <div class="form-group">
-            <div class="col-md-offset-1 col-md-10">
-                <button type="submit" class="btn btn-danger btn-sm">更 新</button>
-{#                <a class="btn btn-danger btn-sm" href={% url "resetpasswordurl" ID %} onclick="return confirm('确认重置密码吗？？')">重置密码</a>#}
-            <div>
+            <div class="box-footer" style="margin-left: 10px;width: 530px;">
+                <button type="submit" class="btn btn-primary pull-left" style="width: 120px">更新信息</button>&nbsp;&nbsp;
+                <a class="btn btn-danger" href="{% url "reset_pwd" ids %}" style="width: 120px" onclick="return confirm('确认重置密码？')">重置密码</a>
+            </div>
         </div>
+              </div>
     </form>
 </div>
     </div>

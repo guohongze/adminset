@@ -11,11 +11,6 @@ from django.core.urlresolvers import reverse
 from models import UserInfo
 
 
-@login_required()
-def index(request):
-    return HttpResponse("ok")
-
-
 def login(request):
     if request.user.is_authenticated():
         return HttpResponseRedirect('/')
@@ -106,3 +101,20 @@ def user_edit(request, ids):
     # }
 
     return render_to_response('accounts/user_edit.html', locals())
+
+
+@login_required
+def reset_pwd(request, ids):
+    user = get_user_model().objects.get(id=ids)
+    newpassword = get_user_model().objects.make_random_password(length=10, allowed_chars='abcdefghjklmnpqrstuvwxyABCDEFGHJKLMNPQRSTUVWXY3456789')
+    print '====>ResetPassword:%s-->%s' % (user.username, newpassword)
+    user.set_password(newpassword)
+    user.save()
+
+    kwvars = {
+        'object': user,
+        'newpassword': newpassword,
+        'request': request,
+    }
+
+    return render_to_response('accounts/reset_pwd.html', kwvars,RequestContext(request))
