@@ -1,0 +1,25 @@
+<header class="main-header">
+
+    <!-- Logo -->
+    <a href="{% url 'index' %}" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini"><b>AST</b></span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg"><b>AdminSet</b></span>
+    </a>
+
+    <!-- Header Navbar -->
+    <nav class="navbar navbar-static-top" role="navigation">
+      <!-- Sidebar toggle button-->
+      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+        <span class="sr-only">Toggle navigation</span>
+      </a>
+        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li style="font-size: medium"><a href="#"><b>配置管理</b></a></li>
+          </ul>
+        </div>
+      <!-- Navbar Right Menu -->
+      {% include 'navbar-custom-menu.html' %}
+    </nav>
+  </header>

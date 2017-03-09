@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+{% load mytags %}
+{% block self_head_css_js %}
+    <script src="/static/layer/layer.js"></script>
+    <script src="/static/js/base.js"></script>
+    <script src="/static/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="/static/plugins/datatables/dataTables.bootstrap.min.js"></script>
+    <script src="/static/plugins/datatables/dataTables.bootstrap.css"></script>
+
+{% endblock %}
+{% block content %}
+<script>
+    window.onload=init;
+    function init() {
+        showhide(2);
+    }
+    function showhide(n) {
+        var box = document.getElementById("accounts");
+        box.className="active";
+    }
+</script>
+
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <form action="" method="post" id="user_form">
+            <div class="box">
+                <div class="box-header">
+                    <div class="col-sm-2" style="padding-left: 0">
+						 <a href="{% url 'user_add' %}"><li class="btn btn-success" ><b>添加用户</b></li></a>
+                  </div>
+                </div>
+
+                <!-- /.box-header -->
+                <div class="box-body">
+                  <table class="table table-striped table-bordered" id="dataform">
+                      <thead>
+                        <tr>
+                            <th>账号</th>
+                            <th>姓名</th>
+                            <th>Email</th>
+                            <th>状态</th>
+                            <th>角色</th>
+                            <th>最后登录时间</th>
+                            <th>操作</th>
+                        </tr>
+                      </thead>
+                            <tbody>
+                                {% for i in all_user %}
+                                    <tr class="even gradeX">
+                                        <td>{{ i.username }}</td>
+                                        <td>{{ i.nickname|default:"----" }}</td>
+                                        <td>{{ i.email }}</td>
+                                        <td>
+                                            {% if i.is_active %}
+                                                <span class="label label-success">启用</span>
+                                            {% else %}
+                                                <span class="label label-default">禁用</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ i.role|default:"----" }}</td>
+                                        <td>{{ i.last_login|date:"Y-m-d H:i:s" }}</td>
+                                        <td class="text-center" data-editable='false'>
+{#                                        <a href="{% url 'user_edit' %}?id={{ host.id }}" class="btn btn-xs btn-info">编辑</a>#}
+                                        <a href="#"><li class="btn btn-sm btn-info" onclick="return tanchu(this.value)" value="{{ i.id }}">编辑</li></a>
+                                        <a value="{% url 'user_del' i.id %}" class="btn btn-sm btn-danger user_del">删除</a>
+                                    </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                  </table>
+                </div>
+            </div>
+        </form>
+    </section>
+        <!-- /.content -->
+{#用于接收user_edit.html中layui子层的传值#}
+<input id="handle_status" value="" hidden="hidden">
+</div>
+<script>
+  $(function () {
+    $("#example1").DataTable();
+    $('#dataform').DataTable({
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": true
+    });
+  });
+</script>
+<script>
+function checkSubmit() {
+    if (!confirm("确定删除？")) {
+        window.event.returnValue = false;
+    }
+}
+</script>
+<script>
+function tanchu(n){
+    layer.open({
+    type: 2,
+    title: '修改主机信息',
+    closeBtn: 1,
+    area: ['700px', '550px'],
+    shadeClose: true, //点击遮罩关闭
+    content: ['/accounts/user/edit/' + n,],
+    end:function(){
+            var handle_status = $("#handle_status").val();
+            if ( handle_status == '1' ) {
+                layer.msg('保存成功！',{
+                    icon: 1,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                },function(){
+                    history.go(0);
+                });
+            } else if ( handle_status == '2' ) {
+                layer.msg('修改失败！',{
+                    icon: 2,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                },function(){
+                    history.go(0);
+                });
+            }
+        }
+  });
+}
+</script>
+<script>
+    function change_info(){
+        var args = $("#user_form").serialize();
+        window.location = "{% url 'cmdb' %}?" + args
+    }
+
+    function export_excel(){
+        var user_id_all = getIDall();
+        if (user_id_all == ''){
+            if(confirm('您没有勾选，是否导出全部信息？')){
+                var args = $("#user_form").serialize();
+                window.location = "{% url 'cmdb' %}?export=all&" + args
+                }else{
+                    return false;
+                }
+            }else{
+                var args = $("#user_form").serialize();
+                window.location = "{% url 'cmdb' %}?export=true&" + args
+            }
+    }
+    $("#search_input").keydown(function(e) {
+        if (e.keyCode == 13) {
+            change_info()
+        }
+        });
+</script>
+<script>
+    $(document).ready(function(){
+        $('.user_del').click(function(){
+            var row = $(this).closest('tr');
+            if (confirm("确定删除?")) {
+                $.get(
+                        $(this).attr('value'),
+                        {},
+                        function (data) {
+                            row.remove()
+                        }
+                )
+            }
+        });
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% include 'link_css.html' %}
+    {% include 'head_script.html' %}
+</head>
+<body>
+<div class="content-wrapper">
+
+
+    <section class="content">
+
+<div id="dialog">
+        <div class="box box-info">
+            <!-- /.box-header -->
+            <!-- form start -->
+    <form class="form-horizontal" role="form" action={% url "user_edit" ids %} method="POST" >
+    {% csrf_token %}
+
+        {% for item in form %}
+            <div class="form-group">
+                <label class="control-label col-md-1">{{item.label}}</label>
+                <div class="col-md-2">
+                    {{item}}
+                </div>
+                <div class="col-md-offset-1 col-md-10">
+                    {{item.errors}}
+                </div>
+                    <input type="hidden" name="id" value="{{ item.id }}">
+            </div>
+        {% endfor %}
+        <div class="form-group">
+            <div class="col-md-offset-1 col-md-10">
+                <button type="submit" class="btn btn-danger btn-sm">更 新</button>
+{#                <a class="btn btn-danger btn-sm" href={% url "resetpasswordurl" ID %} onclick="return confirm('确认重置密码吗？？')">重置密码</a>#}
+            <div>
+        </div>
+    </form>
+</div>
+    </div>
+
+
+    </section>
+
+  </div>
+{#回传参数至父层#}
+<script type="text/javascript">
+        var index = parent.layer.getFrameIndex(window.name);
+        var success = {{ status }};
+        if ( success == '1' ) {
+            parent.$("#handle_status").val('1');
+              parent.layer.close(index);
+        } else if( success == '2' ) {
+            parent.$("#handle_status").val('2');
+            parent.layer.close(index);
+        }
+</script>
+</body>
+</html>

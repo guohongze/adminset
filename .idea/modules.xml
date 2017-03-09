@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/../AdminLTE-2.3.11 (1)/.idea/AdminLTE-2.3.11 (1).iml" filepath="$PROJECT_DIR$/../AdminLTE-2.3.11 (1)/.idea/AdminLTE-2.3.11 (1).iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/adminset.iml" filepath="$PROJECT_DIR$/.idea/adminset.iml" />
       <module fileurl="file://$PROJECT_DIR$/../jumpserver/.idea/jumpserver.iml" filepath="$PROJECT_DIR$/../jumpserver/.idea/jumpserver.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../sadmin/.idea/sadmin.iml" filepath="$PROJECT_DIR$/../sadmin/.idea/sadmin.iml" />
     </modules>
   </component>
 </project>
