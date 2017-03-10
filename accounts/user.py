@@ -4,7 +4,7 @@ from django.shortcuts import render_to_response, redirect, HttpResponse, HttpRes
 from django.contrib.auth.decorators import login_required
 from hashlib import sha1
 from django.contrib import auth
-from forms import LoginUserForm, EditUserForm
+from forms import LoginUserForm, EditUserForm, ChangePasswordForm
 from django.contrib.auth import get_user_model
 from forms import AddUserForm
 from django.core.urlresolvers import reverse
@@ -18,6 +18,9 @@ def login(request):
     if request.method == 'GET' and request.GET.has_key('next'):
         next = request.GET['next']
     else:
+        next = '/'
+
+    if next == "/accounts/logout/":
         next = '/'
 
     if request.method == "POST":
@@ -117,4 +120,24 @@ def reset_pwd(request, ids):
         'request': request,
     }
 
-    return render_to_response('accounts/reset_pwd.html', kwvars,RequestContext(request))
+    return render_to_response('accounts/reset_pwd.html', kwvars, RequestContext(request))
+
+
+@login_required
+def change_password(request):
+    temp_name = "accounts/accounts-header.html"
+    if request.method == 'POST':
+        form = ChangePasswordForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('logout'))
+    else:
+        form = ChangePasswordForm(user=request.user)
+
+    kwvars = {
+        'form': form,
+        'request': request,
+        'temp_name': temp_name,
+    }
+
+    return render_to_response('accounts/change_password.html', kwvars, RequestContext(request))

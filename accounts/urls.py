@@ -13,4 +13,5 @@ urlpatterns = [
     url(r'^user/delete/(?P<ids>\d+)/$', user.user_del, name='user_del'),
     url(r'^user/edit/(?P<ids>\d+)/$', user.user_edit, name='user_edit'),
     url(r'^reset/password/(?P<ids>\d+)/$', user.reset_pwd, name='reset_pwd'),
+    url(r'^change/password/$', user.change_password, name='change_password'),
 ]
