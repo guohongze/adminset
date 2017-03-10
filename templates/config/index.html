@@ -18,6 +18,10 @@
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
+        <div class="alert alert-info alert-dismissible" style="display: {{ display_control }};">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4>{{ tips }}</h4>
+        </div>
     </section>
 
     <!-- Main content -->
@@ -26,6 +30,7 @@
         <div class="box">
             <form class="form-horizontal" action="{% url 'config_save' %}" method="POST">
               <div class="box-body">
+                  <span><b>脚本路径设置</b></span>
                 <div class="form-group">
                   <label for="ansible_path" class="col-sm-2 control-label">Ansible路径:</label>
 
@@ -54,10 +59,55 @@
                     <input type="text" value="{{ s_path }}" id="scripts_path" name="scripts_path" style="width:450px;">
                   </div>
                 </div>
-              </div>
+                <hr>
+                  <p><b>数据库设置</b></p>
+                <div class="form-group">
+                  <label for="engine" class="col-sm-2 control-label">Engine:</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" value="{{ engine }}" id="engine" name="engine" style="width:450px;">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="host" class="col-sm-2 control-label">Host:</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" value="{{ host }}" id="host" name="host" style="width:450px;">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="user" class="col-sm-2 control-label">User:</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" value="{{ user }}" id="user" name="user" style="width:450px;">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="port" class="col-sm-2 control-label">Port:</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" value="{{ port }}" id="port" name="port" style="width:450px;">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="password" class="col-sm-2 control-label">Password:</label>
+
+                  <div class="col-sm-10">
+                    <input type="password" value="{{ password }}" id="password" name="password" style="width:450px;">
+                  </div>
+                    </div>
+                <div class="form-group">
+                  <label for="database" class="col-sm-2 control-label">Database:</label>
+
+                  <div class="col-sm-10">
+                    <input type="database" value="{{ database }}" id="database" name="database" style="width:450px;">
+                  </div>
+                </div>
+                         </div>
+
               <!-- /.box-body -->
               <div class="box-footer">
-                <button type="submit" onclick="checkSubmit()" class="btn btn-info pull-right" style="width: 100px"><b>保存(save)</b></button>
+                <button type="submit" onclick="checkSubmit()" class="btn btn-info pull-left" style="width: 120px"><b>保存(save)</b></button>
               </div>
               <!-- /.box-footer -->
             </form>
