@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block self_head_css_js %}
+    <script src="/static/layer/layer.js"></script>
+    <script src="/static/js/jquery.bootstrap-duallistbox.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap-duallistbox.css">
+{% endblock %}
+{% block content %}
+<script>
+    window.onload=init;
+    function init() {
+        showhide(2);
+    }
+    function showhide(n) {
+        var box = document.getElementById("accounts");
+        box.className="active";
+        var box = document.getElementById("role_list");
+        box.className="active";
+    }
+</script>
+
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+    </section>
+
+    <!-- Main content -->
+
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="box">
+        <div class="box-header with-border">
+        </div>
+        <div class="box-body">
+      <form action="{% url 'role_edit' ids %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" class="btn btn-primary" style="width: 60pt" value="提交">&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="{% url 'role_list' %}"><li style="width: 60pt" class="btn btn-primary" value="">返回</li></a><br>
+          </form>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+          <i class="fa fa-info-circle"></i> 请勿重复添加条目
+        </div>
+        <!-- /.box-footer-->
+      </div>
+      <!-- /.box -->
+    </section>
+
+  </div>
+    <script>
+        var demo1 = $('select[name="permission"]').bootstrapDualListbox({
+              nonSelectedListLabel: '可选择权限',
+              selectedListLabel: '已选择权限',
+              preserveSelectionOnMove: 'moved',
+              moveOnSelect: false,
+        });
+    </script>
+
+{% endblock %}

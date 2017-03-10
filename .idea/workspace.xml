@@ -42,103 +42,105 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
-      <file leaf-file-name="asset_add.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/cmdb/asset_add.html">
+      <file leaf-file-name="role_add.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/accounts/role_add.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.8139534">
-              <caret line="64" column="22" selection-start-line="64" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
+            <state vertical-scroll-proportion="-9.488372">
+              <caret line="15" column="52" selection-start-line="15" selection-start-column="43" selection-end-line="15" selection-end-column="52" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="asset.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cmdb/asset.py">
+      <file leaf-file-name="accounts-header.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/accounts/accounts-header.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="18" column="25" selection-start-line="18" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+            <state vertical-scroll-proportion="-7.8139534">
+              <caret line="19" column="55" selection-start-line="19" selection-start-column="55" selection-end-line="19" selection-end-column="55" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="group_add.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/cmdb/group_add.html">
+      <file leaf-file-name="change_password.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/accounts/change_password.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-0.7906977">
+              <caret line="36" column="38" selection-start-line="36" selection-start-column="38" selection-end-line="36" selection-end-column="38" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="role.add.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../sadmin/templates/UserManage/role.add.html">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="-5.5348835">
-              <caret line="19" column="41" selection-start-line="19" selection-start-column="41" selection-end-line="25" selection-end-column="14" />
+              <caret line="7" column="44" selection-start-line="7" selection-start-column="35" selection-end-line="7" selection-end-column="44" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/templates/config/index.html">
+      <file leaf-file-name="role_list.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/accounts/role_list.html">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.48634592">
-              <caret line="32" column="33" selection-start-line="32" selection-start-column="33" selection-end-line="32" selection-end-column="33" />
+              <caret line="11" column="8" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="8" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="role.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/accounts/role.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="52" column="12" selection-start-line="52" selection-start-column="12" selection-end-line="52" selection-end-column="12" />
               <folding>
-                <element signature="n#style#0;n#button#0;n#div#1;n#form#0;n#div#0;n#div#0;n#section#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="e#48#92#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config/views.py">
+      <file leaf-file-name="role_edit.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/accounts/role_edit.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-10.27907">
+              <caret line="37" column="41" selection-start-line="37" selection-start-column="41" selection-end-line="37" selection-end-column="41" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="role.edit.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../sadmin/templates/UserManage/role.edit.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.7209302">
+              <caret line="23" column="76" selection-start-line="23" selection-start-column="74" selection-end-line="23" selection-end-column="76" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/accounts/urls.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="11" column="4" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="4" />
-              <folding />
+              <caret line="19" column="72" selection-start-line="19" selection-start-column="72" selection-end-line="19" selection-end-column="72" />
+              <folding>
+                <element signature="e#47#88#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/adminset/settings.py">
+      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../sadmin/UserManage/urls.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="97" column="36" selection-start-line="97" selection-start-column="32" selection-end-line="97" selection-end-column="36" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="adminset.conf" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/adminset.conf">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="11" column="8" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="8" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="idc.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/cmdb/idc.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="idc_add.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/cmdb/idc_add.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.5813954">
-              <caret line="11" column="47" selection-start-line="11" selection-start-column="47" selection-end-line="11" selection-end-column="47" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="group.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/cmdb/group.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.5813954">
-              <caret line="11" column="47" selection-start-line="11" selection-start-column="43" selection-end-line="11" selection-end-column="47" />
+              <caret line="15" column="62" selection-start-line="15" selection-start-column="62" selection-end-line="17" selection-end-column="80" />
               <folding />
             </state>
           </provider>
@@ -162,10 +164,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/adminset/urls.py" />
-        <option value="$PROJECT_DIR$/accounts/users.py" />
-        <option value="$PROJECT_DIR$/templates/header_status.html" />
-        <option value="$PROJECT_DIR$/templates/main-header.html" />
         <option value="$PROJECT_DIR$/templates/config/config-header.html" />
         <option value="$PROJECT_DIR$/templates/navi/navi-header.html" />
         <option value="$PROJECT_DIR$/templates/setup/setup-header.html" />
@@ -196,23 +194,27 @@
         <option value="$PROJECT_DIR$/../sadmin/UserManage/views/user.py" />
         <option value="$PROJECT_DIR$/templates/cmdb/asset_edit.html" />
         <option value="$PROJECT_DIR$/templates/main-sidebar.html" />
-        <option value="$PROJECT_DIR$/accounts/roles.py" />
         <option value="$PROJECT_DIR$/accounts/models.py" />
-        <option value="$PROJECT_DIR$/templates/accounts/accounts-header.html" />
-        <option value="$PROJECT_DIR$/templates/accounts/user_list.html" />
         <option value="$PROJECT_DIR$/templates/accounts/reset_pwd.html" />
         <option value="$PROJECT_DIR$/templates/accounts/user_edit.html" />
-        <option value="$PROJECT_DIR$/accounts/urls.py" />
         <option value="$PROJECT_DIR$/templates/navbar-custom-menu.html" />
         <option value="$PROJECT_DIR$/templates/accounts/change_password.html" />
-        <option value="$PROJECT_DIR$/accounts/forms.py" />
-        <option value="$PROJECT_DIR$/accounts/user.py" />
         <option value="$PROJECT_DIR$/templates/cmdb/cmdb-header.html" />
         <option value="$PROJECT_DIR$/templates/cmdb/asset_add.html" />
         <option value="$PROJECT_DIR$/templates/cmdb/idc_add.html" />
         <option value="$PROJECT_DIR$/templates/cmdb/group_add.html" />
         <option value="$PROJECT_DIR$/config/views.py" />
         <option value="$PROJECT_DIR$/templates/config/index.html" />
+        <option value="$PROJECT_DIR$/templates/accounts/user_list.html" />
+        <option value="$PROJECT_DIR$/accounts/user.py" />
+        <option value="$PROJECT_DIR$/accounts/forms.py" />
+        <option value="$PROJECT_DIR$/accounts/roles.py" />
+        <option value="$PROJECT_DIR$/templates/accounts/role_add.html" />
+        <option value="$PROJECT_DIR$/accounts/urls.py" />
+        <option value="$PROJECT_DIR$/templates/accounts/accounts-header.html" />
+        <option value="$PROJECT_DIR$/templates/accounts/role_edit.html" />
+        <option value="$PROJECT_DIR$/accounts/role.py" />
+        <option value="$PROJECT_DIR$/templates/accounts/role_list.html" />
       </list>
     </option>
   </component>
@@ -285,7 +287,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="adminset" />
+              <option name="myItemId" value="sadmin" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -295,7 +297,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="adminset" />
+              <option name="myItemId" value="sadmin" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -309,7 +311,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="adminset" />
+              <option name="myItemId" value="sadmin" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -317,7 +319,49 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="config" />
+              <option name="myItemId" value="UserManage" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="adminset" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sadmin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="UserManage" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="adminset" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sadmin" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="UserManage" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="adminset" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="adminset" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -339,19 +383,19 @@
     <option name="myUseBundledCoveragePy" value="true" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\11_WOSS\adminset\templates\accounts" />
-      <recent name="D:\11_WOSS\adminset\accounts" />
-      <recent name="D:\11_WOSS\adminset\UserManage" />
-      <recent name="D:\11_WOSS\adminset\account" />
-      <recent name="D:\11_WOSS\adminset\templates\account" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\11_WOSS\adminset\config" />
       <recent name="D:\11_WOSS\adminset" />
       <recent name="D:\11_WOSS\adminset\cmdb" />
       <recent name="D:\11_WOSS\adminset\adminset" />
       <recent name="D:\11_WOSS\adminset\templates" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\11_WOSS\adminset\templates\accounts" />
+      <recent name="D:\11_WOSS\adminset\accounts" />
+      <recent name="D:\11_WOSS\adminset\UserManage" />
+      <recent name="D:\11_WOSS\adminset\account" />
+      <recent name="D:\11_WOSS\adminset\templates\account" />
     </key>
   </component>
   <component name="RunManager" selected="Django server.adminset">
@@ -686,96 +730,6 @@
       <option name="number" value="Default" />
       <updated>1473831414640</updated>
     </task>
-    <task id="LOCAL-00700" summary="测试">
-      <created>1489076701928</created>
-      <option name="number" value="00700" />
-      <option name="project" value="LOCAL" />
-      <updated>1489076701928</updated>
-    </task>
-    <task id="LOCAL-00701" summary="测试">
-      <created>1489076835988</created>
-      <option name="number" value="00701" />
-      <option name="project" value="LOCAL" />
-      <updated>1489076835988</updated>
-    </task>
-    <task id="LOCAL-00702" summary="测试">
-      <created>1489077692387</created>
-      <option name="number" value="00702" />
-      <option name="project" value="LOCAL" />
-      <updated>1489077692387</updated>
-    </task>
-    <task id="LOCAL-00703" summary="测试">
-      <created>1489077829342</created>
-      <option name="number" value="00703" />
-      <option name="project" value="LOCAL" />
-      <updated>1489077829342</updated>
-    </task>
-    <task id="LOCAL-00704" summary="测试">
-      <created>1489077988643</created>
-      <option name="number" value="00704" />
-      <option name="project" value="LOCAL" />
-      <updated>1489077988643</updated>
-    </task>
-    <task id="LOCAL-00705" summary="测试">
-      <created>1489078109606</created>
-      <option name="number" value="00705" />
-      <option name="project" value="LOCAL" />
-      <updated>1489078109607</updated>
-    </task>
-    <task id="LOCAL-00706" summary="测试">
-      <created>1489078212984</created>
-      <option name="number" value="00706" />
-      <option name="project" value="LOCAL" />
-      <updated>1489078212984</updated>
-    </task>
-    <task id="LOCAL-00707" summary="测试">
-      <created>1489078343531</created>
-      <option name="number" value="00707" />
-      <option name="project" value="LOCAL" />
-      <updated>1489078343531</updated>
-    </task>
-    <task id="LOCAL-00708" summary="测试">
-      <created>1489078381433</created>
-      <option name="number" value="00708" />
-      <option name="project" value="LOCAL" />
-      <updated>1489078381433</updated>
-    </task>
-    <task id="LOCAL-00709" summary="测试">
-      <created>1489078487663</created>
-      <option name="number" value="00709" />
-      <option name="project" value="LOCAL" />
-      <updated>1489078487664</updated>
-    </task>
-    <task id="LOCAL-00710" summary="测试">
-      <created>1489079096676</created>
-      <option name="number" value="00710" />
-      <option name="project" value="LOCAL" />
-      <updated>1489079096676</updated>
-    </task>
-    <task id="LOCAL-00711" summary="测试">
-      <created>1489079175380</created>
-      <option name="number" value="00711" />
-      <option name="project" value="LOCAL" />
-      <updated>1489079175380</updated>
-    </task>
-    <task id="LOCAL-00712" summary="测试">
-      <created>1489079207055</created>
-      <option name="number" value="00712" />
-      <option name="project" value="LOCAL" />
-      <updated>1489079207055</updated>
-    </task>
-    <task id="LOCAL-00713" summary="测试">
-      <created>1489079311740</created>
-      <option name="number" value="00713" />
-      <option name="project" value="LOCAL" />
-      <updated>1489079311740</updated>
-    </task>
-    <task id="LOCAL-00714" summary="测试">
-      <created>1489116259824</created>
-      <option name="number" value="00714" />
-      <option name="project" value="LOCAL" />
-      <updated>1489116259828</updated>
-    </task>
     <task id="LOCAL-00715" summary="测试">
       <created>1489116402919</created>
       <option name="number" value="00715" />
@@ -980,7 +934,97 @@
       <option name="project" value="LOCAL" />
       <updated>1489123006324</updated>
     </task>
-    <option name="localTasksCounter" value="749" />
+    <task id="LOCAL-00749" summary="测试">
+      <created>1489123436521</created>
+      <option name="number" value="00749" />
+      <option name="project" value="LOCAL" />
+      <updated>1489123436521</updated>
+    </task>
+    <task id="LOCAL-00750" summary="测试">
+      <created>1489143676259</created>
+      <option name="number" value="00750" />
+      <option name="project" value="LOCAL" />
+      <updated>1489143676259</updated>
+    </task>
+    <task id="LOCAL-00751" summary="测试">
+      <created>1489143862758</created>
+      <option name="number" value="00751" />
+      <option name="project" value="LOCAL" />
+      <updated>1489143862758</updated>
+    </task>
+    <task id="LOCAL-00752" summary="测试">
+      <created>1489143898484</created>
+      <option name="number" value="00752" />
+      <option name="project" value="LOCAL" />
+      <updated>1489143898484</updated>
+    </task>
+    <task id="LOCAL-00753" summary="测试">
+      <created>1489144307464</created>
+      <option name="number" value="00753" />
+      <option name="project" value="LOCAL" />
+      <updated>1489144307464</updated>
+    </task>
+    <task id="LOCAL-00754" summary="测试">
+      <created>1489144426100</created>
+      <option name="number" value="00754" />
+      <option name="project" value="LOCAL" />
+      <updated>1489144426100</updated>
+    </task>
+    <task id="LOCAL-00755" summary="测试">
+      <created>1489144655141</created>
+      <option name="number" value="00755" />
+      <option name="project" value="LOCAL" />
+      <updated>1489144655141</updated>
+    </task>
+    <task id="LOCAL-00756" summary="测试">
+      <created>1489145007249</created>
+      <option name="number" value="00756" />
+      <option name="project" value="LOCAL" />
+      <updated>1489145007249</updated>
+    </task>
+    <task id="LOCAL-00757" summary="测试">
+      <created>1489145101639</created>
+      <option name="number" value="00757" />
+      <option name="project" value="LOCAL" />
+      <updated>1489145101639</updated>
+    </task>
+    <task id="LOCAL-00758" summary="测试">
+      <created>1489147125560</created>
+      <option name="number" value="00758" />
+      <option name="project" value="LOCAL" />
+      <updated>1489147125560</updated>
+    </task>
+    <task id="LOCAL-00759" summary="测试">
+      <created>1489147535782</created>
+      <option name="number" value="00759" />
+      <option name="project" value="LOCAL" />
+      <updated>1489147535782</updated>
+    </task>
+    <task id="LOCAL-00760" summary="测试">
+      <created>1489150728500</created>
+      <option name="number" value="00760" />
+      <option name="project" value="LOCAL" />
+      <updated>1489150728500</updated>
+    </task>
+    <task id="LOCAL-00761" summary="测试">
+      <created>1489150802082</created>
+      <option name="number" value="00761" />
+      <option name="project" value="LOCAL" />
+      <updated>1489150802082</updated>
+    </task>
+    <task id="LOCAL-00762" summary="测试">
+      <created>1489150864141</created>
+      <option name="number" value="00762" />
+      <option name="project" value="LOCAL" />
+      <updated>1489150864141</updated>
+    </task>
+    <task id="LOCAL-00763" summary="测试">
+      <created>1489151098042</created>
+      <option name="number" value="00763" />
+      <option name="project" value="LOCAL" />
+      <updated>1489151098042</updated>
+    </task>
+    <option name="localTasksCounter" value="764" />
     <servers />
   </component>
   <component name="TodoView">
@@ -996,29 +1040,29 @@
     <frame x="-11" y="-11" width="1942" height="1042" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23868534" sideWeight="0.49445325" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2106681" sideWeight="0.49445325" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32799146" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3278302" sideWeight="0.49784482" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32429245" sideWeight="0.50919914" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32954547" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39976415" sideWeight="0.49353448" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32429245" sideWeight="0.49080086" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2676887" sideWeight="0.49301827" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1995685" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43160376" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25947997" sideWeight="0.50554675" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39954337" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="manage.py@adminset" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32897863" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2676887" sideWeight="0.49301827" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32955772" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="SVN Properties" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32897863" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900944" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39954337" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="manage.py@adminset" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32897863" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1084,103 +1128,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/cmdb/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmdb/templatetags/mytags.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="27" column="18" selection-start-line="27" selection-start-column="15" selection-end-line="27" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/adminset/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.25123152">
-          <caret line="6" column="37" selection-start-line="6" selection-start-column="37" selection-end-line="6" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/accounts/tests.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../sadmin/templates/UserManage/user.list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.511628">
-          <caret line="47" column="116" selection-start-line="47" selection-start-column="109" selection-end-line="47" selection-end-column="116" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/setup/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.488372">
-          <caret line="140" column="0" selection-start-line="140" selection-start-column="0" selection-end-line="149" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/cmdb/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.023256">
-          <caret line="136" column="57" selection-start-line="136" selection-start-column="0" selection-end-line="137" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmdb/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/setup/ansible.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.0">
-          <caret line="137" column="0" selection-start-line="137" selection-start-column="0" selection-end-line="148" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/cmdb/idc_edit.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.5348835">
-          <caret line="76" column="38" selection-start-line="76" selection-start-column="0" selection-end-line="77" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmdb/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmdb/group.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmdb/apps.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../sadmin/UserManage/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1237,13 +1184,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/accounts/accounts-header.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.651163">
-          <caret line="19" column="57" selection-start-line="19" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../sadmin/templates/UserManage/permission.no.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1276,22 +1216,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/accounts/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="17" column="28" selection-start-line="17" selection-start-column="28" selection-end-line="17" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../sadmin/UserManage/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="12" column="38" selection-start-line="12" selection-start-column="25" selection-end-line="12" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/accounts/user_add.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1319,9 +1243,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="37" column="102" selection-start-line="37" selection-start-column="102" selection-end-line="37" selection-end-column="102" />
-          <folding>
-            <element signature="n#style#0;n#a#0;n#div#0;n#div#1;n#div#0;n#form#0;n#div#0;n#div#0;n#section#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1335,14 +1256,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../sadmin/UserManage/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="69" column="24" selection-start-line="36" selection-start-column="0" selection-end-line="69" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../sadmin/templates/UserManage/password.change.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1351,49 +1264,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/accounts/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="16" column="1" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="1" />
-          <folding>
-            <element signature="e#47#88#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/navbar-custom-menu.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="137" column="84" selection-start-line="137" selection-start-column="84" selection-end-line="137" selection-end-column="84" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/accounts/user_list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="177" column="10" selection-start-line="177" selection-start-column="0" selection-end-line="178" selection-end-column="0" />
-          <folding>
-            <element signature="n#div#0;n#!!top" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/accounts/change_password.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="36" column="38" selection-start-line="36" selection-start-column="38" selection-end-line="36" selection-end-column="38" />
-          <folding>
-            <element signature="n#style#0;n#button#0;n#div#0;n#div#1;n#div#0;n#form#0;n#div#0;n#div#0;n#section#0;n#div#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/accounts/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="133" column="0" selection-start-line="133" selection-start-column="0" selection-end-line="133" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1401,7 +1275,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-9.488372">
           <caret line="18" column="55" selection-start-line="18" selection-start-column="50" selection-end-line="18" selection-end-column="55" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1415,7 +1288,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/cmdb/idc_add.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.5813954">
+        <state vertical-scroll-proportion="0.0">
           <caret line="11" column="47" selection-start-line="11" selection-start-column="47" selection-end-line="11" selection-end-column="47" />
           <folding />
         </state>
@@ -1423,7 +1296,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/cmdb/group.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.5813954">
+        <state vertical-scroll-proportion="0.0">
           <caret line="11" column="47" selection-start-line="11" selection-start-column="43" selection-end-line="11" selection-end-column="47" />
           <folding />
         </state>
@@ -1431,7 +1304,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/cmdb/group_add.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.5348835">
+        <state vertical-scroll-proportion="0.0">
           <caret line="19" column="41" selection-start-line="19" selection-start-column="41" selection-end-line="25" selection-end-column="14" />
           <folding />
         </state>
@@ -1455,7 +1328,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/cmdb/asset_add.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.8139534">
+        <state vertical-scroll-proportion="0.0">
           <caret line="64" column="22" selection-start-line="64" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
           <folding />
         </state>
@@ -1479,11 +1352,187 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/config/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.48634592">
+        <state vertical-scroll-proportion="-9.093023">
           <caret line="32" column="33" selection-start-line="32" selection-start-column="33" selection-end-line="32" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/accounts/user_list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.8139534">
+          <caret line="125" column="27" selection-start-line="125" selection-start-column="27" selection-end-line="125" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/accounts/tests.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/accounts/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="17" column="28" selection-start-line="17" selection-start-column="28" selection-end-line="17" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../sadmin/UserManage/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="152" column="0" selection-start-line="152" selection-start-column="0" selection-end-line="167" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/adminset/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="13" column="33" selection-start-line="13" selection-start-column="33" selection-end-line="13" selection-end-column="33" />
           <folding>
-            <element signature="n#style#0;n#button#0;n#div#1;n#form#0;n#div#0;n#div#0;n#section#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="e#0#40#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/accounts/user.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="53" column="49" selection-start-line="53" selection-start-column="40" selection-end-line="53" selection-end-column="49" />
+          <folding>
+            <element signature="e#77#186#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../sadmin/templates/UserManage/user.add.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="6.627907">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/accounts/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="132" column="18" selection-start-line="132" selection-start-column="6" selection-end-line="132" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../sadmin/UserManage/views/permission.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../sadmin/UserManage/views/role.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="16" column="21" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="21" />
+          <folding>
+            <element signature="e#85#129#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../sadmin/templates/UserManage/role.list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.2790697">
+          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../sadmin/UserManage/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="15" column="62" selection-start-line="15" selection-start-column="62" selection-end-line="17" selection-end-column="80" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/accounts/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="19" column="72" selection-start-line="19" selection-start-column="72" selection-end-line="19" selection-end-column="72" />
+          <folding>
+            <element signature="e#47#88#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../sadmin/templates/UserManage/role.add.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.5348835">
+          <caret line="7" column="44" selection-start-line="7" selection-start-column="35" selection-end-line="7" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/accounts/role_add.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.488372">
+          <caret line="15" column="52" selection-start-line="15" selection-start-column="43" selection-end-line="15" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/accounts/accounts-header.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.8139534">
+          <caret line="19" column="55" selection-start-line="19" selection-start-column="55" selection-end-line="19" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/accounts/change_password.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.7906977">
+          <caret line="36" column="38" selection-start-line="36" selection-start-column="38" selection-end-line="36" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../sadmin/templates/UserManage/role.edit.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7209302">
+          <caret line="23" column="76" selection-start-line="23" selection-start-column="74" selection-end-line="23" selection-end-column="76" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/accounts/role.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="52" column="12" selection-start-line="52" selection-start-column="12" selection-end-line="52" selection-end-column="12" />
+          <folding>
+            <element signature="e#48#92#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/accounts/role_edit.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.27907">
+          <caret line="37" column="41" selection-start-line="37" selection-start-column="41" selection-end-line="37" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/accounts/role_list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.48634592">
+          <caret line="11" column="8" selection-start-line="11" selection-start-column="8" selection-end-line="11" selection-end-column="8" />
+          <folding />
         </state>
       </provider>
     </entry>

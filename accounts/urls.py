@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 from django.conf.urls import url, include
-from accounts import user
+from accounts import user, role
 
 
 urlpatterns = [
@@ -14,4 +14,8 @@ urlpatterns = [
     url(r'^user/edit/(?P<ids>\d+)/$', user.user_edit, name='user_edit'),
     url(r'^reset/password/(?P<ids>\d+)/$', user.reset_pwd, name='reset_pwd'),
     url(r'^change/password/$', user.change_password, name='change_password'),
+    url(r'^role/add/$', role.role_add, name='role_add'),
+    url(r'^role/list/$', role.role_list, name='role_list'),
+    url(r'^role/edit/(?P<ids>\d+)/$', role.role_edit, name='role_edit'),
+    url(r'^role/delete/(?P<ids>\d+)/$', role.role_del, name='role_del'),
 ]
