@@ -5,9 +5,11 @@ from django.shortcuts import render_to_response
 from forms import IdcForm
 from .models import Idc
 from django.contrib.auth.decorators import login_required
+from accounts.permission import permission_verify
 
 
 @login_required()
+@permission_verify()
 def idc(request):
     temp_name = "cmdb/cmdb-header.html"
     idc_info = Idc.objects.all()
@@ -15,6 +17,7 @@ def idc(request):
 
 
 @login_required()
+@permission_verify()
 def idc_add(request):
     temp_name = "cmdb/cmdb-header.html"
     if request.method == "POST":
@@ -34,6 +37,7 @@ def idc_add(request):
 
 
 @login_required()
+@permission_verify()
 def idc_add_mini(request):
     temp_name = "cmdb/cmdb-header.html"
     if request.method == "POST":
@@ -54,6 +58,7 @@ def idc_add_mini(request):
 
 
 @login_required()
+@permission_verify()
 def idc_del(request):
     temp_name = "cmdb/cmdb-header.html"
     if request.method == 'POST':
@@ -66,16 +71,15 @@ def idc_del(request):
 
 
 @login_required()
-def idc_edit(request):
-    temp_name = "cmdb/cmdb-header.html"
-    if request.method == 'GET':
-        idcid = request.GET.get("idcid")
-        obj = Idc.objects.get(id=idcid)
-        allidc = Idc.objects.all()
+@permission_verify()
+def idc_edit(request, ids):
+    obj = Idc.objects.get(id=ids)
+    allidc = Idc.objects.all()
     return render_to_response("cmdb/idc_edit.html", locals())
 
 
 @login_required()
+@permission_verify()
 def idc_save(request):
     temp_name = "cmdb/cmdb-header.html"
     if request.method == 'POST':

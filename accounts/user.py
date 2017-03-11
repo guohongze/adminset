@@ -10,6 +10,7 @@ from django.contrib.auth import get_user_model
 from forms import AddUserForm
 from django.core.urlresolvers import reverse
 from models import UserInfo
+from accounts.permission import permission_verify
 
 
 def login(request):
@@ -48,6 +49,7 @@ def logout(request):
 
 
 @login_required()
+@permission_verify()
 def user_list(request):
     temp_name = "accounts/accounts-header.html"
     all_user = get_user_model().objects.all()
@@ -55,6 +57,7 @@ def user_list(request):
 
 
 @login_required
+@permission_verify()
 def user_add(request):
     temp_name = "accounts/accounts-header.html"
     if request.method == 'POST':
@@ -78,6 +81,7 @@ def user_add(request):
 
 
 @login_required
+@permission_verify()
 def user_del(request, ids):
     if ids:
         get_user_model().objects.filter(id=ids).delete()
@@ -85,6 +89,7 @@ def user_del(request, ids):
 
 
 @login_required
+@permission_verify()
 def user_edit(request, ids):
     user = get_user_model().objects.get(id=ids)
 
@@ -108,7 +113,8 @@ def user_edit(request, ids):
 
 
 @login_required
-def reset_pwd(request, ids):
+@permission_verify()
+def reset_password(request, ids):
     user = get_user_model().objects.get(id=ids)
     newpassword = get_user_model().objects.make_random_password(length=10, allowed_chars='abcdefghjklmnpqrstuvwxyABCDEFGHJKLMNPQRSTUVWXY3456789')
     print '====>ResetPassword:%s-->%s' % (user.username, newpassword)
@@ -121,7 +127,7 @@ def reset_pwd(request, ids):
         'request': request,
     }
 
-    return render_to_response('accounts/reset_pwd.html', kwvars, RequestContext(request))
+    return render_to_response('accounts/reset_password.html', kwvars, RequestContext(request))
 
 
 @login_required

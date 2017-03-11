@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'navi',
     'cmdb',
     'config',
-    'auser',
     'accounts',
     'django.contrib.admin',
     'django.contrib.auth',

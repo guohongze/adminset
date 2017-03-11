@@ -53,8 +53,8 @@
                                     <td>{{ i.name }} </td>
 
                                     <td>
-                                        <a href="{% url "role_edit" i.id %}"><span class="glyphicon glyphicon-edit btn-xs"></span></a>
-                                        <a href="{% url "role_del" i.id %}" onclick="return confirm('确认删除角色吗？？')"><span class="glyphicon glyphicon-trash btn-xs"></span></a>
+                                        <a href="{% url "role_edit" i.id %}"><span class="btn btn-sm btn-info">编辑</span></a>
+                                        <a href="{% url "role_del" i.id %}" onclick="return confirm('确认删除角色吗？？')"><span class="btn btn-sm btn-danger ">删除</span></a>
                                     </td>
                                 </tr>
                             {% endfor %}

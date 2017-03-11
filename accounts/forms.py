@@ -3,7 +3,7 @@
 # update by guohongze@126.com
 from django import forms
 from django.contrib import auth
-from models import UserInfo, RoleList
+from models import UserInfo, RoleList, PermissionList
 
 
 class LoginUserForm(forms.Form):
@@ -145,6 +145,23 @@ class RoleListForm(forms.ModelForm):
         self.fields['name'].error_messages = {'required':u'请输入名称'}
         self.fields['permission'].label = u'URL'
         self.fields['permission'].required = False
+
+
+class PermissionListForm(forms.ModelForm):
+    class Meta:
+        model = PermissionList
+        exclude = ("id",)
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'url': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(PermissionListForm, self).__init__(*args, **kwargs)
+        self.fields['name'].label = u'名 称'
+        self.fields['name'].error_messages = {'required':u'请输入名称'}
+        self.fields['url'].label = u'URL'
+        self.fields['url'].error_messages = {'required':u'请输入URL'}
 
 
 

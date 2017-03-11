@@ -109,7 +109,7 @@ function tanchu(n){
   title: '机房信息修改',
   area: ['600px', '450px'],
   shadeClose: true, //点击遮罩关闭
-  content: ['/cmdb/group_edit?id=' + n,],
+  content: ['/cmdb/group/edit/' + n,],
   end:function(){
         var handle_status = $("#handle_status").val();
         if ( handle_status == '1' ) {

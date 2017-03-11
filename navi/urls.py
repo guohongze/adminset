@@ -3,7 +3,6 @@
 from django.conf.urls import url, include
 from navi import views
 
-#app_name = 'navi'
 urlpatterns = [
     url(r'^$', views.index, name='navi'),
     url(r'^add/', views.add, name='add'),

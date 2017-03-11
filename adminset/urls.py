@@ -1,7 +1,7 @@
 from django.conf.urls import include,url
 from django.contrib import admin
 from django.conf import settings
-from navi import views
+import views
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
@@ -9,7 +9,6 @@ urlpatterns = [
     url(r'^navi/', include('navi.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^setup/', include('setup.urls')),
-    url(r'^auser/', include('auser.urls')),
     url(r'^config/', include('config.urls')),
     url(r'^accounts/', include('accounts.urls')),
 ]

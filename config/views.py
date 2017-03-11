@@ -4,9 +4,11 @@ from django.shortcuts import render_to_response, HttpResponse, redirect
 import ConfigParser
 import os
 from django.contrib.auth.decorators import login_required
+from accounts.permission import permission_verify
 
 
 @login_required()
+@permission_verify()
 def index(request):
     temp_name = "config/config-header.html"
     display_control = "none"
@@ -29,6 +31,7 @@ def index(request):
 
 
 @login_required()
+@permission_verify()
 def config_save(request):
     temp_name = "config/config-header.html"
     if request.method == 'POST':
@@ -37,7 +40,7 @@ def config_save(request):
         roles_path = request.POST.get('roles_path')
         pbook_path = request.POST.get('pbook_path')
         scripts_path = request.POST.get('scripts_path')
-        #db
+        # db
         engine = request.POST.get('engine')
         host = request.POST.get('host')
         port = request.POST.get('port')

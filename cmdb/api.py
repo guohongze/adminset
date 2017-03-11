@@ -4,6 +4,7 @@
 from django.http import HttpResponse
 from models import Host, HostGroup, ASSET_TYPE, ASSET_STATUS
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
+from django.views.decorators.csrf import csrf_exempt
 
 try:
     import json
@@ -79,6 +80,7 @@ def pages(post_objects, request):
     return post_objects, paginator, page_objects, page_range, current_page, show_first, show_end
 
 
+@csrf_exempt
 def collect(request):
     req = request
     if req.POST:
@@ -121,33 +123,6 @@ def collect(request):
     else:
         return HttpResponse("no any post data!")
 
-
-# def get_group(request):
-#     if request.GET:
-#         d = []
-#         try:
-#             name = request.GET['name']
-#         except:
-#             return HttpResponse('you have no data')
-#         host_groups = HostGroup.objects.get(name=name)
-#         ret_hg = {'host_group': host_groups.name, 'members': []}
-#         members = host_groups.members.all()
-#         for h in members:
-#             ret_h = {'hostname': h.hostname, 'ipaddr': h.ip}
-#             ret_hg['members'].append(ret_h)
-#         d.append(ret_hg)
-#         return HttpResponse(json.dumps(d))
-#     else:
-#         d = []
-#         host_groups = HostGroup.objects.all()
-#         for hg in host_groups:
-#             ret_hg = {'host_group': hg.name, 'members': []}
-#             members = hg.members.all()
-#             for h in members:
-#                 ret_h = {'hostname': h.hostname, 'ipaddr': h.ip}
-#                 ret_hg['members'].append(ret_h)
-#             d.append(ret_hg)
-#         return HttpResponse(json.dumps(d))
 
 def get_group(request):
     if request.GET:

@@ -7,9 +7,11 @@ from django.http import HttpResponse
 from django.shortcuts import render_to_response,redirect
 from forms import navi_form
 from django.contrib.auth.decorators import login_required
+from accounts.permission import permission_verify
 
 
-@login_required
+@login_required()
+@permission_verify()
 def index(request):
     temp_name = "navi/navi-header.html"
     allnavi = navi.objects.all()
@@ -17,6 +19,7 @@ def index(request):
 
 
 @login_required()
+@permission_verify()
 def add(request):
     temp_name = "navi/navi-header.html"
     if request.method == "POST":
@@ -36,6 +39,7 @@ def add(request):
 
 
 @login_required()
+@permission_verify()
 def delete(request):
     temp_name = "navi/navi-header.html"
     if request.method == 'POST':
@@ -48,6 +52,7 @@ def delete(request):
 
 
 @login_required()
+@permission_verify()
 def manage(request):
     temp_name = "navi/navi-header.html"
     allnavi = navi.objects.all()
@@ -55,6 +60,7 @@ def manage(request):
 
 
 @login_required()
+@permission_verify()
 def edit(request):
     temp_name = "navi/navi-header.html"
     if request.method == 'GET':
@@ -64,6 +70,7 @@ def edit(request):
 
 
 @login_required()
+@permission_verify()
 def save(request):
     temp_name = "navi/navi-header.html"
     if request.method == 'POST':

@@ -17,7 +17,7 @@
     function showhide(n) {
         var box = document.getElementById("accounts");
         box.className="active";
-        var box = document.getElementById("user_list");
+        var box = document.getElementById("permission_list");
         box.className="active";
     }
 </script>
@@ -30,11 +30,11 @@
 
     <!-- Main content -->
     <section class="content">
-        <form action="" method="post" id="user_form">
+        <form action="" method="post" id="permission_form">
             <div class="box">
                 <div class="box-header">
                     <div class="col-sm-2" style="padding-left: 0">
-						 <a href="{% url 'user_add' %}"><li class="btn btn-success" ><b>添加用户</b></li></a>
+						 <a href="{% url 'permission_add' %}"><li class="btn btn-success" ><b>添加权限</b></li></a>
                   </div>
                 </div>
 
@@ -43,37 +43,23 @@
                   <table class="table table-striped table-bordered" id="dataform">
                       <thead>
                         <tr>
-                            <th>账号</th>
-                            <th>姓名</th>
-                            <th>Email</th>
-                            <th>状态</th>
-                            <th>角色</th>
-                            <th>最后登录时间</th>
+                            <th>权限名称</th>
+                            <th>URL</th>
                             <th>操作</th>
                         </tr>
                       </thead>
                             <tbody>
-                                {% for i in all_user %}
-                                    <tr class="even gradeX">
-                                        <td>{{ i.username }}</td>
-                                        <td>{{ i.nickname|default:"----" }}</td>
-                                        <td>{{ i.email }}</td>
-                                        <td>
-                                            {% if i.is_active %}
-                                                <span class="label label-success">启用</span>
-                                            {% else %}
-                                                <span class="label label-default">禁用</span>
-                                            {% endif %}
-                                        </td>
-                                        <td>{{ i.role|default:"----" }}</td>
-                                        <td>{{ i.last_login|date:"Y-m-d H:i:s" }}</td>
-                                        <td class="text-center" data-editable='false'>
-{#                                        <a href="{% url 'user_edit' %}?id={{ host.id }}" class="btn btn-xs btn-info">编辑</a>#}
-                                        <a href="#"><li class="btn btn-sm btn-info" onclick="return tanchu(this.value)" value="{{ i.id }}">编辑</li></a>
-                                        <a value="{% url 'user_del' i.id %}" class="btn btn-sm btn-danger user_del">删除</a>
+                            {% for i in all_permission %}
+                                <tr style="font-size: 13px;">
+                                    <td>{{ i.name }} </td>
+                                    <td>{{ i.url }} </td>
+
+                                    <td>
+                                        <a href="{% url "permission_edit" i.id %}"><span class="btn btn-sm btn-info">编辑</span></a>
+                                        <a href="{% url "permission_del" i.id %}" onclick="return confirm('确认删除角色吗？？')"><span class="btn btn-sm btn-danger">删除</span></a>
                                     </td>
-                                    </tr>
-                                {% endfor %}
+                                </tr>
+                            {% endfor %}
                             </tbody>
                   </table>
                 </div>
@@ -133,32 +119,6 @@ function tanchu(n){
         }
   });
 }
-</script>
-<script>
-    function change_info(){
-        var args = $("#user_form").serialize();
-        window.location = "{% url 'cmdb' %}?" + args
-    }
-
-    function export_excel(){
-        var user_id_all = getIDall();
-        if (user_id_all == ''){
-            if(confirm('您没有勾选，是否导出全部信息？')){
-                var args = $("#user_form").serialize();
-                window.location = "{% url 'cmdb' %}?export=all&" + args
-                }else{
-                    return false;
-                }
-            }else{
-                var args = $("#user_form").serialize();
-                window.location = "{% url 'cmdb' %}?export=true&" + args
-            }
-    }
-    $("#search_input").keydown(function(e) {
-        if (e.keyCode == 13) {
-            change_info()
-        }
-        });
 </script>
 <script>
     $(document).ready(function(){

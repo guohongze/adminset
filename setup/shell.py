@@ -7,10 +7,12 @@ from subprocess import Popen, PIPE
 import sh
 from config.views import get_dir
 from django.contrib.auth.decorators import login_required
+from accounts.permission import permission_verify
 scripts_dir = get_dir("s_path")
 
 
 @login_required()
+@permission_verify()
 def index(request):
     temp_name = "setup/setup-header.html"
     all_host = Host.objects.all()
@@ -20,6 +22,7 @@ def index(request):
 
 
 @login_required()
+@permission_verify()
 def exec_scripts(request):
     ret = []
     temp_name = "setup/setup-header.html"

@@ -17,7 +17,7 @@
     function showhide(n) {
         var box = document.getElementById("cmdb");
         box.className="active";
-        var box = document.getElementById("cmdb_navibar");
+        var box = document.getElementById("asset");
         box.className="active";
     }
 </script>
@@ -31,6 +31,7 @@
     <!-- Main content -->
     <section class="content">
         <form action="" method="post" id="asset_form">
+        {% csrf_token %}
             <div class="box">
                 <div class="box-header">
                     <div class="col-sm-2" style="padding-left: 0">
@@ -179,7 +180,7 @@ function tanchu(n){
     closeBtn: 1,
     area: ['700px', '550px'],
     shadeClose: true, //点击遮罩关闭
-    content: ['/cmdb/asset_edit?hostid=' + n,],
+    content: ['/cmdb/asset/edit/' + n,],
     end:function(){
             var handle_status = $("#handle_status").val();
             if ( handle_status == '1' ) {

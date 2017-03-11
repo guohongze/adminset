@@ -7,9 +7,11 @@ from django.shortcuts import render_to_response,RequestContext
 from django.contrib.auth.decorators import login_required
 from forms import RoleListForm
 from models import RoleList
+from accounts.permission import permission_verify
 
 
 @login_required
+@permission_verify()
 def role_add(request):
     temp_name = "accounts/accounts-header.html"
     if request.method == "POST":
@@ -30,6 +32,7 @@ def role_add(request):
 
 
 @login_required
+@permission_verify()
 def role_list(request):
     temp_name = "accounts/accounts-header.html"
     all_role = RoleList.objects.all()
@@ -37,6 +40,7 @@ def role_list(request):
 
 
 @login_required
+@permission_verify()
 def role_edit(request, ids):
     iRole = RoleList.objects.get(id=ids)
     temp_name = "accounts/accounts-header.html"
@@ -59,6 +63,7 @@ def role_edit(request, ids):
 
 
 @login_required
+@permission_verify()
 def role_del(request, ids):
     RoleList.objects.filter(id=ids).delete()
     return HttpResponseRedirect(reverse('role_list'))

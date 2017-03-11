@@ -8,19 +8,21 @@ from django.http import HttpResponse
 import os
 from config.views import get_dir
 from django.contrib.auth.decorators import login_required
+from accounts.permission import permission_verify
 
 
 ansible_dir = get_dir("a_path")
 roles_dir = get_dir("r_path")
-pbook_dir = get_dir("p_path")
+playbook_dir = get_dir("p_path")
 
 
 @login_required()
+@permission_verify()
 def index(request):
     temp_name = "setup/setup-header.html"
     all_host = Host.objects.all()
     all_dir = get_roles(roles_dir)
-    all_pbook = get_pbook(pbook_dir)
+    all_pbook = get_playbook(playbook_dir)
     all_group = HostGroup.objects.all()
     return render_to_response('setup/ansible.html', locals())
 
@@ -38,7 +40,7 @@ def get_roles(args):
     return dir_list
 
 
-def get_pbook(args):
+def get_playbook(args):
     files_list = []
     dirs = os.listdir(args)
     for d in dirs:
@@ -53,6 +55,7 @@ def get_pbook(args):
     return files_list
 
 
+@login_required()
 def playbook(request):
     ret = []
     temp_name = "setup/setup-header.html"
@@ -82,13 +85,13 @@ def playbook(request):
         else:
             for h in host:
                 for p in pbook:
-                    f = open(ansible_dir + '/pbook/' + p, 'r+')
+                    f = open(playbook_dir + p, 'r+')
                     flist = f.readlines()
                     flist[0] = '- hosts: '+h+'\n'
-                    f = open(ansible_dir + '/pbook/' + p, 'w+')
+                    f = open(playbook_dir + p, 'w+')
                     f.writelines(flist)
                     f.close()
-                    cmd = "ansible-playbook"+" " + ansible_dir + '/pbook/' + p
+                    cmd = "ansible-playbook"+" " + playbook_dir + p
                     p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
                     data = p.communicate()[0]
                     ret.append(data)
@@ -96,6 +99,7 @@ def playbook(request):
 
 
 @login_required()
+@permission_verify()
 def ansible_command(request):
     command_list = []
     ret2 = []
@@ -117,6 +121,7 @@ def ansible_command(request):
 
 
 @login_required()
+@permission_verify()
 def host_sync(request):
     group = HostGroup.objects.all()
     ansible_file = open(ansible_dir+"/hosts", "wb")
