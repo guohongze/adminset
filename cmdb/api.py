@@ -5,12 +5,39 @@ from django.http import HttpResponse
 from models import Host, HostGroup, ASSET_TYPE, ASSET_STATUS
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
 from django.views.decorators.csrf import csrf_exempt
-
+from config.views import get_dir
 try:
     import json
 except ImportError, e:
     import simplejson as json
 
+
+def token_verify():
+
+    def decorator(view_func):
+        def _wrapped_view(request, *args, **kwargs):
+            iToken = get_dir('token')
+            if request.POST:
+                pToken = request.POST.get('token')
+                if iToken == pToken:
+                    return view_func(request, *args, **kwargs)
+                else:
+                    message = "forbidden your token error!!"
+                    print message
+                    return HttpResponse(status=403)
+            if request.GET:
+                pToken = request.GET['token']
+                if iToken == pToken:
+                    return view_func(request, *args, **kwargs)
+                else:
+                    message = "forbidden your token error!!"
+                    print message
+                    return HttpResponse(status=403)
+            return HttpResponse(status=403)
+
+        return _wrapped_view
+
+    return decorator
 
 def str2gb(args):
     """
@@ -81,6 +108,7 @@ def pages(post_objects, request):
 
 
 @csrf_exempt
+@token_verify()
 def collect(request):
     req = request
     if req.POST:
@@ -124,33 +152,7 @@ def collect(request):
         return HttpResponse("no any post data!")
 
 
-def get_group(request):
-    if request.GET:
-        d = []
-        try:
-            group_name = request.GET['group_name']
-        except:
-            return HttpResponse('you have no data')
-        ret_hg = {'host_group': group_name, 'members': []}
-        members = Host.objects.filter(group__name=group_name)
-        for h in members:
-            ret_h = {'hostname': h.hostname, 'ipaddr': h.ip}
-            ret_hg['members'].append(ret_h)
-        d.append(ret_hg)
-        return HttpResponse(json.dumps(d))
-    else:
-        d = []
-        host_groups = HostGroup.objects.all()
-        for hg in host_groups:
-            ret_hg = {'host_group': hg.name, 'members': []}
-            members = Host.objects.filter(group__name=hg)
-            for h in members:
-                ret_h = {'hostname': h.hostname, 'ipaddr': h.ip}
-                ret_hg['members'].append(ret_h)
-            d.append(ret_hg)
-        return HttpResponse(json.dumps(d))
-
-
+@token_verify()
 def get_host(request):
     try:
         hostname = request.GET['hostname']
@@ -163,3 +165,31 @@ def get_host(request):
     data = {'hostname': host.hostname, 'ip': host.ip}
     return HttpResponse(json.dumps({'status': 0, 'message': 'ok', 'data': data}))
 
+
+@token_verify()
+def get_group(request):
+    if request.GET:
+        d = []
+        try:
+            group_name = request.GET['name']
+        except:
+            return HttpResponse('your parameter is error')
+        if group_name == 'all':
+            host_groups = HostGroup.objects.all()
+            for hg in host_groups:
+                ret_hg = {'host_group': hg.name, 'members': []}
+                members = Host.objects.filter(group__name=hg)
+                for h in members:
+                    ret_h = {'hostname': h.hostname, 'ipaddr': h.ip}
+                    ret_hg['members'].append(ret_h)
+                d.append(ret_hg)
+            return HttpResponse(json.dumps(d))
+        else:
+            ret_hg = {'host_group': group_name, 'members': []}
+            members = Host.objects.filter(group__name=group_name)
+            for h in members:
+                ret_h = {'hostname': h.hostname, 'ipaddr': h.ip}
+                ret_hg['members'].append(ret_h)
+            d.append(ret_hg)
+            return HttpResponse(json.dumps(d))
+    return HttpResponse(status=403)

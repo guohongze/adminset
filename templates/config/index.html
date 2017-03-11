@@ -101,10 +101,21 @@
                   <label for="database" class="col-sm-2 control-label">Database:</label>
 
                   <div class="col-sm-10">
-                    <input type="database" value="{{ database }}" id="database" name="database" style="width:450px;">
+                    <input type="text" value="{{ database }}" id="database" name="database" style="width:450px;">
                   </div>
                 </div>
-                         </div>
+                    <hr>
+                <p><b>Token设置</b></p>
+                <div class="form-group">
+                  <label for="token" class="col-sm-2 control-label">Token:</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" value="{{ token }}" id="token" name="token" style="width:450px;">
+                    <li class="btn btn-default" id="config" onclick="get_token();"><b>创建</b></li>
+                  </div>
+                </div>
+
+                 </div>
 
               <!-- /.box-body -->
               <div class="box-footer">
@@ -124,6 +135,13 @@ function checkSubmit() {
     if (!confirm("确定修改？")) {
         window.event.returnValue = false;
     }
+}
+</script>
+<script>
+function get_token() {
+    $.post('/config/token/',{csrfmiddlewaretoken: '{{ csrf_token }}'},function(data){
+        document.getElementById("token").value = data;
+    });
 }
 </script>
 {% endblock %}

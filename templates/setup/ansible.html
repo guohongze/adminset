@@ -174,7 +174,7 @@ function sync(){
     yes:function(){
         $.ajax({
                 type: "post",
-                csrfmiddlewatetoken: Cookie.get('csrftoken'),
+                data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
                 url: "{% url 'host_sync' %}",
             });
         layer.msg('同步成功！');

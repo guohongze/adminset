@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 from cmdb.models import Host, HostGroup
-from django.shortcuts import render_to_response, HttpResponse
+from django.shortcuts import render_to_response, HttpResponse, RequestContext
 import os
 from subprocess import Popen, PIPE
 import sh
@@ -18,7 +18,7 @@ def index(request):
     all_host = Host.objects.all()
     all_group = HostGroup.objects.all()
     all_scripts = get_scripts(scripts_dir)
-    return render_to_response('setup/shell.html', locals())
+    return render_to_response('setup/shell.html', locals(), RequestContext(request))
 
 
 @login_required()

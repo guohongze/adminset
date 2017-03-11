@@ -123,7 +123,7 @@ def asset(request):
         return response
 
     assets_list, p, assets, page_range, current_page, show_first, show_end = pages(asset_find, request)
-    return render_to_response('cmdb/index.html', locals())
+    return render_to_response('cmdb/index.html', locals(), RequestContext(request))
 
 
 @login_required()
@@ -139,14 +139,14 @@ def asset_add(request):
         else:
             tips = u"增加失败！"
             display_control = ""
-        return render_to_response("cmdb/asset_add.html", locals(), context_instance=RequestContext(request))
+        return render_to_response("cmdb/asset_add.html", locals(), RequestContext(request))
     else:
         display_control = "none"
         a_form = AssetForm()
-        return render_to_response("cmdb/asset_add.html", locals(), context_instance=RequestContext(request))
+        return render_to_response("cmdb/asset_add.html", locals(), RequestContext(request))
 
 
-@csrf_exempt
+# @csrf_exempt
 @login_required()
 @permission_verify()
 def asset_del(request):
@@ -176,7 +176,7 @@ def asset_edit(request, ids):
     temp_name = "cmdb/cmdb-header.html"
     obj = Host.objects.get(id=ids)
     asset_types = ASSET_TYPE
-    return render_to_response("cmdb/asset_edit.html", locals(), context_instance=RequestContext(request))
+    return render_to_response("cmdb/asset_edit.html", locals(), RequestContext(request))
 
 
 @login_required()
@@ -224,7 +224,7 @@ def asset_save(request):
         status = 1
     else:
         status = 2
-    return render_to_response("cmdb/asset_edit.html", locals(), context_instance=RequestContext(request))
+    return render_to_response("cmdb/asset_edit.html", locals(), RequestContext(request))
 
 
 # @login_required()

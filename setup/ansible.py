@@ -3,7 +3,7 @@
 
 from subprocess import Popen, PIPE, STDOUT, call
 from cmdb.models import Host, HostGroup
-from django.shortcuts import render_to_response, redirect
+from django.shortcuts import render_to_response, redirect, RequestContext
 from django.http import HttpResponse
 import os
 from config.views import get_dir
@@ -24,7 +24,7 @@ def index(request):
     all_dir = get_roles(roles_dir)
     all_pbook = get_playbook(playbook_dir)
     all_group = HostGroup.objects.all()
-    return render_to_response('setup/ansible.html', locals())
+    return render_to_response('setup/ansible.html', locals(), RequestContext(request))
 
 
 def get_roles(args):
@@ -95,7 +95,7 @@ def playbook(request):
                     p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
                     data = p.communicate()[0]
                     ret.append(data)
-        return render_to_response('setup/result.html', locals())
+        return render_to_response('setup/result.html', locals(), RequestContext(request))
 
 
 @login_required()
@@ -117,7 +117,7 @@ def ansible_command(request):
                 data = "your command " + str(count) + "  is invalid!"
                 ret2.append(data)
             count += 1
-        return render_to_response('setup/result.html', locals())
+        return render_to_response('setup/result.html', locals(), RequestContext(request))
 
 
 @login_required()

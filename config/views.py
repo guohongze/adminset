@@ -1,10 +1,11 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-from django.shortcuts import render_to_response, HttpResponse, redirect
+from django.shortcuts import render_to_response, HttpResponse, redirect, RequestContext
 import ConfigParser
 import os
 from django.contrib.auth.decorators import login_required
 from accounts.permission import permission_verify
+from django.contrib.auth import get_user_model
 
 
 @login_required()
@@ -27,7 +28,8 @@ def index(request):
         user = config.get('db', 'user')
         password = config.get('db', 'password')
         database = config.get('db', 'database')
-    return render_to_response('config/index.html', locals())
+        token = config.get('token', 'token')
+    return render_to_response('config/index.html', locals(), RequestContext(request))
 
 
 @login_required()
@@ -47,7 +49,9 @@ def config_save(request):
         user = request.POST.get('user')
         password = request.POST.get('password')
         database = request.POST.get('database')
-
+        # cmdb_api_token
+        token = request.POST.get('token')
+        
         config = ConfigParser.RawConfigParser()
         dirs = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         config.add_section('config')
@@ -62,6 +66,8 @@ def config_save(request):
         config.set('db', 'user', user)
         config.set('db', 'password', password)
         config.set('db', 'database', database)
+        config.add_section('token')
+        config.set('token', 'token', token)
         tips = u"保存成功！"
         display_control = ""
         with open(dirs+'/adminset.conf', 'wb') as cfgfile:
@@ -78,9 +84,10 @@ def config_save(request):
             user = config.get('db', 'user')
             password = config.get('db', 'password')
             database = config.get('db', 'database')
+            token = config.get('token', 'token')
     else:
         display_control = "none"
-    return render_to_response('config/index.html', locals())
+    return render_to_response('config/index.html', locals(), RequestContext(request))
 
 
 def get_dir(args):
@@ -92,6 +99,7 @@ def get_dir(args):
         r_path = config.get('config', 'roles_path')
         p_path = config.get('config', 'playbook_path')
         s_path = config.get('config', 'scripts_path')
+        token = config.get('token', 'token')
     if args == "a_path":
         return a_path
     if args == "r_path":
@@ -100,3 +108,13 @@ def get_dir(args):
         return p_path
     if args == "s_path":
         return s_path
+    if args == "token":
+        return token
+
+
+def get_token(request):
+    if request.method == 'POST':
+        new_token = get_user_model().objects.make_random_password(length=12, allowed_chars='abcdefghjklmnpqrstuvwxyABCDEFGHJKLMNPQRSTUVWXY3456789')
+        return HttpResponse(new_token)
+    else:
+        return 
