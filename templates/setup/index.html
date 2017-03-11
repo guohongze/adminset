@@ -42,6 +42,7 @@
 
             <div class="col-md-6">
             <form action="{% url 'playbook' %}" method="post">
+                                {% csrf_token %}
               <div class="form-group">
                 <label>选择主机</label>
                 <select id="mserver" name="mserver" class="form-control select2" multiple="multiple" data-placeholder="选择主机(host)" style="width: 100%;">
@@ -85,6 +86,7 @@
               <div class="form-group">
               <!-- /.form-group -->
               <form action="{% url 'acommand' %}" method="post">
+                                      {% csrf_token %}
               <div class="form-group ">
                   <label>Ansible Command</label>
                   <textarea style="padding-bottom: 15px;" id="mcommand" name="mcommand" rows="11" class="form-control" placeholder="use enter spilt and command like: ansible web -a 'ls'"></textarea>
@@ -174,6 +176,7 @@ function sync(){
     yes:function(){
         $.ajax({
                 type: "post",
+                csrfmiddlewatetoken: Cookie.get('csrftoken'),
                 url: "{% url 'host_sync' %}",
             });
         layer.msg('同步成功！');

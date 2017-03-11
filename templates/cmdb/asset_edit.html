@@ -15,6 +15,7 @@
 <div id="dialog">
         <div class="box">
             <form class="form-horizontal" action="{% url 'asset_save' %}" method="POST">
+                        {% csrf_token %}
               <div class="box-body">
                 <div class="form-group">
                   <label for="hostname" class="col-sm-2 control-label">主机名:</label>

@@ -17,7 +17,8 @@
             <!-- /.box-header -->
             <!-- form start -->
             <form class="form-horizontal" action="{% url 'group_save' %}" method="POST">
-              <div class="box-body">
+                      {% csrf_token %}
+                <div class="box-body">
                 <div class="form-group">
                   <label for="name" class="col-sm-2 control-label">组名:</label>
 

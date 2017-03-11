@@ -25,6 +25,7 @@
     <!-- Main content -->
     <section class="content">
         <form action="{% url 'idc_del' %}" method="post">
+                    {% csrf_token %}
             <div class="box">
                 <div class="box-header">
                     <div class="btn-group">

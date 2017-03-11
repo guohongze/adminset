@@ -19,7 +19,8 @@
             <!-- /.box-header -->
             <!-- form start -->
             <form class="form-horizontal" action="{% url 'save' %}" method="POST">
-              <div class="box-body">
+                      {% csrf_token %}
+                <div class="box-body">
                 <div class="form-group">
                   <label for="navi_name" class="col-sm-2 control-label">名称</label>
 

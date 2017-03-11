@@ -35,6 +35,7 @@
 
             <div class="col-md-6">
             <form action="{% url 'exec_scripts' %}" method="post">
+                                      {% csrf_token %}
               <div class="form-group">
                 <label>选择主机</label>
                 <select id="mserver" name="mserver" class="form-control select2" multiple="multiple" data-placeholder="选择主机(host)" style="width: 100%;">

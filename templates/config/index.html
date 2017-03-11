@@ -29,7 +29,8 @@
         <div id="dialog">
         <div class="box">
             <form class="form-horizontal" action="{% url 'config_save' %}" method="POST">
-              <div class="box-body">
+                      {% csrf_token %}
+                <div class="box-body">
                   <span><b>脚本路径设置</b></span>
                 <div class="form-group">
                   <label for="ansible_path" class="col-sm-2 control-label">Ansible路径:</label>

@@ -138,11 +138,11 @@ def asset_add(request):
         else:
             tips = u"增加失败！"
             display_control = ""
-        return render_to_response("cmdb/asset_add.html", locals(), context_instance=RequestContext(request))
+        return render_to_response("cmdb/asset_add.html", locals(), RequestContext(request))
     else:
         display_control = "none"
         a_form = AssetForm()
-        return render_to_response("cmdb/asset_add.html", locals(), context_instance=RequestContext(request))
+        return render_to_response("cmdb/asset_add.html", locals(), RequestContext(request))
 
 
 @login_required()
