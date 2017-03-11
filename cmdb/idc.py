@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, RequestContext
 from forms import IdcForm
 from .models import Idc
 from django.contrib.auth.decorators import login_required
@@ -13,7 +13,7 @@ from accounts.permission import permission_verify
 def idc(request):
     temp_name = "cmdb/cmdb-header.html"
     idc_info = Idc.objects.all()
-    return render_to_response('cmdb/idc.html', locals())
+    return render_to_response('cmdb/idc.html', locals(), RequestContext(request))
 
 
 @login_required()
@@ -29,32 +29,33 @@ def idc_add(request):
         else:
             tips = u"增加失败！"
             display_control = ""
-        return render_to_response("cmdb/idc_add.html", locals())
+        return render_to_response("cmdb/idc_add.html", locals(), RequestContext(request))
     else:
         display_control = "none"
         idc_form = IdcForm()
-        return render_to_response("cmdb/idc_add.html", locals())
+        return render_to_response("cmdb/idc_add.html", locals(), RequestContext(request))
 
 
-@login_required()
-@permission_verify()
-def idc_add_mini(request):
-    temp_name = "cmdb/cmdb-header.html"
-    if request.method == "POST":
-        idc_form = IdcForm(request.POST)
-        if idc_form.is_valid():
-            idc_form.save()
-            tips = u"增加成功！"
-            display_control = ""
-            status = 1
-        else:
-            tips = u"增加失败！"
-            display_control = ""
-        return render_to_response("cmdb/idc_add_mini.html", locals())
-    else:
-        display_control = "none"
-        idc_form = IdcForm()
-        return render_to_response("cmdb/idc_add_mini.html", locals())
+# @login_required()
+# @permission_verify()
+# def idc_add_mini(request):
+#     temp_name = "cmdb/cmdb-header.html"
+#     if request.method == "POST":
+#         idc_form = IdcForm(request.POST)
+#         if idc_form.is_valid():
+#             idc_form.save()
+#             tips = u"增加成功！"
+#             display_control = ""
+#             status = 1
+#             return render_to_response("cmdb/idc_add_mini.html", locals(). RequestContext(request))
+#         else:
+#             tips = u"增加失败！"
+#             display_control = ""
+#             return render_to_response("cmdb/idc_add_mini.html", locals(). RequestContext(request))
+#     else:
+#         display_control = "none"
+#         idc_form = IdcForm()
+#         return render_to_response("cmdb/idc_add_mini.html", locals())
 
 
 @login_required()
@@ -67,7 +68,7 @@ def idc_del(request):
             for n in idc_items:
                 Idc.objects.filter(id=n).delete()
     idc_info = Idc.objects.all()
-    return render_to_response("cmdb/idc.html", locals())
+    return render_to_response("cmdb/idc.html", locals(), RequestContext(request))
 
 
 @login_required()
@@ -75,7 +76,7 @@ def idc_del(request):
 def idc_edit(request, ids):
     obj = Idc.objects.get(id=ids)
     allidc = Idc.objects.all()
-    return render_to_response("cmdb/idc_edit.html", locals())
+    return render_to_response("cmdb/idc_edit.html", locals(), RequestContext(request))
 
 
 @login_required()
@@ -107,4 +108,4 @@ def idc_save(request):
         status = 1
     else:
         status = 2
-    return render_to_response("cmdb/idc_edit.html", locals())
+    return render_to_response("cmdb/idc_edit.html", locals(), RequestContext(request))

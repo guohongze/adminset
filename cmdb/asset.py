@@ -10,6 +10,7 @@ from cmdb.api import pages, str2gb
 import csv, datetime
 from django.contrib.auth.decorators import login_required
 from accounts.permission import permission_verify
+from django.views.decorators.csrf import csrf_exempt
 import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
@@ -138,13 +139,14 @@ def asset_add(request):
         else:
             tips = u"增加失败！"
             display_control = ""
-        return render_to_response("cmdb/asset_add.html", locals(), RequestContext(request))
+        return render_to_response("cmdb/asset_add.html", locals(), context_instance=RequestContext(request))
     else:
         display_control = "none"
         a_form = AssetForm()
-        return render_to_response("cmdb/asset_add.html", locals(), RequestContext(request))
+        return render_to_response("cmdb/asset_add.html", locals(), context_instance=RequestContext(request))
 
 
+@csrf_exempt
 @login_required()
 @permission_verify()
 def asset_del(request):
@@ -174,7 +176,7 @@ def asset_edit(request, ids):
     temp_name = "cmdb/cmdb-header.html"
     obj = Host.objects.get(id=ids)
     asset_types = ASSET_TYPE
-    return render_to_response("cmdb/asset_edit.html", locals())
+    return render_to_response("cmdb/asset_edit.html", locals(), context_instance=RequestContext(request))
 
 
 @login_required()
@@ -222,12 +224,12 @@ def asset_save(request):
         status = 1
     else:
         status = 2
-    return render_to_response("cmdb/asset_edit.html", locals())
+    return render_to_response("cmdb/asset_edit.html", locals(), context_instance=RequestContext(request))
 
 
-@login_required()
-@permission_verify()
-def asset_group(request):
-    temp_name = "cmdb/cmdb-header.html"
-    group_info = HostGroup.objects.all()
-    return render_to_response('cmdb/group.html', locals())
+# @login_required()
+# @permission_verify()
+# def asset_group(request):
+#     temp_name = "cmdb/cmdb-header.html"
+#     group_info = HostGroup.objects.all()
+#     return render_to_response('cmdb/group.html', locals())

@@ -47,7 +47,7 @@
         {{ a_form.as_p }}
         <input type="submit" class="btn btn-primary" style="width: 60pt" value="提交">&nbsp;&nbsp;
         <a href="{% url 'cmdb' %}"> <li class="btn btn-primary" style="width: 60pt">返回</li></a>
-        &nbsp;&nbsp;<li  id="idc_add" class="btn btn-success" style="width: 60pt" >机房 <i class="fa fa-plus-circle"></i></li>
+{#        &nbsp;&nbsp;<li  id="idc_add" class="btn btn-success" style="width: 60pt" >机房 <i class="fa fa-plus-circle"></i></li>#}
 
           <br>
       </form>
@@ -72,7 +72,7 @@ $('#idc_add').on('click', function(){
     closeBtn: 1,
     area: ['500px', '450px'],
     shadeClose: true, //点击遮罩关闭
-    content: ['/cmdb/idc_add_mini'],
+    content: ['/cmdb/idc/add/mini/'],
     end:function(){
             var handle_status = $("#handle_status").val();
             if ( handle_status == '1' ) {
