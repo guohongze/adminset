@@ -53,7 +53,7 @@ def logout(request):
 def user_list(request):
     temp_name = "accounts/accounts-header.html"
     all_user = get_user_model().objects.all()
-    return render_to_response('accounts/user_list.html', locals())
+    return render_to_response('accounts/user_list.html', locals(), RequestContext(request))
 
 
 @login_required
@@ -67,7 +67,7 @@ def user_add(request):
             user.set_password(form.cleaned_data['password'])
 
             form.save()
-            return HttpResponseRedirect(reverse('user_list'))
+            return HttpResponseRedirect(reverse('user_list'), RequestContext(request))
     else:
         form = AddUserForm()
 
@@ -85,7 +85,7 @@ def user_add(request):
 def user_del(request, ids):
     if ids:
         get_user_model().objects.filter(id=ids).delete()
-    return HttpResponseRedirect(reverse('user_list'))
+    return HttpResponseRedirect(reverse('user_list'), RequestContext(request))
 
 
 @login_required
@@ -109,7 +109,7 @@ def user_edit(request, ids):
     #     'request': request,
     # }
 
-    return render_to_response('accounts/user_edit.html', locals())
+    return render_to_response('accounts/user_edit.html', locals(), RequestContext(request))
 
 
 @login_required

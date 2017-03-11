@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-
+# 2017.3 update by guohongze@126.com
 from django.http import HttpResponse
 from models import Host, HostGroup, ASSET_TYPE, ASSET_STATUS
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
