@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# update:2017.3 by guohongze@126.com
-
 from django.core.urlresolvers import reverse
-from django.http import HttpResponse,HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response,RequestContext
 from django.contrib.auth.decorators import login_required
 from forms import PermissionListForm

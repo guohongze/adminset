@@ -39,6 +39,7 @@ def token_verify():
 
     return decorator
 
+
 def str2gb(args):
     """
     :参数 args:

@@ -9,15 +9,16 @@ from .models import Host, Idc, HostGroup
 
 class AssetForm(forms.ModelForm):
 
-    def clean(self):
-        cleaned_data = super(AssetForm, self).clean()
-        value = cleaned_data.get('hostname')
-        try:
-            Host.objects.get(hostname=value)
-            self._errors['hostname'] = self.error_class(["%s的信息已经存在" % value])
-        except Host.DoesNotExist:
-            pass
-        return cleaned_data
+    # 验证字段
+    # def clean(self):
+    #     cleaned_data = super(AssetForm, self).clean()
+    #     value = cleaned_data.get('hostname')
+    #     try:
+    #         Host.objects.get(hostname=value)
+    #         self._errors['hostname'] = self.error_class(["%s的信息已经存在" % value])
+    #     except Host.DoesNotExist:
+    #         pass
+    #     return cleaned_data
 
     class Meta:
         model = Host
@@ -27,6 +28,7 @@ class AssetForm(forms.ModelForm):
             'ip': TextInput(attrs={'class': 'form-control', 'style': 'width:530px;', 'placeholder': u'必填项'}),
             'other_ip': TextInput(attrs={'class': 'form-control', 'style': 'width:530px;'}),
             'group': Select(attrs={'class': 'form-control', 'style': 'width:530px;'}),
+            'asset_no': TextInput(attrs={'class': 'form-control', 'style': 'width:530px;'}),
             'asset_type': Select(attrs={'class': 'form-control', 'style': 'width:530px;'}),
             'status': Select(attrs={'class': 'form-control', 'style': 'width:530px;'}),
             'os': TextInput(attrs={'class': 'form-control', 'style': 'width:530px;'}),
