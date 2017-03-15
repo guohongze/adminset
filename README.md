@@ -42,3 +42,5 @@ yum install smartmontools
 ## 访问
 http://your_server_ip:8000<br>
 使用自己createsuperuser创建的用户名密码
+<br>
+<img src="https://github.com/guohongze/adminset/blob/master/static/dist/img/demo.png"></img>
