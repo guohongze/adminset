@@ -14,9 +14,9 @@ python 2.7<br>
 smartmontools<br>
 
 
-##安装说明
-####step1:
+## 安装说明
+#### step1:
 git clone https://github.com/guohongze/adminset.git
-####step2:
+#### step2:
 cd adminset
 python manage.py runserver 0.0.0.0:8000
