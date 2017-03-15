@@ -10,7 +10,7 @@ ansible 2.0+
 #### 客户端
 python 2.7
 smartmontools
-# 启动 
+# Start 
 python manage.py runserver 0.0.0.0:8000
-# 访问
+# Access
 http://ip:8000
