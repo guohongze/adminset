@@ -29,6 +29,7 @@ cd adminset<br>
 pip install -r reqirements.txt<br>
 python manage.py makemigrations<br>
 python manage.py migrate<br>
+python manage.py createsuperuser<br>
 python manage.py runserver 0.0.0.0:8000
 
 ## 客户端说明
