@@ -14,9 +14,22 @@ python 2.7<br>
 smartmontools<br>
 
 
-## 安装说明
-#### step1:
+## 服务端说明
+#### step1:下载
 git clone https://github.com/guohongze/adminset.git
-#### step2:
-cd adminset
+#### step2:数据库
+yum install mariadb-server
+mysql
+CREATE DATABASE adminset DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+#### step3:配置
+cd adminset<br>
+编辑adminset.conf文件填写mysql数据库信息
+#### step4:运行
+pip install -r reqirements.txt
 python manage.py runserver 0.0.0.0:8000
+
+## 客户端说明
+#### step1:
+yum install smartmontools
+#### step2:
+在客户机上执行 scripts/agent_post_info.py 文件自动上报主机信息<br>
