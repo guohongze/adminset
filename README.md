@@ -14,4 +14,4 @@ smartmontools
 # Start 
 python manage.py runserver 0.0.0.0:8000
 # Access
-http://ip:8000
+http://your_ip:8000
