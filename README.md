@@ -1,5 +1,5 @@
 # Adminset
-<img src="https://travis-ci.org/guohongze/adminset.svg?branch=master"></img>
+<img src="https://travis-ci.org/guohongze/adminset.svg?branch=master"></img><br>
 The open source operation platform : CMDB, project deploy, DevOps , monitor. 开源DevOps平台：资产管理、项目部署、自动运维、系统监控
 # Requirements
 #### 服务器
