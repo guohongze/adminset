@@ -146,7 +146,6 @@ def asset_add(request):
         return render_to_response("cmdb/asset_add.html", locals(), RequestContext(request))
 
 
-# @csrf_exempt
 @login_required()
 @permission_verify()
 def asset_del(request):
@@ -166,19 +165,6 @@ def asset_del(request):
     return HttpResponse(u'删除成功')
 
 
-# @login_required()
-# @permission_verify()
-# def asset_edit(request, ids):
-#     #传参给layui script避免一个status为空的报错
-#     status = 0
-#     iasset = get_object(Host, id=ids)
-#     af = AssetForm(instance=iasset)
-#     temp_name = "cmdb/cmdb-header.html"
-#     obj = Host.objects.get(id=ids)
-#     asset_types = ASSET_TYPE
-#     return render_to_response("cmdb/asset_edit.html", locals(), RequestContext(request))
-
-
 @login_required
 @permission_verify()
 def asset_edit(request, ids):
@@ -195,67 +181,5 @@ def asset_edit(request, ids):
             status = 2
     else:
         af = AssetForm(instance=obj)
-    # ids = ids
-    # kwvars = {
-    #     'ids': ids,
-    #     'form': form,
-    #     'request': request,
-    # }
 
     return render_to_response('cmdb/asset_edit.html', locals(), RequestContext(request))
-
-
-# @login_required()
-# @permission_verify()
-# def asset_save(request):
-#     temp_name = "cmdb/cmdb-header.html"
-#     if request.method == 'POST':
-#         asset_id = request.POST.get('id')
-#         hostname = request.POST.get('hostname')
-#         ip = request.POST.get('ip')
-#         other_ip = request.POST.get('other_ip')
-#         group = request.POST.get('group')
-#         asset_type = request.POST.get('asset_type')
-#         status = request.POST.get('status')
-#         os = request.POST.get('os')
-#         vendor = request.POST.get('vendor')
-#         cpu_model = request.POST.get('cpu_model')
-#         cpu_num = request.POST.get('cpu_num')
-#         memory = request.POST.get('memory')
-#         disk = request.POST.get('disk')
-#         sn = request.POST.get('sn')
-#         idc = request.POST.get('idc')
-#         position = request.POST.get('position')
-#         memo = request.POST.get('memo')
-#         h_item = Host.objects.get(id=asset_id)
-#         h_item.hostname = hostname
-#         h_item.ip = ip
-#         h_item.other_ip = other_ip
-#         h_item.group_id = group
-#         h_item.asset_type = asset_type
-#         h_item.status = status
-#         h_item.os = os
-#         h_item.vendor = vendor
-#         h_item.cpu_model = cpu_model
-#         h_item.cpu_num = cpu_num
-#         h_item.memory = memory
-#         h_item.disk = disk
-#         h_item.sn = sn
-#         h_item.idc_id = idc
-#         h_item.position = position
-#         h_item.memo = memo
-#         h_item.save()
-#         obj = h_item
-#         #传参给lyaui以触发回调
-#         status = 1
-#     else:
-#         status = 2
-#     return render_to_response("cmdb/asset_edit.html", locals(), RequestContext(request))
-
-
-# @login_required()
-# @permission_verify()
-# def asset_group(request):
-#     temp_name = "cmdb/cmdb-header.html"
-#     group_info = HostGroup.objects.all()
-#     return render_to_response('cmdb/group.html', locals())
