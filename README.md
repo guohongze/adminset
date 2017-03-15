@@ -19,6 +19,7 @@ smartmontools<br>
 git clone https://github.com/guohongze/adminset.git
 #### step2:数据库
 yum install mariadb-server<br>
+service mariadb start<br>
 mysql<br>
 CREATE DATABASE adminset DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 #### step3:配置
@@ -33,3 +34,4 @@ python manage.py runserver 0.0.0.0:8000
 yum install smartmontools
 #### step2:
 在客户机上执行 scripts/agent_post_info.py 文件自动上报主机信息<br>
+注意：编写前请编辑scripts/agent_post_info.py文件 保证 token 和server_url是正确的
