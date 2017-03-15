@@ -1,6 +1,6 @@
 # Adminset
 The open source operation platform : CMDB, project deploy, DevOps , monitor. 开源DevOps平台：资产管理、项目部署、自动运维、系统监控
-# Requires
+# Requirements
 #### 服务器
 python 2.7
 django 1.9.8
