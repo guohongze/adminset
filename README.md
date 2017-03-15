@@ -38,3 +38,7 @@ yum install smartmontools
 #### step2:
 在客户机上执行 scripts/agent_post_info.py 文件自动上报主机信息<br>
 注意：编写前请编辑scripts/agent_post_info.py文件 保证 token 和server_url是正确的
+
+## 访问
+http://your_server_ip:8000<br>
+使用自己createsuperuser创建的用户名密码
