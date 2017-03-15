@@ -10,16 +10,22 @@ import urllib2
 import platform
 import socket
 
+token = 'HPcWR7l4NJNJ'
+server_url = 'http://192.168.47.130:8000/cmdb/collect'
+
+
 def get_ip():
     hostname = socket.getfqdn(socket.gethostname())
     ipaddr = socket.gethostbyname(hostname)
     return ipaddr
 
+
 def getDMI():
     p = Popen('dmidecode', stdout=PIPE, shell=True)
     stdout, stderr = p.communicate()
     return stdout
-        
+
+
 def parserDMI(dmidata):
     pd = {}
     line_in = False
@@ -34,6 +40,7 @@ def parserDMI(dmidata):
             line_in = False
     return pd
 
+
 def getMemTotal():
     cmd = "grep MemTotal /proc/meminfo"
     p = Popen(cmd, stdout = PIPE, shell = True)
@@ -42,11 +49,13 @@ def getMemTotal():
     memtotal = int(round(int(mem_total)/1024.0/1024.0, 0))
     return memtotal
 
+
 def getCpu():
     cmd = "cat /proc/cpuinfo"
     p = Popen(cmd, stdout = PIPE, stderr = PIPE, shell = True)
     stdout, stderr = p.communicate()
     return stdout
+
 
 def parserCpu(stdout):
     groups = [i for i in stdout.split('\n\n')]
@@ -57,6 +66,7 @@ def parserCpu(stdout):
         k, v = [i.strip() for i in x.split(':')]
         cpu_info[k] = v
     return cpu_info
+
 
 def getDiskInfo():
     ret = {}
@@ -72,6 +82,8 @@ def getDiskInfo():
             p = n.communicate()
             ret[dk] = p
     return ret
+
+
 def parserDiskInfo(diskdata):
     pd = {}
     disknum = diskdata.keys()
@@ -90,11 +102,13 @@ def parserDiskInfo(diskdata):
                 pd[num] = endnum + 'G'
     return pd
 
+
 def postData(data):
     postdata = urllib.urlencode(data)
-    req = urllib2.urlopen('http://192.168.47.130:8000/cmdb/collect',postdata)
+    req = urllib2.urlopen(server_url, postdata)
     req.read()
     return True
+
 
 def main():
     data_info = {}
@@ -116,6 +130,8 @@ def main():
     os_ver = os_ver.rstrip()
     data_info['osver'] = os_ver
     data_info['hostname'] = platform.uname()[1]
+    data_info['token'] = token
+
 
     return data_info
 
