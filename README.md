@@ -18,14 +18,14 @@ smartmontools<br>
 #### step1:下载
 git clone https://github.com/guohongze/adminset.git
 #### step2:数据库
-yum install mariadb-server
-mysql
+yum install mariadb-server<br>
+mysql<br>
 CREATE DATABASE adminset DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 #### step3:配置
 cd adminset<br>
 编辑adminset.conf文件填写mysql数据库信息
 #### step4:运行
-pip install -r reqirements.txt
+pip install -r reqirements.txt<br>
 python manage.py runserver 0.0.0.0:8000
 
 ## 客户端说明
