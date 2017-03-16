@@ -29,9 +29,10 @@ CREATE DATABASE adminset DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 #### step3:配置
 cd adminset<br>
 编辑adminset.conf文件填写mysql数据库信息
-#### 配置免密钥登陆
+#### step4:配置免密钥登陆客机
 ssh-keygen (可选)<br>
-ssh-copy -i /root/.ssh/rsa_id.pub {your_host_ip}<br>
+ssh-copy -i /root/.ssh/rsa_id.pub {客户机IP}<br>
+ansible和shell管理客户机需要此配置
 
 #### step4:运行
 easy_install pip <br>
