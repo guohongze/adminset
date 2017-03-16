@@ -30,9 +30,8 @@ CREATE DATABASE adminset DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 cd adminset<br>
 编辑adminset.conf文件填写mysql数据库信息
 #### 配置免密钥登陆
-yum install ansible
-ssh-keygen
-ssh-copy -i /root/.ssh/rsa_id.pub {host_ip}
+ssh-keygen (可选)<br>
+ssh-copy -i /root/.ssh/rsa_id.pub {your_host_ip}<br>
 
 #### step4:运行
 easy_install pip <br>
