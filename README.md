@@ -15,8 +15,12 @@ smartmontools<br>
 
 
 ## 服务端说明
-#### step1:下载
+#### step1:准备
 git clone https://github.com/guohongze/adminset.git
+yum install ansible -y
+yum install smartmontools -y
+mkdir /etc/ansible/scripts
+mkdir /etc/ansible/playbook
 #### step2:数据库
 yum install mariadb-server<br>
 service mariadb start<br>
@@ -25,13 +29,18 @@ CREATE DATABASE adminset DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 #### step3:配置
 cd adminset<br>
 编辑adminset.conf文件填写mysql数据库信息
+#### 配置免密钥登陆
+yum install ansible
+ssh-keygen
+ssh-copy -i /root/.ssh/rsa_id.pub {host_ip}
+
 #### step4:运行
+easy_install pip <br>
 pip install -r reqirements.txt<br>
 python manage.py makemigrations<br>
 python manage.py migrate<br>
 python manage.py createsuperuser<br>
 python manage.py runserver 0.0.0.0:8000
-
 ## 客户端说明
 #### step1:
 yum install smartmontools
