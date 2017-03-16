@@ -59,3 +59,6 @@ http://your_server_ip:8000/get/group/?token=your_token&name=group_name <br>
 http://your_server_ip:8000/get/group/?token=your_token&name=all <br>
 # dashboard
 <img src="https://github.com/guohongze/adminset/blob/master/static/dist/img/demo.png"></img>
+# 安全
+建议不要将程序启动在有公网可以直接访问的设备上，如果需要请使用VPN。<br>
+建议生产环境中使用https配置服务器<br>
