@@ -42,5 +42,12 @@ yum install smartmontools
 ## 访问
 http://your_server_ip:8000<br>
 使用自己createsuperuser创建的用户名密码
-<br>
+
+# API
+#### 获取主机信息
+http://your_server_ip:8000/get/host/?token=your_token&name=host_name <br>
+#### 获取组信息
+http://your_server_ip:8000/get/group/?token=your_token&name=group_name <br>
+http://your_server_ip:8000/get/group/?token=your_token&name=all <br>
+# dashboard
 <img src="https://github.com/guohongze/adminset/blob/master/static/dist/img/demo.png"></img>

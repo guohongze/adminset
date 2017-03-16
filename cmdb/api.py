@@ -156,7 +156,7 @@ def collect(request):
 @token_verify()
 def get_host(request):
     try:
-        hostname = request.GET['hostname']
+        hostname = request.GET['name']
     except:
         return HttpResponse('you have no data')
     try:
