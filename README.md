@@ -34,7 +34,7 @@ ssh-keygen (可选)<br>
 ssh-copy -i /root/.ssh/rsa_id.pub {客户机IP}<br>
 ansible和shell管理客户机需要此配置
 
-#### step4:运行
+#### step5:运行
 easy_install pip <br>
 pip install -r reqirements.txt<br>
 python manage.py makemigrations<br>
