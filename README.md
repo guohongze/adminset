@@ -17,10 +17,10 @@ smartmontools<br>
 ## 服务端说明
 #### step1:准备
 git clone https://github.com/guohongze/adminset.git
-yum install ansible -y
-yum install smartmontools -y
-mkdir /etc/ansible/scripts
-mkdir /etc/ansible/playbook
+yum install ansible -y<br>
+yum install smartmontools -y<br>
+mkdir /etc/ansible/scripts<br>
+mkdir /etc/ansible/playbook<br>
 #### step2:数据库
 yum install mariadb-server<br>
 service mariadb start<br>
