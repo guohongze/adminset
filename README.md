@@ -16,7 +16,7 @@ smartmontools<br>
 
 ## 服务端说明
 #### step1:准备
-git clone https://github.com/guohongze/adminset.git
+git clone https://github.com/guohongze/adminset.git<br>
 yum install ansible -y<br>
 yum install smartmontools -y<br>
 mkdir /etc/ansible/scripts<br>
