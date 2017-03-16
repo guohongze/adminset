@@ -19,11 +19,13 @@ smartmontools<br>
 git clone https://github.com/guohongze/adminset.git<br>
 yum install ansible -y<br>
 yum install smartmontools -y<br>
+yum install python python-devel -y<br>
 mkdir /etc/ansible/scripts<br>
 mkdir /etc/ansible/playbook<br>
 #### step2:数据库
-yum install mariadb-server<br>
+yum install -y mariadb-server mariadb-devel<br>
 service mariadb start<br>
+chkconfig mariadb on<br>
 mysql<br>
 CREATE DATABASE adminset DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 #### step3:配置
@@ -31,12 +33,12 @@ cd adminset<br>
 编辑adminset.conf文件填写mysql数据库信息
 #### step4:配置免密钥登陆客机
 ssh-keygen (可选)<br>
-ssh-copy -i /root/.ssh/rsa_id.pub {客户机IP}<br>
+ssh-copy-id -i /root/.ssh/id_rsa.pub {客户机IP}<br>
 ansible和shell管理客户机需要此配置
 
 #### step5:运行
 easy_install pip <br>
-pip install -r reqirements.txt<br>
+pip install -r requirements.txt<br>
 python manage.py makemigrations<br>
 python manage.py migrate<br>
 python manage.py createsuperuser<br>
