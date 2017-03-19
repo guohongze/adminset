@@ -3,17 +3,21 @@
 
 from subprocess import Popen, PIPE, STDOUT, call
 from cmdb.models import Host, HostGroup
-from django.shortcuts import render_to_response, redirect, RequestContext
+from django.shortcuts import render
 from django.http import HttpResponse
 import os
 from config.views import get_dir
 from django.contrib.auth.decorators import login_required
 from accounts.permission import permission_verify
+import logging
+from lib.log import log
+from lib.setup import get_playbook, get_roles
 
-
+# var info
 ansible_dir = get_dir("a_path")
 roles_dir = get_dir("r_path")
 playbook_dir = get_dir("p_path")
+log("setup.log")
 
 
 @login_required()
@@ -24,38 +28,11 @@ def index(request):
     all_dir = get_roles(roles_dir)
     all_pbook = get_playbook(playbook_dir)
     all_group = HostGroup.objects.all()
-    return render_to_response('setup/ansible.html', locals(), RequestContext(request))
-
-
-def get_roles(args):
-    dir_list = []
-    dirs = os.listdir(args)
-    for d in dirs:
-        if d[0] == '.':
-            pass
-        elif os.path.isfile(args+d):
-            pass
-        else:
-            dir_list.append(d)
-    return dir_list
-
-
-def get_playbook(args):
-    files_list = []
-    dirs = os.listdir(args)
-    for d in dirs:
-        if d[0] == '.':
-            pass
-        elif os.path.isdir(args+d):
-            pass
-        elif d.endswith(".retry"):
-            os.remove(args+d)
-        else:
-            files_list.append(d)
-    return files_list
+    return render(request, 'setup/ansible.html', locals())
 
 
 @login_required()
+@permission_verify()
 def playbook(request):
     ret = []
     temp_name = "setup/setup-header.html"
@@ -72,17 +49,24 @@ def playbook(request):
     if host:
         if roles:
             for h in host:
+                logging.info("==========ansible tasks start==========")
+                logging.info("User:"+request.user.username)
+                logging.info("host:"+h)
                 f = open(ansible_dir + '/gexec.yml', 'w+')
                 flist = ['- hosts: '+h+'\n', '  remote_user: root\n', '  gather_facts: false\n', '  roles:\n']
                 for r in roles:
                     rs = '    - ' + r + '\n'
                     flist.append(rs)
+                    logging.info("Role:"+r)
                 f.writelines(flist)
                 f.close()
                 cmd = "ansible-playbook"+" " + ansible_dir+'/gexec.yml'
                 p = Popen(cmd, stderr=PIPE, stdout=PIPE, shell=True)
-                data = p.communicate()[0]
+                data = p.communicate()
                 ret.append(data)
+                for d in data:
+                    logging.info(d)
+                logging.info("==========ansible tasks end============")
         else:
             for h in host:
                 for p in pbook:
@@ -93,25 +77,39 @@ def playbook(request):
                     f.writelines(flist)
                     f.close()
                     cmd = "ansible-playbook"+" " + playbook_dir + p
-                    p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
-                    data = p.communicate()[0]
+                    pcmd = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
+                    data = pcmd.communicate()
                     ret.append(data)
-        return render_to_response('setup/result.html', locals(), RequestContext(request))
+                    logging.info("==========ansible tasks start==========")
+                    logging.info("User:"+request.user.username)
+                    logging.info("host:"+h)
+                    logging.info("Playbook:"+p)
+                    for d in data:
+                        logging.info(d)
+                    logging.info("==========ansible tasks end============")
+        return render(request, 'setup/result.html', locals())
 
     if group:
         if roles:
             for g in group:
+                logging.info("==========ansible tasks start==========")
+                logging.info("User:"+request.user.username)
+                logging.info("group:"+g)
                 f = open(ansible_dir + '/gexec.yml', 'w+')
                 flist = ['- hosts: '+g+'\n', '  remote_user: root\n', '  gather_facts: false\n', '  roles:\n']
                 for r in roles:
                     rs = '    - ' + r + '\n'
                     flist.append(rs)
+                    logging.info("Role:"+r)
                 f.writelines(flist)
                 f.close()
                 cmd = "ansible-playbook"+" " + ansible_dir+'/gexec.yml'
                 p = Popen(cmd, stderr=PIPE, stdout=PIPE, shell=True)
-                data = p.communicate()[0]
+                data = p.communicate()
                 ret.append(data)
+                for d in data:
+                    logging.info(d)
+                logging.info("==========ansible tasks end============")
         else:
             for g in group:
                 for p in pbook:
@@ -122,17 +120,24 @@ def playbook(request):
                     f.writelines(flist)
                     f.close()
                     cmd = "ansible-playbook"+" " + playbook_dir + p
-                    p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
-                    data = p.communicate()[0]
+                    pcmd = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
+                    data = pcmd.communicate()
                     ret.append(data)
-        return render_to_response('setup/result.html', locals(), RequestContext(request))
+                    logging.info("==========ansible tasks start==========")
+                    logging.info("User:"+request.user.username)
+                    logging.info("Group:"+g)
+                    logging.info("Playbook:"+p)
+                    for d in data:
+                        logging.info(d)
+                    logging.info("==========ansible tasks end============")
+        return render(request, 'setup/result.html', locals())
 
 
 @login_required()
 @permission_verify()
 def ansible_command(request):
     command_list = []
-    ret2 = []
+    ret = []
     count = 1
     temp_name = "setup/setup-header.html"
     if request.method == 'POST':
@@ -142,12 +147,19 @@ def ansible_command(request):
             if command.startswith("ansible"):
                 p = Popen(command, stdout=PIPE, stderr=PIPE,shell=True)
                 data = p.communicate()
-                ret2.append(data)
+                ret.append(data)
             else:
                 data = "your command " + str(count) + "  is invalid!"
-                ret2.append(data)
+                ret.append(data)
             count += 1
-        return render_to_response('setup/result.html', locals(), RequestContext(request))
+            logging.info("==========ansible tasks start==========")
+            logging.info("User:"+request.user.username)
+            logging.info("command:"+command)
+            for d in data:
+                logging.info(d)
+            logging.info("==========ansible tasks end============")
+        # return render_to_response('setup/result.html', locals(), RequestContext(request))
+        return render(request, 'setup/result.html', locals())
 
 
 @login_required()
@@ -168,4 +180,8 @@ def host_sync(request):
             group_item = m.hostname+"\n"
             ansible_file.write(group_item)
     ansible_file.close()
+    logging.info("==========ansible tasks start==========")
+    logging.info("User:"+request.user.username)
+    logging.info("Task: sync cmdb info to ansible hosts")
+    logging.info("==========ansible tasks end============")
     return HttpResponse("ok")

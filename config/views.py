@@ -117,4 +117,4 @@ def get_token(request):
         new_token = get_user_model().objects.make_random_password(length=12, allowed_chars='abcdefghjklmnpqrstuvwxyABCDEFGHJKLMNPQRSTUVWXY3456789')
         return HttpResponse(new_token)
     else:
-        return 
+        return True

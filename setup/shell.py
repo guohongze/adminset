@@ -8,7 +8,11 @@ import sh
 from config.views import get_dir
 from django.contrib.auth.decorators import login_required
 from accounts.permission import permission_verify
+from lib.log import log
+from lib.setup import get_scripts
+import logging
 scripts_dir = get_dir("s_path")
+log('setup.log')
 
 
 @login_required()
@@ -36,25 +40,42 @@ def exec_scripts(request):
                 for name in server:
                     host = Host.objects.get(hostname=name)
                     ret.append(host.hostname)
+                    logging.info("==========Shell Start==========")
+                    logging.info("User:"+request.user.username)
+                    logging.info("Host:"+host.hostname)
                     for s in scripts:
                         sh.scp(scripts_dir+s, "root@{}:/tmp/".format(host.ip)+s)
                         cmd = "ssh root@"+host.ip+" "+'"sh /tmp/{}"'.format(s)
-                        p = Popen(cmd, stdout=PIPE, stderr=PIPE,shell=True)
+                        p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
                         data = p.communicate()
                         ret.append(data)
+                        logging.info("Scripts:"+s)
+                        for d in data:
+                            logging.info(d)
+                    logging.info("==========Shell End============")
             else:
                 for name in server:
                     host = Host.objects.get(hostname=name)
                     ret.append(host.hostname)
+                    logging.info("==========Shell Start==========")
+                    logging.info("User:"+request.user.username)
+                    logging.info("Host:"+host.hostname)
                     command_list = command.split('\n')
                     for cmd in command_list:
                         cmd = "ssh root@"+host.ip+" "+'"{}"'.format(cmd)
                         p = Popen(cmd, stdout=PIPE, stderr=PIPE,shell=True)
                         data = p.communicate()
                         ret.append(data)
+                        logging.info("command:"+cmd)
+                        for d in data:
+                            logging.info(d)
+                    logging.info("==========Shell End============")
         if group:
             if scripts:
                 for g in group:
+                    logging.info("==========Shell Start==========")
+                    logging.info("User:"+request.user.username)
+                    logging.info("Group:"+g)
                     hosts = Host.objects.filter(group__name=g)
                     ret.append(g)
                     for host in hosts:
@@ -62,13 +83,20 @@ def exec_scripts(request):
                         for s in scripts:
                             sh.scp(scripts_dir+s, "root@{}:/tmp/".format(host.ip)+s)
                             cmd = "ssh root@"+host.ip+" "+'"sh /tmp/{}"'.format(s)
-                            p = Popen(cmd, stdout=PIPE, stderr=PIPE,shell=True)
+                            p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
                             data = p.communicate()
                             ret.append(data)
+                            logging.info("command:"+cmd)
+                            for d in data:
+                                logging.info(d)
+                    logging.info("==========Shell End============")
             else:
                 command_list = []
                 command_list = command.split('\n')
                 for g in group:
+                    logging.info("==========Shell Start==========")
+                    logging.info("User:"+request.user.username)
+                    logging.info("Group:"+g)
                     hosts = Host.objects.filter(group__name=g)
                     ret.append(g)
                     for host in hosts:
@@ -78,17 +106,8 @@ def exec_scripts(request):
                             p = Popen(cmd, stdout=PIPE, stderr=PIPE,shell=True)
                             data = p.communicate()
                             ret.append(data)
+                            logging.info("command:"+cmd)
+                            for d in data:
+                                logging.info(d)
+                    logging.info("==========Shell End============")
         return render_to_response('setup/shell_result.html', locals())
-
-
-def get_scripts(args):
-    files_list = []
-    dirs = os.listdir(args)
-    for d in dirs:
-        if d[0] == '.':
-            pass
-        elif os.path.isdir(args+d):
-            pass
-        else:
-            files_list.append(d)
-    return files_list

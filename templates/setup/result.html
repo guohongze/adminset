@@ -33,10 +33,7 @@
         </div>
         <div class="box-body">
         {% for d in ret %}
-        <p>{{ d }}</p><br>
-        {% endfor %}
-        {% for r in ret2 %}
-        <p>{{ r|res_splict|safe }}</p><br>
+        <p>{{ d|res_splict|safe }}</p><br>
         {% endfor %}
         </div>
         <!-- /.box-body -->
