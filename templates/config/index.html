@@ -110,8 +110,29 @@
                   <label for="token" class="col-sm-2 control-label">Token:</label>
 
                   <div class="col-sm-10">
-                    <input type="text" value="{{ token }}" id="token" name="token" style="width:450px;">
+                    <input type="text" value="{{ token }}" id="token" name="token" style="width:450px;" readonly>
                     <li class="btn btn-default" id="config" onclick="get_token();"><b>创建</b></li>
+                  </div>
+                </div>
+                    <hr>
+                <p><b>日志设置(重启生效)</b></p>
+                <div class="form-group">
+                  <label for="log" class="col-sm-2 control-label">日志路径:</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" value="{{ log_path }}" id="log_path" name="log_path" style="width:450px;">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="log" class="col-sm-2 control-label">日志级别:</label>
+
+                  <div class="col-sm-10">
+                    <select name="log_level" class="form-control" style="width:450px;">
+                            <option value="{{ log_level }}" selected="selected"> {{ log_level }}</option>
+                        {% for key,value in all_level.items %}
+                            <option value="{{ key }}"> {{ key }}</option>
+                        {% endfor %}
+                    </select>
                   </div>
                 </div>
 

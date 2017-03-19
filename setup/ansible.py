@@ -17,7 +17,9 @@ from lib.setup import get_playbook, get_roles
 ansible_dir = get_dir("a_path")
 roles_dir = get_dir("r_path")
 playbook_dir = get_dir("p_path")
-log("setup.log")
+level = get_dir("log_level")
+log_path = get_dir("log_path")
+log("setup.log", level, log_path)
 
 
 @login_required()

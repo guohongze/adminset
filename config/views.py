@@ -6,6 +6,8 @@ import os
 from django.contrib.auth.decorators import login_required
 from accounts.permission import permission_verify
 from django.contrib.auth import get_user_model
+import logging
+from lib.log import dic
 
 
 @login_required()
@@ -16,6 +18,7 @@ def index(request):
     # dirs = os.path.split(os.path.realpath(__file__))[0]
     dirs = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     config = ConfigParser.ConfigParser()
+    all_level = dic
     with open(dirs+'/adminset.conf', 'r') as cfgfile:
         config.readfp(cfgfile)
         a_path = config.get('config', 'ansible_path')
@@ -29,6 +32,8 @@ def index(request):
         password = config.get('db', 'password')
         database = config.get('db', 'database')
         token = config.get('token', 'token')
+        log_path = config.get('log', 'log_path')
+        log_level = config.get('log', 'log_level')
     return render_to_response('config/index.html', locals(), RequestContext(request))
 
 
@@ -51,6 +56,9 @@ def config_save(request):
         database = request.POST.get('database')
         # cmdb_api_token
         token = request.POST.get('token')
+        # log
+        log_path = request.POST.get('log_path')
+        log_level = request.POST.get('log_level')
         
         config = ConfigParser.RawConfigParser()
         dirs = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -68,6 +76,9 @@ def config_save(request):
         config.set('db', 'database', database)
         config.add_section('token')
         config.set('token', 'token', token)
+        config.add_section('log')
+        config.set('log', 'log_path', log_path)
+        config.set('log', 'log_level', log_level)
         tips = u"保存成功！"
         display_control = ""
         with open(dirs+'/adminset.conf', 'wb') as cfgfile:
@@ -85,6 +96,7 @@ def config_save(request):
             password = config.get('db', 'password')
             database = config.get('db', 'database')
             token = config.get('token', 'token')
+            log_path = config.get('log', 'log_path')
     else:
         display_control = "none"
     return render_to_response('config/index.html', locals(), RequestContext(request))
@@ -100,6 +112,9 @@ def get_dir(args):
         p_path = config.get('config', 'playbook_path')
         s_path = config.get('config', 'scripts_path')
         token = config.get('token', 'token')
+        log_path = config.get('log', 'log_path')
+        log_level = config.get('log', 'log_level')
+
     if args == "a_path":
         return a_path
     if args == "r_path":
@@ -110,6 +125,10 @@ def get_dir(args):
         return s_path
     if args == "token":
         return token
+    if args == "log_path":
+        return log_path
+    if args == "log_level":
+        return log_level
 
 
 def get_token(request):
