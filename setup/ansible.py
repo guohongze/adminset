@@ -68,6 +68,7 @@ def playbook(request):
         group = request.POST.getlist('mgroup', [])
         pbook = request.POST.getlist('splaybook', [])
         roles = request.POST.getlist('mplaybook', [])
+
     if host:
         if roles:
             for h in host:
@@ -88,6 +89,35 @@ def playbook(request):
                     f = open(playbook_dir + p, 'r+')
                     flist = f.readlines()
                     flist[0] = '- hosts: '+h+'\n'
+                    f = open(playbook_dir + p, 'w+')
+                    f.writelines(flist)
+                    f.close()
+                    cmd = "ansible-playbook"+" " + playbook_dir + p
+                    p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
+                    data = p.communicate()[0]
+                    ret.append(data)
+        return render_to_response('setup/result.html', locals(), RequestContext(request))
+
+    if group:
+        if roles:
+            for g in group:
+                f = open(ansible_dir + '/gexec.yml', 'w+')
+                flist = ['- hosts: '+g+'\n', '  remote_user: root\n', '  gather_facts: false\n', '  roles:\n']
+                for r in roles:
+                    rs = '    - ' + r + '\n'
+                    flist.append(rs)
+                f.writelines(flist)
+                f.close()
+                cmd = "ansible-playbook"+" " + ansible_dir+'/gexec.yml'
+                p = Popen(cmd, stderr=PIPE, stdout=PIPE, shell=True)
+                data = p.communicate()[0]
+                ret.append(data)
+        else:
+            for g in group:
+                for p in pbook:
+                    f = open(playbook_dir + p, 'r+')
+                    flist = f.readlines()
+                    flist[0] = '- hosts: '+g+'\n'
                     f = open(playbook_dir + p, 'w+')
                     f.writelines(flist)
                     f.close()
