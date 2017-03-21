@@ -74,7 +74,7 @@
                 </select>
               </div>
               <!-- /.form-group -->
-            <input type="submit" onclick="return checkSubmit();" class="btn btn-primary" style="width: 60pt; font-size: medium;" value="执行">
+            <input type="submit" id="playbook_submit" class="btn btn-primary" style="width: 60pt; font-size: medium;" value="执行">
                 <!-- /.form-group -->
             </form>
             </div>
@@ -89,7 +89,7 @@
                   <label>Ansible Command</label>
                   <textarea style="padding-bottom: 15px;" id="mcommand" name="mcommand" rows="11" class="form-control" placeholder="use enter spilt and command like: ansible web -a 'ls'"></textarea>
                 </div>
-                  <input type="submit" onclick="return checkCommand();" class="btn btn-primary" style="width: 60pt; font-size: medium;" value="执行">
+                  <input type="submit" id="command_submit" class="btn btn-primary" style="width: 60pt; font-size: medium;" value="执行">
                 <!-- /.form-group -->
                   </form>
             </div>
@@ -118,10 +118,24 @@
     $("#splaybook").select2().on("select2:select", function () { $("#mplaybook").prop("disabled", true); });
     $("#splaybook").select2().on("select2:unselect", function () { $("#mplaybook").prop("disabled", false); });
 
-  });
-</script>
-<script>
-function checkSubmit() {
+    $("#command_submit").click(function(){
+
+        if ($('#mcommand').val() == "") {
+            layer.msg('请填写正确的ansible命令!');
+            return false;
+        }
+        var obj = $('#mcommand').val();
+
+        if(confirm("确认执行"+obj+'?'))
+            var index = layer.load(1, {
+                shade: [0.1,'#fff'] //0.1透明度的白色背景
+            });
+        else
+            return false;
+    });
+
+  $("#playbook_submit").click(function(){
+
     if ($('#mserver').val() == null && $('#mgroup').val() == null) {
         layer.msg("请选目标服务器或组!");
         return false;
@@ -133,32 +147,15 @@ function checkSubmit() {
     var obj = $('#mserver').val() || $('#mgroup').val();
     var act = $('#mplaybook').val() || $('#splaybook').val();
 
-    {# loding layer #}
-    var index = layer.load(1, {
-        shade: [0.1,'#fff'] //0.1透明度的白色背景
-    });
-
-    if (!confirm("确定在"+obj+"上执行"+act+"？")) {
-        window.event.returnValue = false;
-    }
-}
-</script>
-<script>
-function checkCommand() {
-    if ($('#mcommand').val() == "") {
-        layer.msg('请填写正确的ansible命令!');
+    if(confirm("确定在"+obj+"上执行"+act+"？"))
+        var index = layer.load(1, {
+            shade: [0.1,'#fff'] //0.1透明度的白色背景
+        });
+    else
         return false;
-    }
-    var obj = $('#mcommand').val();
-    {# loding layer #}
-    var index = layer.load(1, {
-        shade: [0.1,'#fff'] //0.1透明度的白色背景
-    });
 
-    if (!confirm("确定执行命令"+obj+"？")) {
-        window.event.returnValue = false;
-    }
-}
+  });
+});
 </script>
 <script>
 function checkBlur(){
