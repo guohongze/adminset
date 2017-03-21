@@ -123,15 +123,21 @@
 <script>
 function checkSubmit() {
     if ($('#mserver').val() == null && $('#mgroup').val() == null) {
-        alert("请选目标服务器或组!");
+        layer.msg("请选目标服务器或组!");
         return false;
     }
-    if ($('#splaybook').val() == null && $('#mplaybook').val() == "") {
-        alert("请选要执行的Roles或Playbook!");
+    if ($('#splaybook').val() == null && $('#mplaybook').val() == null) {
+        layer.msg("请选要执行的Roles或Playbook!");
         return false;
     }
-    var obj = $('#mserver').val() || $('#mgroup').val()
-    var act = $('#mplaybook').val() || $('#splaybook').val()
+    var obj = $('#mserver').val() || $('#mgroup').val();
+    var act = $('#mplaybook').val() || $('#splaybook').val();
+
+    {# loding layer #}
+    var index = layer.load(1, {
+        shade: [0.1,'#fff'] //0.1透明度的白色背景
+    });
+
     if (!confirm("确定在"+obj+"上执行"+act+"？")) {
         window.event.returnValue = false;
     }
@@ -140,10 +146,15 @@ function checkSubmit() {
 <script>
 function checkCommand() {
     if ($('#mcommand').val() == "") {
-        alert("请填写正确的ansible命令!");
+        layer.msg('请填写正确的ansible命令!');
         return false;
     }
-    var obj = $('#mcommand').val()
+    var obj = $('#mcommand').val();
+    {# loding layer #}
+    var index = layer.load(1, {
+        shade: [0.1,'#fff'] //0.1透明度的白色背景
+    });
+
     if (!confirm("确定执行命令"+obj+"？")) {
         window.event.returnValue = false;
     }
@@ -152,17 +163,17 @@ function checkCommand() {
 <script>
 function checkBlur(){
     if ($('#mcommand').val() == "") {
-        document.getElementById("mplaybook").removeAttribute('disabled')
-        document.getElementById("splaybook").removeAttribute('disabled')
-        document.getElementById("mgroup").removeAttribute('disabled')
-        document.getElementById("mserver").removeAttribute('disabled')
+        document.getElementById("mplaybook").removeAttribute('disabled');
+        document.getElementById("splaybook").removeAttribute('disabled');
+        document.getElementById("mgroup").removeAttribute('disabled');
+        document.getElementById("mserver").removeAttribute('disabled');
     }
 }
 function checkFocus(){
-    document.getElementById("mplaybook").setAttribute('disabled','disabled')
-    document.getElementById("splaybook").setAttribute('disabled','disabled')
-    document.getElementById("mserver").setAttribute('disabled','disabled')
-    document.getElementById("mgroup").setAttribute('disabled','disabled')
+    document.getElementById("mplaybook").setAttribute('disabled','disabled');
+    document.getElementById("splaybook").setAttribute('disabled','disabled');
+    document.getElementById("mserver").setAttribute('disabled','disabled');
+    document.getElementById("mgroup").setAttribute('disabled','disabled');
 }
 </script>
 <script>
@@ -175,7 +186,7 @@ function sync(){
         $.ajax({
                 type: "post",
                 data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
-                url: "{% url 'host_sync' %}",
+                url: "{% url 'host_sync' %}"
             });
         layer.msg('同步成功！');
         }

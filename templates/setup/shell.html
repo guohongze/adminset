@@ -92,15 +92,21 @@
 <script>
 function checkSubmit() {
     if ($('#mserver').val() == null && $('#mgroup').val() == null) {
-        alert("请选目标服务器或组!");
+        layer.msg("请选目标服务器或组!");
         return false;
     }
     if ($('#mscripts').val() == null && $('#mcommand').val() == "") {
-        alert("请选要执行的Scripts或shell command!");
+        layer.msg("请选要执行的Scripts或shell command!");
         return false;
     }
-    var obj = $('#mserver').val() || $('#mgroup').val()
-    var act = $('#mscripts').val() || $('#mcommand').val()
+    var obj = $('#mserver').val() || $('#mgroup').val();
+    var act = $('#mscripts').val() || $('#mcommand').val();
+
+    {# loding layer #}
+    var index = layer.load(1, {
+        shade: [0.1,'#fff'] //0.1透明度的白色背景
+    });
+
     if (!confirm("确定在"+obj+"上执行"+act+"？")) {
         window.event.returnValue = false;
     }
