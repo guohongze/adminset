@@ -46,7 +46,10 @@ def exec_scripts(request):
                     logging.info("User:"+request.user.username)
                     logging.info("Host:"+host.hostname)
                     for s in scripts:
-                        sh.scp(scripts_dir+s, "root@{}:/tmp/".format(host.ip)+s)
+                        try:
+                            sh.scp(scripts_dir+s, "root@{}:/tmp/".format(host.ip)+s)
+                        except:
+                            pass
                         cmd = "ssh root@"+host.ip+" "+'"sh /tmp/{}"'.format(s)
                         p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
                         data = p.communicate()
@@ -65,7 +68,7 @@ def exec_scripts(request):
                     command_list = command.split('\n')
                     for cmd in command_list:
                         cmd = "ssh root@"+host.ip+" "+'"{}"'.format(cmd)
-                        p = Popen(cmd, stdout=PIPE, stderr=PIPE,shell=True)
+                        p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
                         data = p.communicate()
                         ret.append(data)
                         logging.info("command:"+cmd)
@@ -83,7 +86,10 @@ def exec_scripts(request):
                     for host in hosts:
                         ret.append(host.hostname)
                         for s in scripts:
-                            sh.scp(scripts_dir+s, "root@{}:/tmp/".format(host.ip)+s)
+                            try:
+                                sh.scp(scripts_dir+s, "root@{}:/tmp/".format(host.ip)+s)
+                            except:
+                                pass
                             cmd = "ssh root@"+host.ip+" "+'"sh /tmp/{}"'.format(s)
                             p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
                             data = p.communicate()
@@ -105,7 +111,7 @@ def exec_scripts(request):
                         ret.append(host.hostname)
                         for cmd in command_list:
                             cmd = "ssh root@"+host.ip+" "+'"{}"'.format(cmd)
-                            p = Popen(cmd, stdout=PIPE, stderr=PIPE,shell=True)
+                            p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
                             data = p.communicate()
                             ret.append(data)
                             logging.info("command:"+cmd)
