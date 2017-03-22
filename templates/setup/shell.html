@@ -102,8 +102,8 @@
         var act = $('#mscripts').val() || $('#mcommand').val();
 
         if(confirm("确定在"+obj+"上执行"+act+"？"))
-            var index = layer.load(1, {
-                shade: [0.1,'#fff'] //0.1透明度的白色背景
+            layer.load(1, {
+                shade: [0.5,'#f4f4f4'] //0.1透明度的白色背景
             });
         else
             return false;
