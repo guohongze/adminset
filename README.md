@@ -48,7 +48,7 @@ python manage.py runserver 0.0.0.0:8000
 说明：为保证注册IP是管理IP（后续会被ansible等调用），客户端的IP抓取目前使用主机名解析，也就是说主机名必须可以被解析才能执行自动上报脚本，否则报错。
 如：主机名为centos6 请在/etc/hosts中加入相应的解析 192.168.x.x centos6，这样再执行agent_post_info.py 可以保证正常运行。
 #### step1:
-yum install -y smartmontools
+yum install -y smartmontools <br>
 yum install -y dmidecode
 #### step2:
 在客户机上执行 scripts/agent_post_info.py 文件自动上报主机信息<br>
