@@ -10,12 +10,13 @@ sh 1.12.9<br>
 mysql-python 1.2.5<br>
 ansible 2.0+<br>
 #### 客户端
-python 2.7<br>
+python 2.6+<br>
 smartmontools<br>
 
 
 ## 服务端说明
 #### step1:准备
+请将服务器端安装在centos7上
 git clone https://github.com/guohongze/adminset.git<br>
 yum install ansible -y<br>
 yum install smartmontools -y<br>
@@ -44,8 +45,11 @@ python manage.py migrate<br>
 python manage.py createsuperuser<br>
 python manage.py runserver 0.0.0.0:8000
 ## 客户端说明
+说明：为保证注册IP是管理IP（后续会被ansible等调用），客户端的IP抓取目前使用主机名解析，也就是说主机名必须可以被解析才能执行自动上报脚本，否则报错。
+如：主机名为centos6 请在/etc/hosts中加入相应的解析 192.168.x.x centos6，这样再执行agent_post_info.py 可以保证正常运行。
 #### step1:
-yum install smartmontools
+yum install -y smartmontools
+yum install -y dmidecode
 #### step2:
 在客户机上执行 scripts/agent_post_info.py 文件自动上报主机信息<br>
 注意：编写前请编辑scripts/agent_post_info.py文件 保证 token 和server_url是正确的
