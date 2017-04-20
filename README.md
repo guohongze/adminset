@@ -38,7 +38,7 @@ ssh-copy-id -i /root/.ssh/id_rsa.pub {客户机IP}<br>
 ansible和shell管理客户机需要此配置
 
 #### step5:运行
-easy_install pip <br>
+yum install -y python-pip <br>
 pip install -r requirements.txt<br>
 python manage.py makemigrations<br>
 python manage.py migrate<br>
