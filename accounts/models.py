@@ -63,3 +63,20 @@ class UserInfo(AbstractBaseUser):
     def has_perm(self, perm, obj=None):
         if self.is_active and self.is_superuser:
             return True
+
+    def has_module_perms(self, app_label):
+        return True
+
+    def get_full_name(self):
+        # The user is identified by their email address
+        return self.email
+
+    def get_short_name(self):
+        # The user is identified by their email address
+        return self.email
+
+    @property
+    def is_staff(self):
+        "Is the user a member of staff?"
+        # Simplest possible answer: All admins are staff
+        return self.is_superuser
