@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% include 'link_css.html' %}
+    {% include 'head_script.html' %}
+</head>
+<body>
+<div class="content-wrapper">
+
+
+    <section class="content">
+
+<div id="dialog">
+        <div class="box">
+            <!-- /.box-header -->
+            <!-- form start -->
+    <form class="form-horizontal" role="form" method="POST" action={% url "job_edit" ids %} >
+    {% csrf_token %}
+              <div class="box-body">
+        {% for item in form %}
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{item.label}}</label>
+
+                <div class="col-ms-10" style="margin-left: 10px;">
+                    {{item}}
+                </div>
+                <div class="col-ms-10" style="margin-left: 10px;">
+                    {{item.errors}}
+                </div>
+            </div>
+            <input type="hidden" name="id" value="{{ item.id }}">
+        {% endfor %}
+        <div class="form-group">
+            <div class="box-footer" style="margin-left: 10px;width: 530px;">
+                <button type="submit" class="btn btn-primary pull-left" style="width: 120px">更新信息</button>&nbsp;&nbsp;
+            </div>
+        </div>
+              </div>
+    </form>
+</div>
+    </div>
+
+
+    </section>
+
+  </div>
+{#回传参数至父层#}
+<script type="text/javascript">
+        var index = parent.layer.getFrameIndex(window.name);
+        var success = {{ status }};
+        if ( success == '1' ) {
+            parent.$("#handle_status").val('1');
+              parent.layer.close(index);
+        } else if( success == '2' ) {
+            parent.$("#handle_status").val('2');
+            parent.layer.close(index);
+        }
+</script>
+</body>
+</html>

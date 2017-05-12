@@ -36,28 +36,6 @@ def idc_add(request):
         return render_to_response("cmdb/idc_add.html", locals(), RequestContext(request))
 
 
-# @login_required()
-# @permission_verify()
-# def idc_add_mini(request):
-#     temp_name = "cmdb/cmdb-header.html"
-#     if request.method == "POST":
-#         idc_form = IdcForm(request.POST)
-#         if idc_form.is_valid():
-#             idc_form.save()
-#             tips = u"增加成功！"
-#             display_control = ""
-#             status = 1
-#             return render_to_response("cmdb/idc_add_mini.html", locals(). RequestContext(request))
-#         else:
-#             tips = u"增加失败！"
-#             display_control = ""
-#             return render_to_response("cmdb/idc_add_mini.html", locals(). RequestContext(request))
-#     else:
-#         display_control = "none"
-#         idc_form = IdcForm()
-#         return render_to_response("cmdb/idc_add_mini.html", locals())
-
-
 @login_required()
 @permission_verify()
 def idc_del(request):

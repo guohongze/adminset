@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block self_head_css_js %}
+    <script src="/static/layer/layer.js"></script>
+{% endblock %}
+{% block content %}
+<script>
+    window.onload=init;
+    function init() {
+        showhide(2);
+    }
+    function showhide(n) {
+        var box = document.getElementById("setup");
+        box.className="active";
+        var box = document.getElementById("jobs");
+        box.className="active";
+    }
+</script>
+
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="alert alert-info alert-dismissible" style="display: {{ display_control }};">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4>{{ tips }}</h4>
+        </div>
+    </section>
+
+    <!-- Main content -->
+
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="box">
+        <div class="box-header with-border">
+        </div>
+        <div class="box-body">
+      <form action="{% url 'job_interval_add' %}" method="post">
+        {% csrf_token %}
+        {{ a_form.as_p }}
+        <input type="submit" class="btn btn-primary" style="width: 60pt" value="提交">&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="{% url 'job_interval_list' %}"><li style="width: 60pt" class="btn btn-primary" value="">返回</li></a><br>
+          </form>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+          <i class="fa fa-info-circle"></i> 请勿重复添加条目
+        </div>
+        <!-- /.box-footer-->
+      </div>
+      <!-- /.box -->
+    </section>
+
+  </div>
+{% endblock %}
