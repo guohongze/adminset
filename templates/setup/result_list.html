@@ -24,27 +24,22 @@
 
     <!-- Main content -->
     <section class="content">
-        <div class="btn-group btn-group-lg">
-             <a href="{% url 'job_list' %}"><li class="btn btn-default .btn-flat active"><b>任务列表</b></li></a>
-        </div>
-        <div class="btn-group btn-group-lg">
-             <a href="{% url 'job_interval_list' %}"><li class="btn btn-default .btn-flat" ><b>Interval</b></li></a>
-        </div>
-        <div class="btn-group btn-group-lg">
-             <a href="{% url 'job_crontab_list' %}"><li class="btn btn-default .btn-flat" ><b>Crontab</b></li></a>
-        </div>
-        <div class="btn-group btn-group-lg">
-             <a href="{% url 'job_result_list' %}"><li class="btn btn-default .btn-flat" ><b>任务结果</b></li></a>
-        </div>
-        <form action="{% url 'job_del' %}" method="post">
+                    <div class="btn-group btn-group-lg">
+						 <a href="{% url 'job_list' %}"><li class="btn btn-default .btn-flat" ><b>任务列表</b></li></a>
+                    </div>
+                    <div class="btn-group btn-group-lg">
+						 <a href="{% url 'job_interval_list' %}"><li class="btn btn-default .btn-flat" ><b>Interval</b></li></a>
+                    </div>
+                    <div class="btn-group btn-group-lg">
+						 <a href="{% url 'job_crontab_list' %}"><li class="btn btn-default .btn-flat" ><b>Crontab</b></li></a>
+                    </div>
+                    <div class="btn-group btn-group-lg">
+                         <a href="{% url 'job_result_list' %}"><li class="btn btn-default .btn-flat active" ><b>任务结果</b></li></a>
+                    </div>
+        <form action="{% url 'job_result_del' %}" method="post">
                     {% csrf_token %}
             <div class="box">
                 <div class="box-header">
-                </div>
-                <div class="box-header">
-                    <div class="btn-group">
-						 <a href="{% url 'job_add' %}"><li class="btn btn-success" ><b>新建任务</b></li></a>
-                  </div>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -54,27 +49,25 @@
                             <th>
                                 <input type="checkbox" onclick="checkAll(this, 'item1');" />
                             </th>
-                                    <th>任务名称</th>
-                                    <th>任务类型</th>
+                                    <th>任务名</th>
+                                    <th>任务状态</th>
                                     <th>任务参数</th>
-                                    <th>上次运行</th>
-                                    <th>运行次数</th>
-                                    <th>上次修改</th>
-                                    <th>过期时间</th>
+                                    <th>完成时间</th>
+                                    <th>任务结果</th>
+                                    <th>任务异常</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {% if jobs_info %}
-                                {% for job in jobs_info %}
+                                {% if result_info %}
+                                {% for res in result_info %}
                                     <tr class="even gradeA">
-                                        <td><input type="checkbox" id="u_id" class="item1" value="{{ job.id }}" name="idc_check" /></td>
-                                        <td><a href="#"><li style="list-style-type:none" onclick="return tanchu(this.value)" value="{{ job.id }}"> {{ job.name }}</li></a></td>
-                                        <td>{{ job.task }}</td>
-                                        <td>{{ job.args }}</td>
-                                        <td>{{ job.last_run_at }}</td>
-                                        <td>{{ job.total_run_count }}</td>
-                                        <td>{{ job.date_changed }}</td>
-                                        <td>{{ job.expires }}</td>
+                                        <td><input type="checkbox" id="u_id" class="item1" value="{{ res.id }}" name="idc_check" /></td>
+                                        <td><a href="#"><li style="list-style-type:none" onclick="return tanchu(this.value)" value="{{ res.id }}"> {{ res.task_name }}</li></a></td>
+                                        <td>{{ res.status }}</td>
+                                        <td>{{ res.task_arguments }}</td>
+                                        <td>{{ res.date_done }}</td>
+                                        <td>{{ res.result }}</td>
+                                        <td>{{ res.traceback }}</td>
                                     </tr>
                                 {% endfor %}
                                 {% else %}
@@ -132,9 +125,9 @@ function tanchu(n){
   layer.open({
   type: 2,
   title: '信息修改',
-  area: ['600px', '450px'],
+  area: ['600px', '350px'],
   shadeClose: true, //点击遮罩关闭
-  content: ['/setup/job/edit/' + n,],
+  content: ['/setup/job/result/edit/' + n,],
   end:function(){
         var handle_status = $("#handle_status").val();
         if ( handle_status == '1' ) {

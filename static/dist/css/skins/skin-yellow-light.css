@@ -29,7 +29,7 @@
   color: #fff;
 }
 .skin-yellow-light .main-header .navbar .sidebar-toggle:hover {
-  background-color: #e08e0b;
+  background-color: #00aeff;
 }
 @media (max-width: 767px) {
   .skin-yellow-light .main-header .navbar .dropdown-menu li.divider {
@@ -51,7 +51,7 @@
   background-color: #f39a0d;
 }
 .skin-yellow-light .main-header li.user-header {
-  background-color: #f39c12;
+  background-color: #00aeff;
 }
 .skin-yellow-light .content-header {
   background: transparent;

@@ -2,10 +2,11 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response, RequestContext, redirect
 from django_celery_beat.models import PeriodicTask, IntervalSchedule, CrontabSchedule
+from django_celery_results.models import TaskResult
 from django.contrib.auth.decorators import login_required
 from accounts.permission import permission_verify
 from cmdb.api import get_object
-from forms import PeriodicTaskForm, IntervalForm, CrontabForm
+from forms import PeriodicTaskForm, IntervalForm, CrontabForm, TaskResultForm
 
 
 @login_required
@@ -189,3 +190,43 @@ def job_crontab_add(request):
         display_control = "none"
         a_form = CrontabForm()
         return render_to_response("setup/crontab_add.html", locals(), RequestContext(request))
+
+
+@login_required()
+@permission_verify()
+def job_result_list(request):
+    temp_name = "setup/setup-header.html"
+    result_info = TaskResult.objects.all()
+    return render_to_response('setup/result_list.html', locals(), RequestContext(request))
+
+
+@login_required
+@permission_verify()
+def job_result_edit(request, ids):
+    status = 0
+    obj = get_object(TaskResult, id=ids)
+
+    if request.method == 'POST':
+        form = TaskResultForm(request.POST, instance=obj)
+        if form.is_valid():
+            form.save()
+            status = 1
+        else:
+            status = 2
+    else:
+        form = TaskResultForm(instance=obj)
+
+    return render_to_response('setup/result_edit.html', locals(), RequestContext(request))
+
+
+@login_required
+@permission_verify()
+def job_result_del(request):
+    temp_name = "setup/setup-header.html"
+    if request.method == 'POST':
+        results = request.POST.getlist('idc_check', [])
+        if results:
+            for n in results:
+                TaskResult.objects.filter(id=n).delete()
+    result_info = TaskResult.objects.all()
+    return render_to_response("setup/result_list.html", locals(), RequestContext(request))

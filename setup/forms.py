@@ -18,6 +18,7 @@ from kombu.utils.json import loads
 
 from django_celery_beat.models import PeriodicTask, IntervalSchedule, CrontabSchedule
 from django_celery_beat.utils import is_database_scheduler
+from django_celery_results.models import TaskResult
 
 try:
     from django.utils.encoding import force_text
@@ -134,4 +135,11 @@ class CrontabForm(forms.ModelForm):
 
     class Meta:
         model = CrontabSchedule
+        exclude = ("id",)
+
+
+class TaskResultForm(forms.ModelForm):
+
+    class Meta:
+        model = TaskResult
         exclude = ("id",)

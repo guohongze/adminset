@@ -33,6 +33,9 @@
                     <div class="btn-group btn-group-lg">
 						 <a href="{% url 'job_crontab_list' %}"><li class="btn btn-default .btn-flat" ><b>Crontab</b></li></a>
                     </div>
+                    <div class="btn-group btn-group-lg">
+                         <a href="{% url 'job_result_list' %}"><li class="btn btn-default .btn-flat" ><b>任务结果</b></li></a>
+                    </div>
         <form action="{% url 'job_interval_del' %}" method="post">
                     {% csrf_token %}
             <div class="box">
