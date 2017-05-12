@@ -3,7 +3,7 @@
  * ------------
  */
 .skin-yellow-light .main-header .navbar {
-  background-color: #f39c12;
+  background-color: #00aeff;
 }
 .skin-yellow-light .main-header .navbar .nav > li > a {
   color: #ffffff;
@@ -43,7 +43,7 @@
   }
 }
 .skin-yellow-light .main-header .logo {
-  background-color: #f39c12;
+  background-color: #00aeff;
   color: #ffffff;
   border-bottom: 0 solid transparent;
 }

@@ -24,19 +24,19 @@
 
     <!-- Main content -->
     <section class="content">
-        <form action="{% url 'job_interval_del' %}" method="post">
-                    {% csrf_token %}
-            <div class="box">
-                <div class="box-header">
                     <div class="btn-group btn-group-lg">
 						 <a href="{% url 'job_list' %}"><li class="btn btn-default .btn-flat" ><b>任务列表</b></li></a>
                     </div>
                     <div class="btn-group btn-group-lg">
-						 <a href="{% url 'job_interval_list' %}"><li class="btn btn-default .btn-flat" ><b>Interval</b></li></a>
+						 <a href="{% url 'job_interval_list' %}"><li class="btn btn-default .btn-flat active" ><b>Interval</b></li></a>
                     </div>
                     <div class="btn-group btn-group-lg">
-						 <a href="{% url 'job_crontab' %}"><li class="btn btn-default .btn-flat" ><b>Crontab</b></li></a>
+						 <a href="{% url 'job_crontab_list' %}"><li class="btn btn-default .btn-flat" ><b>Crontab</b></li></a>
                     </div>
+        <form action="{% url 'job_interval_del' %}" method="post">
+                    {% csrf_token %}
+            <div class="box">
+                <div class="box-header">
                 </div>
                 <div class="box-header">
                     <div class="btn-group">

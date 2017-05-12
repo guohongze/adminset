@@ -128,3 +128,10 @@ class IntervalForm(forms.ModelForm):
     class Meta:
         model = IntervalSchedule
         exclude = ("id",)
+
+
+class CrontabForm(forms.ModelForm):
+
+    class Meta:
+        model = CrontabSchedule
+        exclude = ("id",)

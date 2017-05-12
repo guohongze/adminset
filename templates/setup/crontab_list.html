@@ -24,23 +24,23 @@
 
     <!-- Main content -->
     <section class="content">
-        <div class="btn-group btn-group-lg">
-             <a href="{% url 'job_list' %}"><li class="btn btn-default .btn-flat active"><b>任务列表</b></li></a>
-        </div>
-        <div class="btn-group btn-group-lg">
-             <a href="{% url 'job_interval_list' %}"><li class="btn btn-default .btn-flat" ><b>Interval</b></li></a>
-        </div>
-        <div class="btn-group btn-group-lg">
-             <a href="{% url 'job_crontab_list' %}"><li class="btn btn-default .btn-flat" ><b>Crontab</b></li></a>
-        </div>
-        <form action="{% url 'job_del' %}" method="post">
+                    <div class="btn-group btn-group-lg">
+						 <a href="{% url 'job_list' %}"><li class="btn btn-default .btn-flat" id="job_list"><b>任务列表</b></li></a>
+                    </div>
+                    <div class="btn-group btn-group-lg">
+						 <a href="{% url 'job_interval_list' %}"><li class="btn btn-default .btn-flat" ><b>Interval</b></li></a>
+                    </div>
+                    <div class="btn-group btn-group-lg">
+						 <a href="{% url 'job_crontab_list' %}"><li class="btn btn-default .btn-flat active" ><b>Crontab</b></li></a>
+                    </div>
+        <form action="{% url 'job_crontab_del' %}" method="post">
                     {% csrf_token %}
             <div class="box">
                 <div class="box-header">
                 </div>
                 <div class="box-header">
                     <div class="btn-group">
-						 <a href="{% url 'job_add' %}"><li class="btn btn-success" ><b>新建任务</b></li></a>
+						 <a href="{% url 'job_crontab_add' %}"><li class="btn btn-success" ><b>新建周期</b></li></a>
                   </div>
                 </div>
                 <!-- /.box-header -->
@@ -51,27 +51,23 @@
                             <th>
                                 <input type="checkbox" onclick="checkAll(this, 'item1');" />
                             </th>
-                                    <th>任务名称</th>
-                                    <th>任务类型</th>
-                                    <th>任务参数</th>
-                                    <th>上次运行</th>
-                                    <th>运行次数</th>
-                                    <th>上次修改</th>
-                                    <th>过期时间</th>
+                                    <th>分(Minute):</th>
+                                    <th>时(Hour):</th>
+                                    <th>日/周(Day of week):</th>
+                                    <th>日/月(Day of month):</th>
+                                    <th>月/年(Month of year):</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {% if jobs_info %}
-                                {% for job in jobs_info %}
+                                {% if crontab_info %}
+                                {% for crontab in crontab_info %}
                                     <tr class="even gradeA">
-                                        <td><input type="checkbox" id="u_id" class="item1" value="{{ job.id }}" name="idc_check" /></td>
-                                        <td><a href="#"><li style="list-style-type:none" onclick="return tanchu(this.value)" value="{{ job.id }}"> {{ job.name }}</li></a></td>
-                                        <td>{{ job.task }}</td>
-                                        <td>{{ job.args }}</td>
-                                        <td>{{ job.last_run_at }}</td>
-                                        <td>{{ job.total_run_count }}</td>
-                                        <td>{{ job.date_changed }}</td>
-                                        <td>{{ job.expires }}</td>
+                                        <td><input type="checkbox" id="u_id" class="item1" value="{{ crontab.id }}" name="idc_check" /></td>
+                                        <td><a href="#"><li style="list-style-type:none" onclick="return tanchu(this.value)" value="{{ crontab.id }}"> {{ crontab.minute }}</li></a></td>
+                                        <td>{{ crontab.hour }}</td>
+                                        <td>{{ crontab.day_of_week }}</td>
+                                        <td>{{ crontab.day_of_month }}</td>
+                                        <td>{{ crontab.month_of_year }}</td>
                                     </tr>
                                 {% endfor %}
                                 {% else %}
@@ -129,9 +125,9 @@ function tanchu(n){
   layer.open({
   type: 2,
   title: '信息修改',
-  area: ['600px', '450px'],
+  area: ['600px', '350px'],
   shadeClose: true, //点击遮罩关闭
-  content: ['/setup/job/edit/' + n,],
+  content: ['/setup/job/crontab/edit/' + n,],
   end:function(){
         var handle_status = $("#handle_status").val();
         if ( handle_status == '1' ) {
