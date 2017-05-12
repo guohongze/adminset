@@ -196,7 +196,7 @@ def job_crontab_add(request):
 @permission_verify()
 def job_result_list(request):
     temp_name = "setup/setup-header.html"
-    result_info = TaskResult.objects.all()
+    result_info = TaskResult.objects.all().order_by("-id")
     return render_to_response('setup/result_list.html', locals(), RequestContext(request))
 
 
