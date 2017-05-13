@@ -12,9 +12,8 @@ scripts_dir = get_dir("s_path")
 @shared_task
 def command(host, name):
     h = Host.objects.get(hostname=host)
-    cmd = "ssh root@"+h.ip+" "+'"{}"'.format(name)
-    p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
-    data = p.communicate()
+    cmd = sh.ssh("root@"+h.ip, " "+name)
+    data = str(cmd)
     return data
 
 
