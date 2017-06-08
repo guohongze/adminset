@@ -58,7 +58,8 @@ nohup celery -A adminset worker --loglevel=INFO --concurrency=10 -n work1@localh
 echo "####install nginx####"
 yum install nginx -y
 scp $adminset_dir/install/adminset_nginx.conf /etc/nginx/conf.d
-service nginx reload
+scp $adminset_dir/install/nginx.conf /etc/nginx
+nginx -s reload
 echo "##############install finished###################"
 echo "you have installed adminset successfully!!"
 echo "please access website http://server_ip"
