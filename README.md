@@ -40,15 +40,15 @@ yum install -y dmidecode
 注意：执行前请编辑scripts/agent_post_info.py文件 保证 token 和server_url是正确的，token可以在服务端web界面系统配置中获得
 
 ## 访问
-http://your_server_ip:8000<br>
+http://your_server_ip<br>
 使用自己在安装过程中创建的super admin用户名密码
 
 # API
 #### 获取主机信息
-http://your_server_ip:8000/cmdb/get/host/?token=your_token&name=host_name <br>
+http://your_server_ip/cmdb/get/host/?token=your_token&name=host_name <br>
 #### 获取组信息
-http://your_server_ip:8000/cmdb/get/group/?token=your_token&name=group_name <br>
-http://your_server_ip:8000/cmdb/get/group/?token=your_token&name=all <br>
+http://your_server_ip/cmdb/get/group/?token=your_token&name=group_name <br>
+http://your_server_ip/cmdb/get/group/?token=your_token&name=all <br>
 # dashboard
 <img src="https://github.com/guohongze/adminset/blob/master/static/dist/img/demo.png"></img>
 # 安全
