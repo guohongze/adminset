@@ -9,8 +9,8 @@ yum install -y ansible smartmontools
 mkdir -p /etc/ansible/scripts
 mkdir -p /etc/ansible/playbook
 echo "####install database####"
-read -p "do you want to create a new mysql database?[yes/no]:" db
-case $db in
+read -p "do you want to create a new mysql database?[yes/no]:" db1
+case $db1 in
 	yes|y|Y|YES)  
 		echo "installing a new mariadb...."
 		yum install -y mariadb-server mariadb-devel
@@ -30,6 +30,7 @@ case $db in
 		else
 			yum install -y mysql
 			mysql -h$db_ip -P$dbport -u$db_user -p$db_password -e "CREATE DATABASE adminset DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;"
+		fi
 		sed -i "s/host = 127.0.0.1/host = $db_ip/g" $adminset_dir/admiset.conf
 		sed -i "s/user = root/user = $db_user/g" $adminset_dir/admiset.conf
 		sed -i "s/port = 3306/port = $db_port/g" $adminset_dir/admiset.conf
