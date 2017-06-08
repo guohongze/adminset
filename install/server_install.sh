@@ -9,7 +9,7 @@ yum install -y ansible smartmontools
 mkdir -p /etc/ansible/scripts
 mkdir -p /etc/ansible/playbook
 echo "####install database####"
-read -p "do you want to create a new mysql database?[yes/no]":$db
+read -p "do you want to create a new mysql database?[yes/no]:" db
 case $db in
 	yes|y|Y|YES)  
 		echo "installing a new mariadb...."
