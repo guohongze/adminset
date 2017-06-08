@@ -1,0 +1,13 @@
+[Unit]
+Description=adminset
+After=network.target
+
+[Service]
+WorkingDirectory=/opt/adminset
+ExecStart=/usr/bin/gunicorn -c gunicorn_conf.py adminset.wsgi
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target
+

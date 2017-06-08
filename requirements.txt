@@ -5,3 +5,4 @@ pytest==3.0.7
 celery==4.0.2
 django-celery-beat==1.0.1
 django-celery-results==1.0.1
+gunicorn==19.7.1
