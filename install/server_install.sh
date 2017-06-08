@@ -1,5 +1,6 @@
 #!/bin/bash
-adminset_dir = "/opt/adminset/"
+set -e
+adminset_dir="/opt/adminset/"
 echo "####install depandencies####"
 yum install -y epel-release
 yum install -y make autoconf automake cmake gcc gcc-c++ 
@@ -8,7 +9,7 @@ yum install -y ansible smartmontools
 mkdir -p /etc/ansible/scripts
 mkdir -p /etc/ansible/playbook
 echo "####install database####"
-read -p "do you want to create a new mysql database?[yes/no]":db
+read -p "do you want to create a new mysql database?[yes/no]":$db
 case $db in
 	yes|y|Y|YES)  
 		echo "installing a new mariadb...."
@@ -53,8 +54,12 @@ echo "####install redis####"
 yum install redis -y
 nohup celery -A adminset beat -l info -S django &
 nohup celery -A adminset worker --loglevel=INFO --concurrency=10 -n work1@localhost &
+echo "####install nginx####"
+yum install nginx -y
+scp $adminset_dir/install/adminset_nginx.conf /etc/nginx/conf.d
+service nginx reload
 echo "##############install finished###################"
 echo "you have installed adminset successfully!!"
-echo "please access website http://server_ip:8000"
+echo "please access website http://server_ip"
 echo "start adminset: service adminset start"
 echo "stop adminset: service adminset stop"
