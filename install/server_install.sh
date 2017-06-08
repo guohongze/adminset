@@ -53,14 +53,20 @@ chkconfig adminset on
 service adminset start
 echo "####install redis####"
 yum install redis -y
+chkconfig redis on
 nohup celery -A adminset beat -l info -S django &
 nohup celery -A adminset worker --loglevel=INFO --concurrency=10 -n work1@localhost &
 echo "####install nginx####"
 yum install nginx -y
+chkconfig nginx on
 scp $adminset_dir/install/adminset_nginx.conf /etc/nginx/conf.d
 scp $adminset_dir/install/nginx.conf /etc/nginx
 nginx -s reload
 echo "##############install finished###################"
+service nginx start
+service mariadb start
+service redis start
+service adminset start
 echo "you have installed adminset successfully!!"
 echo "please access website http://server_ip"
 echo "start adminset: service adminset start"
