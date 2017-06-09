@@ -44,6 +44,14 @@ case $db1 in
 esac
 echo "####install adminset####"
 yum install -y python-pip
+mkdir -p  ~/.pip
+cat <<EOF > ~/.pip/pip.conf
+[global]
+index-url = http://mirrors.aliyun.com/pypi/simple/
+
+[install]
+trusted-host=mirrors.aliyun.com
+EOF
 cd $adminset_dir
 pip install -r requirements.txt
 python manage.py makemigrations
@@ -70,7 +78,6 @@ service nginx start
 service mariadb start
 service redis start
 service adminset start
-echo "you have installed adminset successfully!!"
 echo "please access website http://server_ip"
-echo "start adminset: service adminset start"
-echo "stop adminset: service adminset stop"
+echo "you have installed adminset successfully!!!"
+echo "################################################"
