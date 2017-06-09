@@ -1,0 +1,16 @@
+[Unit]
+Description=Beat Service
+After=network.target
+
+[Service]
+#Type=forking
+User=root
+Group=root
+EnvironmentFile=-/var/opt/adminset/config/celery/beat.conf
+WorkingDirectory=/opt/adminset
+ExecStart=/bin/sh -c '${CELERY_BIN} \
+  -A ${CELERY_APP} --pidfile=${CELERYD_PID_FILE} \
+  --logfile=${CELERYD_LOG_FILE} --loglevel=${CELERYD_LOG_LEVEL} ${CELERYD_OPTS}'
+
+[Install]
+WantedBy=multi-user.target

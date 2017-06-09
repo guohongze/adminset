@@ -3,7 +3,7 @@ Description=adminset
 After=network.target
 
 [Service]
-WorkingDirectory=/opt/adminset
+WorkingDirectory=/var/opt/adminset/main
 ExecStart=/usr/bin/gunicorn -c gunicorn_conf.py adminset.wsgi
 User=root
 Group=root

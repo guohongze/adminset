@@ -16,7 +16,7 @@ def log(log_name, level="info", path=None):
     if path:
         log_path = path+'/'
     else:
-        log_path = BASE_DIR+'/logs/'
+        log_path = BASE_DIR
 
     logging.basicConfig(level=dic[level],
                 # format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',

@@ -1,13 +1,26 @@
 #!/bin/bash
 set -e
-adminset_dir="/opt/adminset"
+main_dir="/var/opt/adminset"
+adminset_dir="$main_dir/main"
+data_dir="$main_dir/data"
+config_dir="$main_dir/config"
+logs_dir="$main_dir/logs"
+cur_dir=$(pwd)
+mkdir -p $adminset_dir
+mkdir -p $data_dir/scripts
+mkdir -p $data_dir/playbook
+mkdir -p $data_dir/roles
+mkdir -p $config_dir
+mkdir -p $logs_dir
+mkdir -p $main_dir/pid
+rsync --delete --progress -ra $cur_dir/ $adminset_dir
+scp $main_dir/install/ansible/ansible.cfg /etc/ansible/ansible.cfg
 echo "####install depandencies####"
 yum install -y epel-release
 yum install -y make autoconf automake cmake gcc gcc-c++ 
 yum install -y python python-pip python-setuptools python-devel openssl openssl-devel
 yum install -y ansible smartmontools
-mkdir -p /etc/ansible/scripts
-mkdir -p /etc/ansible/playbook
+
 echo "####install database####"
 read -p "do you want to create a new mysql database?[yes/no]:" db1
 case $db1 in
@@ -28,10 +41,10 @@ case $db1 in
 		sleep 3
 		if [ $? -eq 0 ]
 		then
-			mysql -h$db_ip -P$db_port -u$db_user -p$db_password -e "CREATE DATABASE adminset DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;"
+			mysql -h$db_ip -P$db_port -u$db_user -p$db_password -e "CREATE DATABASE adminset DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci if not exists adminset;"
 		else
 			yum install -y mysql
-			mysql -h$db_ip -P$db_port -u$db_user -p$db_password -e "CREATE DATABASE adminset DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;"
+			mysql -h$db_ip -P$db_port -u$db_user -p$db_password -e "CREATE DATABASE adminset DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci if not exists adminset;"
 		fi
 		sed -i "s/host = 127.0.0.1/host = $db_ip/g" $adminset_dir/adminset.conf
 		sed -i "s/user = root/user = $db_user/g" $adminset_dir/adminset.conf
@@ -43,7 +56,6 @@ case $db1 in
 		;;
 esac
 echo "####install adminset####"
-yum install -y python-pip
 mkdir -p  ~/.pip
 cat <<EOF > ~/.pip/pip.conf
 [global]
@@ -59,19 +71,28 @@ python manage.py migrate
 echo "please create your adminset' super admin:"
 python manage.py createsuperuser
 scp $adminset_dir/install/adminset.service /usr/lib/systemd/system
+systemctl daemon-reload
 chkconfig adminset on
 service adminset start
 echo "####install redis####"
 yum install redis -y
 chkconfig redis on
 service redis start
-nohup celery -A adminset beat -l info -S django &
-nohup celery -A adminset worker --loglevel=INFO --concurrency=10 -n work1@localhost &
+echo "####install celery####"
+scp $adminset_dir/install/celery/celery.conf $config_dir/celery/celery.conf
+scp $adminset_dir/install/celery/beat.conf $config_dir/celery/beat.conf
+scp $adminset_dir/install/celery/celery.server /usr/lib/systemd/system
+scp $adminset_dir/install/celery/beat.server /usr/lib/systemd/system
+systemctl daemon-reload
+chkconfig celery on
+chkconfig beat on
+service celery start
+service beat start
 echo "####install nginx####"
 yum install nginx -y
 chkconfig nginx on
-scp $adminset_dir/install/adminset_nginx.conf /etc/nginx/conf.d
-scp $adminset_dir/install/nginx.conf /etc/nginx
+scp $adminset_dir/install/nginx/adminset.conf /etc/nginx/conf.d
+scp $adminset_dir/install/nginx/nginx.conf /etc/nginx
 service nginx start
 nginx -s reload
 echo "##############install finished###################"

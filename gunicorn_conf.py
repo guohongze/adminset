@@ -27,6 +27,6 @@ reload = True
 debug = False
 
 bind = "%s:%s" % ("0.0.0.0", 8000)
-pidfile = '/run/adminset.pid'
+pidfile = '/var/opt/adminset/pid/gunicorn.pid'
 #errorlog = '%s/logs/adminset_error.log' % (path_of_current_dir)
 #accesslog = '%s/logs/adminset_access.log' % (path_of_current_dir)
