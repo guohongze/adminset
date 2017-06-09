@@ -28,8 +28,8 @@ yum install -y dmidecode
 http://your_server_ip<br>
 使用自己在安装过程中创建的super admin用户名密码
 
-##使用说明
-平台说明用说明请转到：<a herf="https://github.com/guohongze/adminset/blob/master/docs/Manual.txt">使用说明</a>
+## 使用说明
+平台说明用说明请转到：<a href="https://github.com/guohongze/adminset/blob/master/docs/Manual.txt">使用说明</a>
 # dashboard
 <img src="https://github.com/guohongze/adminset/blob/master/static/dist/img/asset.png"></img>
 # 安全
