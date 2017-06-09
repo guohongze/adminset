@@ -7,7 +7,7 @@ After=network.target
 User=root
 Group=root
 EnvironmentFile=-/var/opt/adminset/config/celery/beat.conf
-WorkingDirectory=/opt/adminset
+WorkingDirectory=/var/opt/adminset/main
 ExecStart=/bin/sh -c '${CELERY_BIN} \
   -A ${CELERY_APP} --pidfile=${CELERYD_PID_FILE} \
   --logfile=${CELERYD_LOG_FILE} --loglevel=${CELERYD_LOG_LEVEL} ${CELERYD_OPTS}'
