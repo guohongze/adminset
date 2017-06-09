@@ -5,7 +5,7 @@ The open source operation platform : CMDB, project deploy, DevOps , Monitor. <br
 
 
 ## 服务端说明
-建议将服务器端安装在centos7上，程序使用/opt/adminset目录（强制）<br>
+服务器端安装在centos7上，程序使用/opt/adminset目录（强制）<br>
 cd /opt<br>
 git clone https://github.com/guohongze/adminset.git<br>
 执行安装脚本<br>

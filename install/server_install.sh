@@ -64,6 +64,7 @@ service adminset start
 echo "####install redis####"
 yum install redis -y
 chkconfig redis on
+service redis start
 nohup celery -A adminset beat -l info -S django &
 nohup celery -A adminset worker --loglevel=INFO --concurrency=10 -n work1@localhost &
 echo "####install nginx####"
@@ -74,9 +75,7 @@ scp $adminset_dir/install/nginx.conf /etc/nginx
 service nginx start
 nginx -s reload
 echo "##############install finished###################"
-service nginx start
 service mariadb start
-service redis start
 service adminset start
 echo "please access website http://server_ip"
 echo "you have installed adminset successfully!!!"
