@@ -19,10 +19,10 @@ case $db1 in
 		mysql -e "CREATE DATABASE adminset DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;"
 		;;
 	no|n|N|NO)
-		read -p "your database ip address:":db_ip
-		read -p "your database port:":db_port
-		read -p "your database user:":db_user
-		read -p "your database password:":db_password
+		read -p "your database ip address:" db_ip
+		read -p "your database port:" db_port
+		read -p "your database user:" db_user
+		read -p "your database password:" db_password
 		mysql
 		if [ $? -eq 0 ]
 		then

@@ -1,0 +1,54 @@
+#站点导航用法
+在站点管理中输入常用的运维工具系统后会自动出现在站点导航界面。
+
+#cmdb用法
+    利用scripts/agent_post_info.py 自动上报主机相关信息到CMDB
+    获取主机信息
+    http://your_server_ip/cmdb/get/host/?token=your_token&name=host_name
+    获取组信息
+    http://your_server_ip/cmdb/get/group/?token=your_token&name=group_name
+    http://your_server_ip/cmdb/get/group/?token=your_token&name=all
+# 定时任务用法
+    首先新建interval 或crontab<br>
+    新建任务填写名字<br>
+    选择间隔或crontab<br>
+    在Keyword arguments:处的写法是json格式：<br>
+        执行命令<br>
+        {"host":"c1", name:"service tomcat restart"}<br>
+        执行脚本<br>
+        {"host":"c1", name:"reboot.sh"}<br>
+    拉到最下边Task (registered)<br>
+    setup.tasks.command是直接向目标机器发送命令<br>
+    setup.tasks.scripts是在目标机器上执行一个你已经上传到服务器中的脚本<br>
+
+#ansible用法
+    配置免密钥登陆客机(ansible和shell管理客户机需要此配置)
+    在服务器上执行
+    ssh-keygen
+    ssh-copy-id -i /root/.ssh/id_rsa.pub {客户机IP}
+    输入客户机密码后认证成功可以ssh免密登入
+
+    CMDB自动上报主机以后，在ansible页面执行 同步到ansible将主机信息写入ansible的hosts文件
+    然后将playbook 或是role脚本上传到/etc/ansible/playbook 或/etc/ansible/roles
+
+#shell用法
+CMDB自动上报主机以后，shell界面可以直接调用主机。
+然后将常用脚本上传到/etc/ansible/scripts 中shell脚本栏将会自动发现脚本。
+
+#权限管理
+    1、新建权限如：
+    名字：资产管理
+    RL：/cmdb/
+    2、新建角色：
+    名字：资产管理员
+    可选择权限：资产管理
+    3、新建用户
+    在角色一栏选择：资产管理员
+
+
+#启动管理
+service nginx {start|stop|restart}
+service adminset {start|stop|restart}
+service redis {start|stop|restart}
+service mariadb {start|stop|restart}
+/opt/adminset/install/celery_start.sh （重启后需要执行此文件，否则定时任务无法执行）
