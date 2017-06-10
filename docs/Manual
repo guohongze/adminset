@@ -9,17 +9,19 @@
     http://your_server_ip/cmdb/get/group/?token=your_token&name=group_name
     http://your_server_ip/cmdb/get/group/?token=your_token&name=all
 # 定时任务用法
-    首先新建interval 或crontab<br>
-    新建任务填写名字<br>
-    选择间隔或crontab<br>
-    在Keyword arguments:处的写法是json格式：<br>
+    首先新建interval 或crontab
+    新建任务填写名字
+    选择间隔或crontab
+    在Keyword arguments:处的写法是json格式：
         执行命令<br>
-        {"host":"c1", name:"service tomcat restart"}<br>
+        {"host":"c1", name:"service tomcat restart"}
         执行脚本<br>
-        {"host":"c1", name:"reboot.sh"}<br>
+        {"host":"c1", name:"reboot.sh"}
     拉到最下边Task (registered)<br>
-    setup.tasks.command是直接向目标机器发送命令<br>
-    setup.tasks.scripts是在目标机器上执行一个你已经上传到服务器中的脚本<br>
+    setup.tasks.command是直接向目标机器发送命令
+    setup.tasks.scripts是在目标机器上执行一个你已经上传到服务器中的脚本
+    注意：已经运行任务以后，再去修改任务不会立即生效，需要重启beat组件，在任务编排的后台管理中可以重启。
+          这是由于celery的BUG导致，会在社区发布稳定版本以后修复。
 
 #ansible用法
     配置免密钥登陆客机(ansible和shell管理客户机需要此配置)
@@ -53,3 +55,12 @@ service redis {start|stop|restart}
 service mariadb {start|stop|restart}
 service celery {start|stop|restart}
 service beat {start|stop|restart}
+
+#升级与更新
+强烈建设在升级或更新adminset之前先备份数据，并在测试环境验证通过，因为adminset在快速的发展过程中，功能与结果变化较大。<br>
+二次开发时可以在程序安装目标通过git pull 下载最新代码，然后使用rsync.sh 或 update.sh更新运行程序。
+
+# 安全
+强烈建议不要将程序启动在有公网可以直接访问的设备上，如果需要请使用VPN。
+建议生产环境中使用https配置服务器<br>
+由于开发方使，我在django的settings中开启了DEBUG，在生产中需要关闭并指定自己的域名。

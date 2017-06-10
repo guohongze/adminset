@@ -36,6 +36,6 @@ http://your_server_ip<br>
 # 安全
 建议不要将程序启动在有公网可以直接访问的设备上，如果需要请使用VPN。<br>
 建议生产环境中使用https配置服务器<br>
-
+由于开发方使，我在django的settings中开启了DEBUG，在生产中需要关闭并指定自己的域名。
 
 
