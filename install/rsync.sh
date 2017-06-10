@@ -7,4 +7,4 @@ config_dir="$main_dir/config"
 logs_dir="$main_dir/logs"
 cd ..
 cur_dir=$(pwd)
-rsync --progress -ra $cur_dir/ $adminset_dir
+rsync --progress -ra --exclude '.git' $cur_dir/ $adminset_dir

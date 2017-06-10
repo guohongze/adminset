@@ -14,7 +14,7 @@ mkdir -p $data_dir/roles
 mkdir -p $config_dir
 mkdir -p $logs_dir
 mkdir -p $main_dir/pid
-rsync --delete --progress -ra $cur_dir/ $adminset_dir
+rsync --delete --progress -ra --exclude '.git' $cur_dir/ $adminset_dir
 echo "####install depandencies####"
 yum install -y epel-release
 yum install -y make autoconf automake cmake gcc gcc-c++
