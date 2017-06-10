@@ -29,7 +29,7 @@ case $db1 in
 		yum install -y mariadb-server mariadb-devel
 		service mariadb start
 		chkconfig mariadb on
-		mysql -e "CREATE DATABASE adminset DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;"
+		mysql -e "CREATE DATABASE if not exists adminset DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;"
 		;;
 	no|n|N|NO)
 		read -p "your database ip address:" db_ip
@@ -82,7 +82,9 @@ echo "####install celery####"
 mkdir -p $config_dir/celery
 scp $adminset_dir/install/celery/beat.conf $config_dir/celery/beat.conf
 scp $adminset_dir/install/celery/celery.service /usr/lib/systemd/system
+scp $adminset_dir/install/celery/start_celery.sh $config_dir/celery/start_celery.sh
 scp $adminset_dir/install/celery/beat.service /usr/lib/systemd/system
+chmod +x $config_dir/celery/start_celery.sh
 systemctl daemon-reload
 chkconfig celery on
 chkconfig beat on

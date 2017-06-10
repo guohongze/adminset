@@ -8,8 +8,7 @@ RemainAfterExit=true
 User=root
 Group=root
 WorkingDirectory=/var/opt/adminset/main
-ExecStart=/var/opt/adminset/main/install/celery/start_adminset.sh
-#ExecStop=/var/opt/adminset/main/install/celery/stop_adminset.sh
+ExecStart=/var/opt/adminset/config/celery/start_celery.sh
 
 [Install]
 WantedBy=multi-user.target
