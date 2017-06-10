@@ -1,15 +1,17 @@
 # Adminset
 <img src="https://travis-ci.org/guohongze/adminset.svg?branch=master"></img><br>
-The open source operation platform : CMDB, project deploy, DevOps , Monitor. <br>
-开源DevOps平台：资产管理、项目部署、自动运维、系统监控
+The open source operation platform : CMDB, project deploy, Crontab, DevOps , Monitor. <br>
+开源DevOps平台：资产管理、定时任务、项目部署、自动运维、系统监控
 
 
 ## 服务端说明
-服务器端安装在centos7上，程序使用/opt/adminset目录（强制）<br>
-cd /opt<br>
+服务器端安装在centos7上<br>
 git clone https://github.com/guohongze/adminset.git<br>
 执行安装脚本<br>
-/opt/adminset/install/server_install.sh<br>
+cd adminset
+./install/server_install.sh<br>
+安装过程需要输入超管数据库等交互信息<br>
+安装后主程目录/var/opt/adminset
 
 
 

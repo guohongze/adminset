@@ -20,6 +20,7 @@ yum install -y epel-release
 yum install -y make autoconf automake cmake gcc gcc-c++ dos2unix
 yum install -y python python-pip python-setuptools python-devel openssl openssl-devel
 yum install -y ansible smartmontools
+yum update -y  kernel systemd
 scp $adminset_dir/install/ansible/ansible.cfg /etc/ansible/ansible.cfg
 echo "####install database####"
 read -p "do you want to create a new mysql database?[yes/no]:" db1

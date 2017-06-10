@@ -29,11 +29,11 @@
     输入客户机密码后认证成功可以ssh免密登入
 
     CMDB自动上报主机以后，在ansible页面执行 同步到ansible将主机信息写入ansible的hosts文件
-    然后将playbook 或是role脚本上传到/etc/ansible/playbook 或/etc/ansible/roles
+    然后将playbook 或是role脚本上传到/var/opt/adminset/data/playbook 或/var/opt/adminset/data/roles
 
 #shell用法
 CMDB自动上报主机以后，shell界面可以直接调用主机。
-然后将常用脚本上传到/etc/ansible/scripts 中shell脚本栏将会自动发现脚本。
+然后将常用脚本上传到/var/opt/adminset/data/scripts 中shell脚本栏将会自动发现脚本。
 
 #权限管理
     1、新建权限如：
@@ -46,9 +46,10 @@ CMDB自动上报主机以后，shell界面可以直接调用主机。
     在角色一栏选择：资产管理员
 
 
-#启动管理
-service nginx {start|stop|restart}
+#组件启动管理
 service adminset {start|stop|restart}
+service nginx {start|stop|restart}
 service redis {start|stop|restart}
 service mariadb {start|stop|restart}
-/opt/adminset/install/celery_start.sh （重启后需要执行此文件，否则定时任务无法执行）
+service celery {start|stop|restart}
+service beat {start|stop|restart}
