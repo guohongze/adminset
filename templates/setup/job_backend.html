@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% block self_head_css_js %}
+    <script src="/static/layer/layer.js"></script>
+{% endblock %}
+{% block content %}
+<script>
+    window.onload=init;
+    function init() {
+        showhide(2);
+    }
+    function showhide(n) {
+        var box = document.getElementById("setup");
+        box.className="active";
+        var box = document.getElementById("job_list");
+        box.className="active";
+    }
+</script>
+
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="btn-group btn-group-lg">
+             <a href="{% url 'job_list' %}"><li class="btn btn-default .btn-flat"><b>任务列表</b></li></a>
+        </div>
+        <div class="btn-group btn-group-lg">
+             <a href="{% url 'job_interval_list' %}"><li class="btn btn-default .btn-flat" ><b>Interval</b></li></a>
+        </div>
+        <div class="btn-group btn-group-lg">
+             <a href="{% url 'job_crontab_list' %}"><li class="btn btn-default .btn-flat" ><b>Crontab</b></li></a>
+        </div>
+        <div class="btn-group btn-group-lg">
+             <a href="{% url 'job_result_list' %}"><li class="btn btn-default .btn-flat" ><b>任务结果</b></li></a>
+        </div>
+        <div class="btn-group btn-group-lg">
+             <a href="{% url 'job_backend' %}"><li class="btn btn-default .btn-flat active" ><b>后台管理</b></li></a>
+        </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="box box-primary">
+            <div class="box-header">
+              <i class="fa fa-cog"></i>
+
+              <h3 class="box-title">任务后台管理</h3>
+            </div>
+
+            <div class="box-body pad table-responsive">
+              <p></p>
+              <table class="table table-bordered text-center">
+              <tr>
+                  <th>Celery Worker</th>
+                  <th>Celery Beat</th>
+              </tr>
+              <tr>
+                  <td>
+                      <a href="{% url 'job_backend_task' 'celery' 'start' %}">
+                          <button class="btn btn-app" {{ celery_disable }} onclick="return loading()">
+                            <i class="fa fa-play"></i> 启动
+                          </button></a>
+                      <a href="{% url 'job_backend_task' 'celery' 'restart' %}">
+                          <button class="btn btn-app" onclick="return loading();">
+                            <i class="fa fa-repeat"></i>  重启
+                          </button>
+                      </a>
+                      <a href="{% url 'job_backend_task' 'celery' 'stop' %}">
+                          <button class="btn btn-app" {{ celery_stop_disable }} onclick="return loading();">
+                            <i class="fa fa-stop"></i> 停止
+                          </button>
+                      </a>
+                  </td>
+                  <td>
+                      <a href="{% url 'job_backend_task' 'beat' 'start' %}">
+                          <button class="btn btn-app" {{ beat_disable }} onclick="return loading()">
+                            <i class="fa fa-play"></i> 启动
+                          </button></a>
+                      <a href="{% url 'job_backend_task' 'beat' 'restart' %}">
+                          <button class="btn btn-app" onclick="return loading();">
+                            <i class="fa fa-repeat"></i>  重启
+                          </button>
+                      </a>
+                      <a href="{% url 'job_backend_task' 'beat' 'stop' %}">
+                          <button class="btn btn-app" {{ beat_stop_disable }} onclick="return loading();">
+                            <i class="fa fa-stop"></i> 停止
+                          </button>
+                      </a>
+                      </a>
+                  </td>
+              </tr>
+              </table>
+            </div>
+            <!-- /.box -->
+          </div>
+        </div>
+        <!-- /.col -->
+      </div>
+    </section>
+        <!-- /.content -->
+      </div>
+<script>
+function loading(){
+    var index = layer.load(1, {
+    shade: [0.5,'#f4f4f4'] //0.1透明度的白色背景
+});
+}
+</script>
+
+{% endblock %}

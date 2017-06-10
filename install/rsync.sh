@@ -8,3 +8,4 @@ logs_dir="$main_dir/logs"
 cd ..
 cur_dir=$(pwd)
 rsync --progress -ra --exclude '.git' $cur_dir/ $adminset_dir
+service adminset restart

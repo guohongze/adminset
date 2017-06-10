@@ -1,13 +1,14 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-from django.shortcuts import render_to_response, RequestContext, redirect
+from django.shortcuts import render_to_response, RequestContext, redirect, HttpResponse
 from django_celery_beat.models import PeriodicTask, IntervalSchedule, CrontabSchedule
 from django_celery_results.models import TaskResult
 from django.contrib.auth.decorators import login_required
 from accounts.permission import permission_verify
 from cmdb.api import get_object
 from forms import PeriodicTaskForm, IntervalForm, CrontabForm, TaskResultForm
-
+from subprocess import Popen, PIPE
+import os, time
 
 @login_required
 @permission_verify()
@@ -230,3 +231,33 @@ def job_result_del(request):
                 TaskResult.objects.filter(id=n).delete()
     result_info = TaskResult.objects.all()
     return render_to_response("setup/result_list.html", locals(), RequestContext(request))
+
+
+@login_required
+@permission_verify()
+def job_backend(request):
+    temp_name = "setup/setup-header.html"
+    celery_file = os.path.exists('/var/opt/adminset/pid/w1.pid')
+    beat_file = os.path.exists('/var/opt/adminset/pid/beat.pid')
+    if celery_file:
+        celery_disable = "disabled"
+        celery_stop_disable = ""
+    else:
+        celery_disable = ""
+        celery_stop_disable = "disabled"
+    if beat_file:
+        beat_disable = "disabled"
+        beat_stop_disable = ""
+    else:
+        beat_disable = ""
+        beat_stop_disable = "disabled"
+    return render_to_response("setup/job_backend.html", locals(), RequestContext(request))
+
+
+@login_required
+@permission_verify()
+def job_backend_task(request, name, action):
+    cmd = "service "+name+" "+action
+    Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
+    time.sleep(3)
+    return redirect("/setup/job/backend/")
