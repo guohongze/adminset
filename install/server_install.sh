@@ -98,8 +98,12 @@ scp $adminset_dir/install/nginx/nginx.conf /etc/nginx
 service nginx start
 nginx -s reload
 echo "##############install finished###################"
-service mariadb start
-service adminset start
+systemctl daemon-reload
+service redis restart
+service mariadb restart
+service adminset restart
+service celery restart
+service beat restart
 echo "please access website http://server_ip"
 echo "you have installed adminset successfully!!!"
 echo "################################################"
