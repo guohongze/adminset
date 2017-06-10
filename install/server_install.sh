@@ -17,7 +17,7 @@ mkdir -p $main_dir/pid
 rsync --delete --progress -ra $cur_dir/ $adminset_dir
 echo "####install depandencies####"
 yum install -y epel-release
-yum install -y make autoconf automake cmake gcc gcc-c++ 
+yum install -y make autoconf automake cmake gcc gcc-c++ dos2unix
 yum install -y python python-pip python-setuptools python-devel openssl openssl-devel
 yum install -y ansible smartmontools
 scp $adminset_dir/install/ansible/ansible.cfg /etc/ansible/ansible.cfg
@@ -84,6 +84,7 @@ scp $adminset_dir/install/celery/celery.conf $config_dir/celery/celery.conf
 scp $adminset_dir/install/celery/beat.conf $config_dir/celery/beat.conf
 scp $adminset_dir/install/celery/celery.service /usr/lib/systemd/system
 scp $adminset_dir/install/celery/beat.service /usr/lib/systemd/system
+dos2unix /usr/lib/systemd/system/celery.service
 systemctl daemon-reload
 chkconfig celery on
 chkconfig beat on
