@@ -1,5 +1,13 @@
+#程序目录
+    安装脚本会将文件安装在/var/opt/adminset
+    main为程序代码
+    config 配置
+    pid pid文件
+    logs 日志
+    data 常用数据
+
 #站点导航用法
-在站点管理中输入常用的运维工具系统后会自动出现在站点导航界面。
+    在站点管理中输入常用的运维工具系统后会自动出现在站点导航界面。
 
 #cmdb用法
     利用scripts/agent_post_info.py 自动上报主机相关信息到CMDB
@@ -34,8 +42,8 @@
     然后将playbook 或是role脚本上传到/var/opt/adminset/data/playbook 或/var/opt/adminset/data/roles
 
 #shell用法
-CMDB自动上报主机以后，shell界面可以直接调用主机。
-然后将常用脚本上传到/var/opt/adminset/data/scripts 中shell脚本栏将会自动发现脚本。
+    CMDB自动上报主机以后，shell界面可以直接调用主机。
+    然后将常用脚本上传到/var/opt/adminset/data/scripts 中shell脚本栏将会自动发现脚本。
 
 #权限管理
     1、新建权限如：
@@ -49,18 +57,18 @@ CMDB自动上报主机以后，shell界面可以直接调用主机。
 
 
 #组件启动管理
-service adminset {start|stop|restart}
-service nginx {start|stop|restart}
-service redis {start|stop|restart}
-service mariadb {start|stop|restart}
-service celery {start|stop|restart}
-service beat {start|stop|restart}
+    service adminset {start|stop|restart}
+    service nginx {start|stop|restart}
+    service redis {start|stop|restart}
+    service mariadb {start|stop|restart}
+    service celery {start|stop|restart}
+    service beat {start|stop|restart}
 
 #升级与更新
-强烈建设在升级或更新adminset之前先备份数据，并在测试环境验证通过，因为adminset在快速的发展过程中，功能与结果变化较大。<br>
-二次开发时可以在程序安装目标通过git pull 下载最新代码，然后使用rsync.sh 或 update.sh更新运行程序。
+    强烈建设在升级或更新adminset之前先备份数据，并在测试环境验证通过，因为adminset在快速的发展过程中，功能与结果变化较大。<br>
+    二次开发时可以在程序安装目标通过git pull 下载最新代码，然后使用rsync.sh 或 update.sh更新运行程序。
 
 # 安全
-强烈建议不要将程序启动在有公网可以直接访问的设备上，如果需要请使用VPN。
-建议生产环境中使用https配置服务器<br>
-由于开发方使，我在django的settings中开启了DEBUG，在生产中需要关闭并指定自己的域名。
+    强烈建议不要将程序启动在有公网可以直接访问的设备上，如果需要请使用VPN。
+    建议生产环境中使用https配置服务器<br>
+    由于开发方使，我在django的settings中开启了DEBUG，在生产中需要关闭并指定自己的域名。

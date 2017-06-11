@@ -3,24 +3,24 @@
 <img src="https://img.shields.io/hexpm/l/plug.svg"></img>
 <br>
 The open source operation platform : CMDB, project deploy, Crontab, DevOps , Monitor. <br>
-开源DevOps平台：资产管理、定时任务、项目部署、自动运维、系统监控
+开源DevOps平台：资产管理、定时任务、项目部署、自动运维、系统监控<br>
 
 
-## 服务端说明
-服务器端安装在centos7上<br>
+## 开发环境
+centos 7.2(1511) django 1.9.8 python 2.7<br>
+
+## 服务端安装
 git clone https://github.com/guohongze/adminset.git<br>
 执行安装脚本<br>
-cd adminset<br>
-./install/server_install.sh<br>
-安装过程需要输入超管数据库等交互信息<br>
-安装后主程目录/var/opt/adminset
+adminset/install/server_install.sh<br>
+安装过程需要输入管理员数据库等交互信息<br>
 
 
 
 ## 客户端说明
 说明：为保证注册IP是管理IP（后续会被ansible等调用），客户端的IP抓取目前使用主机名解析，也就是说主机名必须可以被解析才能执行自动上报脚本，否则报错。
 如：主机名为centos6 请在/etc/hosts中加入相应的解析 192.168.x.x centos6，这样再执行agent_post_info.py 可以保证正常运行。
-centos7不进行解析也可获取主机IP，但是centos6必须在/etc/hosts对主机名进行解析。
+centos7不进行解析也可获取主机IP，centos6必须在/etc/hosts对主机名进行解析。
 #### step1:
 yum install -y smartmontools <br>
 yum install -y dmidecode
