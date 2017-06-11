@@ -32,12 +32,12 @@ http://your_server_ip<br>
 使用自己在安装过程中创建的super admin用户名密码
 
 ## 使用说明
-平台说明用说明请转到：<a href="https://github.com/guohongze/adminset/blob/master/docs/Manual.txt">使用说明</a>
+请转到：<a href="https://github.com/guohongze/adminset/blob/master/docs/Manual.txt">使用说明</a>
 # dashboard
 <img src="https://github.com/guohongze/adminset/blob/master/static/dist/img/asset.png"></img>
 # 安全
 建议不要将程序启动在有公网可以直接访问的设备上，如果需要请使用VPN。<br>
 建议生产环境中使用https配置服务器<br>
-由于开发方使，我在django的settings中开启了DEBUG，在生产中需要关闭并指定自己的域名。
+由于开发方便，在django的settings中开启了DEBUG，在生产中需要关闭并指定自己的域名。
 
 
