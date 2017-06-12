@@ -19,8 +19,8 @@ adminset/install/server_install.sh<br>
 
 ## 客户端说明
 说明：为保证注册IP是管理IP（后续会被ansible等调用），客户端的IP抓取目前使用主机名解析，也就是说主机名必须可以被解析才能执行自动上报脚本，否则报错。
-如：主机名为centos6 请在/etc/hosts中加入相应的解析 192.168.x.x centos6，这样再执行agent_post_info.py 可以保证正常运行。
-centos7不进行解析也可获取主机IP，centos6必须在/etc/hosts对主机名进行解析。
+如：主机名为webserver 请在/etc/hosts中加入相应的解析 192.168.x.x webserver，这样再执行agent_post_info.py 可以保证正常运行。
+
 #### step1:
 yum install -y smartmontools <br>
 yum install -y dmidecode
