@@ -21,7 +21,22 @@
         box.className="active";
     }
 </script>
-
+<script>
+    $(document).ready(function(){
+        $('.asset_del').click(function(){
+            var row = $(this).closest('tr');
+            if (confirm("确定删除?")) {
+                $.get(
+                        $(this).attr('value'),
+                        {},
+                        function (data) {
+                            row.remove()
+                        }
+                )
+            }
+        });
+    });
+</script>
 
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -31,6 +46,7 @@
     <!-- Main content -->
     <section class="content">
         <form action="" method="post" id="asset_form">
+        {% csrf_token %}
             <div class="box">
                 <div class="box-header">
                     <div class="col-sm-2" style="padding-left: 0">
@@ -228,20 +244,6 @@ function tanchu(n){
         });
 </script>
 <script>
-    $(document).ready(function(){
-        $('.asset_del').click(function(){
-            var row = $(this).closest('tr');
-            if (confirm("确定删除?")) {
-                $.get(
-                        $(this).attr('value'),
-                        {},
-                        function (data) {
-                            row.remove()
-                        }
-                )
-            }
-        });
-
     $('#asset_del').click(function () {
         var asset_id_all = getIDall();
         if (asset_id_all == ''){
@@ -258,7 +260,6 @@ function tanchu(n){
                 }
             });
         }
-    });
     });
 </script>
 
