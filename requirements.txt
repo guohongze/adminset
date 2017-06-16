@@ -8,3 +8,4 @@ django-celery-results==1.0.1
 gunicorn==19.7.1
 redis==2.10.5
 psutil==5.2.2
+schedule==0.4.3

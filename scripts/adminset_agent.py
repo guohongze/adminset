@@ -11,6 +11,8 @@ import socket
 import psutil
 import time
 import schedule
+import redis
+import json
 
 token = 'HPcWR7l4NJNJ'
 server_url = 'http://192.168.47.130/cmdb/collect'
@@ -114,7 +116,7 @@ def post_data(data):
     return True
 
 
-def main():
+def asset_info():
     data_info = dict()
     data_info['memory'] = get_mem_total()
     data_info['disk'] = parser_disk_info(get_disk_info())
@@ -133,20 +135,80 @@ def main():
     return data_info
 
 
-def agent_post():
+def asset_info_post():
     osenv = os.environ["LANG"]
     os.environ["LANG"] = "us_EN.UTF8"
-    result = main()
     os.environ["LANG"] = osenv
-    print 'Get the hardwave and softwave infos from host:'
-    print result
+    print 'Get the hardwave infos from host:'
+    print asset_info()
     print '----------------------------------------------------------'
-    post_data(result)
-    print 'Post the hardwave and softwave infos to CMDB successfully!'
+    post_data(asset_info())
+    print 'Post the hardwave infos to CMDB successfully!'
+
+
+def get_sys_cpu():
+    sys_cpu = {}
+    cpu_time = psutil.cpu_times_percent(interval=1)
+    sys_cpu['percent'] = psutil.cpu_percent(interval=1)
+    sys_cpu['lcpu_percent'] = psutil.cpu_percent(interval=1, percpu=True)
+    sys_cpu['user'] = cpu_time.user
+    sys_cpu['nice'] = cpu_time.nice
+    sys_cpu['system'] = cpu_time.system
+    sys_cpu['idle'] = cpu_time.idle
+    sys_cpu['iowait'] = cpu_time.iowait
+    sys_cpu['irq'] = cpu_time.irq
+    sys_cpu['softirq'] = cpu_time.softirq
+    sys_cpu['guest'] = cpu_time.guest
+    return sys_cpu
+
+
+def get_sys_mem():
+    sys_mem = {}
+    mem = psutil.virtual_memory()
+    sys_mem["total"] = mem.total/1024/1024
+    sys_mem["percent"] = mem.percent
+    sys_mem["available"] = mem.available/1024/1024
+    sys_mem["used"] = mem.used/1024/1024
+    sys_mem["free"] = mem.free/1024/1024
+    sys_mem["buffers"] = mem.buffers/1024/1024
+    sys_mem["cached"] = mem.cached/1024/1024
+    return sys_mem
+
+
+def parser_sys_disk(mountpoint):
+        partitions_list = {}
+        d = psutil.disk_usage(mountpoint)
+        partitions_list['mountpoint'] = mountpoint
+        partitions_list['total'] = round(d.total/1024/1024/1024.0, 2)
+        partitions_list['free'] = round(d.free/1024/1024/1024.0, 2)
+        partitions_list['used'] = round(d.used/1024/1024/1024.0, 2)
+        partitions_list['percent'] = d.percent
+        return partitions_list
+
+
+def get_sys_disk():
+    sys_disk = {}
+    partition_info = []
+    partitions = psutil.disk_partitions()
+    for p in partitions:
+        partition_info.append(parser_sys_disk(p.mountpoint))
+    sys_disk = partition_info
+    return sys_disk
+
+
+def agg_sys_info():
+    sys_info = dict()
+    sys_info['hostname'] = platform.node()
+    sys_info['timestamp'] = int(time.time())
+    sys_info['cpu'] = get_sys_cpu()
+    sys_info['mem'] = get_sys_mem()
+    sys_info['disk'] = get_sys_disk()
+    return json.dumps(sys_info)
 
 
 if __name__ == "__main__":
-    schedule.every(10).seconds.do(agent_post)
+    asset_info_post()
+    schedule.every(10).seconds.do(asset_info_post)
     while True:
         schedule.run_pending()
         time.sleep(1)
