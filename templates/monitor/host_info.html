@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block self_head_css_js %}
+    <script src="/static/js/echarts.js"></script>
+{% endblock %}
+{% block content %}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+    </section>
+    <!-- Main content -->
+    <section class="content">
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">Title</h3>
+        </div>
+        <div class="box-body">
+    <div id="main" style="width: 900px;height:300px;"></div>
+
+        </div>
+      <!-- /.row -->
+        <!-- /.box-body -->
+        <div class="box-footer">
+          Footer
+        </div>
+        <!-- /.box-footer-->
+      </div>
+<script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+var myChart = echarts.init(document.getElementById('main'));
+myChart.showLoading();
+setInterval(function () {
+$.get("/monitor/get/data/{{ hostname }}").done(function (data) {
+    var data = JSON.parse(data);
+    myChart.hideLoading();// 加载动画
+    myChart.setOption({
+        title: {
+            text: 'CPU总体使用率'
+        },
+        tooltip: {},
+        legend: {
+            data:['CPU']
+        },
+        xAxis: {
+            boundaryGap: false,
+            data: data.data_time
+        },
+        yAxis: {},
+        series: [{
+            boundaryGap: [0, '0%'],
+            name: 'CPU',
+            smooth:true,
+            type: 'line',
+            max: 100,
+            data: data.data_percent
+        }]
+    });
+});
+}, 2000);
+</script>
+</section>
+        <!-- /.content -->
+</div>
+{% endblock %}

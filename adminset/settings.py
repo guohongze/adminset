@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'cmdb',
     'config',
     'accounts',
+    'monitor',
     'django_celery_results',
     'django_celery_beat',
     'django.contrib.admin',
@@ -154,7 +155,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 

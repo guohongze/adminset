@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^navi/', include('navi.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^setup/', include('setup.urls')),
+    url(r'^monitor/', include('monitor.urls')),
     url(r'^config/', include('config.urls')),
     url(r'^accounts/', include('accounts.urls')),
 ]

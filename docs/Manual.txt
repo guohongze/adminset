@@ -1,3 +1,7 @@
+#主机名
+    adminset依赖主机名，所以被控机器、客户机，都需要设置主机名，主机名唯一，并且可以
+    被解析。
+
 #程序目录
     安装脚本会将文件安装在/var/opt/adminset
     main为程序代码
@@ -16,6 +20,7 @@
     获取组信息
     http://your_server_ip/cmdb/get/group/?token=your_token&name=group_name
     http://your_server_ip/cmdb/get/group/?token=your_token&name=all
+
 # 定时任务用法
     首先新建interval 或crontab
     新建任务填写名字
@@ -57,15 +62,15 @@
 
 
 #组件启动管理
-    service adminset {start|stop|restart}
-    service nginx {start|stop|restart}
-    service redis {start|stop|restart}
-    service mariadb {start|stop|restart}
-    service celery {start|stop|restart}
-    service beat {start|stop|restart}
+    service adminset {start|stop|restart} # gunicorn管理程序
+    service nginx {start|stop|restart}    # web server
+    service redis {start|stop|restart}    # 缓存和任务列表
+    service mariadb {start|stop|restart}  # 数据库，账号资产等信息
+    service celery {start|stop|restart}   # 异步任务主程序
+    service beat {start|stop|restart}     # 任务调用
 
 #升级与更新
-    强烈建设在升级或更新adminset之前先备份数据，并在测试环境验证通过，因为adminset在快速的发展过程中，功能与结果变化较大。<br>
+    强烈建设在升级或更新adminset之前先备份数据，并在测试环境验证通过，因为adminset在快速的发展过程中，每版本功能与结构变化较大。<br>
     二次开发时可以在程序安装目标通过git pull 下载最新代码，然后使用rsync.sh 或 update.sh更新运行程序。
 
 # 安全

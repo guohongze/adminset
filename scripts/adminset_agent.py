@@ -13,7 +13,6 @@ import time
 import schedule
 import redis
 import json
-import pymongo
 from pymongo import MongoClient
 
 
@@ -117,8 +116,12 @@ def parser_disk_info(diskdata):
 
 def post_data(data):
     postdata = urllib.urlencode(data)
-    req = urllib2.urlopen("http://"+server_ip+"/cmdb/collect", postdata)
-    req.read()
+    try:
+        req = urllib2.urlopen("http://"+server_ip+"/cmdb/collect", postdata)
+        req.read()
+        print 'Post the hardwave infos to CMDB successfully!'
+    except StandardError as msg:
+        print msg
     return True
 
 
@@ -149,7 +152,6 @@ def asset_info_post():
     print '----------------------------------------------------------'
     post_data(asset_info())
     os.environ["LANG"] = osenv
-    print 'Post the hardwave infos to CMDB successfully!'
     return True
 
 
@@ -216,13 +218,15 @@ def agg_sys_info():
     print sys_info
     # insert to mongodb
     print '----------------------------------------------------------'
-    client = MongoClient(server_ip, 27017)
-    db = client.sys_info
-    collection = db[hostname]
-    post = sys_info
-    collection.insert_one(post).inserted_id
-    post_data(asset_info())
-    print 'Post the system infos to mongodb successfully!'
+    try:
+        client = MongoClient(server_ip, 27017)
+        db = client.sys_info
+        collection = db[hostname]
+        post = sys_info
+        collection.insert_one(post).inserted_id
+        print 'Post the system infos to mongodb successfully!'
+    except BaseException as msg:
+        print msg
     return True
 
 if __name__ == "__main__":
