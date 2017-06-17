@@ -3,6 +3,16 @@
     <script src="/static/js/echarts.js"></script>
 {% endblock %}
 {% block content %}
+<script>
+    window.onload=init;
+    function init() {
+        showhide(1);
+    }
+    function showhide(n) {
+        var box = document.getElementById("monitor");
+        box.className="active";
+    }
+</script>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -11,11 +21,11 @@
     <section class="content">
       <div class="box box-info">
         <div class="box-header with-border">
-          <h3 class="box-title">{{ hostname }}监控信息</h3>
+          <h3 class="box-title">{{ hostname }} 监控信息</h3>
         </div>
         <div class="box-body">
-    <div id="cpu" style="width: 900px;height:300px;"></div>
-    <div id="memory" style="width: 900px;height:300px;"></div>
+    <div id="cpu" style="width: 850px;height:300px;"></div>
+    <div id="memory" style="width: 850px;height:300px;"></div>
 
         </div>
       <!-- /.row -->
@@ -37,24 +47,41 @@ $.get("/monitor/get/data/{{ hostname }}").done(function (data) {
         title: {
             text: 'CPU总体使用率'
         },
-        tooltip: {},
+        toolbox: {
+            feature: {
+                dataZoom: {
+                    yAxisIndex: 'none'
+                },
+                restore: {},
+                saveAsImage: {}
+            }
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
         legend: {
-            data:['CPU'],
+            data:['CPU']
         },
         xAxis: {
             boundaryGap: false,
             data: data.data_time
         },
-        yAxis: {},
+        yAxis: [{
+                type : 'value',
+                axisLabel : {
+                    formatter : '{value} %'
+                }
+        }],
         series: [{
-            boundaryGap: [0, '0%'],
+            boundaryGap: false,
             name: 'CPU',
             smooth:true,
             type: 'line',
             symbol: 'none',
             stack: 'a',
             areaStyle: {
-                normal: {}
+                normal: {
+                }
             },
             max: 100,
             data: data.cpu_percent
@@ -77,6 +104,15 @@ $.get("/monitor/get/data/{{ hostname }}").done(function (data) {
             text: '内存使用率'
         },
         tooltip: {},
+        toolbox: {
+            feature: {
+                dataZoom: {
+                    yAxisIndex: 'none'
+                },
+                restore: {},
+                saveAsImage: {}
+            }
+        },
         legend: {
             data:['Memory'],
         },
@@ -84,7 +120,12 @@ $.get("/monitor/get/data/{{ hostname }}").done(function (data) {
             boundaryGap: false,
             data: data.data_time
         },
-        yAxis: {},
+        yAxis: [{
+                type : 'value',
+                axisLabel : {
+                    formatter : '{value} %'
+                }
+        }],
         series: [{
             boundaryGap: [0, '0%'],
             name: 'Memory',
