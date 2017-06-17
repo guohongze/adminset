@@ -6,7 +6,7 @@ from cmdb.models import Host
 from django.contrib.auth.decorators import login_required
 from accounts.permission import permission_verify
 from pymongo import MongoClient
-import json
+import json, time
 
 
 @login_required()
@@ -28,15 +28,24 @@ def host_info(request, hostname):
 @permission_verify()
 def get_sys_data(request, hostname):
     data_time = []
-    data_percent = []
+    cpu_percent = []
+    memory_percent = []
     client = MongoClient("127.0.0.1", 27017)
     db = client.sys_info
     collection = db[hostname]
     cursor = collection.find()
+    now = int(time.time())
     for doc in cursor:
         unix_time = doc['timestamp']
-        cpu_percent = doc['cpu']['percent']
-        data_percent.append(cpu_percent)
-        data_time.append(unix_time)
-    data = {"data_time": data_time, "data_percent": data_percent}
+        if unix_time >= now-3600:
+            times = time.localtime(unix_time)
+            dt = time.strftime("%m%d-%H:%M:%S", times)
+            # get cpu data
+            c_percent = doc['cpu']['percent']
+            cpu_percent.append(c_percent)
+            data_time.append(dt)
+            # get mem data
+            m_percent = doc['mem']['percent']
+            memory_percent.append(m_percent)
+    data = {"data_time": data_time, "cpu_percent": cpu_percent, "memory_percent": memory_percent}
     return HttpResponse(json.dumps(data))
