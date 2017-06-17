@@ -39,7 +39,7 @@ def get_sys_data(request, hostname):
         unix_time = doc['timestamp']
         if unix_time >= now-3600:
             times = time.localtime(unix_time)
-            dt = time.strftime("%m%d-%H:%M:%S", times)
+            dt = time.strftime("%m%d-%H:%M", times)
             # get cpu data
             c_percent = doc['cpu']['percent']
             cpu_percent.append(c_percent)
