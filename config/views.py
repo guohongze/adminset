@@ -131,6 +131,8 @@ def get_dir(args):
         return log_level
 
 
+@login_required()
+@permission_verify()
 def get_token(request):
     if request.method == 'POST':
         new_token = get_user_model().objects.make_random_password(length=12, allowed_chars='abcdefghjklmnpqrstuvwxyABCDEFGHJKLMNPQRSTUVWXY3456789')

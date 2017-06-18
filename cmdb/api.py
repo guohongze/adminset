@@ -5,39 +5,11 @@ from django.http import HttpResponse
 from models import Host, HostGroup, ASSET_TYPE, ASSET_STATUS
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
 from django.views.decorators.csrf import csrf_exempt
-from config.views import get_dir
+from lib.common import token_verify
 try:
     import json
 except ImportError, e:
     import simplejson as json
-
-
-def token_verify():
-
-    def decorator(view_func):
-        def _wrapped_view(request, *args, **kwargs):
-            iToken = get_dir('token')
-            if request.POST:
-                pToken = request.POST.get('token')
-                if iToken == pToken:
-                    return view_func(request, *args, **kwargs)
-                else:
-                    message = "forbidden your token error!!"
-                    print message
-                    return HttpResponse(status=403)
-            if request.GET:
-                pToken = request.GET['token']
-                if iToken == pToken:
-                    return view_func(request, *args, **kwargs)
-                else:
-                    message = "forbidden your token error!!"
-                    print message
-                    return HttpResponse(status=403)
-            return HttpResponse(status=403)
-
-        return _wrapped_view
-
-    return decorator
 
 
 def str2gb(args):
