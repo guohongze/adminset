@@ -6,7 +6,9 @@ from cmdb.models import Host
 from django.contrib.auth.decorators import login_required
 from accounts.permission import permission_verify
 from pymongo import MongoClient
-import json, time
+import json
+import time
+from config.views import get_dir
 
 
 @login_required()
@@ -27,10 +29,12 @@ def host_info(request, hostname):
 @login_required()
 @permission_verify()
 def get_sys_data(request, hostname):
+    mongodb_ip = get_dir("mongodb_ip")
+    mongodb_port = get_dir("mongodb_port")
     data_time = []
     cpu_percent = []
     memory_percent = []
-    client = MongoClient("127.0.0.1", 27017)
+    client = MongoClient(mongodb_ip, int(mongodb_port))
     db = client.sys_info
     collection = db[hostname]
     cursor = collection.find()

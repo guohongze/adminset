@@ -34,6 +34,8 @@ def index(request):
         token = config.get('token', 'token')
         log_path = config.get('log', 'log_path')
         log_level = config.get('log', 'log_level')
+        mongodb_ip = config.get('mongodb', 'ip')
+        mongodb_port = config.get('mongodb', 'port')
     return render_to_response('config/index.html', locals(), RequestContext(request))
 
 
@@ -59,7 +61,10 @@ def config_save(request):
         # log
         log_path = request.POST.get('log_path')
         log_level = request.POST.get('log_level')
-        
+        # mongodb
+        mongodb_ip = request.POST.get('mongodb_ip')
+        mongodb_port = request.POST.get('mongodb_port')
+
         config = ConfigParser.RawConfigParser()
         dirs = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         config.add_section('config')
@@ -79,6 +84,9 @@ def config_save(request):
         config.add_section('log')
         config.set('log', 'log_path', log_path)
         config.set('log', 'log_level', log_level)
+        config.add_section('mongodb')
+        config.set('mongodb', 'ip', mongodb_ip)
+        config.set('mongodb', 'port', mongodb_port)
         tips = u"保存成功！"
         display_control = ""
         with open(dirs+'/adminset.conf', 'wb') as cfgfile:
@@ -97,6 +105,8 @@ def config_save(request):
             database = config.get('db', 'database')
             token = config.get('token', 'token')
             log_path = config.get('log', 'log_path')
+            mongodb_ip = config.get('mongodb', 'ip')
+            mongodb_port = config.get('mongodb', 'port')
     else:
         display_control = "none"
     return render_to_response('config/index.html', locals(), RequestContext(request))
@@ -114,6 +124,8 @@ def get_dir(args):
         token = config.get('token', 'token')
         log_path = config.get('log', 'log_path')
         log_level = config.get('log', 'log_level')
+        mongodb_ip = config.get('mongodb', 'ip')
+        mongodb_port = config.get('mongodb', 'port')
 
     if args == "a_path":
         return a_path
@@ -129,6 +141,10 @@ def get_dir(args):
         return log_path
     if args == "log_level":
         return log_level
+    if args == "mongodb_ip":
+        return mongodb_ip
+    if args == "mongodb_port":
+        return mongodb_port
 
 
 @login_required()

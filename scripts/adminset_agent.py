@@ -6,6 +6,7 @@ from subprocess import Popen, PIPE
 import re
 import urllib
 import urllib2
+import requests
 import platform
 import socket
 import psutil
@@ -14,6 +15,7 @@ import schedule
 import redis
 import json
 from pymongo import MongoClient
+import threading
 
 
 token = 'HPcWR7l4NJNJ'
@@ -114,12 +116,12 @@ def parser_disk_info(diskdata):
     return pd
 
 
-def post_data(data):
+def post_data(url, data):
     postdata = urllib.urlencode(data)
     try:
-        req = urllib2.urlopen("http://"+server_ip+"/cmdb/collect", postdata)
+        req = urllib2.urlopen(url, postdata)
         req.read()
-        print 'Post the hardwave infos to CMDB successfully!'
+        print 'Post the infos to adminset successfully!'
     except StandardError as msg:
         print msg
     return True
@@ -150,7 +152,7 @@ def asset_info_post():
     print 'Get the hardwave infos from host:'
     print asset_info()
     print '----------------------------------------------------------'
-    post_data(asset_info())
+    post_data("http://{}/cmdb/collect".format(server_ip), asset_info())
     os.environ["LANG"] = osenv
     return True
 
@@ -210,31 +212,32 @@ def agg_sys_info():
     print 'Get the system infos from host:'
     sys_info = dict()
     sys_info['hostname'] = platform.node()
-    hostname = platform.node()
-    sys_info['timestamp'] = int(time.time())
     sys_info['cpu'] = get_sys_cpu()
     sys_info['mem'] = get_sys_mem()
     sys_info['disk'] = get_sys_disk()
+    sys_info['token'] = token
     print sys_info
-    # insert to mongodb
+    json_data = json.dumps(sys_info)
     print '----------------------------------------------------------'
     try:
-        client = MongoClient(server_ip, 27017)
-        db = client.sys_info
-        collection = db[hostname]
-        post = sys_info
-        collection.insert_one(post).inserted_id
-        print 'Post the system infos to mongodb successfully!'
-    except BaseException as msg:
+        r = requests.post("http://{}/monitor/received/sys/info/".format(server_ip), json_data)
+        print r.text
+    except StandardError as msg:
         print msg
     return True
+
+
+def run_threaded(job_func):
+    job_thread = threading.Thread(target=job_func)
+    job_thread.start()
+
 
 if __name__ == "__main__":
     asset_info_post()
     time.sleep(1)
     agg_sys_info()
-    schedule.every(1800).seconds.do(asset_info_post)
-    schedule.every(60).seconds.do(agg_sys_info)
+    schedule.every(1800).seconds.do(run_threaded, asset_info_post)
+    schedule.every(10).seconds.do(run_threaded, agg_sys_info)
     while True:
         schedule.run_pending()
         time.sleep(1)
