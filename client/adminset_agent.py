@@ -4,17 +4,13 @@
 import os
 from subprocess import Popen, PIPE
 import re
-import urllib
-import urllib2
 import requests
 import platform
 import socket
 import psutil
 import time
 import schedule
-import redis
 import json
-from pymongo import MongoClient
 import threading
 
 
@@ -209,7 +205,6 @@ def get_sys_disk():
 
 
 def agg_sys_info():
-    # get info
     print 'Get the system infos from host:'
     sys_info = dict()
     sys_info['hostname'] = platform.node()
