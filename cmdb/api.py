@@ -83,18 +83,18 @@ def pages(post_objects, request):
 @csrf_exempt
 @token_verify()
 def collect(request):
-    req = request
-    if req.POST:
-        vendor = req.POST.get('vendor')
-        group = req.POST.get('group')
-        disk = req.POST.get('disk')
-        cpu_model = req.POST.get('cpu_model')
-        cpu_num = req.POST.get('cpu_num')
-        memory = req.POST.get('memory')
-        sn = req.POST.get('sn')
-        osver = req.POST.get('osver')
-        hostname = req.POST.get('hostname')
-        ip = req.POST.get('ip')
+    asset_info = json.loads(request.body)
+    if request.method == 'POST':
+        vendor = asset_info['vendor']
+        # group = asset_info['group']
+        disk = asset_info['disk']
+        cpu_model = asset_info['cpu_model']
+        cpu_num = asset_info['cpu_num']
+        memory = asset_info['memory']
+        sn = asset_info['sn']
+        osver = asset_info['osver']
+        hostname = asset_info['hostname']
+        ip = asset_info['ip']
         asset_type = ""
         status = ""
         try:
@@ -108,7 +108,7 @@ def collect(request):
         #     except:
         #         host = Host()
         host.hostname = hostname
-        #host.group = group
+        # host.group = group
         host.cpu_num = int(cpu_num)
         host.cpu_model = cpu_model
         host.memory = int(memory)
@@ -120,9 +120,9 @@ def collect(request):
         host.asset_type = asset_type
         host.status = status
         host.save()
-        return HttpResponse("post data successfully!")
+        return HttpResponse("Post asset data to server successfully!")
     else:
-        return HttpResponse("no any post data!")
+        return HttpResponse("No any post data!")
 
 
 @token_verify()
@@ -130,7 +130,7 @@ def get_host(request):
     try:
         hostname = request.GET['name']
     except:
-        return HttpResponse('you have no data')
+        return HttpResponse('You have no data')
     try:
         host = Host.objects.get(hostname=hostname)
     except:

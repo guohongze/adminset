@@ -117,11 +117,12 @@ def parser_disk_info(diskdata):
 
 
 def post_data(url, data):
-    postdata = urllib.urlencode(data)
     try:
-        req = urllib2.urlopen(url, postdata)
-        req.read()
-        print 'Post the infos to adminset successfully!'
+        r = requests.post(url, data)
+        if r.text:
+            print r.text
+        else:
+            print("Server return http status code: {}".format(r.status_code))
     except StandardError as msg:
         print msg
     return True
@@ -143,7 +144,7 @@ def asset_info():
     data_info['osver'] = platform.linux_distribution()[0] + " " + platform.linux_distribution()[1] + " " + platform.machine()
     data_info['hostname'] = platform.node()
     data_info['token'] = token
-    return data_info
+    return json.dumps(data_info)
 
 
 def asset_info_post():
@@ -219,11 +220,7 @@ def agg_sys_info():
     print sys_info
     json_data = json.dumps(sys_info)
     print '----------------------------------------------------------'
-    try:
-        r = requests.post("http://{}/monitor/received/sys/info/".format(server_ip), json_data)
-        print r.text
-    except StandardError as msg:
-        print msg
+    post_data("http://{}/monitor/received/sys/info/".format(server_ip), json_data)
     return True
 
 
@@ -236,7 +233,7 @@ if __name__ == "__main__":
     asset_info_post()
     time.sleep(1)
     agg_sys_info()
-    schedule.every(1800).seconds.do(run_threaded, asset_info_post)
+    schedule.every(10).seconds.do(run_threaded, asset_info_post)
     schedule.every(10).seconds.do(run_threaded, agg_sys_info)
     while True:
         schedule.run_pending()
