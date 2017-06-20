@@ -14,13 +14,13 @@ import time
 from config.views import get_dir
 
 TIME_SECTOR = (
-    (str(1), 3600),
-    (str(2), 3600*3),
-    (str(3), 3600*5),
-    (str(4), 86400),
-    (str(5), 86400*3),
-    (str(6), 86400*7),
-    )
+            3600,
+            3600*3,
+            3600*5,
+            86400,
+            86400*3,
+            86400*7,
+)
 
 
 class GetSysData(object):
@@ -48,7 +48,7 @@ def get_cpu(request, hostname, timing):
     data_time = []
     cpu_percent = []
     range_time = TIME_SECTOR[int(timing)]
-    cpu_data = GetSysData(hostname, "cpu", range_time[1])
+    cpu_data = GetSysData(hostname, "cpu", range_time)
     for doc in cpu_data.get_data():
         unix_time = doc['timestamp']
         times = time.localtime(unix_time)
@@ -66,7 +66,7 @@ def get_mem(request, hostname, timing):
     data_time = []
     mem_percent = []
     range_time = TIME_SECTOR[int(timing)]
-    mem_data = GetSysData(hostname, "mem", range_time[1])
+    mem_data = GetSysData(hostname, "mem", range_time)
     for doc in mem_data.get_data():
         unix_time = doc['timestamp']
         times = time.localtime(unix_time)
