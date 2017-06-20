@@ -1,46 +1,8 @@
-{% extends 'base.html' %}
-{% block self_head_css_js %}
-    <script src="/static/js/echarts.js"></script>
-{% endblock %}
-{% block content %}
-<script>
-    window.onload=init;
-    function init() {
-        showhide(1);
-    }
-    function showhide(n) {
-        var box = document.getElementById("monitor");
-        box.className="active";
-    }
-</script>
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-    </section>
-    <!-- Main content -->
-    <section class="content">
-      <div class="box box-info">
-        <div class="box-header with-border">
-          <h3 class="box-title">{{ hostname }} 监控信息</h3>
-        </div>
-        <div class="box-body">
-    <div id="cpu" style="width: 900px;height:300px;"></div>
-    <div id="memory" style="width: 900px;height:300px;"></div>
-
-        </div>
-      <!-- /.row -->
-        <!-- /.box-body -->
-        <div class="box-footer">
-          Footer
-        </div>
-        <!-- /.box-footer-->
-      </div>
 <script type="text/javascript">
-        // 基于准备好的dom，初始化echarts实例
 var mycpu = echarts.init(document.getElementById('cpu'));
 mycpu.showLoading();
 setInterval(function () {
-$.get("/monitor/get/data/{{ hostname }}").done(function (data) {
+$.get("/monitor/get/cpu/{{ hostname }}/"+timing).done(function (data) {
     var data = JSON.parse(data);
     mycpu.hideLoading();// 加载动画
     mycpu.setOption({
@@ -92,11 +54,10 @@ $.get("/monitor/get/data/{{ hostname }}").done(function (data) {
 }, 5000);
 </script>
 <script type="text/javascript">
-        // 基于准备好的dom，初始化echarts实例
 var mymemory = echarts.init(document.getElementById('memory'));
 mymemory.showLoading();
 setInterval(function () {
-$.get("/monitor/get/data/{{ hostname }}").done(function (data) {
+$.get("/monitor/get/mem/{{ hostname }}/"+timing).done(function (data) {
     var data = JSON.parse(data);
     mymemory.hideLoading();// 加载动画
     mymemory.setOption({
@@ -139,14 +100,10 @@ $.get("/monitor/get/data/{{ hostname }}").done(function (data) {
                     color: '#00a65a'
                 }
                 },
-            data: data.memory_percent
+            data: data.mem_percent
         }
         ]
     });
 });
 }, 5000);
 </script>
-</section>
-        <!-- /.content -->
-</div>
-{% endblock %}

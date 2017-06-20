@@ -28,7 +28,7 @@
         <div class="box-body" >
         {% if all_host %}
             {% for host in all_host %}
-                <a href="{% url 'host_info' host.hostname %}">
+                <a href="{% url 'host_info' host.hostname 0 %}">
                     <div class="col-md-3">
                       <div class="box box-info">
                         <div class="box-header with-border">
