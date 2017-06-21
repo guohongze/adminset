@@ -25,10 +25,11 @@ TIME_SECTOR = (
 
 class GetSysData(object):
 
-    def __init__(self, hostname, monitor_item, timing):
+    def __init__(self, hostname, monitor_item, timing, no=0):
         self.hostname = hostname
         self.monitor_item = monitor_item
         self.timing = timing
+        self.no = no
 
     def get_data(self):
         mongodb_ip = get_dir("mongodb_ip")
@@ -38,7 +39,7 @@ class GetSysData(object):
         collection = db[self.hostname]
         now_time = int(time.time())
         find_time = now_time-self.timing
-        cursor = collection.find({'timestamp': {'$gte': find_time}}, {self.monitor_item: 1, "timestamp": 1})
+        cursor = collection.find({'timestamp': {'$gte': find_time}}, {self.monitor_item: 1, "timestamp": 1}).limit(self.no)
         return cursor
 
 
@@ -80,6 +81,27 @@ def get_mem(request, hostname, timing):
 
 @login_required()
 @permission_verify()
+def get_disk(request, hostname, timing, partition):
+    data_time = []
+    disk_percent = []
+    disk_name = ""
+    range_time = TIME_SECTOR[int(timing)]
+    disk = GetSysData(hostname, "disk", range_time)
+    for doc in disk.get_data():
+        unix_time = doc['timestamp']
+        times = time.localtime(unix_time)
+        dt = time.strftime("%m%d-%H:%M", times)
+        data_time.append(dt)
+        d_percent = doc['disk'][int(partition)]['percent']
+        disk_percent.append(d_percent)
+        if not disk_name:
+            disk_name = doc['disk'][int(partition)]['mountpoint']
+    data = {"data_time": data_time, "disk_name": disk_name, "disk_percent": disk_percent}
+    return HttpResponse(json.dumps(data))
+
+
+@login_required()
+@permission_verify()
 def index(request):
     temp_name = "monitor/monitor-header.html"
     all_host = Host.objects.all()
@@ -90,5 +112,13 @@ def index(request):
 @permission_verify()
 def host_info(request, hostname, timing):
     temp_name = "monitor/monitor-header.html"
+    # 传递磁盘号给前端JS,用以迭代分区图表
+    disk = GetSysData(hostname, "disk", 3600, 1)
+    data = disk.get_data()
+    partitions_len = []
+    for d in data:
+        p = len(d["disk"])
+        for x in range(p):
+            partitions_len.append(x)
     return render_to_response("monitor/host_info_{}.html".format(timing), locals(), RequestContext(request))
 

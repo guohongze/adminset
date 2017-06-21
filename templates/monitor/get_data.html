@@ -7,7 +7,7 @@ $.get("/monitor/get/cpu/{{ hostname }}/"+timing).done(function (data) {
     mycpu.hideLoading();// 加载动画
     mycpu.setOption({
         title: {
-            text: 'CPU总体使用率'
+            text: 'CPU使用率'
         },
         toolbox: {
             feature: {
@@ -97,7 +97,7 @@ $.get("/monitor/get/mem/{{ hostname }}/"+timing).done(function (data) {
             type: 'line',
             areaStyle: {
                 normal: {
-                    color: '#00a65a'
+                    color: '#009900'
                 }
                 },
             data: data.mem_percent
@@ -107,3 +107,61 @@ $.get("/monitor/get/mem/{{ hostname }}/"+timing).done(function (data) {
 });
 }, 5000);
 </script>
+{% for p in partitions_len %}
+<script type="text/javascript">
+var disk{{ p }} = echarts.init(document.getElementById("disk{{ p }}"));
+disk{{ p }}.showLoading();
+setInterval(function () {
+$.get("/monitor/get/disk/{{ hostname }}/"+timing+"/"+{{ p }}).done(function (data) {
+    var data = JSON.parse(data);
+    disk{{ p }}.hideLoading();// 加载动画
+    disk{{ p }}.setOption({
+        title: {
+            text: data.disk_name
+        },
+        toolbox: {
+            feature: {
+                dataZoom: {
+                    yAxisIndex: 'none'
+                },
+                restore: {},
+                saveAsImage: {}
+            }
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data:['Disk']
+        },
+        xAxis: {
+            boundaryGap: false,
+            data: data.data_time
+        },
+        yAxis: [{
+                type : 'value',
+                axisLabel : {
+                    formatter : '{value} %'
+                },
+                max: 100
+        }],
+        series: [{
+            boundaryGap: false,
+            name: 'Disk',
+            smooth:true,
+            type: 'line',
+            symbol: 'none',
+            stack: 'a',
+            areaStyle: {
+                normal: { color: "#0099CC"
+                }
+            },
+            data: data.disk_percent
+        }
+        ]
+    });
+});
+}, 5000);
+</script>
+{% endfor %}
+

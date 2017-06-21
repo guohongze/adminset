@@ -25,25 +25,28 @@
         </div>
         <div class="box-body">
         <div class="btn-group btn-group-lg">
-             <a href="{% url 'host_info' hostname 0 %}"><li class="btn btn-default .btn-flat">一小时</li></a>
+             <a href="{% url 'host_info' hostname 0 %}"><span class="btn btn-default .btn-flat">一小时</span></a>
         </div>
         <div class="btn-group btn-group-lg">
-             <a href="{% url 'host_info' hostname 1 %}"><li class="btn btn-default .btn-flat">三小时</li></a>
+             <a href="{% url 'host_info' hostname 1 %}"><span class="btn btn-default .btn-flat">三小时</span></a>
         </div>
         <div class="btn-group btn-group-lg">
-             <a href="{% url 'host_info' hostname 2 %}"><li class="btn btn-default .btn-flat">五小时</li></a>
+             <a href="{% url 'host_info' hostname 2 %}"><span class="btn btn-default .btn-flat">五小时</span></a>
         </div>
         <div class="btn-group btn-group-lg">
-             <a href="{% url 'host_info' hostname 3 %}"><li class="btn btn-default .btn-flat">一天</li></a>
+             <a href="{% url 'host_info' hostname 3 %}"><span class="btn btn-default .btn-flat">一天</span></a>
         </div>
         <div class="btn-group btn-group-lg">
-             <a href="{% url 'host_info' hostname 4 %}"><li class="btn btn-default .btn-flat">三天</li></a>
+             <a href="{% url 'host_info' hostname 4 %}"><span class="btn btn-default .btn-flat">三天</span></a>
         </div>
         <div class="btn-group btn-group-lg">
-             <a href="{% url 'host_info' hostname 5 %}"><li class="btn btn-default .btn-flat active">一周</li></a>
+             <a href="{% url 'host_info' hostname 5 %}"><span class="btn btn-default .btn-flat active">一周</span></a>
         </div>
-    <div id="cpu" style="width: 800px;height:300px;"></div>
-    <div id="memory" style="width: 800px;height:300px;"></div>
+    <div id="cpu" style="width: 650px;height:260px;"></div>
+    <div id="memory" style="width: 650px;height:260px;"></div>
+    {% for p in partitions_len %}
+        <div id="disk{{ p }}" style="width: 650px;height:260px;"></div>
+    {% endfor %}
 
         </div>
       <!-- /.row -->
