@@ -10,12 +10,11 @@ $.get("/monitor/get/cpu/{{ hostname }}/"+timing).done(function (data) {
             text: 'CPU使用率'
         },
         toolbox: {
-            feature: {
-                dataZoom: {
-                    yAxisIndex: 'none'
-                },
-                restore: {},
-                saveAsImage: {}
+            show : true,
+            feature : {
+                mark : {show: true},
+                dataView : {show: true, readOnly: false},
+                saveAsImage : {show: true}
             }
         },
         tooltip: {
@@ -68,12 +67,10 @@ $.get("/monitor/get/mem/{{ hostname }}/"+timing).done(function (data) {
             trigger: 'axis'
         },
         toolbox: {
-            feature: {
-                dataZoom: {
-                    yAxisIndex: 'none'
-                },
-                restore: {},
-                saveAsImage: {}
+            feature : {
+                mark : {show: true},
+                dataView : {show: true, readOnly: false},
+                saveAsImage : {show: true}
             }
         },
         legend: {
@@ -95,11 +92,14 @@ $.get("/monitor/get/mem/{{ hostname }}/"+timing).done(function (data) {
             name: 'Memory',
             smooth:true,
             type: 'line',
-            areaStyle: {
+            itemStyle: {
                 normal: {
-                    color: '#009900'
+                    color:'#009900', //自定义折点
+                    areaStyle: {
+                        color: '#009900' //自定义线条
+                    }
                 }
-                },
+            },
             data: data.mem_percent
         }
         ]
@@ -120,12 +120,10 @@ $.get("/monitor/get/disk/{{ hostname }}/"+timing+"/"+{{ p }}).done(function (dat
             text: data.disk_name
         },
         toolbox: {
-            feature: {
-                dataZoom: {
-                    yAxisIndex: 'none'
-                },
-                restore: {},
-                saveAsImage: {}
+            feature : {
+                mark : {show: true},
+                dataView : {show: true, readOnly: false},
+                saveAsImage : {show: true}
             }
         },
         tooltip: {
@@ -150,10 +148,12 @@ $.get("/monitor/get/disk/{{ hostname }}/"+timing+"/"+{{ p }}).done(function (dat
             name: 'Disk',
             smooth:true,
             type: 'line',
-            symbol: 'none',
-            stack: 'a',
-            areaStyle: {
-                normal: { color: "#0099CC"
+            itemStyle: {
+                normal: {
+                    color:'#0099CC', //自定义折点
+                    areaStyle: {
+                        color: '#0099CC' //自定义线条
+                    }
                 }
             },
             data: data.disk_percent
@@ -164,4 +164,112 @@ $.get("/monitor/get/disk/{{ hostname }}/"+timing+"/"+{{ p }}).done(function (dat
 }, 5000);
 </script>
 {% endfor %}
+{% for nic in nic_len %}
+<script type="text/javascript">
+var net{{ nic }} = echarts.init(document.getElementById("net{{ nic }}"));
+net{{ nic }}.showLoading();
+setInterval(function () {
+$.get("/monitor/get/net/{{ hostname }}/"+timing+"/"+{{ nic }}).done(function (data) {
+    var data = JSON.parse(data);
+    net{{ nic }}.hideLoading();// 加载动画
+    net{{ nic }}.setOption({
+        title: {
+            text: data.nic_name
+        },
+        toolbox: {
+            feature : {
+                mark : {show: true},
+                dataView : {show: true, readOnly: false},
+                saveAsImage : {show: true}
+            }
+        },
+        tooltip: {
+            trigger: 'axis',
+            formatter : function (params) {
+                //转换bytes到Mbps Gbps函数
+                function data_convert(vdata) {
+                    if (vdata*8 < 1000) {
+                        var res = vdata*8+'Kb';
+                    }
+                    else if ( vdata*8 > 1000*1000 ) {
+                        var res = Math.round(vdata/1000*8/1024)+"Gb";
+                    }
+                    else {
+                        var res = Math.round(vdata/1000*8)+"Mb";
+                    }
+                    return res
+                }
+                var traffic_in = data_convert(params[0].value); //x轴数据
+                var traffic_out = data_convert(params[1].value);
+                var in_name = params[0].seriesName;
+                var out_name = params[1].seriesName;
+                var str = "流量统计<br>";
+                str += in_name;
+                str += traffic_in+"<br>";
+                str += out_name;
+                str += traffic_out+"<br>";
+                return str
+            }
+        },
+        legend: {
+            data:['入流量','出流量']
+        },
+        xAxis: {
+            boundaryGap: false,
+            data: data.data_time
+        },
+        yAxis: [{
+                type : 'value',
+                axisLabel : {
+                    formatter : function (value) {
+                        if (value*8 < 1000) {
+                            var res = value*8+'Kb';
+                            return res
+                        }
+                        else if ( value*8 > 1000*1000 ) {
+                            var res = Math.round(value/1000*8/1024)+"Gb";
+                            return res
+                        }
+                        else {
+                            var res = Math.round(value/1000*8)+"Mb";
+                            return res
+                        }
+                    }
+                }
+        }],
+        series: [{
+            boundaryGap: false,
+            name: '入流量',
+            smooth:true,
+            type: 'line',
+            itemStyle: {
+                normal: {
+                    color:'#00FF00', //自定义折点
+                    lineStyle: {
+                        color: '#00FF00' //自定义线条
+                    }
+                }
+            },
+            data: data.traffic_in
+        },
+        {
+            boundaryGap: false,
+            name: '出流量',
+            smooth:true,
+            type: 'line',
+            itemStyle: {
+                normal: {
+                    color:'#3366CC',
+                    lineStyle: {
 
+                        color: '#3366CC'
+                    }
+                }
+            },
+            data: data.traffic_out
+        }]
+    });
+});
+}, 5000);
+</script>
+{% endfor %}

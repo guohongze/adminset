@@ -204,14 +204,59 @@ def get_sys_disk():
     return sys_disk
 
 
+# 函数获取各网卡发送、接收字节数
+def get_nic():
+
+    key_info = psutil.net_io_counters(pernic=True).keys()  # 获取网卡名称
+
+    recv = {}
+    sent = {}
+
+    for key in key_info:
+        recv.setdefault(key, psutil.net_io_counters(pernic=True).get(key).bytes_recv)  # 各网卡接收的字节数
+        sent.setdefault(key, psutil.net_io_counters(pernic=True).get(key).bytes_sent)  # 各网卡发送的字节数
+
+    return key_info, recv, sent
+
+
+# 函数计算每秒速率
+def get_nic_rate(func):
+
+    key_info, old_recv, old_sent = func()  # 上一秒收集的数据
+    time.sleep(1)
+    key_info, now_recv, now_sent = func()  # 当前所收集的数据
+
+    net_in = {}
+    net_out = {}
+
+    for key in key_info:
+        net_in.setdefault(key, (now_recv.get(key) - old_recv.get(key)) / 1024)  # 每秒接收速率
+        net_out.setdefault(key, (now_sent.get(key) - old_sent.get(key)) / 1024) # 每秒发送速率
+
+    return key_info, net_in, net_out
+
+
+def get_net_info():
+    net_info = []
+    key_info, net_in, net_out = get_nic_rate(get_nic)
+    for key in key_info:
+        in_data = net_in.get(key)
+        out_data = net_out.get(key)
+        net_info.append({"nic_name": key, "traffic_in": in_data, "traffic_out": out_data})
+    return net_info
+
+
 def agg_sys_info():
+
     print 'Get the system infos from host:'
     sys_info = dict()
     sys_info['hostname'] = platform.node()
     sys_info['cpu'] = get_sys_cpu()
     sys_info['mem'] = get_sys_mem()
     sys_info['disk'] = get_sys_disk()
+    sys_info['net'] = get_net_info()
     sys_info['token'] = token
+
     print sys_info
     json_data = json.dumps(sys_info)
     print '----------------------------------------------------------'
@@ -225,6 +270,7 @@ def run_threaded(job_func):
 
 
 if __name__ == "__main__":
+
     asset_info_post()
     time.sleep(1)
     agg_sys_info()
