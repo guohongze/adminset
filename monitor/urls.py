@@ -1,12 +1,15 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 from django.conf.urls import url, include
-from . import system
+from . import system, manage
 import api
 
 
 urlpatterns = [
     url(r'^system/$', system.index, name='monitor'),
+    url(r'^manage/del/all/$', manage.drop_sys_info, name='drop_all'),
+    url(r'^manage/del/range/(?P<timing>\d+)/$', manage.del_monitor_data, name='del_monitor_data'),
+    url(r'^manage/$', manage.index, name='monitor_manage'),
     url(r'^system/(?P<hostname>.+)/(?P<timing>\d+)/$', system.host_info, name='host_info'),
     url(r'^get/cpu/(?P<hostname>.+)/(?P<timing>\d+)/$', system.get_cpu, name='get_cpu'),
     url(r'^get/mem/(?P<hostname>.+)/(?P<timing>\d+)/$', system.get_mem, name='get_mem'),

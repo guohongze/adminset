@@ -8,11 +8,9 @@ from django.shortcuts import render_to_response, redirect, RequestContext, HttpR
 from cmdb.models import Host
 from django.contrib.auth.decorators import login_required
 from accounts.permission import permission_verify
-from pymongo import MongoClient
 import json
 import time
-from config.views import get_dir
-
+from api import GetSysData
 TIME_SECTOR = (
             3600,
             3600*3,
@@ -21,26 +19,6 @@ TIME_SECTOR = (
             86400*3,
             86400*7,
 )
-
-
-class GetSysData(object):
-
-    def __init__(self, hostname, monitor_item, timing, no=0):
-        self.hostname = hostname
-        self.monitor_item = monitor_item
-        self.timing = timing
-        self.no = no
-
-    def get_data(self):
-        mongodb_ip = get_dir("mongodb_ip")
-        mongodb_port = get_dir("mongodb_port")
-        client = MongoClient(mongodb_ip, int(mongodb_port))
-        db = client.sys_info
-        collection = db[self.hostname]
-        now_time = int(time.time())
-        find_time = now_time-self.timing
-        cursor = collection.find({'timestamp': {'$gte': find_time}}, {self.monitor_item: 1, "timestamp": 1}).limit(self.no)
-        return cursor
 
 
 @login_required()
@@ -153,4 +131,5 @@ def host_info(request, hostname, timing):
         for x in range(p):
             nic_len.append(x)
     return render_to_response("monitor/host_info_{}.html".format(timing), locals(), RequestContext(request))
+
 
