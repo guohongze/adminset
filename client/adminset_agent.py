@@ -4,7 +4,6 @@
 import os
 from subprocess import Popen, PIPE
 import re
-import requests
 import platform
 import socket
 import time
@@ -35,6 +34,17 @@ except ImportError as msg:
     stdout, stderr = p.communicate()
     print stdout
     import schedule
+
+try:
+    import requests
+except ImportError as msg:
+    print msg
+    print("------------------------------------------------")
+    print("begining install schedule module, please waiting")
+    p = Popen('pip install requests==2.17.3', stdout=PIPE, shell=True)
+    stdout, stderr = p.communicate()
+    print stdout
+    import requests
 
 
 def get_ip():
