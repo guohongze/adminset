@@ -32,7 +32,7 @@ yum install -y smartmontools dmidecode
 #### step2:
 拷贝client/adminset_aent.py 到客户机上并执行，自动上报主机信息.
 后台运行请参考：
-nohup adminset_aent.py &
+nohup adminset_agent.py &
 
 ## 访问
 http://your_server_ip<br>
