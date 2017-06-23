@@ -66,6 +66,10 @@ class TaskChoiceField(forms.ChoiceField):
 
 class PeriodicTaskForm(forms.ModelForm):
     """Form that lets you create and modify periodic tasks."""
+    def __init__(self,*args,**kwargs):
+        super(PeriodicTaskForm,self).__init__(*args,**kwargs)
+        self.fields['expires'].label = u"过期时间 2017-06-23 10:11:11"
+        self.fields['kwargs'].label = u'kwargs {"host":"web01","name":"df -h"}'
 
     regtask = TaskChoiceField(
         label=_('Task (registered)'),
