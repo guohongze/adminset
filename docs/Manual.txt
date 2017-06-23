@@ -17,6 +17,7 @@
         拷贝client/adminset_aent.py 到客户机上并执行，自动上报主机信息.
         后台运行请参考：
         nohup adminset_aent.py &
+        agent默认每1800秒上传一次资产和硬件信息，可以在adminset_agent.py中自定义
     访问：
         http://your_server_ip
         使用自己在安装过程中创建的super admin用户名密码
@@ -71,6 +72,8 @@
 
 #监控平台用法
     当adminset_agent.py自动上报信息到，监控会自动发线并配置，无需干预.
+    当监控页面打开时，前端JS每10秒会异步抓取监控数据
+    agent默认每60秒上传一次监控数据，可以在adminset_agent.py中自定义
 
 #权限管理
     1、新建权限如：
