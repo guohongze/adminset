@@ -1,6 +1,25 @@
 #主机名
     adminset依赖主机名，所以被控机器、客户机，都需要设置主机名，主机名唯一，并且可以
     被解析。
+#install
+    安装需要基础yum源和 epel源，请保证可用。
+
+    服务器安装：
+        git clone https://github.com/guohongze/adminset.git
+        执行安装脚本
+        adminset/install/server_install.sh
+        安装过程需要输入管理员数据库等交互信息
+    客户端安装
+        说明：为保证注册IP是管理IP（后续会被ansible等调用），客户端的IP抓取目前使用主机名解析，否则报错。 如：主机名为cn-bj-web01 请在/etc/hosts中加入相应的解析 192.168.x.x cn-bj-web01，这样再执行adminset_agent.py 可以保证正常运行。 centos7不进行解析也可获取主机IP.
+        step1:
+        yum install -y smartmontools dmidecode
+        step2:
+        拷贝client/adminset_aent.py 到客户机上并执行，自动上报主机信息.
+        后台运行请参考：
+        nohup adminset_aent.py &
+    访问：
+        http://your_server_ip
+        使用自己在安装过程中创建的super admin用户名密码
 
 #程序目录
     安装脚本会将文件安装在/var/opt/adminset
@@ -50,6 +69,9 @@
     CMDB自动上报主机以后，shell界面可以直接调用主机。
     然后将常用脚本上传到/var/opt/adminset/data/scripts 中shell脚本栏将会自动发现脚本。
 
+#监控平台用法
+    当adminset_agent.py自动上报信息到，监控会自动发线并配置，无需干预.
+
 #权限管理
     1、新建权限如：
     名字：资产管理
@@ -68,6 +90,7 @@
     service mariadb {start|stop|restart}  # 数据库，账号资产等信息
     service celery {start|stop|restart}   # 异步任务主程序
     service beat {start|stop|restart}     # 任务调用
+    service mongod {start|stop|restart}   # 监控数据库
 
 #升级与更新
     强烈建设在升级或更新adminset之前先备份数据，并在测试环境验证通过，因为adminset在快速的发展过程中，每版本功能与结构变化较大。<br>

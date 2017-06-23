@@ -2,30 +2,37 @@
 <img src="https://travis-ci.org/guohongze/adminset.svg?branch=master"></img> 
 <img src="https://img.shields.io/hexpm/l/plug.svg"></img>
 <br>
-The open source operation platform : CMDB, project deploy, Crontab, DevOps , Monitor. <br>
-开源DevOps平台：资产管理、定时任务、项目部署、自动运维、系统监控<br>
+adminset基于DevOps理念开发，以整合全部运维场景为己任<br>
+自动上报注册主机，自动ansible关联，监控自动发现<br>
+adminset是一个真正的基于运维思维而开发的全自动化运维平台。<br>
 
+## v0.3.0 新功能
+新增监控平台模块<br>
+监控内容自动发现<br>
+agent重构，自动多线程上报<br>
 
 ## 开发环境
 centos 7.2(1511) django 1.9.8 python 2.7<br>
 
 ## 服务端安装
+推荐服务器配置 4核CPU，8G内存.<br>
+测试最低要求 2核CPU，4G内存.<br>
+服务器操作系统版本要求 centos7.2及以上<br>
 git clone https://github.com/guohongze/adminset.git<br>
 执行安装脚本<br>
 adminset/install/server_install.sh<br>
 安装过程需要输入管理员数据库等交互信息<br>
 
 
-
-## 客户端说明
-说明：为保证注册IP是管理IP（后续会被ansible等调用），客户端的IP抓取目前使用主机名解析，也就是说主机名必须可以被解析才能执行自动上报脚本，否则报错。
-如：主机名为webserver 请在/etc/hosts中加入相应的解析 192.168.x.x webserver，这样再执行agent_post_info.py 可以保证正常运行。
-
+## 客户端安装
+客户端脚本在centos上开发，目前支持6和7，在ubuntu等其它平台可能会需要做部分兼容性修定<br>
+说明：为保证注册IP是管理IP（后续会被ansible等调用），客户端的IP抓取目前使用主机名解析，否则报错。 如：主机名为cn-bj-web01 请在/etc/hosts中加入相应的解析 192.168.x.x cn-bj-web01，这样再执行adminset_agent.py 可以保证正常运行。 centos7不进行解析也可获取主机IP.
 #### step1:
-yum install -y smartmontools <br>
-yum install -y dmidecode
+yum install -y smartmontools dmidecode
 #### step2:
-在客户机上执行 scripts/agent_post_info.py 文件自动上报主机信息<br>
+拷贝client/adminset_aent.py 到客户机上并执行，自动上报主机信息.
+后台运行请参考：
+nohup adminset_aent.py &
 
 ## 访问
 http://your_server_ip<br>

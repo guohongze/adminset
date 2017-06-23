@@ -151,6 +151,7 @@ service mariadb restart
 service adminset restart
 service celery restart
 service beat restart
+service mongod restart
 echo "please access website http://server_ip"
 echo "you have installed adminset successfully!!!"
 echo "################################################"

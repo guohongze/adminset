@@ -128,7 +128,7 @@ def parser_disk_info(diskdata):
                 nums = int(diskvo.replace(',',''))
                 endnum = str(nums/1000/1000/1000)
                 pd[num] = endnum
-    return pd
+    return json.dumps(pd)
 
 
 def post_data(url, data):
@@ -293,8 +293,8 @@ if __name__ == "__main__":
     asset_info_post()
     time.sleep(1)
     agg_sys_info()
-    schedule.every(10).seconds.do(run_threaded, asset_info_post)
-    schedule.every(10).seconds.do(run_threaded, agg_sys_info)
+    schedule.every(1800).seconds.do(run_threaded, asset_info_post)
+    schedule.every(60).seconds.do(run_threaded, agg_sys_info)
     while True:
         schedule.run_pending()
         time.sleep(1)
