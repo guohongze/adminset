@@ -7,15 +7,34 @@ import re
 import requests
 import platform
 import socket
-import psutil
 import time
-import schedule
 import json
 import threading
 
-
 token = 'HPcWR7l4NJNJ'
 server_ip = '192.168.47.130'
+
+try:
+    import psutil
+except ImportError as msg:
+    print(msg)
+    print("----------------------------------------------")
+    print("begining install psutil module, please waiting")
+    p = Popen('pip install psutil==5.2.2', stdout=PIPE, shell=True)
+    stdout, stderr = p.communicate()
+    print stdout
+    import psutil
+
+try:
+    import schedule
+except ImportError as msg:
+    print msg
+    print("------------------------------------------------")
+    print("begining install schedule module, please waiting")
+    p = Popen('pip install schedule==0.4.3', stdout=PIPE, shell=True)
+    stdout, stderr = p.communicate()
+    print stdout
+    import schedule
 
 
 def get_ip():

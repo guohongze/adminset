@@ -28,6 +28,7 @@ def received_sys_info(request):
 
 
 class GetSysData(object):
+    collection = get_dir("mongodb_collection")
 
     def __init__(self, hostname, monitor_item, timing, no=0):
         self.hostname = hostname
@@ -39,12 +40,18 @@ class GetSysData(object):
     def connect_db(cls):
         mongodb_ip = get_dir("mongodb_ip")
         mongodb_port = get_dir("mongodb_port")
-        client = MongoClient(mongodb_ip, int(mongodb_port))
+        mongodb_user = get_dir("mongodb_user")
+        mongodb_pwd = get_dir("mongodb_pwd")
+        if mongodb_user:
+            uri = 'mongodb://'+mongodb_user+':'+mongodb_pwd+'@'+mongodb_ip+':'+mongodb_port+'/'+cls.collection
+            client = MongoClient(uri)
+        else:
+            client = MongoClient(mongodb_ip, int(mongodb_port))
         return client
 
     def get_data(self):
         client = self.connect_db()
-        db = client.sys_info
+        db = client[self.collection]
         collection = db[self.hostname]
         now_time = int(time.time())
         find_time = now_time-self.timing

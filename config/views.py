@@ -34,8 +34,11 @@ def index(request):
         token = config.get('token', 'token')
         log_path = config.get('log', 'log_path')
         log_level = config.get('log', 'log_level')
-        mongodb_ip = config.get('mongodb', 'ip')
-        mongodb_port = config.get('mongodb', 'port')
+        mongodb_ip = config.get('mongodb', 'mongodb_ip')
+        mongodb_port = config.get('mongodb', 'mongodb_port')
+        mongodb_user = config.get('mongodb', 'mongodb_user')
+        mongodb_pwd = config.get('mongodb', 'mongodb_pwd')
+        mongodb_collection = config.get('mongodb', 'collection')
     return render_to_response('config/index.html', locals(), RequestContext(request))
 
 
@@ -64,6 +67,9 @@ def config_save(request):
         # mongodb
         mongodb_ip = request.POST.get('mongodb_ip')
         mongodb_port = request.POST.get('mongodb_port')
+        mongodb_user = request.POST.get('mongodb_user')
+        mongodb_pwd = request.POST.get('mongodb_pwd')
+        mongodb_collection = request.POST.get('mongodb_collection')
 
         config = ConfigParser.RawConfigParser()
         dirs = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -85,8 +91,11 @@ def config_save(request):
         config.set('log', 'log_path', log_path)
         config.set('log', 'log_level', log_level)
         config.add_section('mongodb')
-        config.set('mongodb', 'ip', mongodb_ip)
-        config.set('mongodb', 'port', mongodb_port)
+        config.set('mongodb', 'mongodb_ip', mongodb_ip)
+        config.set('mongodb', 'mongodb_port', mongodb_port)
+        config.set('mongodb', 'mongodb_user', mongodb_user)
+        config.set('mongodb', 'mongodb_pwd', mongodb_pwd)
+        config.set('mongodb', 'collection', mongodb_collection)
         tips = u"保存成功！"
         display_control = ""
         with open(dirs+'/adminset.conf', 'wb') as cfgfile:
@@ -105,8 +114,11 @@ def config_save(request):
             database = config.get('db', 'database')
             token = config.get('token', 'token')
             log_path = config.get('log', 'log_path')
-            mongodb_ip = config.get('mongodb', 'ip')
-            mongodb_port = config.get('mongodb', 'port')
+            mongodb_ip = config.get('mongodb', 'mongodb_ip')
+            mongodb_port = config.get('mongodb', 'mongodb_port')
+            mongodb_user = config.get('mongodb', 'mongodb_user')
+            mongodb_pwd = config.get('mongodb', 'mongodb_pwd')
+            mongodb_collection = config.get('mongodb', 'collection')
     else:
         display_control = "none"
     return render_to_response('config/index.html', locals(), RequestContext(request))
@@ -124,8 +136,11 @@ def get_dir(args):
         token = config.get('token', 'token')
         log_path = config.get('log', 'log_path')
         log_level = config.get('log', 'log_level')
-        mongodb_ip = config.get('mongodb', 'ip')
-        mongodb_port = config.get('mongodb', 'port')
+        mongodb_ip = config.get('mongodb', 'mongodb_ip')
+        mongodb_port = config.get('mongodb', 'mongodb_port')
+        mongodb_user = config.get('mongodb', 'mongodb_user')
+        mongodb_pwd = config.get('mongodb', 'mongodb_pwd')
+        mongodb_collection = config.get('mongodb', 'collection')
 
     if args == "a_path":
         return a_path
@@ -145,6 +160,12 @@ def get_dir(args):
         return mongodb_ip
     if args == "mongodb_port":
         return mongodb_port
+    if args == "mongodb_user":
+        return mongodb_user
+    if args == "mongodb_pwd":
+        return mongodb_pwd
+    if args == "mongodb_collection":
+        return mongodb_collection
 
 
 @login_required()

@@ -27,22 +27,14 @@
         </div>
       <div class="box-body pad table-responsive">
               <p></p>
-              <table class="table table-bordered text-center">
+              <table class="table table-bordered">
               <tr>
                   <th>监控数据管理</th>
-                  <th>其它管理</th>
               </tr>
               <tr>
                   <td>
-                  <button class="btn btn-danger" onclick="return drop_all()">
-                    <i class="fa fa-close"></i> 清空监控数据
-                  </button>
-                  </td>
-                  <td>
-
                 <div class="form-group">
-                  <label for="range" class="col-sm-2 control-label">时间选择</label>
-
+{#                  <label for="range" class="col-sm-2 control-label">时间选择</label>#}
                       <select id="select1" class="form-control" style="width:200px;">
                           <option selected="selected" value="0">7天之前</option>
                           <option value="1">14天之前</option>
@@ -51,13 +43,10 @@
                           <option value="4">全部数据</option>
                       </select>
                   </div>
-                  </td>
-                  <td>
-
-                <div class="form-group">
-                  <button class="btn btn-danger" onclick="return del()">
-                    <i class="fa fa-close"></i> 删除数据
-                  </button>
+                  <div class="form-group">
+                      <button class="btn btn-danger" style="float: left" onclick="return del()">
+                        <i class="fa fa-close"></i> 删除数据
+                      </button>
                     </div>
                   </td>
               </tr>
@@ -95,6 +84,7 @@ function drop_all(){
 {#var sel = document.getElementById("select1");#}
 {#var selected_test = $("#select1 option:selected").text();#}
 {#var selected_value = $("#select1 option:selected").val();#}
+// 获取select数据
 var selected_value=0;
 var selected_text="七天之前";
     $(document).ready(function(){
