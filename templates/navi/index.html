@@ -21,6 +21,9 @@
     <section class="content">
     <div>
         <div class="box-body" >
+        {% if not allnavi %}
+            <a href="{% url 'add' %}"><span class="btn btn-default" ><b>添加一个导航</b> <i class="fa fa-plus"></i></span></a>
+        {% endif %}
         {% if allnavi %}
             {% for navi in allnavi %}
                 <a href="{{ navi.url }}" target="view_window">
