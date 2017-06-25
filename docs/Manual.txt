@@ -14,7 +14,7 @@
         step1:
         yum install -y smartmontools dmidecode python-pip python-devel python
         step2:
-        拷贝client/adminset_aent.py 到客户机上并执行，自动上报主机信息.
+        拷贝client/adminset_agent.py 到客户机上并执行，自动上报主机信息.
         后台运行请参考：
         nohup adminset_aent.py &
         agent默认每1800秒上传一次资产和硬件信息，可以在adminset_agent.py中自定义
@@ -34,7 +34,7 @@
     在站点管理中输入常用的运维工具系统后会自动出现在站点导航界面。
 
 #cmdb用法
-    利用scripts/agent_post_info.py 自动上报主机相关信息到CMDB
+    client/adminset_agent.py 开户后会自动上报主机相关信息到CMDB
     获取主机信息
     http://your_server_ip/cmdb/get/host/?token=your_token&name=host_name
     获取组信息
