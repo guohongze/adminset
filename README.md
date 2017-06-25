@@ -6,7 +6,7 @@ adminset基于DevOps理念开发，以整合全部运维场景为己任<br>
 自动上报注册主机，自动ansible关联，监控自动发现<br>
 adminset是一个真正的基于运维思维而开发的全自动化运维平台。<br>
 
-## v0.3.0 新功能
+## v0.3 新功能
 新增监控平台模块<br>
 监控内容自动发现<br>
 agent重构，自动多线程上报<br>
@@ -15,8 +15,8 @@ agent重构，自动多线程上报<br>
 centos 7.2(1511) django 1.9.8 python 2.7<br>
 
 ## 服务端安装
-推荐服务器配置 4核CPU，8G内存.<br>
-测试最低要求 2核CPU，4G内存.<br>
+生产服务器建议 4核CPU，8G内存以上.<br>
+学习测试建议 2核CPU，3G内存以上.<br>
 服务器操作系统版本要求 centos7.2及以上<br>
 git clone https://github.com/guohongze/adminset.git<br>
 执行安装脚本<br>
