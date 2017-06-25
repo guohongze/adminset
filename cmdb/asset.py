@@ -3,14 +3,14 @@
 
 from forms import AssetForm
 from models import Host, Idc, HostGroup, ASSET_STATUS, ASSET_TYPE
-from django.shortcuts import render_to_response, redirect, RequestContext, HttpResponse
+from django.shortcuts import render, HttpResponse
 from django.db.models import Q
 from cmdb.api import get_object
 from cmdb.api import pages, str2gb
-import csv, datetime
+import csv
+import datetime
 from django.contrib.auth.decorators import login_required
 from accounts.permission import permission_verify
-from django.views.decorators.csrf import csrf_exempt
 import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
@@ -20,6 +20,7 @@ sys.setdefaultencoding('utf8')
 @permission_verify()
 def asset(request):
     temp_name = "cmdb/cmdb-header.html"
+    asset_find = []
     idc_info = Idc.objects.all()
     host_list = Host.objects.all()
     group_info = HostGroup.objects.all()
@@ -45,19 +46,14 @@ def asset(request):
             asset_find = Host.objects.filter(idc=idc)
     else:
         asset_find = Host.objects.all()
-
     if idc_name:
         asset_find = asset_find.filter(idc__name__contains=idc_name)
-
     if group_name:
         asset_find = asset_find.filter(group__name__contains=group_name)
-
     if asset_type:
         asset_find = asset_find.filter(asset_type__contains=asset_type)
-
     if status:
         asset_find = asset_find.filter(status__contains=status)
-
     if keyword:
         asset_find = asset_find.filter(
             Q(hostname__contains=keyword) |
@@ -72,20 +68,31 @@ def asset(request):
             Q(sn__contains=keyword) |
             Q(position__contains=keyword) |
             Q(memo__contains=keyword))
+    if export:
+        response = create_excel(export, asset_id_all)
+        return response
+    assets_list, p, assets, page_range, current_page, show_first, show_end = pages(asset_find, request)
+    return render(request, 'cmdb/index.html', locals())
 
+
+def create_excel(export, asset_id_all):
     if export == "true":
         if asset_id_all:
             asset_find = []
             for asset_id in asset_id_all:
-                asset = get_object(Host, id=asset_id)
-                if asset:
-                    asset_find.append(asset)
+                asset_item = get_object(Host, id=asset_id)
+                if asset_item:
+                    asset_find.append(asset_item)
             response = HttpResponse(content_type='text/csv')
             now = datetime.datetime.now().strftime('%Y_%m_%d_%H_%M')
             file_name = 'adminset_cmdb_' + now + '.csv'
             response['Content-Disposition'] = "attachment; filename="+file_name
             writer = csv.writer(response)
-            writer.writerow([str2gb('主机名'), str2gb('IP地址'), str2gb('其它IP'), str2gb('主机组'), str2gb('资产编号'), str2gb('设备类型'), str2gb('设备状态'), str2gb('操作系统'), str2gb('设备厂商'), str2gb('CPU型号'), str2gb('CPU核数'), str2gb('内存大小'), str2gb('硬盘信息'), str2gb('SN号码'), str2gb('所在机房'),str2gb('所在位置'), str2gb('备注信息')])
+            writer.writerow([str2gb(u'主机名'), str2gb(u'IP地址'), str2gb(u'其它IP'), str2gb(u'主机组'),
+                             str2gb(u'资产编号'), str2gb(u'设备类型'), str2gb(u'设备状态'), str2gb(u'操作系统'),
+                             str2gb(u'设备厂商'), str2gb(u'CPU型号'), str2gb(u'CPU核数'), str2gb(u'内存大小'),
+                             str2gb(u'硬盘信息'), str2gb(u'SN号码'), str2gb(u'所在机房'), str2gb(u'所在位置'),
+                             str2gb(u'备注信息')])
             for h in asset_find:
                 if h.asset_type:
                     at_num = int(h.asset_type)
@@ -97,7 +104,10 @@ def asset(request):
                     a_status = ASSET_STATUS[at_as-1][1]
                 else:
                     a_status = ""
-                writer.writerow([str2gb(h.hostname), h.ip, h.other_ip, str2gb(h.group), str2gb(h.asset_no), str2gb(a_type), str2gb(a_status), str2gb(h.os), str2gb(h.vendor), str2gb(h.cpu_model), str2gb(h.cpu_num), str2gb(h.memory), str2gb(h.disk), str2gb(h.sn), str2gb(h.idc), str2gb(h.position), str2gb(h.memo)])
+                writer.writerow([str2gb(h.hostname), h.ip, h.other_ip, str2gb(h.group), str2gb(h.asset_no),
+                                 str2gb(a_type), str2gb(a_status), str2gb(h.os), str2gb(h.vendor),
+                                 str2gb(h.cpu_model), str2gb(h.cpu_num), str2gb(h.memory), str2gb(h.disk),
+                                 str2gb(h.sn), str2gb(h.idc), str2gb(h.position), str2gb(h.memo)])
             return response
 
     if export == "all":
@@ -107,7 +117,10 @@ def asset(request):
         file_name = 'adminset_cmdb_' + now + '.csv'
         response['Content-Disposition'] = "attachment; filename=" + file_name
         writer = csv.writer(response)
-        writer.writerow([str2gb('主机名'), str2gb('IP地址'), str2gb('其它IP'), str2gb('主机组'), str2gb('资产编号'), str2gb('设备类型'), str2gb('设备状态'), str2gb('操作系统'), str2gb('设备厂商'), str2gb('CPU型号'), str2gb('CPU核数'), str2gb('内存大小'), str2gb('硬盘信息'), str2gb('SN号码'), str2gb('所在机房'),str2gb('所在位置'), str2gb('备注信息')])
+        writer.writerow([str2gb('主机名'), str2gb('IP地址'), str2gb('其它IP'), str2gb('主机组'), str2gb('资产编号'),
+                         str2gb('设备类型'), str2gb('设备状态'), str2gb('操作系统'), str2gb('设备厂商'), str2gb('CPU型号'),
+                         str2gb('CPU核数'), str2gb('内存大小'), str2gb('硬盘信息'), str2gb('SN号码'), str2gb('所在机房'),
+                         str2gb('所在位置'), str2gb('备注信息')])
         for h in host:
             if h.asset_type:
                 at_num = int(h.asset_type)
@@ -119,11 +132,11 @@ def asset(request):
                 a_status = ASSET_STATUS[at_as-1][1]
             else:
                 a_status = ""
-            writer.writerow([str2gb(h.hostname), h.ip, h.other_ip, str2gb(h.group), str2gb(h.asset_no), str2gb(a_type), str2gb(a_status), str2gb(h.os), str2gb(h.vendor), str2gb(h.cpu_model), str2gb(h.cpu_num), str2gb(h.memory), str2gb(h.disk), str2gb(h.sn), str2gb(h.idc), str2gb(h.position), str2gb(h.memo)])
+            writer.writerow([str2gb(h.hostname), h.ip, h.other_ip, str2gb(h.group), str2gb(h.asset_no), str2gb(a_type),
+                             str2gb(a_status), str2gb(h.os), str2gb(h.vendor), str2gb(h.cpu_model), str2gb(h.cpu_num),
+                             str2gb(h.memory), str2gb(h.disk), str2gb(h.sn), str2gb(h.idc), str2gb(h.position),
+                             str2gb(h.memo)])
         return response
-
-    assets_list, p, assets, page_range, current_page, show_first, show_end = pages(asset_find, request)
-    return render_to_response('cmdb/index.html', locals(), RequestContext(request))
 
 
 @login_required()
@@ -139,11 +152,11 @@ def asset_add(request):
         else:
             tips = u"增加失败！"
             display_control = ""
-        return render_to_response("cmdb/asset_add.html", locals(), RequestContext(request))
+        return render(request, "cmdb/asset_add.html", locals())
     else:
         display_control = "none"
         a_form = AssetForm()
-        return render_to_response("cmdb/asset_add.html", locals(), RequestContext(request))
+        return render(request, "cmdb/asset_add.html", locals())
 
 
 @login_required()
@@ -159,8 +172,8 @@ def asset_del(request):
 
         if asset_batch:
             for asset_id in asset_id_all.split(','):
-                asset = get_object(Host, id=asset_id)
-                asset.delete()
+                asset_item = get_object(Host, id=asset_id)
+                asset_item.delete()
 
     return HttpResponse(u'删除成功')
 
@@ -182,4 +195,4 @@ def asset_edit(request, ids):
     else:
         af = AssetForm(instance=obj)
 
-    return render_to_response('cmdb/asset_edit.html', locals(), RequestContext(request))
+    return render(request, 'cmdb/asset_edit.html', locals())

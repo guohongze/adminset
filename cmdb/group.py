@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from django.shortcuts import render_to_response, RequestContext
+from django.shortcuts import render
 from models import Host, HostGroup
 from forms import GroupForm, IdcForm
 from django.contrib.auth.decorators import login_required
@@ -13,7 +13,11 @@ from accounts.permission import permission_verify
 def group(request):
     temp_name = "cmdb/cmdb-header.html"
     allgroup = HostGroup.objects.all()
-    return render_to_response('cmdb/group.html', locals(), RequestContext(request))
+    context = {
+        'temp_name': temp_name,
+        'allgroup': allgroup
+    }
+    return render(request, 'cmdb/group.html', context)
 
 
 @login_required()
@@ -29,33 +33,12 @@ def group_add(request):
         else:
             tips = u"增加失败！"
             display_control = ""
-        return render_to_response("cmdb/group_add.html", locals(), RequestContext(request))
+        return render(request, "cmdb/group_add.html", locals())
     else:
         display_control = "none"
         group_form = GroupForm()
         idc_form = IdcForm()
-        return render_to_response("cmdb/group_add.html", locals(), RequestContext(request))
-
-
-@login_required()
-@permission_verify()
-def group_add_mini(request):
-    temp_name = "cmdb/cmdb-header.html"
-    if request.method == "POST":
-        group_form = GroupForm(request.POST)
-        if group_form.is_valid():
-            group_form.save()
-            tips = u"增加成功！"
-            display_control = ""
-            status = 1
-        else:
-            tips = u"增加失败！"
-            display_control = ""
-        return render_to_response("cmdb/group_add_mini.html", locals(), RequestContext(request))
-    else:
-        display_control = "none"
-        group_form = GroupForm()
-        return render_to_response("cmdb/group_add_mini.html", locals(), RequestContext(request))
+        return render(request, "cmdb/group_add.html", locals())
 
 
 @login_required()
@@ -68,7 +51,7 @@ def group_del(request):
             for n in group_items:
                 HostGroup.objects.filter(id=n).delete()
     allgroup = HostGroup.objects.all()
-    return render_to_response("cmdb/group.html", locals(), RequestContext(request))
+    return render(request, "cmdb/group.html", locals())
 
 
 @login_required()
@@ -78,7 +61,7 @@ def group_edit(request, ids):
     allgroup = HostGroup.objects.all()
     unselect = Host.objects.filter(group__name=None)
     members = Host.objects.filter(group__name=obj.name)
-    return render_to_response("cmdb/group_edit.html", locals(), RequestContext(request))
+    return render(request, "cmdb/group_edit.html", locals())
 
 
 @login_required()
@@ -111,4 +94,4 @@ def group_save(request):
         status = 1
     else:
         status = 2
-    return render_to_response("cmdb/group_edit.html", locals(), RequestContext(request))
+    return render(request, "cmdb/group_edit.html", locals())

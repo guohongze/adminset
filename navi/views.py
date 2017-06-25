@@ -76,11 +76,11 @@ def save(request):
         name = request.POST.get('name')
         desc = request.POST.get('desc')
         url = request.POST.get('url')
-        n_item = navi.objects.get(id=ids)
-        n_item.name = name
-        n_item.description = desc
-        n_item.url = url
-        n_item.save()
+        navi_item = navi.objects.get(id=ids)
+        navi_item.name = name
+        navi_item.description = desc
+        navi_item.url = url
+        navi_item.save()
         status = 1
     else:
         status = 2
