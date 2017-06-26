@@ -1,10 +1,6 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-
-from django.shortcuts import render
-
-# Create your views here.
-from django.shortcuts import render_to_response, redirect, RequestContext, HttpResponse
+from django.shortcuts import render, HttpResponse
 from cmdb.models import Host
 from django.contrib.auth.decorators import login_required
 from accounts.permission import permission_verify
@@ -107,7 +103,7 @@ def get_net(request, hostname, timing, net_id):
 def index(request):
     temp_name = "monitor/monitor-header.html"
     all_host = Host.objects.all()
-    return render_to_response("monitor/index.html", locals(), RequestContext(request))
+    return render(request, "monitor/index.html", locals())
 
 
 @login_required()
@@ -130,6 +126,6 @@ def host_info(request, hostname, timing):
         p = len(n["net"])
         for x in range(p):
             nic_len.append(x)
-    return render_to_response("monitor/host_info_{}.html".format(timing), locals(), RequestContext(request))
+    return render(request, "monitor/host_info_{}.html".format(timing), locals())
 
 
