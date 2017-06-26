@@ -1,10 +1,8 @@
-# Adminset
+# AdminSet
 <img src="https://travis-ci.org/guohongze/adminset.svg?branch=master"></img> 
 <img src="https://img.shields.io/hexpm/l/plug.svg"></img>
 <br>
-adminset基于DevOps理念开发，以整合全部运维场景为己任<br>
-自动上报注册主机，自动ansible关联，监控自动发现<br>
-adminset是一个真正的基于运维思维而开发的全自动化运维平台。<br>
+Adminset基于DevOps理念开发，以整合全部运维场景为己任。Adminset是一个真正的基于运维思维而开发的全自动化运维平台。<br>
 
 ## v0.3 新功能
 新增监控平台模块<br>
@@ -49,7 +47,7 @@ http://your_server_ip<br>
 
 ## 说明
 使用请转到：<a href="https://github.com/guohongze/adminset/blob/master/docs/Manual.txt">使用说明</a><br>
-功能请转到 <a href="https://github.com/guohongze/adminset/wiki/AdminSet">功能说明</a>
+功能请转到: <a href="https://github.com/guohongze/adminset/wiki/AdminSet">功能说明</a>
 
 # 安全
 建议不要将程序启动在有公网可以直接访问的设备上，如果需要请使用VPN。<br>
