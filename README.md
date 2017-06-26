@@ -19,7 +19,7 @@ centos 7.2(1511) django 1.9.8 python 2.7<br>
 学习测试建议 2核CPU，3G内存以上.<br>
 服务器操作系统版本要求 centos7.2及以上<br>
 ```
-git clone https://github.com/guohongze/adminset.git<br>
+git clone https://github.com/guohongze/adminset.git
 adminset/install/server_install.sh
 ```
 安装过程需要输入管理员数据库等交互信息<br>
