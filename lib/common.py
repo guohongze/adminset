@@ -9,18 +9,17 @@ def token_verify():
 
     def decorator(view_func):
         def _wrapped_view(request, *args, **kwargs):
-            iToken = get_dir('token')
+            set_token = get_dir('token')
             error_info = "Post forbidden, your token error!!"
             if request.method == 'POST':
-                # pToken = request.POST.get('token')
-                pToken = json.loads(request.body)
-                if iToken == pToken["token"]:
+                post_token = json.loads(request.body)
+                if set_token == post_token["token"]:
                     return view_func(request, *args, **kwargs)
                 else:
                     return HttpResponse(error_info, status=403)
             if request.GET:
-                pToken = request.GET['token']
-                if iToken == pToken:
+                post_token = request.GET['token']
+                if set_token == post_token:
                     return view_func(request, *args, **kwargs)
                 else:
                     return HttpResponse(error_info, status=403)
