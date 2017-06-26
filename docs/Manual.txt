@@ -2,7 +2,7 @@
     adminset依赖主机名，所以被控机器、客户机，都需要设置主机名，主机名唯一，并且可以
     被解析。
 #install
-    安装需要基础yum源和 epel源，请保证可用。
+    安装需要使用yum源请保证可用，目前不支持离线安装。
 
     服务器安装：
         git clone https://github.com/guohongze/adminset.git
@@ -11,10 +11,11 @@
         安装过程需要输入管理员数据库等交互信息
     客户端安装
         说明：为保证注册IP是管理IP（后续会被ansible等调用），客户端的IP抓取目前使用主机名解析，否则报错。 如：主机名为cn-bj-web01 请在/etc/hosts中加入相应的解析 192.168.x.x cn-bj-web01，这样再执行adminset_agent.py 可以保证正常运行。 centos7不进行解析也可获取主机IP.
-        step1:
+        step1:安装依赖
         yum install -y smartmontools dmidecode python-pip python-devel python
-        step2:
-        拷贝client/adminset_agent.py 到客户机上并执行，自动上报主机信息.
+        step2:执行agent
+        拷贝client/adminset_agent.py 到客户机上并执行：
+        python adminset_agent.py
         后台运行请参考：
         nohup adminset_aent.py &
         agent默认每1800秒上传一次资产和硬件信息，可以在adminset_agent.py中自定义

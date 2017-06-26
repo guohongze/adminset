@@ -69,13 +69,13 @@ def asset(request):
             Q(position__contains=keyword) |
             Q(memo__contains=keyword))
     if export:
-        response = create_excel(export, asset_id_all)
+        response = create_asset_excel(export, asset_id_all)
         return response
     assets_list, p, assets, page_range, current_page, show_first, show_end = pages(asset_find, request)
     return render(request, 'cmdb/index.html', locals())
 
 
-def create_excel(export, asset_id_all):
+def create_asset_excel(export, asset_id_all):
     if export == "true":
         if asset_id_all:
             asset_find = []
