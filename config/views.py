@@ -1,12 +1,11 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-from django.shortcuts import render_to_response, HttpResponse, redirect, RequestContext
+from django.shortcuts import render, HttpResponse
 import ConfigParser
 import os
 from django.contrib.auth.decorators import login_required
 from accounts.permission import permission_verify
 from django.contrib.auth import get_user_model
-import logging
 from lib.log import dic
 
 
@@ -15,7 +14,6 @@ from lib.log import dic
 def index(request):
     temp_name = "config/config-header.html"
     display_control = "none"
-    # dirs = os.path.split(os.path.realpath(__file__))[0]
     dirs = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     config = ConfigParser.ConfigParser()
     all_level = dic
@@ -39,7 +37,7 @@ def index(request):
         mongodb_user = config.get('mongodb', 'mongodb_user')
         mongodb_pwd = config.get('mongodb', 'mongodb_pwd')
         mongodb_collection = config.get('mongodb', 'collection')
-    return render_to_response('config/index.html', locals(), RequestContext(request))
+    return render(request, 'config/index.html', locals())
 
 
 @login_required()
@@ -47,12 +45,12 @@ def index(request):
 def config_save(request):
     temp_name = "config/config-header.html"
     if request.method == 'POST':
-        # path
+        # path info
         ansible_path = request.POST.get('ansible_path')
         roles_path = request.POST.get('roles_path')
         pbook_path = request.POST.get('pbook_path')
         scripts_path = request.POST.get('scripts_path')
-        # db
+        # db info
         engine = request.POST.get('engine')
         host = request.POST.get('host')
         port = request.POST.get('port')
@@ -61,10 +59,10 @@ def config_save(request):
         database = request.POST.get('database')
         # cmdb_api_token
         token = request.POST.get('token')
-        # log
+        # log info
         log_path = request.POST.get('log_path')
         log_level = request.POST.get('log_level')
-        # mongodb
+        # mongodb info
         mongodb_ip = request.POST.get('mongodb_ip')
         mongodb_port = request.POST.get('mongodb_port')
         mongodb_user = request.POST.get('mongodb_user')
@@ -121,7 +119,7 @@ def config_save(request):
             mongodb_collection = config.get('mongodb', 'collection')
     else:
         display_control = "none"
-    return render_to_response('config/index.html', locals(), RequestContext(request))
+    return render(request, 'config/index.html', locals())
 
 
 def get_dir(args):
@@ -141,31 +139,11 @@ def get_dir(args):
         mongodb_user = config.get('mongodb', 'mongodb_user')
         mongodb_pwd = config.get('mongodb', 'mongodb_pwd')
         mongodb_collection = config.get('mongodb', 'collection')
-
-    if args == "a_path":
-        return a_path
-    if args == "r_path":
-        return r_path
-    if args == "p_path":
-        return p_path
-    if args == "s_path":
-        return s_path
-    if args == "token":
-        return token
-    if args == "log_path":
-        return log_path
-    if args == "log_level":
-        return log_level
-    if args == "mongodb_ip":
-        return mongodb_ip
-    if args == "mongodb_port":
-        return mongodb_port
-    if args == "mongodb_user":
-        return mongodb_user
-    if args == "mongodb_pwd":
-        return mongodb_pwd
-    if args == "mongodb_collection":
-        return mongodb_collection
+    # 根据传入参数返回变量以获取配置，返回变量名与参数名相同
+    if args:
+        return vars()[args]
+    else:
+        return HttpResponse(status=403)
 
 
 @login_required()
