@@ -25,7 +25,7 @@ echo "####install depandencies####"
 yum install -y epel-release
 yum install -y make autoconf automake cmake gcc gcc-c++
 yum install -y python python-pip python-setuptools python-devel openssl openssl-devel
-yum install -y ansible smartmontools
+yum install -y ansible smartmontools dmidecode
 scp $adminset_dir/install/ansible/ansible.cfg /etc/ansible/ansible.cfg
 
 #安装数据库
