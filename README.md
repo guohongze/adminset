@@ -46,12 +46,14 @@ http://your_server_ip<br>
 使用自己在安装过程中创建的super admin用户名密码
 
 ## 说明
-使用请转到：<a href="https://github.com/guohongze/adminset/blob/master/docs/Manual.txt">使用说明</a><br>
-功能请转到: <a href="https://github.com/guohongze/adminset/wiki/AdminSet">功能说明</a>
+使用请转到，<a href="https://github.com/guohongze/adminset/blob/master/docs/Manual.txt">使用说明</a><br>
+功能请转到，<a href="https://github.com/guohongze/adminset/wiki/AdminSet">功能说明</a>
 
 # 安全
 建议不要将程序启动在有公网可以直接访问的设备上，如果需要请使用VPN。<br>
 建议生产环境中使用https配置服务器<br>
 由于开发方便，在django的settings中开启了DEBUG，在生产中需要关闭并指定自己的域名。
 
-
+# 开发者交流
+请加入开发者群，注明来自github
+<img src="https://github.com/guohongze/adminset/blob/master/static/dist/img/qq.png"></img>

@@ -1,0 +1,2 @@
+sphinx_celery>=1.1
+Django>=1.10

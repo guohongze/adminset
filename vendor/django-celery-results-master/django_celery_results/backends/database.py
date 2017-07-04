@@ -5,7 +5,9 @@ from base64 import b64encode, b64decode
 from celery.backends.base import BaseDictBackend
 
 from ..models import TaskResult
+
 import json
+
 
 class DatabaseBackend(BaseDictBackend):
     """The Django database backend, using models to store task state."""
@@ -17,19 +19,25 @@ class DatabaseBackend(BaseDictBackend):
     def _store_result(self, task_id, result, status,
                       traceback=None, request=None):
         """Store return value and status of an executed task."""
-        content_type, content_encoding, result = self.encode_content(result)
-        _, _, meta = self.encode_content({
-            'children': self.current_task_children(request),
-        })
+        if task_id is not None:
+            content_type, content_encoding, result = self.encode_content(result)
+            _, _, meta = self.encode_content({
+                'children': self.current_task_children(request),
+            })
 
-        self.TaskModel._default_manager.store_result(
-            content_type, content_encoding,
-            task_id, result, status,
-            traceback=traceback,
-            meta=meta,
-            task_name=str(request.task),
-            task_arguments=json.dumps(request.args)
-        )
+            task_name = getattr(request, 'task', None) if request else None
+            task_args = getattr(request, 'args', None) if request else None
+            task_kwargs = getattr(request, 'kwargs', None) if request else None
+
+            self.TaskModel._default_manager.store_result(
+                content_type, content_encoding,
+                task_id, result, status,
+                task_name=task_name,
+                task_args=task_args,
+                task_kwargs=json.dumps(task_kwargs),
+                traceback=traceback,
+                meta=meta,
+            )
         return result
 
     def _get_task_meta_for(self, task_id):

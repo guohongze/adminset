@@ -54,7 +54,7 @@
                             </th>
                                     <th>任务名</th>
                                     <th>任务状态</th>
-                                    <th>任务参数</th>
+                                    <th>任务指令</th>
                                     <th>完成时间</th>
                                     <th>任务结果</th>
                                     <th>任务异常</th>
@@ -67,10 +67,18 @@
                                         <td><input type="checkbox" id="u_id" class="item1" value="{{ res.id }}" name="idc_check" /></td>
                                         <td><a href="#"><li style="list-style-type:none" onclick="return tanchu(this.value)" value="{{ res.id }}"> {{ res.task_name }}</li></a></td>
                                         <td>{{ res.status }}</td>
-                                        <td>{{ res.task_arguments }}</td>
+                                        <td><div style="overflow-y:scroll;width: 150px;">{{ res.task_kwargs }}</div></td>
                                         <td>{{ res.date_done }}</td>
-                                        <td>{{ res.result }}</td>
-                                        <td>{{ res.traceback }}</td>
+                                        {% if  res.result %}
+                                            <td><div style="overflow-y:scroll;width: 250px;height: 120px;">{{ res.result }}</div></td>
+                                        {% else %}
+                                            <td>{{ res.result }}</td>
+                                        {% endif %}
+                                        {% if  res.traceback %}
+                                            <td><div style="overflow-y:scroll;width: 250px;height: 120px;">{{ res.traceback }}</div></td>
+                                        {% else %}
+                                            <td>{{ res.tracebackt }}</td>
+                                        {% endif %}
                                     </tr>
                                 {% endfor %}
                                 {% else %}
