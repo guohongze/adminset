@@ -104,11 +104,16 @@
     2）大版本更新：
     如v0.3.0更新到v0.4.0
     adminset/install/server_install.sh
+    如果原在数据库本机上未设置密码则在do you want to install new mysql/mongodb时选择yes可覆盖安装。
+    如果已设置密码或是独立服务器可以选择no，或者在安装完成后手动修改/var/opt/adminset/main/adminset.conf文件中的相应信息。
     3)二次开发
-    rsync.sh脚本只做增量，rsync参数不带--delete选项，不会在生产环境删除代码中已删除的条目。
-    update.sh脚本带--delete选项，同步代码，并重新发布各组件的配置文件。
+    rsync.sh脚本只做增量，rsync参数不带--delete选项，不会在生产环境删除代码中已删除的条目,不更新组件配置文件，不会生成新的ORM数据库条目。
+    update.sh脚本带--delete选项，同步代码，重新发布各组件的配置文件，并重新生成ORM数据文件（makemigrations migrate）。
 
 # 安全
     强烈建议不要将程序启动在有公网可以直接访问的设备上，如果需要请使用VPN。
     建议生产环境中使用https配置服务器<br>
     由于开发方使，我在django的settings中开启了DEBUG，在生产中需要关闭并指定自己的域名。
+
+# 开发者交流
+  QQ群：427794947
