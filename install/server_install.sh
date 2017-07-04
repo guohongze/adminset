@@ -103,6 +103,11 @@ index-url = http://mirrors.aliyun.com/pypi/simple/
 [install]
 trusted-host=mirrors.aliyun.com
 EOF
+
+cd $adminset_dir/vendor/django-celery-results-master
+python setup.py build
+python setup.py install
+
 cd $adminset_dir
 pip install -r requirements.txt
 python manage.py makemigrations
@@ -142,6 +147,7 @@ scp $adminset_dir/install/nginx/adminset.conf /etc/nginx/conf.d
 scp $adminset_dir/install/nginx/nginx.conf /etc/nginx
 service nginx start
 nginx -s reload
+
 
 # 完成安装
 echo "##############install finished###################"

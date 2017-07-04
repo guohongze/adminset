@@ -10,6 +10,7 @@ from forms import PeriodicTaskForm, IntervalForm, CrontabForm, TaskResultForm
 from subprocess import Popen, PIPE
 import os, time
 
+
 @login_required
 @permission_verify()
 def index(request):

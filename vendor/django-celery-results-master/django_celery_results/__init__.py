@@ -33,4 +33,4 @@ del(re)
 
 __all__ = []
 
-default_app_config = 'vendor.django_celery_results.apps.CeleryResultConfig'
+default_app_config = 'django_celery_results.apps.CeleryResultConfig'

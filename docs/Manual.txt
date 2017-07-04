@@ -46,14 +46,14 @@
     首先新建interval 或crontab
     新建任务填写名字
     选择间隔或crontab
-    在Keyword arguments:处的写法是json格式：
+    在Keyword arguments(任务指令):处的写法是json格式：
         执行命令<br>
         {"host":"c1", name:"service tomcat restart"}
         执行脚本<br>
         {"host":"c1", name:"reboot.sh"}
-    拉到最下边Task (registered)<br>
+    拉到最下边Task (registered)
     setup.tasks.command是直接向目标机器发送命令
-    setup.tasks.scripts是在目标机器上执行一个你已经上传到服务器中的脚本
+    setup.tasks.scripts是在目标机器上执行一个你已经上传到服务器中的脚本，默认路径/var/opt/adminset/data/scripts
     注意：已经运行任务以后，再去修改任务不会立即生效，需要重启beat组件，在任务编排的后台管理中可以重启。
           这是由于celery的BUG导致，会在社区发布稳定版本以后修复。
 
@@ -97,8 +97,16 @@
     service mongod {start|stop|restart}   # 监控数据库
 
 #升级与更新
-    强烈建设在升级或更新adminset之前先备份数据，并在测试环境验证通过，因为adminset在快速的发展过程中，每版本功能与结构变化较大。<br>
-    二次开发时可以在程序安装目标通过git pull 下载最新代码，然后使用rsync.sh 或 update.sh更新运行程序。
+    强烈建设在升级或更新adminset之前先备份数据库，并在测试环境验证通过，因为adminset在快速的发展过程中，每版本功能与结构变化较大。
+    1）小版本更新：
+    如v0.3.6更新到v0.3.7只需下载相应版本的代码到本地然后执行：
+    adminset/install/update.sh
+    2）大版本更新：
+    如v0.3.0更新到v0.4.0
+    adminset/install/server_install.sh
+    3)二次开发
+    rsync.sh脚本只做增量，rsync参数不带--delete选项，不会在生产环境删除代码中已删除的条目。
+    update.sh脚本带--delete选项，同步代码，并重新发布各组件的配置文件。
 
 # 安全
     强烈建议不要将程序启动在有公网可以直接访问的设备上，如果需要请使用VPN。
