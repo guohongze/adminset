@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-from django.shortcuts import render_to_response, RequestContext, redirect, HttpResponse
+from django.shortcuts import render, redirect
 from django_celery_beat.models import PeriodicTask, IntervalSchedule, CrontabSchedule
 from django_celery_results.models import TaskResult
 from django.contrib.auth.decorators import login_required
@@ -16,7 +16,7 @@ import os, time
 def index(request):
     temp_name = "setup/setup-header.html"
     jobs_info = PeriodicTask.objects.all()
-    return render_to_response('setup/job_list.html', locals(), RequestContext(request))
+    return render(request, 'setup/job_list.html', locals())
 
 
 @login_required
@@ -35,7 +35,7 @@ def job_edit(request, ids):
     else:
         form = PeriodicTaskForm(instance=obj)
 
-    return render_to_response('setup/job_edit.html', locals(), RequestContext(request))
+    return render(request, 'setup/job_edit.html', locals())
 
 
 @login_required()
@@ -52,11 +52,11 @@ def job_add(request):
         else:
             tips = u"增加失败！"
             display_control = ""
-            return render_to_response("setup/job_add.html", locals(), RequestContext(request))
+            return render(request, "setup/job_add.html", locals())
     else:
         display_control = "none"
         a_form = PeriodicTaskForm()
-        return render_to_response("setup/job_add.html", locals(), RequestContext(request))
+        return render(request, "setup/job_add.html", locals())
 
 
 @login_required()
@@ -69,7 +69,7 @@ def job_del(request):
             for n in jobs:
                 PeriodicTask.objects.filter(id=n).delete()
     jobs_info = PeriodicTask.objects.all()
-    return render_to_response("setup/job_list.html", locals(), RequestContext(request))
+    return render(request, "setup/job_list.html", locals())
 
 
 @login_required()
@@ -77,7 +77,7 @@ def job_del(request):
 def job_interval_list(request):
     temp_name = "setup/setup-header.html"
     interval_info = IntervalSchedule.objects.all()
-    return render_to_response('setup/interval_list.html', locals(), RequestContext(request))
+    return render(request, 'setup/interval_list.html', locals())
 
 
 @login_required
@@ -96,7 +96,7 @@ def job_interval_edit(request, ids):
     else:
         form = IntervalForm(instance=obj)
 
-    return render_to_response('setup/interval_edit.html', locals(), RequestContext(request))
+    return render(request, 'setup/interval_edit.html', locals())
 
 
 @login_required
@@ -109,7 +109,7 @@ def job_interval_del(request):
             for n in intervals:
                 IntervalSchedule.objects.filter(id=n).delete()
     interval_info = IntervalSchedule.objects.all()
-    return render_to_response("setup/interval_list.html", locals(), RequestContext(request))
+    return render(request, "setup/interval_list.html", locals())
 
 
 @login_required()
@@ -126,11 +126,11 @@ def job_interval_add(request):
         else:
             tips = u"增加失败！"
             display_control = ""
-            return render_to_response("setup/interval_add.html", locals(), RequestContext(request))
+            return render(request, "setup/interval_add.html", locals())
     else:
         display_control = "none"
         a_form = IntervalForm()
-        return render_to_response("setup/interval_add.html", locals(), RequestContext(request))
+        return render(request, "setup/interval_add.html", locals())
 
 
 @login_required()
@@ -138,7 +138,7 @@ def job_interval_add(request):
 def job_crontab_list(request):
     temp_name = "setup/setup-header.html"
     crontab_info = CrontabSchedule.objects.all()
-    return render_to_response('setup/crontab_list.html', locals(), RequestContext(request))
+    return render(request, 'setup/crontab_list.html', locals())
 
 
 @login_required
@@ -157,7 +157,7 @@ def job_crontab_edit(request, ids):
     else:
         form = CrontabForm(instance=obj)
 
-    return render_to_response('setup/crontab_edit.html', locals(), RequestContext(request))
+    return render(request, 'setup/crontab_edit.html', locals())
 
 
 @login_required
@@ -170,7 +170,7 @@ def job_crontab_del(request):
             for n in crontabs:
                 CrontabSchedule.objects.filter(id=n).delete()
     crontab_info = CrontabSchedule.objects.all()
-    return render_to_response("setup/crontab_list.html", locals(), RequestContext(request))
+    return render(request, "setup/crontab_list.html", locals())
 
 
 @login_required()
@@ -187,11 +187,11 @@ def job_crontab_add(request):
         else:
             tips = u"增加失败！"
             display_control = ""
-            return render_to_response("setup/crontab_add.html", locals(), RequestContext(request))
+            return render(request, "setup/crontab_add.html", locals())
     else:
         display_control = "none"
         a_form = CrontabForm()
-        return render_to_response("setup/crontab_add.html", locals(), RequestContext(request))
+        return render(request, "setup/crontab_add.html", locals())
 
 
 @login_required()
@@ -199,7 +199,7 @@ def job_crontab_add(request):
 def job_result_list(request):
     temp_name = "setup/setup-header.html"
     result_info = TaskResult.objects.all().order_by("-id")
-    return render_to_response('setup/result_list.html', locals(), RequestContext(request))
+    return render(request, 'setup/result_list.html', locals())
 
 
 @login_required
@@ -218,7 +218,7 @@ def job_result_edit(request, ids):
     else:
         form = TaskResultForm(instance=obj)
 
-    return render_to_response('setup/result_edit.html', locals(), RequestContext(request))
+    return render(request, 'setup/result_edit.html', locals())
 
 
 @login_required
@@ -231,7 +231,7 @@ def job_result_del(request):
             for n in results:
                 TaskResult.objects.filter(id=n).delete()
     result_info = TaskResult.objects.all()
-    return render_to_response("setup/result_list.html", locals(), RequestContext(request))
+    return render(request, "setup/result_list.html", locals())
 
 
 @login_required
@@ -252,7 +252,7 @@ def job_backend(request):
     else:
         beat_disable = ""
         beat_stop_disable = "disabled"
-    return render_to_response("setup/job_backend.html", locals(), RequestContext(request))
+    return render(request, "setup/job_backend.html", locals())
 
 
 @login_required

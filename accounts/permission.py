@@ -36,7 +36,7 @@ def permission_verify():
                     else:
                         pass
 
-                print '%s---->matchUrl:%s' %(request.user,str(matchUrl))
+                print('{}---->matchUrl:{}'.format(request.user, str(matchUrl)))
                 if len(matchUrl) == 0:
                     return HttpResponseRedirect(reverse('permission_deny'))
             else:

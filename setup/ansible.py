@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from subprocess import Popen, PIPE, STDOUT, call
+from subprocess import Popen, PIPE
 from cmdb.models import Host, HostGroup
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -160,7 +160,6 @@ def ansible_command(request):
             for d in data:
                 logging.info(d)
             logging.info("==========ansible tasks end============")
-        # return render_to_response('setup/result.html', locals(), RequestContext(request))
         return render(request, 'setup/result.html', locals())
 
 

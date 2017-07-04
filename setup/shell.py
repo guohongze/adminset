@@ -1,8 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 from cmdb.models import Host, HostGroup
-from django.shortcuts import render_to_response, HttpResponse, RequestContext
-import os
+from django.shortcuts import render
 from subprocess import Popen, PIPE
 import sh
 from config.views import get_dir
@@ -24,7 +23,7 @@ def index(request):
     all_host = Host.objects.all()
     all_group = HostGroup.objects.all()
     all_scripts = get_scripts(scripts_dir)
-    return render_to_response('setup/shell.html', locals(), RequestContext(request))
+    return render(request, 'setup/shell.html', locals())
 
 
 @login_required()
@@ -118,4 +117,4 @@ def exec_scripts(request):
                             for d in data:
                                 logging.info(d)
                     logging.info("==========Shell End============")
-        return render_to_response('setup/shell_result.html', locals())
+        return render(request, 'setup/shell_result.html', locals())

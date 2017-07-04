@@ -77,13 +77,13 @@ def group_save(request):
         group_item = HostGroup.objects.get(id=group_id)
         if unselect:
             for host in unselect:
-                print "unselect: "+host
+                # print "unselect: "+host
                 obj = Host.objects.get(hostname=host)
                 obj.group_id = None
                 obj.save()
         if members:
             for host in members:
-                print "members: "+host
+                # print "members: "+host
                 obj = Host.objects.get(hostname=host)
                 obj.group_id = group_id
                 obj.save()
