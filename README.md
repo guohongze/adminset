@@ -1,7 +1,7 @@
 # AdminSet
 <img src="https://travis-ci.org/guohongze/adminset.svg?branch=master"></img> 
 <img src="https://img.shields.io/hexpm/l/plug.svg"></img>
-[![release](https://img.shields.io/github/release/guohongze/adminset.svg)](https://img.shields.io/github/release/guohongze/adminset.svg)
+[![release](https://img.shields.io/github/release/guohongze/adminset.svg)](https://github.com/guohongze/adminset/releases)
 <br>
 Adminset基于DevOps理念开发，以整合全部运维场景为己任。Adminset是一个真正的基于运维思维而开发的全自动化运维平台。<br>
 
