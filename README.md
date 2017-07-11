@@ -55,6 +55,7 @@ http://your_server_ip<br>
 ## 说明
 使用请转到，<a href="https://github.com/guohongze/adminset/blob/master/docs/Manual.txt">使用说明</a><br>
 功能请转到，<a href="https://github.com/guohongze/adminset/wiki/AdminSet">功能说明</a>
+FAQ请转到，<a href="https://github.com/guohongze/adminset/wiki/FAQ">常见问题</a>
 
 # 安全
 建议不要将程序启动在有公网可以直接访问的设备上，如果需要请使用VPN。<br>

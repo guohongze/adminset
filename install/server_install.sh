@@ -23,8 +23,7 @@ rsync --delete --progress -ra --exclude '.git' $cur_dir/ $adminset_dir
 # 安装依赖
 echo "####install depandencies####"
 yum install -y epel-release gcc
-yum install -y python-pip python-devel openssl openssl-devel
-yum install -y ansible smartmontools dmidecode
+yum install -y python-pip python-devel ansible smartmontools dmidecode
 scp $adminset_dir/install/ansible/ansible.cfg /etc/ansible/ansible.cfg
 
 #安装数据库
