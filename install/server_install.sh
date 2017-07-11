@@ -17,14 +17,38 @@ mkdir -p $config_dir
 mkdir -p $logs_dir
 mkdir -p $main_dir/pid
 
+# 关闭selinux
+se_status=$(getenforce)
+if [ $se_status != Enforcing ]
+then
+    echo "selinux is diabled, install progress is running"
+    sleep 1
+else
+    echo "Please attention, Your system selinux is enforcing"
+    read -p "Do you want to disabled selinux?[yes/no]": shut
+    case $shut in
+        yes|y|Y|YES)
+            setenforce 0
+            sed -i "s/SELINUX=enforcing/SELINUX=disabled/g" /etc/sysconfig/selinux
+            ;;
+        no|n|N|NO)
+            echo "please manual enable nginx access localhost 8000 port"
+            echo "if not, when you open adminset web you will receive a 502 error!"
+            exit 1
+            ;;
+        *)
+            exit 1
+            ;;
+    esac
+fi
+
 # 分发代码
 rsync --delete --progress -ra --exclude '.git' $cur_dir/ $adminset_dir
 
 # 安装依赖
 echo "####install depandencies####"
 yum install -y epel-release gcc
-yum install -y python-pip python-devel openssl openssl-devel
-yum install -y ansible smartmontools dmidecode
+yum install -y python-pip python-devel ansible smartmontools dmidecode
 scp $adminset_dir/install/ansible/ansible.cfg /etc/ansible/ansible.cfg
 
 #安装数据库
@@ -146,7 +170,6 @@ scp $adminset_dir/install/nginx/adminset.conf /etc/nginx/conf.d
 scp $adminset_dir/install/nginx/nginx.conf /etc/nginx
 service nginx start
 nginx -s reload
-
 
 # 完成安装
 echo "##############install finished###################"
