@@ -25,12 +25,18 @@ adminset/install/server_install.sh
 
 
 ## 客户端安装
-客户端脚本在centos上开发，目前支持6和7，在ubuntu等其它平台可能会需要做部分兼容性修定<br>
+客户端脚本目前rhel/centos6、7,ubuntu14.04经过测试<br>
 说明：为保证注册IP是管理IP（后续会被ansible等调用），客户端的IP抓取目前使用主机名解析，否则报错。 
 如：主机名为cn-bj-web01 请在/etc/hosts中加入相应的解析 192.168.x.x cn-bj-web01，这样再执行adminset_agent.py 可以保证正常运行。
 #### step1:
+centos/rhel
 ```
-yum install -y smartmontools dmidecode python-pip python-devel python
+yum install -y epel-release gcc
+yum install -y smartmontools dmidecode python-pip python-devel
+```
+ubuntu
+```
+apt-get install smartmontools dmidecode python-pip python-dev
 ```
 #### step2:
 拷贝client/adminset_agent.py 到客户机上并执行:
