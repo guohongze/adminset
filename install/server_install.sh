@@ -34,7 +34,7 @@ else
         no|n|N|NO)
             echo "please manual enable nginx access localhost 8000 port"
             echo "if not, when you open adminset web you will receive a 502 error!"
-            exit 1
+            sleep 3
             ;;
         *)
             exit 1
