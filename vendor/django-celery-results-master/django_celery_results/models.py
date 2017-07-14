@@ -1,10 +1,11 @@
 """Database models."""
 from __future__ import absolute_import, unicode_literals
 
-from celery import states
-from celery.five import python_2_unicode_compatible
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+
+from celery import states
+from celery.five import python_2_unicode_compatible
 
 from . import managers
 
@@ -31,13 +32,24 @@ class TaskResult(models.Model):
     content_encoding = models.CharField(
         _('content encoding'), max_length=64,
     )
+    task_name = models.CharField(
+        _('task name'),
+        null=True, max_length=255
+    )
+    task_args = models.TextField(
+        _('task arguments'),
+        null=True
+    )
+    task_kwargs = models.TextField(
+        _('task keyword arguments'),
+        null=True
+    )
     result = models.TextField(null=True, default=None, editable=False)
     date_done = models.DateTimeField(_('done at'), auto_now=True)
     traceback = models.TextField(_('traceback'), blank=True, null=True)
     hidden = models.BooleanField(editable=False, default=False, db_index=True)
     meta = models.TextField(null=True, default=None, editable=False)
-    task_name = models.CharField(null=True, editable=False, max_length=256, db_index=True)
-    task_arguments = models.TextField(null=True, editable=False)
+
     objects = managers.TaskResultManager()
 
     class Meta:

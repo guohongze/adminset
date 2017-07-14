@@ -140,9 +140,9 @@ class RoleListForm(forms.ModelForm):
         }
 
     def __init__(self,*args,**kwargs):
-        super(RoleListForm,self).__init__(*args,**kwargs)
+        super(RoleListForm,self).__init__(*args, **kwargs)
         self.fields['name'].label = u'名 称'
-        self.fields['name'].error_messages = {'required':u'请输入名称'}
+        self.fields['name'].error_messages = {'required': u'请输入名称'}
         self.fields['permission'].label = u'URL'
         self.fields['permission'].required = False
 

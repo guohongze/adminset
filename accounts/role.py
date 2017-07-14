@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 from django.core.urlresolvers import reverse
-from django.http import HttpResponse,HttpResponseRedirect
-from django.shortcuts import render_to_response,RequestContext
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from forms import RoleListForm
 from models import RoleList
@@ -28,7 +28,7 @@ def role_add(request):
         'request': request,
     }
 
-    return render_to_response('accounts/role_add.html',kwvars,RequestContext(request))
+    return render(request, 'accounts/role_add.html', kwvars)
 
 
 @login_required
@@ -36,7 +36,7 @@ def role_add(request):
 def role_list(request):
     temp_name = "accounts/accounts-header.html"
     all_role = RoleList.objects.all()
-    return render_to_response('accounts/role_list.html', locals())
+    return render(request, 'accounts/role_list.html', locals())
 
 
 @login_required
@@ -59,7 +59,7 @@ def role_edit(request, ids):
         'request': request,
     }
 
-    return render_to_response('accounts/role_edit.html', kwvars, RequestContext(request))
+    return render(request, 'accounts/role_edit.html', kwvars)
 
 
 @login_required

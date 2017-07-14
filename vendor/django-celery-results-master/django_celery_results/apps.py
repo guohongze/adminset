@@ -10,6 +10,6 @@ __all__ = ['CeleryResultConfig']
 class CeleryResultConfig(AppConfig):
     """Default configuration for the django_celery_results app."""
 
-    name = 'vendor.django_celery_results'
+    name = 'django_celery_results'
     label = 'celery_results'
     verbose_name = _('Celery Results')
