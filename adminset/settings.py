@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'cmdb',
     'config',
     'accounts',
+    'monitor',
     'django_celery_results',
     'django_celery_beat',
     'django.contrib.admin',
@@ -154,7 +155,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
@@ -165,11 +166,11 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
-#APP_PATH=os.path.dirname(os.path.dirname(__file__))
+# sys.path.append(os.path.join(BASE_DIR, 'vendor').replace('\\', '/'))
 #STATIC_ROOT = os.path.join(APP_PATH,'static').replace('\\','/')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR,'static').replace('\\','/'),
+    os.path.join(BASE_DIR, 'static').replace('\\', '/'),
 )
 '''
 REST_FRAMEWORK = {

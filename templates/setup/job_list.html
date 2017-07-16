@@ -58,8 +58,7 @@
                                 <input type="checkbox" onclick="checkAll(this, 'item1');" />
                             </th>
                                     <th>任务名称</th>
-                                    <th>任务类型</th>
-                                    <th>任务参数</th>
+                                    <th>任务指令</th>
                                     <th>上次运行</th>
                                     <th>运行次数</th>
                                     <th>上次修改</th>
@@ -72,8 +71,7 @@
                                     <tr class="even gradeA">
                                         <td><input type="checkbox" id="u_id" class="item1" value="{{ job.id }}" name="idc_check" /></td>
                                         <td><a href="#"><li style="list-style-type:none" onclick="return tanchu(this.value)" value="{{ job.id }}"> {{ job.name }}</li></a></td>
-                                        <td>{{ job.task }}</td>
-                                        <td>{{ job.args }}</td>
+                                        <td>{{ job.kwargs }}</td>
                                         <td>{{ job.last_run_at }}</td>
                                         <td>{{ job.total_run_count }}</td>
                                         <td>{{ job.date_changed }}</td>

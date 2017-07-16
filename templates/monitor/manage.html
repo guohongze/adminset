@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% block self_head_css_js %}
+    <script src="/static/layer/layer.js"></script>
+{% endblock %}
+{% block content %}
+<script>
+    window.onload=init;
+    function init() {
+        showhide(1);
+    }
+    function showhide(n) {
+        var box = document.getElementById("monitor_manage");
+        box.className="active";
+        var box2 = document.getElementById("monitor");
+        box2.className="active";
+    }
+</script>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+    </section>
+    <!-- Main content -->
+    <section class="content">
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">监控管理</h3>
+        </div>
+      <div class="box-body pad table-responsive">
+              <p></p>
+              <table class="table table-bordered">
+              <tr>
+                  <th>监控数据管理</th>
+              </tr>
+              <tr>
+                  <td>
+                <div class="form-group">
+{#                  <label for="range" class="col-sm-2 control-label">时间选择</label>#}
+                      <select id="select1" class="form-control" style="width:200px;">
+                          <option selected="selected" value="0">7天之前</option>
+                          <option value="1">14天之前</option>
+                          <option value="2">30天之前</option>
+                          <option value="3">60天之前</option>
+                          <option value="4">全部数据</option>
+                      </select>
+                  </div>
+                  <div class="form-group">
+                      <button class="btn btn-danger" style="float: left" onclick="return del()">
+                        <i class="fa fa-close"></i> 删除数据
+                      </button>
+                    </div>
+                  </td>
+              </tr>
+              </table>
+            </div>
+      <!-- /.row -->
+        <!-- /.box-body -->
+        <div class="box-footer">
+        </div>
+        <!-- /.box-footer-->
+      </div>
+</section>
+        <!-- /.content -->
+</div>
+
+<script>
+function drop_all(){
+    layer.open({
+    title: '警告',
+    content: '危险！这将删除所有监控数据？',
+    btn: '确定',
+    yes:function(){
+        $.ajax({
+                type: "post",
+                data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
+                url: "{% url 'drop_all' %}"
+            });
+        layer.msg('删除成功！');
+        }
+    });
+}
+</script>
+<script>
+
+{#var sel = document.getElementById("select1");#}
+{#var selected_test = $("#select1 option:selected").text();#}
+{#var selected_value = $("#select1 option:selected").val();#}
+// 获取select数据
+var selected_value=0;
+var selected_text="七天之前";
+    $(document).ready(function(){
+    $('#select1').change(function(){
+       selected_value=$("#select1").val();
+       selected_text=$("#select1").find("option:selected").text();
+    });
+    });
+function del(){
+    layer.open({
+    title: '警告',
+    content: '危险！这将删除<b>'+selected_text+'</b>的监控数据？',
+    btn: '确定',
+    yes:function(){
+        $.ajax({
+                type: "post",
+                data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
+                url: "/monitor/manage/del/range/"+selected_value+"/"
+            });
+        layer.msg('干的漂亮！');
+        }
+    });
+}
+</script>
+{% endblock %}

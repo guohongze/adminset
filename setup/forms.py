@@ -1,14 +1,9 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# from django import forms
-# from django.forms.widgets import *
-# from django_celery_beat.models import PeriodicTask
 from __future__ import absolute_import, unicode_literals
 
 from django import forms
-from django.conf import settings
-from django.contrib import admin
 from django.forms.widgets import Select
 from django.utils.translation import ugettext_lazy as _
 
@@ -17,7 +12,6 @@ from celery.utils import cached_property
 from kombu.utils.json import loads
 
 from django_celery_beat.models import PeriodicTask, IntervalSchedule, CrontabSchedule
-from django_celery_beat.utils import is_database_scheduler
 from django_celery_results.models import TaskResult
 
 try:
@@ -66,6 +60,9 @@ class TaskChoiceField(forms.ChoiceField):
 
 class PeriodicTaskForm(forms.ModelForm):
     """Form that lets you create and modify periodic tasks."""
+    def __init__(self,*args,**kwargs):
+        super(PeriodicTaskForm, self).__init__(*args, **kwargs)
+        self.fields['expires'].label = u"过期时间"
 
     regtask = TaskChoiceField(
         label=_('Task (registered)'),
@@ -78,6 +75,15 @@ class PeriodicTaskForm(forms.ModelForm):
         widget=forms.TextInput(attrs={'class': 'form-control', 'style': 'width:450px;'}),
     )
 
+    kwargs = forms.CharField(
+        label=_('任务指令'),
+        required=True,
+        max_length=200,
+        initial='',
+        widget=forms.TextInput(attrs={'class': 'form-control', 'style': 'width:450px;',
+                                      'placeholder': u'{"host":"your_hostname","name":"scritps_name or command"}'})
+    )
+
     class Meta:
         model = PeriodicTask
         exclude = ("id",)
@@ -86,15 +92,15 @@ class PeriodicTaskForm(forms.ModelForm):
             'args': forms.TextInput(attrs={'class': 'form-control', 'style': 'width:450px;'}),
             'interval': forms.Select(attrs={'class': 'form-control', 'style': 'width:450px;'}),
             'crontab': forms.Select(attrs={'class': 'form-control', 'style': 'width:450px;'}),
-            'kwargs': forms.TextInput(attrs={'class': 'form-control', 'style': 'width:450px;'}),
-            'enabled': forms.Select(choices=((True, u'启用'),(False, u'禁用')), attrs={'class': 'form-control', 'style': 'width:450px;'}),
+            'enabled': forms.Select(choices=((True, u'启用'), (False, u'禁用')),
+                                    attrs={'class': 'form-control', 'style': 'width:450px;'}),
             'queue': forms.TextInput(attrs={'class': 'form-control', 'style': 'width:450px;'}),
             'exchange': forms.TextInput(attrs={'class': 'form-control', 'style': 'width:450px;'}),
             'routing_key': forms.TextInput(attrs={'class': 'form-control', 'style': 'width:450px;'}),
-            'expires': forms.DateTimeInput(attrs={'class': 'form-control', 'style': 'width:450px;'}),
+            'expires': forms.DateTimeInput(attrs={'class': 'form-control', 'style': 'width:450px;',
+                                                  'placeholder': u'2017-06-23 10:11:11'}),
             'last_run_at': forms.DateTimeInput(attrs={'class': 'form-control', 'style': 'width:450px;'}),
         }
-
 
     def clean(self):
         data = super(PeriodicTaskForm, self).clean()

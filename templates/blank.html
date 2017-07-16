@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block self_head_css_js %}
+    <script src="/static/js/echarts.js"></script>
+{% endblock %}
+{% block content %}
+<script>
+    window.onload=init;
+    function init() {
+        showhide(1);
+    }
+    function showhide(n) {
+        var box = document.getElementById("monitor_manage");
+        box.className="active";
+    }
+</script>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+    </section>
+    <!-- Main content -->
+    <section class="content">
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">监控管理</h3>
+        </div>
+        <div class="box-body">
+
+        </div>
+      <!-- /.row -->
+        <!-- /.box-body -->
+        <div class="box-footer">
+        </div>
+        <!-- /.box-footer-->
+      </div>
+</section>
+        <!-- /.content -->
+</div>
+{% endblock %}

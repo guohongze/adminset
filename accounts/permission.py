@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from django.core.urlresolvers import reverse
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render_to_response,RequestContext
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from forms import PermissionListForm
 from models import UserInfo, RoleList, PermissionList
@@ -36,7 +36,7 @@ def permission_verify():
                     else:
                         pass
 
-                print '%s---->matchUrl:%s' %(request.user,str(matchUrl))
+                print('{}---->matchUrl:{}'.format(request.user, str(matchUrl)))
                 if len(matchUrl) == 0:
                     return HttpResponseRedirect(reverse('permission_deny'))
             else:
@@ -56,7 +56,7 @@ def permission_deny(request):
         'request': request,
     }
 
-    return render_to_response('accounts/permission_deny.html', kwvars, RequestContext(request))
+    return render(request, 'accounts/permission_deny.html', kwvars)
 
 
 @login_required
@@ -77,7 +77,7 @@ def permission_add(request):
         'request': request,
     }
 
-    return render_to_response('accounts/permission_add.html', kwvars, RequestContext(request))
+    return render(request, 'accounts/permission_add.html', kwvars)
 
 
 @login_required
@@ -85,7 +85,7 @@ def permission_add(request):
 def permission_list(request):
     all_permission = PermissionList.objects.all()
     temp_name = "accounts/accounts-header.html"
-    return render_to_response('accounts/permission_list.html', locals())
+    return render(request, 'accounts/permission_list.html', locals())
 
 
 @login_required
@@ -109,7 +109,7 @@ def permission_edit(request, ids):
         'request': request,
     }
 
-    return render_to_response('accounts/permission_edit.html', kwvars, RequestContext(request))
+    return render(request, 'accounts/permission_edit.html', kwvars)
 
 
 @login_required

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block self_head_css_js %}
+    <script src="/static/layer/layer.js"></script>
+{% endblock %}
+{% block content %}
+<script>
+    window.onload=init;
+    function init() {
+        showhide(1);
+    }
+    function showhide(n) {
+        var box = document.getElementById("monitor");
+        box.className="active";
+        var box = document.getElementById("system");
+        box.className="active";
+    }
+</script>
+
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+    <div>
+        <div class="box-body" >
+        {% if all_host %}
+            {% for host in all_host %}
+                <a href="{% url 'host_info' host.hostname 0 %}">
+                    <div class="col-md-3" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+                      <div class="box box-info">
+                        <div class="box-header with-border">
+                          <h3 class="box-title" >{{ host.hostname }}</h3>
+                        </div><!-- /.box-header -->
+                        <div class="box-body">
+                          {{ host.ip }}
+                        </div><!-- /.box-body -->
+                      </div><!-- /.box -->
+                    </div>
+                </a>
+            {% endfor %}
+        {% endif %}
+        </div>
+        <!-- /.box-body -->
+        <!-- /.box-footer-->
+      </div>
+
+      <!-- Your Page Content Here -->
+    </section>
+    <!-- /.content -->
+  </div>
+{% endblock %}

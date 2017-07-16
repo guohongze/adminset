@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block self_head_css_js %}
+    <script src="/static/js/echarts.js"></script>
+{% endblock %}
+{% block content %}
+<script>
+    window.onload=init;
+    function init() {
+        showhide(1);
+    }
+    function showhide(n) {
+        var box = document.getElementById("monitor");
+        box.className="active";
+    }
+</script>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+    </section>
+    <!-- Main content -->
+    <section class="content">
+      <div class="box box-info">
+        <div class="box-header with-border">
+          <h3 class="box-title">{{ hostname }} 监控信息</h3>
+        </div>
+        <div class="box-body">
+        <div class="btn-group btn-group-lg">
+             <a href="{% url 'host_info' hostname 0 %}"><span class="btn btn-default .btn-flat active">一小时</span></a>
+        </div>
+        <div class="btn-group btn-group-lg">
+             <a href="{% url 'host_info' hostname 1 %}"><span class="btn btn-default .btn-flat">三小时</span></a>
+        </div>
+        <div class="btn-group btn-group-lg">
+             <a href="{% url 'host_info' hostname 2 %}"><span class="btn btn-default .btn-flat">五小时</span></a>
+        </div>
+        <div class="btn-group btn-group-lg">
+             <a href="{% url 'host_info' hostname 3 %}"><span class="btn btn-default .btn-flat">一天</span></a>
+        </div>
+        <div class="btn-group btn-group-lg">
+             <a href="{% url 'host_info' hostname 4 %}"><span class="btn btn-default .btn-flat">三天</span></a>
+        </div>
+        <div class="btn-group btn-group-lg">
+             <a href="{% url 'host_info' hostname 5 %}"><span class="btn btn-default .btn-flat">一周</span></a>
+        </div>
+    <div id="cpu" style="width: 650px;height:260px;"></div>
+    <div id="memory" style="width: 650px;height:260px;"></div>
+    {% for p in partitions_len %}
+        <div id="disk{{ p }}" style="width: 650px;height:260px;"></div>
+    {% endfor %}
+    {% for n in nic_len %}
+        <div id="net{{ n }}" style="width: 650px;height:260px;">1234</div>
+    {% endfor %}
+
+        </div>
+      <!-- /.row -->
+        <!-- /.box-body -->
+        <div class="box-footer">
+        </div>
+        <!-- /.box-footer-->
+      </div>
+<script type="text/javascript">
+var timing=0;  //通过URL传递元组数值调用7天数据
+</script>
+{% include 'monitor/get_data.html' %}
+</section>
+        <!-- /.content -->
+</div>
+{% endblock %}

@@ -1,10 +1,8 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from django.shortcuts import render
 from .models import navi
-from django.http import HttpResponse
-from django.shortcuts import render_to_response, redirect, RequestContext
+from django.shortcuts import render
 from forms import navi_form
 from django.contrib.auth.decorators import login_required
 from accounts.permission import permission_verify
@@ -15,7 +13,7 @@ from accounts.permission import permission_verify
 def index(request):
     temp_name = "navi/navi-header.html"
     allnavi = navi.objects.all()
-    return render_to_response("navi/index.html", locals(), RequestContext(request))
+    return render(request, "navi/index.html", locals())
 
 
 @login_required()
@@ -31,11 +29,11 @@ def add(request):
         else:
             tips = u"增加失败！"
             display_control = ""
-        return render_to_response("navi/add.html", locals(), RequestContext(request))
+        return render(request, "navi/add.html", locals())
     else:
         display_control = "none"
         n_form = navi_form()
-        return render_to_response("navi/add.html", locals(), RequestContext(request))
+        return render(request, "navi/add.html", locals())
 
 
 @login_required()
@@ -48,7 +46,7 @@ def delete(request):
             for n in navi_items:
                 navi.objects.filter(id=n).delete()
     allnavi = navi.objects.all()
-    return render_to_response("navi/manage.html", locals(), RequestContext(request))
+    return render(request, "navi/manage.html", locals())
 
 
 @login_required()
@@ -56,7 +54,7 @@ def delete(request):
 def manage(request):
     temp_name = "navi/navi-header.html"
     allnavi = navi.objects.all()
-    return render_to_response("navi/manage.html", locals(), RequestContext(request))
+    return render(request, "navi/manage.html", locals())
 
 
 @login_required()
@@ -66,7 +64,7 @@ def edit(request):
     if request.method == 'GET':
         item = request.GET.get("id")
         obj = navi.objects.get(id=item)
-    return render_to_response("navi/edit.html", locals(), RequestContext(request))
+    return render(request, "navi/edit.html", locals())
 
 
 @login_required()
@@ -74,17 +72,17 @@ def edit(request):
 def save(request):
     temp_name = "navi/navi-header.html"
     if request.method == 'POST':
-        id = request.POST.get('id')
+        ids = request.POST.get('id')
         name = request.POST.get('name')
         desc = request.POST.get('desc')
         url = request.POST.get('url')
-        n_item = navi.objects.get(id=id)
-        n_item.name = name
-        n_item.description = desc
-        n_item.url = url
-        n_item.save()
+        navi_item = navi.objects.get(id=ids)
+        navi_item.name = name
+        navi_item.description = desc
+        navi_item.url = url
+        navi_item.save()
         status = 1
     else:
         status = 2
     allnavi = navi.objects.all()
-    return render_to_response("navi/edit.html",locals(), RequestContext(request))
+    return render(request, "navi/edit.html", locals())

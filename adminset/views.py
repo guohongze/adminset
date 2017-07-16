@@ -1,9 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from django.shortcuts import render_to_response,redirect
-from accounts.permission import permission_verify
-from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect
 
 
 def index(request):

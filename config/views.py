@@ -1,12 +1,11 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-from django.shortcuts import render_to_response, HttpResponse, redirect, RequestContext
+from django.shortcuts import render, HttpResponse
 import ConfigParser
 import os
 from django.contrib.auth.decorators import login_required
 from accounts.permission import permission_verify
 from django.contrib.auth import get_user_model
-import logging
 from lib.log import dic
 
 
@@ -15,7 +14,6 @@ from lib.log import dic
 def index(request):
     temp_name = "config/config-header.html"
     display_control = "none"
-    # dirs = os.path.split(os.path.realpath(__file__))[0]
     dirs = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     config = ConfigParser.ConfigParser()
     all_level = dic
@@ -34,7 +32,12 @@ def index(request):
         token = config.get('token', 'token')
         log_path = config.get('log', 'log_path')
         log_level = config.get('log', 'log_level')
-    return render_to_response('config/index.html', locals(), RequestContext(request))
+        mongodb_ip = config.get('mongodb', 'mongodb_ip')
+        mongodb_port = config.get('mongodb', 'mongodb_port')
+        mongodb_user = config.get('mongodb', 'mongodb_user')
+        mongodb_pwd = config.get('mongodb', 'mongodb_pwd')
+        mongodb_collection = config.get('mongodb', 'collection')
+    return render(request, 'config/index.html', locals())
 
 
 @login_required()
@@ -42,12 +45,12 @@ def index(request):
 def config_save(request):
     temp_name = "config/config-header.html"
     if request.method == 'POST':
-        # path
+        # path info
         ansible_path = request.POST.get('ansible_path')
         roles_path = request.POST.get('roles_path')
         pbook_path = request.POST.get('pbook_path')
         scripts_path = request.POST.get('scripts_path')
-        # db
+        # db info
         engine = request.POST.get('engine')
         host = request.POST.get('host')
         port = request.POST.get('port')
@@ -56,10 +59,16 @@ def config_save(request):
         database = request.POST.get('database')
         # cmdb_api_token
         token = request.POST.get('token')
-        # log
+        # log info
         log_path = request.POST.get('log_path')
         log_level = request.POST.get('log_level')
-        
+        # mongodb info
+        mongodb_ip = request.POST.get('mongodb_ip')
+        mongodb_port = request.POST.get('mongodb_port')
+        mongodb_user = request.POST.get('mongodb_user')
+        mongodb_pwd = request.POST.get('mongodb_pwd')
+        mongodb_collection = request.POST.get('mongodb_collection')
+
         config = ConfigParser.RawConfigParser()
         dirs = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         config.add_section('config')
@@ -79,6 +88,12 @@ def config_save(request):
         config.add_section('log')
         config.set('log', 'log_path', log_path)
         config.set('log', 'log_level', log_level)
+        config.add_section('mongodb')
+        config.set('mongodb', 'mongodb_ip', mongodb_ip)
+        config.set('mongodb', 'mongodb_port', mongodb_port)
+        config.set('mongodb', 'mongodb_user', mongodb_user)
+        config.set('mongodb', 'mongodb_pwd', mongodb_pwd)
+        config.set('mongodb', 'collection', mongodb_collection)
         tips = u"保存成功！"
         display_control = ""
         with open(dirs+'/adminset.conf', 'wb') as cfgfile:
@@ -97,9 +112,14 @@ def config_save(request):
             database = config.get('db', 'database')
             token = config.get('token', 'token')
             log_path = config.get('log', 'log_path')
+            mongodb_ip = config.get('mongodb', 'mongodb_ip')
+            mongodb_port = config.get('mongodb', 'mongodb_port')
+            mongodb_user = config.get('mongodb', 'mongodb_user')
+            mongodb_pwd = config.get('mongodb', 'mongodb_pwd')
+            mongodb_collection = config.get('mongodb', 'collection')
     else:
         display_control = "none"
-    return render_to_response('config/index.html', locals(), RequestContext(request))
+    return render(request, 'config/index.html', locals())
 
 
 def get_dir(args):
@@ -114,23 +134,20 @@ def get_dir(args):
         token = config.get('token', 'token')
         log_path = config.get('log', 'log_path')
         log_level = config.get('log', 'log_level')
-
-    if args == "a_path":
-        return a_path
-    if args == "r_path":
-        return r_path
-    if args == "p_path":
-        return p_path
-    if args == "s_path":
-        return s_path
-    if args == "token":
-        return token
-    if args == "log_path":
-        return log_path
-    if args == "log_level":
-        return log_level
+        mongodb_ip = config.get('mongodb', 'mongodb_ip')
+        mongodb_port = config.get('mongodb', 'mongodb_port')
+        mongodb_user = config.get('mongodb', 'mongodb_user')
+        mongodb_pwd = config.get('mongodb', 'mongodb_pwd')
+        mongodb_collection = config.get('mongodb', 'collection')
+    # 根据传入参数返回变量以获取配置，返回变量名与参数名相同
+    if args:
+        return vars()[args]
+    else:
+        return HttpResponse(status=403)
 
 
+@login_required()
+@permission_verify()
 def get_token(request):
     if request.method == 'POST':
         new_token = get_user_model().objects.make_random_password(length=12, allowed_chars='abcdefghjklmnpqrstuvwxyABCDEFGHJKLMNPQRSTUVWXY3456789')
