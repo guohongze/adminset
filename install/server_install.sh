@@ -11,8 +11,8 @@ cd ..
 cur_dir=$(pwd)
 mkdir -p $adminset_dir
 mkdir -p $data_dir/scripts
-mkdir -p $data_dir/playbook
-mkdir -p $data_dir/roles
+mkdir -p $data_dir/ansible/playbook
+mkdir -p $data_dir/ansible/roles
 mkdir -p $config_dir
 mkdir -p $logs_dir
 mkdir -p $main_dir/pid

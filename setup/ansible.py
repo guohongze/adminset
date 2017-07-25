@@ -48,91 +48,91 @@ def playbook(request):
         pbook = request.POST.getlist('splaybook', [])
         roles = request.POST.getlist('mplaybook', [])
 
-    if host:
-        if roles:
-            for h in host:
-                logging.info("==========ansible tasks start==========")
-                logging.info("User:"+request.user.username)
-                logging.info("host:"+h)
-                f = open(ansible_dir + '/gexec.yml', 'w+')
-                flist = ['- hosts: '+h+'\n', '  remote_user: root\n', '  gather_facts: false\n', '  roles:\n']
-                for r in roles:
-                    rs = '    - ' + r + '\n'
-                    flist.append(rs)
-                    logging.info("Role:"+r)
-                f.writelines(flist)
-                f.close()
-                cmd = "ansible-playbook"+" " + ansible_dir+'/gexec.yml'
-                p = Popen(cmd, stderr=PIPE, stdout=PIPE, shell=True)
-                data = p.communicate()
-                ret.append(data)
-                for d in data:
-                    logging.info(d)
-                logging.info("==========ansible tasks end============")
-        else:
-            for h in host:
-                for p in pbook:
-                    f = open(playbook_dir + p, 'r+')
-                    flist = f.readlines()
-                    flist[0] = '- hosts: '+h+'\n'
-                    f = open(playbook_dir + p, 'w+')
-                    f.writelines(flist)
-                    f.close()
-                    cmd = "ansible-playbook"+" " + playbook_dir + p
-                    pcmd = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
-                    data = pcmd.communicate()
-                    ret.append(data)
+        if host:
+            if roles:
+                for h in host:
                     logging.info("==========ansible tasks start==========")
                     logging.info("User:"+request.user.username)
                     logging.info("host:"+h)
-                    logging.info("Playbook:"+p)
-                    for d in data:
-                        logging.info(d)
-                    logging.info("==========ansible tasks end============")
-        return render(request, 'setup/result.html', locals())
-
-    if group:
-        if roles:
-            for g in group:
-                logging.info("==========ansible tasks start==========")
-                logging.info("User:"+request.user.username)
-                logging.info("group:"+g)
-                f = open(ansible_dir + '/gexec.yml', 'w+')
-                flist = ['- hosts: '+g+'\n', '  remote_user: root\n', '  gather_facts: false\n', '  roles:\n']
-                for r in roles:
-                    rs = '    - ' + r + '\n'
-                    flist.append(rs)
-                    logging.info("Role:"+r)
-                f.writelines(flist)
-                f.close()
-                cmd = "ansible-playbook"+" " + ansible_dir+'/gexec.yml'
-                p = Popen(cmd, stderr=PIPE, stdout=PIPE, shell=True)
-                data = p.communicate()
-                ret.append(data)
-                for d in data:
-                    logging.info(d)
-                logging.info("==========ansible tasks end============")
-        else:
-            for g in group:
-                for p in pbook:
-                    f = open(playbook_dir + p, 'r+')
-                    flist = f.readlines()
-                    flist[0] = '- hosts: '+g+'\n'
-                    f = open(playbook_dir + p, 'w+')
+                    f = open(ansible_dir + '/gexec.yml', 'w+')
+                    flist = ['- hosts: '+h+'\n', '  remote_user: root\n', '  gather_facts: true\n', '  roles:\n']
+                    for r in roles:
+                        rs = '    - ' + r + '\n'
+                        flist.append(rs)
+                        logging.info("Role:"+r)
                     f.writelines(flist)
                     f.close()
-                    cmd = "ansible-playbook"+" " + playbook_dir + p
-                    pcmd = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
-                    data = pcmd.communicate()
+                    cmd = "ansible-playbook"+" " + ansible_dir+'/gexec.yml'
+                    p = Popen(cmd, stderr=PIPE, stdout=PIPE, shell=True)
+                    data = p.communicate()
                     ret.append(data)
-                    logging.info("==========ansible tasks start==========")
-                    logging.info("User:"+request.user.username)
-                    logging.info("Group:"+g)
-                    logging.info("Playbook:"+p)
                     for d in data:
                         logging.info(d)
                     logging.info("==========ansible tasks end============")
-        return render(request, 'setup/result.html', locals())
+            else:
+                for h in host:
+                    for p in pbook:
+                        f = open(playbook_dir + p, 'r+')
+                        flist = f.readlines()
+                        flist[0] = '- hosts: '+h+'\n'
+                        f = open(playbook_dir + p, 'w+')
+                        f.writelines(flist)
+                        f.close()
+                        cmd = "ansible-playbook"+" " + playbook_dir + p
+                        pcmd = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
+                        data = pcmd.communicate()
+                        ret.append(data)
+                        logging.info("==========ansible tasks start==========")
+                        logging.info("User:"+request.user.username)
+                        logging.info("host:"+h)
+                        logging.info("Playbook:"+p)
+                        for d in data:
+                            logging.info(d)
+                        logging.info("==========ansible tasks end============")
+            return render(request, 'setup/result.html', locals())
+
+        if group:
+            if roles:
+                for g in group:
+                    logging.info("==========ansible tasks start==========")
+                    logging.info("User:"+request.user.username)
+                    logging.info("group:"+g)
+                    f = open(ansible_dir + '/gexec.yml', 'w+')
+                    flist = ['- hosts: '+g+'\n', '  remote_user: root\n', '  gather_facts: true\n', '  roles:\n']
+                    for r in roles:
+                        rs = '    - ' + r + '\n'
+                        flist.append(rs)
+                        logging.info("Role:"+r)
+                    f.writelines(flist)
+                    f.close()
+                    cmd = "ansible-playbook"+" " + ansible_dir+'/gexec.yml'
+                    p = Popen(cmd, stderr=PIPE, stdout=PIPE, shell=True)
+                    data = p.communicate()
+                    ret.append(data)
+                    for d in data:
+                        logging.info(d)
+                    logging.info("==========ansible tasks end============")
+            else:
+                for g in group:
+                    for p in pbook:
+                        f = open(playbook_dir + p, 'r+')
+                        flist = f.readlines()
+                        flist[0] = '- hosts: '+g+'\n'
+                        f = open(playbook_dir + p, 'w+')
+                        f.writelines(flist)
+                        f.close()
+                        cmd = "ansible-playbook"+" " + playbook_dir + p
+                        pcmd = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
+                        data = pcmd.communicate()
+                        ret.append(data)
+                        logging.info("==========ansible tasks start==========")
+                        logging.info("User:"+request.user.username)
+                        logging.info("Group:"+g)
+                        logging.info("Playbook:"+p)
+                        for d in data:
+                            logging.info(d)
+                        logging.info("==========ansible tasks end============")
+            return render(request, 'setup/result.html', locals())
 
 
 @login_required()
