@@ -61,8 +61,14 @@
           这是由于celery的BUG导致，会在社区发布稳定版本以后修复。
 
 #ansible用法
-    注意：通过adminset_agent
+    1、自动设置证书认证
+    通过adminset_agent自动上报的服务器，可以自动设置免密登入(认书认证)
+    前提是已经在客户端做了hosts解析，并且密码与在服务器的系统配置>密钥设置>ssh password
+    相同，也就是说如果自动分发密钥必须在系统配置中提前输入密码并保存，系统默认带的密码是root。
+    注意：系统只有在第一次上报信息时会调用ssh密钥分发.如果以后想使用自动密钥分发需要在资产管理中
+    删除服务信息，然后再自动上报即可。
 
+    2、手工设置认证书认证。
     配置免密钥登陆客机(ansible和shell管理客户机需要此配置)
     在服务器上执行
     ssh-keygen
@@ -73,6 +79,7 @@
     然后将playbook 或是role脚本上传到/var/opt/adminset/data/playbook 或/var/opt/adminset/data/roles
 
 #shell用法
+    依赖免密登入（与ansible同）
     CMDB自动上报主机以后，shell界面可以直接调用主机。
     然后将常用脚本上传到/var/opt/adminset/data/scripts 中shell脚本栏将会自动发现脚本。
 
@@ -114,10 +121,12 @@
     3)二次开发
     rsync.sh脚本只做增量，rsync参数不带--delete选项，不会在生产环境删除代码中已删除的条目,不更新组件配置文件，不会生成新的ORM数据库条目。
     update.sh脚本带--delete选项，同步代码，重新发布各组件的配置文件，并重新生成ORM数据文件（makemigrations migrate）。
+    4）0.5版本结构变动较大，更新请使用server_install.sh 然后在设置数据库时使用现有数据库。
 
 # 安全
     强烈建议不要将程序启动在有公网可以直接访问的设备上，如果需要请使用VPN。
     建议生产环境中使用https配置服务器<br>
+    建议adminset放在网管区中，并且开启防火墙。
     由于开发方使，我在django的settings中开启了DEBUG，在生产中需要关闭并指定自己的域名。
 
 # 开发者交流
