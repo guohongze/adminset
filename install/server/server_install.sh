@@ -8,6 +8,7 @@ data_dir="$main_dir/data"
 config_dir="$main_dir/config"
 logs_dir="$main_dir/logs"
 cd ..
+cd ..
 cur_dir=$(pwd)
 mkdir -p $adminset_dir
 mkdir -p $data_dir/scripts
@@ -50,15 +51,15 @@ echo "####install depandencies####"
 read -p "do you have a local yum repository?[yes/no]:" yum1
 if [ ! $yum1 ]
 then
-yum1=yes
+yum1=no
 fi
-case yum1 in
+case $yum1 in
 	yes|y|Y|YES)
-		yum install -y gcc python-pip python-devel ansible smartmontools dmidecode libselinux-python
+		yum install -y gcc expect python-pip python-devel ansible smartmontools dmidecode libselinux-python
 		;;
 	no|n|N|NO)
 	    yum install -y epel-release
-        yum install -y gcc python-pip python-devel ansible smartmontools dmidecode libselinux-python
+            yum install -y gcc python-pip expect python-devel ansible smartmontools dmidecode libselinux-python
 		;;
 	*)
 		exit 1
