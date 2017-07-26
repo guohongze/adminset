@@ -5,10 +5,10 @@
 <br>
 Adminset基于DevOps理念开发，以整合全部运维场景为己任。Adminset是一个真正的基于运维思维而开发的全自动化运维平台。<br>
 
-## v0.3 新功能
-新增监控平台模块<br>
-监控内容自动发现<br>
-agent重构，自动多线程上报<br>
+## v0.5 新功能
+新增脚本执行任务参数<br>
+新增ansible role变量自定义<br>
+设备上报资产信息时自动触发sshkey分发，不再需要手工建立adminset与客户机的免密认证<br>
 
 ## 开发环境
 centos 7.2(1511) django 1.9.8 python 2.7<br>
@@ -26,13 +26,15 @@ adminset/install/server_install.sh
 
 ## 客户端安装
 客户端脚本目前rhel/centos6、7,ubuntu14.04经过测试<br>
+客户端python版本支持2.6.6及以上<br>
 说明：为保证注册IP是管理IP（后续会被ansible等调用），客户端的IP抓取目前使用主机名解析，否则报错。 
 如：主机名为cn-bj-web01 请在/etc/hosts中加入相应的解析 192.168.x.x cn-bj-web01，这样再执行adminset_agent.py 可以保证正常运行。
 #### step1:
 centos/rhel
 ```
-yum install -y epel-release gcc
-yum install -y smartmontools dmidecode python-pip python-devel
+client/client_install.sh
+yum install -y epel-release
+yum install -y gcc smartmontools dmidecode python-pip python-devel
 ```
 ubuntu
 ```

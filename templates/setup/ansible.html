@@ -58,18 +58,18 @@
                 </select>
               </div>
               <div class="form-group">
-                <label>Roles</label>
-                <select id="mroles" name="mroles" class="form-control" multiple="multiple" data-placeholder="Playbook Roles" style="width: 100%;">
-                    {% for dir in all_dir %}
-                        <option value="{{ dir }}">{{ dir}}</option>
-                    {% endfor %}
-                </select>
-              </div>
-              <div class="form-group">
                 <label>Playbook</label>
                 <select id="splaybook" name="splaybook" class="form-control" multiple="multiple" data-placeholder="Playbook" style="width: 100%;">
                     {% for file in all_pbook %}
                         <option value="{{ file }}">{{ file}}</option>
+                    {% endfor %}
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Roles</label>
+                <select id="mroles" name="mroles" class="form-control" multiple="multiple" data-placeholder="Playbook Roles" style="width: 100%;">
+                    {% for dir in all_dir %}
+                        <option value="{{ dir }}">{{ dir}}</option>
                     {% endfor %}
                 </select>
               </div>

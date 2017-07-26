@@ -6,6 +6,15 @@ from models import Host, HostGroup, ASSET_TYPE, ASSET_STATUS
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
 from django.views.decorators.csrf import csrf_exempt
 from lib.common import token_verify
+from lib.deploy_key import deploy_key
+import logging
+from lib.log import log
+from config.views import get_dir
+
+level = get_dir("log_level")
+log_path = get_dir("log_path")
+log("cmdb.log", level, log_path)
+
 try:
     import json
 except ImportError, e:
@@ -101,6 +110,11 @@ def collect(request):
             host = Host.objects.get(hostname=hostname)
         except:
             host = Host()
+            logging.info("==========sshkey deploy start==========")
+            data = deploy_key(ip)
+            logging.info(data)
+            logging.info("==========sshkey deploy end==========")
+
         # if req.POST.get('identity'):
         #     identity = req.POST.get('identity')
         #     try:
