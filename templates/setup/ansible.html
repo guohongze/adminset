@@ -59,7 +59,7 @@
               </div>
               <div class="form-group">
                 <label>Roles</label>
-                <select id="mplaybook" name="mplaybook" class="form-control" multiple="multiple" data-placeholder="Playbook Roles" style="width: 100%;">
+                <select id="mroles" name="mroles" class="form-control" multiple="multiple" data-placeholder="Playbook Roles" style="width: 100%;">
                     {% for dir in all_dir %}
                         <option value="{{ dir }}">{{ dir}}</option>
                     {% endfor %}
@@ -72,6 +72,20 @@
                         <option value="{{ file }}">{{ file}}</option>
                     {% endfor %}
                 </select>
+              </div>
+              <div class="form-group">
+                <label>Role Vars</label>
+                  	<span class="fa fa-info-circle" data-html="true" title="Role变量用法"
+                    data-container="body" data-toggle="popover" data-placement="right"
+                    data-content="1、此项为可选项<br>
+                                  2、不为空将覆盖role的vars/main.yml<br>
+                                  3、多选role覆盖所有的vars/main.yml<br>
+                                  4、写法与role vars相同（不用写---）<br>
+                                  user: tomcat<br>
+                                  password: 1234567<br>
+                                  webport: 8080<br>
+                                  shutdown: 8005"></span>
+                <textarea id="mvars" name="mvars" class="form-control" placeholder="enter kay for spilting vars" rows="4"></textarea>
               </div>
               <!-- /.form-group -->
             <input type="submit" id="playbook_submit" class="btn btn-primary" style="width: 60pt; font-size: medium;" value="执行">
@@ -107,16 +121,24 @@
         <!-- /.content -->
       </div>
 <script>
+    // bootstrap tooltips active code
+    $(function () {
+        $("[data-toggle='popover']").popover();
+    });
+</script>
+<script>
   $(function () {
     //Initialize Select2 Elements
     $("#mserver").select2().on("select2:select", function () { $("#mgroup").prop("disabled", true); });
     $("#mserver").select2().on("select2:unselect", function () { $("#mgroup").prop("disabled", false); });
     $("#mgroup").select2().on("select2:select", function () { $("#mserver").prop("disabled", true); });
     $("#mgroup").select2().on("select2:unselect", function () { $("#mserver").prop("disabled", false); });
-    $("#mplaybook").select2().on("select2:select", function () { $("#splaybook").prop("disabled", true); });
-    $("#mplaybook").select2().on("select2:unselect", function () { $("#splaybook").prop("disabled", false); });
-    $("#splaybook").select2().on("select2:select", function () { $("#mplaybook").prop("disabled", true); });
-    $("#splaybook").select2().on("select2:unselect", function () { $("#mplaybook").prop("disabled", false); });
+    $("#mroles").select2().on("select2:select", function () { $("#splaybook").prop("disabled", true); });
+    $("#mroles").select2().on("select2:unselect", function () { $("#splaybook").prop("disabled", false); });
+    $("#splaybook").select2().on("select2:select", function () { $("#mroles").prop("disabled", true); });
+    $("#splaybook").select2().on("select2:select", function () { $("#mvars").prop("disabled", true); });
+    $("#splaybook").select2().on("select2:unselect", function () { $("#mroles").prop("disabled", false); });
+    $("#splaybook").select2().on("select2:unselect", function () { $("#mvars").prop("disabled", false); });
 
     $("#command_submit").click(function(){
 
@@ -140,12 +162,12 @@
         layer.msg("请选目标服务器或组!");
         return false;
     }
-    if ($('#splaybook').val() == null && $('#mplaybook').val() == null) {
+    if ($('#splaybook').val() == null && $('#mroles').val() == null) {
         layer.msg("请选要执行的Roles或Playbook!");
         return false;
     }
     var obj = $('#mserver').val() || $('#mgroup').val();
-    var act = $('#mplaybook').val() || $('#splaybook').val();
+    var act = $('#mroles').val() || $('#splaybook').val();
 
     if(confirm("确定在"+obj+"上执行"+act+"？"))
         var index = layer.load(1, {
@@ -160,14 +182,14 @@
 <script>
 function checkBlur(){
     if ($('#mcommand').val() == "") {
-        document.getElementById("mplaybook").removeAttribute('disabled');
+        document.getElementById("mroles").removeAttribute('disabled');
         document.getElementById("splaybook").removeAttribute('disabled');
         document.getElementById("mgroup").removeAttribute('disabled');
         document.getElementById("mserver").removeAttribute('disabled');
     }
 }
 function checkFocus(){
-    document.getElementById("mplaybook").setAttribute('disabled','disabled');
+    document.getElementById("mroles").setAttribute('disabled','disabled');
     document.getElementById("splaybook").setAttribute('disabled','disabled');
     document.getElementById("mserver").setAttribute('disabled','disabled');
     document.getElementById("mgroup").setAttribute('disabled','disabled');

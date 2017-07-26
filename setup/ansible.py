@@ -22,6 +22,25 @@ log_path = get_dir("log_path")
 log("setup.log", level, log_path)
 
 
+def write_role_vars(roles, vargs):
+
+    r_vars = vargs.split('\r\n')
+    for r in roles:
+
+        if vargs:
+            if os.path.exists(roles_dir+r+"/vars"):
+                pass
+            else:
+                os.mkdir(roles_dir+r+"/vars")
+
+            with open(roles_dir+r+'/vars/main.yml', 'wb+') as role_file:
+                role_file.writelines("---\n")
+                for x in r_vars:
+                    rs = x + '\n'
+                    role_file.writelines(rs)
+    return True
+
+
 @login_required()
 @permission_verify()
 def index(request):
@@ -46,22 +65,24 @@ def playbook(request):
         host = request.POST.getlist('mserver', [])
         group = request.POST.getlist('mgroup', [])
         pbook = request.POST.getlist('splaybook', [])
-        roles = request.POST.getlist('mplaybook', [])
+        roles = request.POST.getlist('mroles', [])
+        role_vars = request.POST.get('mvars')
 
         if host:
             if roles:
+                if role_vars:
+                    write_role_vars(roles, role_vars)
                 for h in host:
                     logging.info("==========ansible tasks start==========")
                     logging.info("User:"+request.user.username)
                     logging.info("host:"+h)
-                    f = open(ansible_dir + '/gexec.yml', 'w+')
-                    flist = ['- hosts: '+h+'\n', '  remote_user: root\n', '  gather_facts: true\n', '  roles:\n']
-                    for r in roles:
-                        rs = '    - ' + r + '\n'
-                        flist.append(rs)
-                        logging.info("Role:"+r)
-                    f.writelines(flist)
-                    f.close()
+                    with open(ansible_dir + '/gexec.yml', 'w+') as f:
+                        flist = ['- hosts: '+h+'\n', '  remote_user: root\n', '  gather_facts: true\n', '  roles:\n']
+                        for r in roles:
+                            rs = '    - ' + r + '\n'
+                            flist.append(rs)
+                            logging.info("Role:"+r)
+                        f.writelines(flist)
                     cmd = "ansible-playbook"+" " + ansible_dir+'/gexec.yml'
                     p = Popen(cmd, stderr=PIPE, stdout=PIPE, shell=True)
                     data = p.communicate()
@@ -93,6 +114,8 @@ def playbook(request):
 
         if group:
             if roles:
+                if role_vars:
+                    write_role_vars(roles, role_vars)
                 for g in group:
                     logging.info("==========ansible tasks start==========")
                     logging.info("User:"+request.user.username)
