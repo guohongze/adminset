@@ -10,6 +10,8 @@ then
 elif (echo $os|grep Ubuntu)
 then
     apt-get install smartmontools dmidecode python-pip python-dev
+    sed -i "s/PermitRootLogin/\#PermitRootLogin/g" /etc/ssh/sshd_config
+    service ssh restart
 else
     echo "your os version is not supported!"
 fi

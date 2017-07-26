@@ -20,7 +20,7 @@ centos 7.2(1511) django 1.9.8 python 2.7<br>
 安装过程需要输入管理员数据库等交互信息<br>
 ```
 git clone https://github.com/guohongze/adminset.git
-adminset/install/server_install.sh
+adminset/install/server/server_install.sh
 ```
 生成密钥(如果不存在)
 ```
@@ -34,12 +34,12 @@ ssh-keygen
 说明：为保证注册IP是管理IP（后续会被ansible等调用），客户端的IP抓取目前使用主机名解析，否则报错。 
 如：主机名为cn-bj-web01 请在/etc/hosts中加入相应的解析 192.168.x.x cn-bj-web01，这样再执行adminset_agent.py 可以保证正常运行。
 #### step1:
-拷贝client/client_install.sh 到客户机上并执行:
+拷贝install/client/client_install.sh 到客户机上并执行:
 ```
 sh client_install.sh
 ```
 #### step2:
-拷贝client/adminset_agent.py 到客户机上并执行:
+拷贝install/client/adminset_agent.py 到客户机上并执行:
 ```
 python adminset_agent.py
 ```

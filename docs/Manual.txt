@@ -2,19 +2,22 @@
     adminset依赖主机名，所以被控机器、客户机，都需要设置主机名，主机名唯一，并且可以
     被解析。
 #install
-    安装需要使用yum源请保证可用，目前不支持离线安装。
+    安装需要使用yum源请保证可用，或使用本地yum源。
+    如果ubuntu客户端需要ansible等管理功能，需要开启root登录(配置脚本会自动开始，如不需要请手工关闭)
 
     服务器安装：
         git clone https://github.com/guohongze/adminset.git
         执行安装脚本
-        adminset/install/server_install.sh
+        adminset/install/server/server_install.sh
         安装过程需要输入管理员数据库等交互信息
     客户端安装
         说明：为保证注册IP是管理IP（后续会被ansible等调用），客户端的IP抓取目前使用主机名解析，否则报错。 如：主机名为cn-bj-web01 请在/etc/hosts中加入相应的解析 192.168.x.x cn-bj-web01，这样再执行adminset_agent.py 可以保证正常运行。 centos7不进行解析也可获取主机IP.
         step1:安装依赖
-        yum install -y smartmontools dmidecode python-pip python-devel python
+        拷贝adminset/install/client/client_install.sh 到客户机上并执行:
+        sh client_install.sh
+
         step2:执行agent
-        拷贝client/adminset_agent.py 到客户机上并执行：
+        拷贝adminset/install/client/adminset_agent.py 到客户机上并执行：
         python adminset_agent.py
         后台运行请参考：
         nohup adminset_aent.py &
@@ -35,7 +38,7 @@
     在站点管理中输入常用的运维工具系统后会自动出现在站点导航界面。
 
 #cmdb用法
-    client/adminset_agent.py 开户后会自动上报主机相关信息到CMDB
+    install/client/adminset_agent.py 开户后会自动上报主机相关信息到CMDB
     获取主机信息
     http://your_server_ip/cmdb/get/host/?token=your_token&name=host_name
     获取组信息
@@ -58,6 +61,8 @@
           这是由于celery的BUG导致，会在社区发布稳定版本以后修复。
 
 #ansible用法
+    注意：通过adminset_agent
+
     配置免密钥登陆客机(ansible和shell管理客户机需要此配置)
     在服务器上执行
     ssh-keygen
