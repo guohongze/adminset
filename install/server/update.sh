@@ -6,6 +6,7 @@ data_dir="$main_dir/data"
 config_dir="$main_dir/config"
 logs_dir="$main_dir/logs"
 cd ..
+cd ..
 cur_dir=$(pwd)
 rsync --progress -ra --exclude '.git' $cur_dir/ $adminset_dir
 #scp $adminset_dir/install/ansible/ansible.cfg /etc/ansible/ansible.cfg

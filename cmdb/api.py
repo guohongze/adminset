@@ -11,9 +11,6 @@ import logging
 from lib.log import log
 from config.views import get_dir
 
-level = get_dir("log_level")
-log_path = get_dir("log_path")
-log("cmdb.log", level, log_path)
 
 try:
     import json
@@ -110,8 +107,12 @@ def collect(request):
             host = Host.objects.get(hostname=hostname)
         except:
             host = Host()
+            level = get_dir("log_level")
+            ssh_pwd = get_dir("ssh_pwd")
+            log_path = get_dir("log_path")
+            log("cmdb.log", level, log_path)
             logging.info("==========sshkey deploy start==========")
-            data = deploy_key(ip)
+            data = deploy_key(ip, ssh_pwd)
             logging.info(data)
             logging.info("==========sshkey deploy end==========")
 
