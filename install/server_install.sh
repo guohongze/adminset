@@ -47,13 +47,33 @@ rsync --delete --progress -ra --exclude '.git' $cur_dir/ $adminset_dir
 
 # 安装依赖
 echo "####install depandencies####"
-yum install -y epel-release gcc
-yum install -y python-pip python-devel ansible smartmontools dmidecode
+read -p "do you have a local yum repository?[yes/no]:" yum1
+if [ ! $yum1 ]
+then
+yum1=yes
+fi
+case yum1 in
+	yes|y|Y|YES)
+		yum install -y gcc python-pip python-devel ansible smartmontools dmidecode
+		;;
+	no|n|N|NO)
+	    yum install -y epel-release
+        yum install -y gcc python-pip python-devel ansible smartmontools dmidecode
+		;;
+	*)
+		exit 1
+		;;
+esac
+
 scp $adminset_dir/install/ansible/ansible.cfg /etc/ansible/ansible.cfg
 
 #安装数据库
 echo "####install database####"
 read -p "do you want to create a new mysql database?[yes/no]:" db1
+if [ ! $db1 ]
+then
+db1=yes
+fi
 case $db1 in
 	yes|y|Y|YES)  
 		echo "installing a new mariadb...."
@@ -90,6 +110,10 @@ esac
 # 安装mongodb
 echo "####install mongodb####"
 read -p "do you want to create a new Mongodb?[yes/no]:" mongo
+if [ ! $mongo ]
+then
+mongo=yes
+fi
 case $mongo in
 	yes|y|Y|YES)
 		echo "installing a new Mongodb...."

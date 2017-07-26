@@ -2,8 +2,17 @@
 set -e
 
 # 安装依赖包
-yum install -y epel-release
-yum install -y gcc smartmontools dmidecode python-pip python-devel
+os=$(cat /proc/version)
+if (echo $os|grep centos)
+then
+    yum install -y epel-release
+    yum install -y gcc smartmontools dmidecode python-pip python-devel
+elif (echo $os|grep Ubuntu)
+then
+    apt-get install smartmontools dmidecode python-pip python-dev
+else
+    echo "your os version is not supported!"
+fi
 
 
 echo "####install pip mirror####"
