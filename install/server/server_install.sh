@@ -54,18 +54,18 @@ yum1=yes
 fi
 case yum1 in
 	yes|y|Y|YES)
-		yum install -y gcc python-pip python-devel ansible smartmontools dmidecode
+		yum install -y gcc python-pip python-devel ansible smartmontools dmidecode libselinux-python
 		;;
 	no|n|N|NO)
 	    yum install -y epel-release
-        yum install -y gcc python-pip python-devel ansible smartmontools dmidecode
+        yum install -y gcc python-pip python-devel ansible smartmontools dmidecode libselinux-python
 		;;
 	*)
 		exit 1
 		;;
 esac
 
-scp $adminset_dir/install/ansible/ansible.cfg /etc/ansible/ansible.cfg
+scp $adminset_dir/install/server/ansible/ansible.cfg /etc/ansible/ansible.cfg
 
 #安装数据库
 echo "####install database####"
@@ -161,7 +161,7 @@ python manage.py makemigrations
 python manage.py migrate
 echo "please create your adminset' super admin:"
 python manage.py createsuperuser
-scp $adminset_dir/install/adminset.service /usr/lib/systemd/system
+scp $adminset_dir/install/server/adminset.service /usr/lib/systemd/system
 systemctl daemon-reload
 chkconfig adminset on
 service adminset start
@@ -175,10 +175,10 @@ service redis start
 # 安装celery
 echo "####install celery####"
 mkdir -p $config_dir/celery
-scp $adminset_dir/install/celery/beat.conf $config_dir/celery/beat.conf
-scp $adminset_dir/install/celery/celery.service /usr/lib/systemd/system
-scp $adminset_dir/install/celery/start_celery.sh $config_dir/celery/start_celery.sh
-scp $adminset_dir/install/celery/beat.service /usr/lib/systemd/system
+scp $adminset_dir/install/server/celery/beat.conf $config_dir/celery/beat.conf
+scp $adminset_dir/install/server/celery/celery.service /usr/lib/systemd/system
+scp $adminset_dir/install/server/celery/start_celery.sh $config_dir/celery/start_celery.sh
+scp $adminset_dir/install/server/celery/beat.service /usr/lib/systemd/system
 chmod +x $config_dir/celery/start_celery.sh
 systemctl daemon-reload
 chkconfig celery on
@@ -190,10 +190,13 @@ service beat start
 echo "####install nginx####"
 yum install nginx -y
 chkconfig nginx on
-scp $adminset_dir/install/nginx/adminset.conf /etc/nginx/conf.d
-scp $adminset_dir/install/nginx/nginx.conf /etc/nginx
+scp $adminset_dir/install/server/nginx/adminset.conf /etc/nginx/conf.d
+scp $adminset_dir/install/server/nginx/nginx.conf /etc/nginx
 service nginx start
 nginx -s reload
+
+# update ssh config
+scp $adminset_dir/install/server/ssh/config ~/.ssh
 
 # 完成安装
 echo "##############install finished###################"
@@ -204,6 +207,7 @@ service adminset restart
 service celery restart
 service beat restart
 service mongod restart
+service sshd restart
 echo "please access website http://server_ip"
 echo "you have installed adminset successfully!!!"
 echo "################################################"

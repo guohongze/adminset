@@ -6,7 +6,7 @@ os=$(cat /proc/version)
 if (echo $os|grep centos)
 then
     yum install -y epel-release
-    yum install -y gcc smartmontools dmidecode python-pip python-devel
+    yum install -y gcc smartmontools dmidecode python-pip python-devel  libselinux-python
 elif (echo $os|grep Ubuntu)
 then
     apt-get install smartmontools dmidecode python-pip python-dev
