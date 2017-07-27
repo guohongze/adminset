@@ -7,8 +7,8 @@ adminset_dir="$main_dir/main"
 data_dir="$main_dir/data"
 config_dir="$main_dir/config"
 logs_dir="$main_dir/logs"
-cd ..
-cd ..
+cd "$( dirname "$0"  )"
+cd .. && cd ..
 cur_dir=$(pwd)
 mkdir -p $adminset_dir
 mkdir -p $data_dir/scripts
