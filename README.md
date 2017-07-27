@@ -22,11 +22,6 @@ centos 7.2(1511) django 1.9.8 python 2.7<br>
 git clone https://github.com/guohongze/adminset.git
 adminset/install/server/server_install.sh
 ```
-生成密钥(如果不存在)
-```
-ssh-keygen
-```
-
 
 ## 客户端安装
 客户端脚本目前rhel/centos6、7,ubuntu14.04经过测试<br>
