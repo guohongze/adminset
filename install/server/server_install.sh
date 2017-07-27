@@ -157,7 +157,7 @@ index-url = http://mirrors.aliyun.com/pypi/simple/
 [install]
 trusted-host=mirrors.aliyun.com
 EOF
-
+pip install kombu==4.1.0
 cd $adminset_dir/vendor/django-celery-results-master
 python setup.py build
 python setup.py install
