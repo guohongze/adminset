@@ -36,7 +36,7 @@ ssh-keygen
 #### step1:
 拷贝install/client/client_install.sh 到客户机上并执行:
 ```
-sh client_install.sh
+client_install.sh
 ```
 #### step2:
 拷贝install/client/adminset_agent.py 到客户机上并执行:

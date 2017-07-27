@@ -44,7 +44,13 @@ else
 fi
 
 # 分发代码
-rsync --delete --progress -ra --exclude '.git' $cur_dir/ $adminset_dir
+if [ ! $cur_dir ] || [ ! $adminset_dir ]
+then
+    echo "install directory info error, please check your system environment program exit"
+    exit 1
+else
+    rsync --delete --progress -ra --exclude '.git' $cur_dir/ $adminset_dir
+fi
 
 # 安装依赖
 echo "####install depandencies####"
