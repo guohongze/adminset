@@ -206,7 +206,9 @@ scp $adminset_dir/install/server/nginx/nginx.conf /etc/nginx
 service nginx start
 nginx -s reload
 
-# update ssh config
+# create ssh config
+echo "create ssh-key, you could choose no if you had have ssh key"
+ssh-keygen -q -N "" -t rsa -f /root/.ssh/id_rsa
 scp $adminset_dir/install/server/ssh/config ~/.ssh
 
 # 完成安装

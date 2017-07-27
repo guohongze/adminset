@@ -6,8 +6,9 @@
     如果ubuntu客户端需要ansible等管理功能，需要开启root登录(配置脚本会自动开始，如不需要请手工关闭)
 
     服务器安装：
+        1、下载代码
         git clone https://github.com/guohongze/adminset.git
-        执行安装脚本
+        2、执行安装脚本
         adminset/install/server/server_install.sh
         安装过程需要输入管理员数据库等交互信息，如果安装中断再次执行server_install.sh即可
     客户端安装
