@@ -54,7 +54,7 @@ fi
 
 # 安装依赖
 echo "####install depandencies####"
-read -p "do you have a local yum repository?[yes/no]:" yum1
+read -p "do you have a local yum repository?[yes/NO]:" yum1
 if [ ! $yum1 ]
 then
 yum1=no
@@ -76,7 +76,7 @@ scp $adminset_dir/install/server/ansible/ansible.cfg /etc/ansible/ansible.cfg
 
 #安装数据库
 echo "####install database####"
-read -p "do you want to create a new mysql database?[yes/no]:" db1
+read -p "do you want to create a new mysql database?[YES/no]:" db1
 if [ ! $db1 ]
 then
 db1=yes
@@ -116,7 +116,7 @@ esac
 
 # 安装mongodb
 echo "####install mongodb####"
-read -p "do you want to create a new Mongodb?[yes/no]:" mongo
+read -p "do you want to create a new Mongodb?[YES/no]:" mongo
 if [ ! $mongo ]
 then
 mongo=yes
@@ -157,6 +157,9 @@ index-url = http://mirrors.aliyun.com/pypi/simple/
 [install]
 trusted-host=mirrors.aliyun.com
 EOF
+pip install kombu==4.1.0
+pip install billiard==3.5.0.3
+pip install pytz==2017.2
 pip install kombu==4.1.0
 cd $adminset_dir/vendor/django-celery-results-master
 python setup.py build
