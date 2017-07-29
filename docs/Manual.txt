@@ -43,8 +43,11 @@
     install/client/adminset_agent.py 开户后会自动上报主机相关信息到CMDB
     获取主机信息
     http://your_server_ip/cmdb/get/host/?token=your_token&name=host_name
-    获取组信息
+    获取所有主机：
+    http://your_server_ip/cmdb/get/host/?token=your_token&name=all
+    获取组信息：
     http://your_server_ip/cmdb/get/group/?token=your_token&name=group_name
+    获取所有组：
     http://your_server_ip/cmdb/get/group/?token=your_token&name=all
 
 # 定时任务用法
