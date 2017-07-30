@@ -101,8 +101,8 @@ def collect(request):
         osver = asset_info['osver']
         hostname = asset_info['hostname']
         ip = asset_info['ip']
-        asset_type = ""
-        status = ""
+        # asset_type = ""
+        # status = ""
         try:
             host = Host.objects.get(hostname=hostname)
         except Exception as msg:
@@ -133,8 +133,8 @@ def collect(request):
         host.os = osver
         host.vendor = vendor
         host.ip = ip
-        host.asset_type = asset_type
-        host.status = status
+        # host.asset_type = asset_type
+        # host.status = status
         host.save()
         return HttpResponse("Post asset data to server successfully!")
     else:
