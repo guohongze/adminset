@@ -89,7 +89,7 @@
     然后将常用脚本上传到/var/opt/adminset/data/scripts 中shell脚本栏将会自动发现脚本。
 
 #监控平台用法
-    当adminset_agent.py自动上报信息到，监控会自动发线并配置，无需干预.
+    当adminset_agent.py自动上报信息到，监控会自动发现并配置，无需干预.
     当监控页面打开时，前端JS每10秒会异步抓取监控数据
     agent默认每60秒上传一次监控数据，可以在adminset_agent.py中自定义
 
@@ -132,7 +132,7 @@
     强烈建议不要将程序启动在有公网可以直接访问的设备上，如果需要请使用VPN。
     建议生产环境中使用https配置服务器<br>
     建议adminset放在网管区中，并且开启防火墙。
-    由于开发方使，我在django的settings中开启了DEBUG，在生产中需要关闭并指定自己的域名。
+    django的settings中开启了DEBUG，在生产中需要关闭并指定自己的域名。
 
 # 开发者交流
   QQ群：427794947
