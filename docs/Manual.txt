@@ -89,7 +89,7 @@
     然后将常用脚本上传到/var/opt/adminset/data/scripts 中shell脚本栏将会自动发现脚本。
 
 #监控平台用法
-    当adminset_agent.py自动上报信息到，监控会自动发线并配置，无需干预.
+    当adminset_agent.py自动上报信息到，监控会自动发现并配置，无需干预.
     当监控页面打开时，前端JS每10秒会异步抓取监控数据
     agent默认每60秒上传一次监控数据，可以在adminset_agent.py中自定义
 
