@@ -18,6 +18,9 @@ mkdir -p $config_dir
 mkdir -p $logs_dir
 mkdir -p $main_dir/pid
 
+# 安装 epel
+yum install epel-release -y
+
 # 关闭selinux
 se_status=$(getenforce)
 if [ $se_status != Enforcing ]
