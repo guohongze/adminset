@@ -1,6 +1,6 @@
 #主机名
-    adminset依赖主机名，所以被控机器、客户机，都需要设置主机名，主机名唯一，并且可以
-    被解析。
+    adminset程序依赖主机名，所以被控机器、客户机，都需要设置主机名，主机名唯一，并且可以被解析
+    请在 /etc/hosts 或是DNS中加入主机名的解析。
 #install
     安装需要使用yum源请保证可用，或使用本地yum源。
     如果ubuntu客户端需要ansible等管理功能，需要开启root登录(配置脚本会自动开始，如不需要请手工关闭)
@@ -12,6 +12,16 @@
         adminset/install/server/server_install.sh
         安装过程需要输入管理员数据库等交互信息，如果安装中断再次执行server_install.sh即可.
         安装过程中会生成rsa密钥，位于/root/.ssh 目录下，如果已经存在，忽略即可。
+        3、交互信息
+        1、如果系统开启了selinux会提示：Do you want to disabled selinux?[yes/no]
+           选择yes。(默认yes)
+        2、YUM源选择提示do you want to use an internet yum repository?[yes/no]
+           没有本地的yum源请选择yes，如果有本地的YUM源（包括epel源）请选择no。(默认值yes)
+        3、数据库选择提示：do you want to create a new mysql database?[yes/no]
+           本地没有数据库选择yes自动下载安装mariadb数据库，如已经存在mysql或mariadb数据库选择no，然后填写相关信息主机、端口、用户名、密码。(默认值yes)
+        4、mongodb选择提示：do you want to create a new Mongodb?[YES/no]
+           本地没有mongodb选择yes自动下载安装mongodb数据库，如已经存在mongodb数据库选择no，然后填写相关信息主机、端口、用户名、密码。(默认值yes)
+        5、创建超管用户提示，please create your adminset' super admin: 输入超管用户名、邮件、密码。
     客户端安装
         说明：为保证注册IP是管理IP（后续会被ansible等调用），客户端的IP抓取目前使用主机名解析，否则报错。 如：主机名为cn-bj-web01 请在/etc/hosts中加入相应的解析 192.168.x.x cn-bj-web01，这样再执行adminset_agent.py 可以保证正常运行。 centos7不进行解析也可获取主机IP.
         step1:安装依赖
