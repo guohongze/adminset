@@ -7,8 +7,8 @@ from cmdb.models import Host
 
 
 class AppOwner(models.Model):
-    name = models.CharField(u"负责人姓名", max_length=30, unique=True, null=False, blank=False)
-    phone = models.IntegerField(u"负责人手机")
+    name = models.CharField(u"负责人姓名", max_length=50, unique=True, null=False, blank=False)
+    phone = models.CharField(u"负责人手机", max_length=30)
     qq = models.CharField(u"负责人QQ", max_length=100)
     weChat = models.CharField(u"负责人微信", max_length=100)
 
