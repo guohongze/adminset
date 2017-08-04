@@ -72,9 +72,9 @@
                                         <td><input type="checkbox" id="u_id" class="item1" value="{{ job.id }}" name="idc_check" /></td>
                                         <td><a href="#"><li style="list-style-type:none" onclick="return tanchu(this.value)" value="{{ job.id }}"> {{ job.name }}</li></a></td>
                                         <td>{{ job.kwargs }}</td>
-                                        <td>{{ job.last_run_at }}</td>
+                                        <td>{{ job.last_run_at|date:"Y-m-d H:i:s" }}</td>
                                         <td>{{ job.total_run_count }}</td>
-                                        <td>{{ job.date_changed }}</td>
+                                        <td>{{ job.date_changed|date:"Y-m-d H:i:s" }}</td>
                                         <td>{{ job.expires }}</td>
                                     </tr>
                                 {% endfor %}
