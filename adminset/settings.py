@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'config',
     'accounts',
     'monitor',
+    'appconf',
     'django_celery_results',
     'django_celery_beat',
     'django.contrib.admin',

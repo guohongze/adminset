@@ -54,18 +54,18 @@ fi
 
 # 安装依赖
 echo "####install depandencies####"
-read -p "do you have a local yum repository?[yes/NO]:" yum1
+read -p "do you want to use an internet yum repository?[yes/no]:" yum1
 if [ ! $yum1 ]
 then
-yum1=no
+yum1=yes
 fi
 case $yum1 in
 	yes|y|Y|YES)
+	    yum install -y epel-release
 		yum install -y gcc expect python-pip python-devel ansible smartmontools dmidecode libselinux-python
 		;;
 	no|n|N|NO)
-	    yum install -y epel-release
-            yum install -y gcc python-pip expect python-devel ansible smartmontools dmidecode libselinux-python
+        yum install -y gcc python-pip expect python-devel ansible smartmontools dmidecode libselinux-python
 		;;
 	*)
 		exit 1
@@ -76,7 +76,7 @@ scp $adminset_dir/install/server/ansible/ansible.cfg /etc/ansible/ansible.cfg
 
 #安装数据库
 echo "####install database####"
-read -p "do you want to create a new mysql database?[YES/no]:" db1
+read -p "do you want to create a new mysql database?[yes/no]:" db1
 if [ ! $db1 ]
 then
 db1=yes
@@ -116,7 +116,7 @@ esac
 
 # 安装mongodb
 echo "####install mongodb####"
-read -p "do you want to create a new Mongodb?[YES/no]:" mongo
+read -p "do you want to create a new Mongodb?[yes/no]:" mongo
 if [ ! $mongo ]
 then
 mongo=yes

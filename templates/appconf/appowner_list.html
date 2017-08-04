@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load mytags %}
+{% block self_head_css_js %}
+    <script src="/static/layer/layer.js"></script>
+    <script src="/static/js/base.js"></script>
+    <script src="/static/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="/static/plugins/datatables/dataTables.bootstrap.min.js"></script>
+    <script src="/static/plugins/datatables/dataTables.bootstrap.css"></script>
+{% endblock %}
+{% block content %}
+
+    <script>
+        window.onload=init;
+        function init() {
+            var box = document.getElementById("appconf");
+            box.className="active";
+            var box = document.getElementById("appowner_list");
+            box.className="active";
+        }
+    </script>
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <form action="" method="post" id="appowner_form">
+                {% csrf_token %}
+            <div class="box">
+                <div class="box-header">
+                    <div class="col-sm-2" style="padding-left: 0">
+						 <a href="{% url 'appowner_add' %}"><li class="btn btn-success" ><b>添加负责人</b></li></a>
+                  </div>
+                </div>
+
+                <!-- /.box-header -->
+                <div class="box-body">
+                  <table class="table table-striped table-bordered" id="appOwnerform">
+                      <thead>
+                        <tr>
+                            <th>
+                                <input id="checkall" type="checkbox" class="i-checks" name="checkall" value="checkall" data-editable='false' onclick="check_all('appowner_form')">
+                            </th>
+                            <th>负责人姓名</th>
+                            <th>负责人手机</th>
+                            <th>负责人QQ</th>
+                            <th>负责人微信</th>
+                            <th>操作</th>
+                        </tr>
+                      </thead>
+                            <tbody>
+                            {% for owner in all_app_owner %}
+                                <tr class="even gradeX">
+                                    <td><input type="checkbox" id="id" class="i-checks" value="{{ owner.id }}" name="id" /></td>
+                                    <td>{{ owner.name }} </td>
+                                    <td>{{ owner.phone }} </td>
+                                    <td>{{ owner.qq }} </td>
+                                    <td>{{ owner.weChat }} </td>
+                                    <td>
+                                        <a href="{% url "appowner_edit" owner.id %}"><span class="btn btn-sm btn-info">编辑</span></a>
+                                        <a href="{% url "appowner_del"%}?id={{ owner.id }}" onclick="return confirm('确认删除负责人吗？')"><span class="btn btn-sm btn-danger ">删除</span></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                  </table>
+                  <div class="btn-group">
+                      <input type="button" id="appowner_del" class="btn btn-danger"   name="del_button" value="删除负责人"/>
+                  </div>
+                </div>
+            </div>
+        </form>
+    </section>
+
+</div>
+<script>
+  $(function () {
+    $('#appOwnerform').DataTable({
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": true
+    });
+  });
+</script>
+
+<script>
+    $('#appowner_del').click(function () {
+        var appowner_id_all = getIDall();
+        if (appowner_id_all == ''){
+            alert("请至少选择一行!");
+            return false;
+        }
+        if (confirm("确定删除?")) {
+            $.ajax({
+                type: "post",
+                data: {appowner_id_all: appowner_id_all,csrfmiddlewaretoken: '{{ csrf_token }}'},
+                url: "{% url 'appowner_del' %}",
+                success: function () {
+                    parent.location.reload();
+                }
+            });
+        }
+    });
+</script>
+
+{% endblock %}
