@@ -1,0 +1,29 @@
+<header class="main-header">
+
+    <!-- Logo -->
+    <a href="{% url 'index' %}" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini"><b>AST</b></span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg"><b>AdminSet</b></span>
+    </a>
+
+    <!-- Header Navbar -->
+    <nav class="navbar navbar-static-top" role="navigation">
+      <!-- Sidebar toggle button-->
+      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+        <span class="sr-only">Toggle navigation</span>
+      </a>
+        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li style="font-size: medium" id="product_list"><a href="{% url 'product_list' %}"><b>产品线管理</b></a></li>
+            <li style="font-size: medium" id="project_list"><a href="{% url 'project_list' %}"><b>项目管理</b></a></li>
+            <li style="font-size: medium" id="appowner_list"><a href="{% url 'appowner_list' %}"><b>负责人管理</b></a></li>
+
+          </ul>
+        </div>
+      <!-- Navbar Right Menu -->
+      {% include 'navbar-custom-menu.html' %}
+    </nav>
+  </header>
+

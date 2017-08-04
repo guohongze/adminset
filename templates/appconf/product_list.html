@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% load mytags %}
+{% block self_head_css_js %}
+    <script src="/static/layer/layer.js"></script>
+    <script src="/static/js/base.js"></script>
+    <script src="/static/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="/static/plugins/datatables/dataTables.bootstrap.min.js"></script>
+    <script src="/static/plugins/datatables/dataTables.bootstrap.css"></script>
+{% endblock %}
+{% block content %}
+
+    <script>
+        window.onload=init;
+        function init() {
+            var box = document.getElementById("appconf");
+            box.className="active";
+            var box = document.getElementById("product_list");
+            box.className="active";
+        }
+    </script>
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <form action="" method="post" id="product_form">
+                {% csrf_token %}
+            <div class="box">
+                <div class="box-header">
+                    <div class="col-sm-2" style="padding-left: 0">
+						 <a href="{% url 'product_add' %}"><li class="btn btn-success" ><b>添加产品线</b></li></a>
+                  </div>
+                </div>
+
+                <!-- /.box-header -->
+                <div class="box-body">
+                  <table class="table table-striped table-bordered" id="productform">
+                      <thead>
+                        <tr>
+                            <th>
+                                <input id="checkall" type="checkbox" class="i-checks" name="checkall" value="checkall" data-editable='false' onclick="check_all('product_form')">
+                            </th>
+                            <th>产品线名称</th>
+                            <th>产品线描述</th>
+                            <th>负责人姓名</th>
+                            <th>负责人电话</th>
+                            <th>负责人微信</th>
+                            <th>负责人QQ</th>
+                            <th>操作</th>
+                        </tr>
+                      </thead>
+                            <tbody>
+                            {% for product in all_product %}
+                                <tr class="even gradeX">
+                                    <td><input type="checkbox" id="id" class="i-checks" value="{{ product.id }}" name="id" /></td>
+                                    <td>{{ product.name }} </td>
+                                    <td>{{ product.description }} </td>
+                                    <td>{{ product.owner.name }} </td>
+                                    <td>{{ product.owner.phone }} </td>
+                                    <td>{{ product.owner.weChat }} </td>
+                                    <td>{{ product.owner.qq }} </td>
+                                    <td>
+                                        <a href="{% url "product_edit" product.id %}"><span class="btn btn-sm btn-info">编辑</span></a>
+                                        <a href="{% url "product_del"%}?id={{ product.id }}" onclick="return confirm('确认删除产品线吗？')"><span class="btn btn-sm btn-danger ">删除</span></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                  </table>
+                  <div class="btn-group">
+                      <input type="button" id="product_del" class="btn btn-danger"   name="del_button" value="删除产品线"/>
+                  </div>
+                </div>
+            </div>
+        </form>
+    </section>
+
+</div>
+<script>
+  $(function () {
+    $('#productform').DataTable({
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": true
+    });
+  });
+</script>
+
+<script>
+    $('#product_del').click(function () {
+        var product_id_all = getIDall();
+        if (product_id_all == ''){
+            alert("请至少选择一行!");
+            return false;
+        }
+        if (confirm("确定删除?")) {
+            $.ajax({
+                type: "post",
+                data: {product_id_all: product_id_all,csrfmiddlewaretoken: '{{ csrf_token }}'},
+                url: "{% url 'product_del' %}",
+                success: function () {
+                    parent.location.reload();
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}
