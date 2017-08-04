@@ -60,6 +60,10 @@
                     {% endfor %}
                 </select>
               </div>
+              <div class="form-group">
+                <label>Scripts Args</label>
+                <input type="text" id="margs" name="margs" class="form-control" placeholder="args1 args2..." style="width: 100%;">
+              </div>
             <div class="form-group ">
                   <label>Shell Command</label>
                   <textarea onblur="return checkBlur()" onfocus="checkFocus()" style="padding-bottom: 15px;" id="mcommand" name="mcommand" rows="6" class="form-control" placeholder="use enter spilt and command"></textarea>
@@ -114,11 +118,13 @@
 <script>
 function checkBlur(){
     if ($('#mcommand').val() == "") {
-        document.getElementById("mscripts").removeAttribute('disabled')
+        document.getElementById("mscripts").removeAttribute('disabled');
+        document.getElementById("margs").removeAttribute('disabled');
     }
 }
 function checkFocus(){
-    document.getElementById("mscripts").setAttribute('disabled','disabled')
+    document.getElementById("mscripts").setAttribute('disabled','disabled');
+    document.getElementById("margs").setAttribute('disabled','disabled');
 }
 </script>
 {% endblock %}

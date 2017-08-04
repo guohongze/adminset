@@ -6,6 +6,12 @@ from models import Host, HostGroup, ASSET_TYPE, ASSET_STATUS
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
 from django.views.decorators.csrf import csrf_exempt
 from lib.common import token_verify
+from lib.deploy_key import deploy_key
+import logging
+from lib.log import log
+from config.views import get_dir
+
+
 try:
     import json
 except ImportError, e:
@@ -95,12 +101,22 @@ def collect(request):
         osver = asset_info['osver']
         hostname = asset_info['hostname']
         ip = asset_info['ip']
-        asset_type = ""
-        status = ""
+        # asset_type = ""
+        # status = ""
         try:
             host = Host.objects.get(hostname=hostname)
-        except:
+        except Exception as msg:
+            print(msg)
             host = Host()
+            level = get_dir("log_level")
+            ssh_pwd = get_dir("ssh_pwd")
+            log_path = get_dir("log_path")
+            log("cmdb.log", level, log_path)
+            logging.info("==========sshkey deploy start==========")
+            data = deploy_key(ip, ssh_pwd)
+            logging.info(data)
+            logging.info("==========sshkey deploy end==========")
+
         # if req.POST.get('identity'):
         #     identity = req.POST.get('identity')
         #     try:
@@ -117,8 +133,8 @@ def collect(request):
         host.os = osver
         host.vendor = vendor
         host.ip = ip
-        host.asset_type = asset_type
-        host.status = status
+        # host.asset_type = asset_type
+        # host.status = status
         host.save()
         return HttpResponse("Post asset data to server successfully!")
     else:
@@ -127,27 +143,37 @@ def collect(request):
 
 @token_verify()
 def get_host(request):
+    d = []
     try:
         hostname = request.GET['name']
-    except:
-        return HttpResponse('You have no data')
-    try:
-        host = Host.objects.get(hostname=hostname)
-    except:
-        return HttpResponse('no data,please check your hostname')
-    data = {'hostname': host.hostname, 'ip': host.ip}
-    return HttpResponse(json.dumps({'status': 0, 'message': 'ok', 'data': data}))
+    except Exception as msg:
+        return HttpResponse(msg, status=404)
+    if hostname == "all":
+        all_host = Host.objects.all()
+        ret_host = {'hostname': hostname, 'members': []}
+        for h in all_host:
+            ret_h = {'hostname': h.hostname, 'ipaddr': h.ip}
+            ret_host['members'].append(ret_h)
+        d.append(ret_host)
+        return HttpResponse(json.dumps(d))
+    else:
+        try:
+            host = Host.objects.get(hostname=hostname)
+            data = {'hostname': host.hostname, 'ip': host.ip}
+            return HttpResponse(json.dumps({'status': 0, 'message': 'ok', 'data': data}))
+        except Exception as msg:
+            return HttpResponse(msg, status=404)
 
 
 @token_verify()
 def get_group(request):
-    if request.GET:
+    if request.method == 'GET':
         d = []
         try:
             group_name = request.GET['name']
-        except:
-            return HttpResponse('your parameter is error')
-        if group_name == 'all':
+        except Exception as msg:
+            return HttpResponse(msg)
+        if group_name == "all":
             host_groups = HostGroup.objects.all()
             for hg in host_groups:
                 ret_hg = {'host_group': hg.name, 'members': []}

@@ -7,12 +7,13 @@ adminset_dir="$main_dir/main"
 data_dir="$main_dir/data"
 config_dir="$main_dir/config"
 logs_dir="$main_dir/logs"
-cd ..
+cd "$( dirname "$0"  )"
+cd .. && cd ..
 cur_dir=$(pwd)
 mkdir -p $adminset_dir
 mkdir -p $data_dir/scripts
-mkdir -p $data_dir/playbook
-mkdir -p $data_dir/roles
+mkdir -p $data_dir/ansible/playbook
+mkdir -p $data_dir/ansible/roles
 mkdir -p $config_dir
 mkdir -p $logs_dir
 mkdir -p $main_dir/pid
@@ -43,17 +44,43 @@ else
 fi
 
 # 分发代码
-rsync --delete --progress -ra --exclude '.git' $cur_dir/ $adminset_dir
+if [ ! $cur_dir ] || [ ! $adminset_dir ]
+then
+    echo "install directory info error, please check your system environment program exit"
+    exit 1
+else
+    rsync --delete --progress -ra --exclude '.git' $cur_dir/ $adminset_dir
+fi
 
 # 安装依赖
 echo "####install depandencies####"
-yum install -y epel-release gcc
-yum install -y python-pip python-devel ansible smartmontools dmidecode
-scp $adminset_dir/install/ansible/ansible.cfg /etc/ansible/ansible.cfg
+read -p "do you want to use an internet yum repository?[yes/no]:" yum1
+if [ ! $yum1 ]
+then
+yum1=yes
+fi
+case $yum1 in
+	yes|y|Y|YES)
+	    yum install -y epel-release
+		yum install -y gcc expect python-pip python-devel ansible smartmontools dmidecode libselinux-python
+		;;
+	no|n|N|NO)
+        yum install -y gcc python-pip expect python-devel ansible smartmontools dmidecode libselinux-python
+		;;
+	*)
+		exit 1
+		;;
+esac
+
+scp $adminset_dir/install/server/ansible/ansible.cfg /etc/ansible/ansible.cfg
 
 #安装数据库
 echo "####install database####"
 read -p "do you want to create a new mysql database?[yes/no]:" db1
+if [ ! $db1 ]
+then
+db1=yes
+fi
 case $db1 in
 	yes|y|Y|YES)  
 		echo "installing a new mariadb...."
@@ -90,6 +117,10 @@ esac
 # 安装mongodb
 echo "####install mongodb####"
 read -p "do you want to create a new Mongodb?[yes/no]:" mongo
+if [ ! $mongo ]
+then
+mongo=yes
+fi
 case $mongo in
 	yes|y|Y|YES)
 		echo "installing a new Mongodb...."
@@ -126,7 +157,11 @@ index-url = http://mirrors.aliyun.com/pypi/simple/
 [install]
 trusted-host=mirrors.aliyun.com
 EOF
-
+pip install kombu==4.1.0
+pip install celery==4.0.2
+pip install billiard==3.5.0.3
+pip install pytz==2017.2
+pip install kombu==4.1.0
 cd $adminset_dir/vendor/django-celery-results-master
 python setup.py build
 python setup.py install
@@ -137,7 +172,7 @@ python manage.py makemigrations
 python manage.py migrate
 echo "please create your adminset' super admin:"
 python manage.py createsuperuser
-scp $adminset_dir/install/adminset.service /usr/lib/systemd/system
+scp $adminset_dir/install/server/adminset.service /usr/lib/systemd/system
 systemctl daemon-reload
 chkconfig adminset on
 service adminset start
@@ -151,10 +186,10 @@ service redis start
 # 安装celery
 echo "####install celery####"
 mkdir -p $config_dir/celery
-scp $adminset_dir/install/celery/beat.conf $config_dir/celery/beat.conf
-scp $adminset_dir/install/celery/celery.service /usr/lib/systemd/system
-scp $adminset_dir/install/celery/start_celery.sh $config_dir/celery/start_celery.sh
-scp $adminset_dir/install/celery/beat.service /usr/lib/systemd/system
+scp $adminset_dir/install/server/celery/beat.conf $config_dir/celery/beat.conf
+scp $adminset_dir/install/server/celery/celery.service /usr/lib/systemd/system
+scp $adminset_dir/install/server/celery/start_celery.sh $config_dir/celery/start_celery.sh
+scp $adminset_dir/install/server/celery/beat.service /usr/lib/systemd/system
 chmod +x $config_dir/celery/start_celery.sh
 systemctl daemon-reload
 chkconfig celery on
@@ -166,10 +201,15 @@ service beat start
 echo "####install nginx####"
 yum install nginx -y
 chkconfig nginx on
-scp $adminset_dir/install/nginx/adminset.conf /etc/nginx/conf.d
-scp $adminset_dir/install/nginx/nginx.conf /etc/nginx
+scp $adminset_dir/install/server/nginx/adminset.conf /etc/nginx/conf.d
+scp $adminset_dir/install/server/nginx/nginx.conf /etc/nginx
 service nginx start
 nginx -s reload
+
+# create ssh config
+echo "create ssh-key, you could choose no if you had have ssh key"
+ssh-keygen -q -N "" -t rsa -f /root/.ssh/id_rsa
+scp $adminset_dir/install/server/ssh/config ~/.ssh
 
 # 完成安装
 echo "##############install finished###################"
@@ -180,6 +220,7 @@ service adminset restart
 service celery restart
 service beat restart
 service mongod restart
+service sshd restart
 echo "please access website http://server_ip"
 echo "you have installed adminset successfully!!!"
 echo "################################################"
