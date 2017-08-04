@@ -35,6 +35,7 @@ def exec_scripts(request):
         server = request.POST.getlist('mserver', [])
         group = request.POST.getlist('mgroup', [])
         scripts = request.POST.getlist('mscripts', [])
+        args = request.POST.getlist('margs')
         command = request.POST.get('mcommand')
         if server:
             if scripts:
@@ -49,7 +50,7 @@ def exec_scripts(request):
                             sh.scp(scripts_dir+s, "root@{}:/tmp/".format(host.ip)+s)
                         except:
                             pass
-                        cmd = "ssh root@"+host.ip+" "+'"sh /tmp/{}"'.format(s)
+                        cmd = "ssh root@"+host.ip+" "+'"sh /tmp/{} {}"'.format(s, args)
                         p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
                         data = p.communicate()
                         ret.append(data)
@@ -89,7 +90,7 @@ def exec_scripts(request):
                                 sh.scp(scripts_dir+s, "root@{}:/tmp/".format(host.ip)+s)
                             except:
                                 pass
-                            cmd = "ssh root@"+host.ip+" "+'"sh /tmp/{}"'.format(s)
+                            cmd = "ssh root@"+host.ip+" "+'"sh /tmp/{} {}"'.format(s, args)
                             p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
                             data = p.communicate()
                             ret.append(data)

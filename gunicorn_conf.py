@@ -17,9 +17,9 @@ workers = multiprocessing.cpu_count() * 2 + 1
 chdir = path_of_current_dir
 
 worker_connections = 1000
-timeout = 30
+timeout = 300
 max_requests = 2000
-graceful_timeout = 30
+graceful_timeout = 300
 
 loglevel = 'info'
 
