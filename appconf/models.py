@@ -9,8 +9,8 @@ from cmdb.models import Host
 class AppOwner(models.Model):
     name = models.CharField(u"负责人姓名", max_length=50, unique=True, null=False, blank=False)
     phone = models.CharField(u"负责人手机", max_length=30)
-    qq = models.CharField(u"负责人QQ", max_length=100)
-    weChat = models.CharField(u"负责人微信", max_length=100)
+    qq = models.CharField(u"负责人QQ", max_length=100, null=True, blank=True)
+    weChat = models.CharField(u"负责人微信", max_length=100, null=True, blank=True)
 
     def __unicode__(self):
         return self.name
@@ -18,7 +18,7 @@ class AppOwner(models.Model):
 
 class Product(models.Model):
     name = models.CharField(u"产品线名称", max_length=50, unique=True, null=False, blank=False)
-    description = models.CharField(u"产品线描述", max_length=255)
+    description = models.CharField(u"产品线描述", max_length=255, null=True, blank=True)
     owner = models.ForeignKey(
         AppOwner, verbose_name=u"产品线负责人"
     )
@@ -33,10 +33,10 @@ class Project(models.Model):
         ("Php", "Php"),
     )
     name = models.CharField(u"项目名称", max_length=50, unique=True, null=False, blank=False)
-    description = models.CharField(u"项目描述", max_length=255)
+    description = models.CharField(u"项目描述", max_length=255, null=True, blank=True)
     type = models.CharField(u"程序类型", choices=APP_TYPES, max_length=30, null=False, blank=False)
     appPath = models.CharField(u"程序路径", max_length=255, null=False, blank=False)
-    configPath = models.CharField(u"配置文件路径", max_length=255)
+    configPath = models.CharField(u"配置文件路径", max_length=255, null=True, blank=True)
     product = models.ForeignKey(
             Product,
             null=False,
