@@ -68,7 +68,7 @@
                                         <td><a href="#"><li style="list-style-type:none" onclick="return tanchu(this.value)" value="{{ res.id }}"> {{ res.task_name }}</li></a></td>
                                         <td>{{ res.status }}</td>
                                         <td><div style="overflow-y:scroll;width: 200px;height: 100px;">{{ res.task_kwargs }}</div></td>
-                                        <td>{{ res.date_done }}</td>
+                                        <td>{{ res.date_done|date:"Y-m-d H:i:s" }}</td>
                                         {% if  res.result %}
                                             <td><div style="overflow-y:scroll;width: 200px;height: 100px;">{{ res.result }}</div></td>
                                         {% else %}
