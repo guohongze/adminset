@@ -48,8 +48,6 @@
                             <th>所属产品线</th>
                             <th>负责人姓名</th>
                             <th>负责人电话</th>
-                            <th>负责人微信</th>
-                            <th>负责人QQ</th>
                             <th>操作</th>
                         </tr>
                       </thead>
@@ -58,12 +56,10 @@
                                 <tr class="even gradeX">
                                     <td><input type="checkbox" id="id" class="i-checks" value="{{ project.id }}" name="id" /></td>
                                     <td>{{ project.name }} </td>
-                                    <td>{{ project.type }} </td>
+                                    <td>{{ project.language_type }} </td>
                                     <td>{{ project.product }} </td>
                                     <td>{{ project.owner.name }} </td>
                                     <td>{{ project.owner.phone }} </td>
-                                    <td>{{ project.owner.weChat }} </td>
-                                    <td>{{ project.owner.qq }} </td>
                                     <td>
                                         <a href="{% url "project_edit" project.id %}"><span class="btn btn-sm btn-info">编辑</span></a>
                                         <a href="{% url "project_del"%}?project_id={{ project.id }}" onclick="return confirm('确认删除项目吗？')"><span class="btn btn-sm btn-danger ">删除</span></a>

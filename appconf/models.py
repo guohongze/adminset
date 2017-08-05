@@ -28,13 +28,55 @@ class Product(models.Model):
 
 
 class Project(models.Model):
-    APP_TYPES = (
-        ("Tomcat", "Tomcat"),
-        ("Php", "Php"),
+    LANGUAGE_TYPES = (
+        ("Java", "Java"),
+        ("PHP", "PHP"),
+        ("Python", "Python"),
+        ("C#", "C#"),
+        ("Html", "Html"),
+        ("Javascript", "Javascript"),
+        ("C/C++", "C/C++"),
+        ("Ruby", "Ruby"),
+        ("Other", "Other"),
     )
+
+    APP_TYPE = (
+        ("Frontend", "Frontend"),
+        ("Middleware", "Middleware"),
+        ("Backend", "Backend"),
+    )
+
+    SERVER_TYPE = (
+        ("Tomcat", "Tomcat"),
+        ("Weblogic", "Weblogic"),
+        ("JETTY", "JETTY"),
+        ("Nginx", "Nginx"),
+        ("Gunicorn", "Gunicorn"),
+        ("Uwsgi", "Uwsgi"),
+        ("Apache", "Apache"),
+        ("IIS", "IIS"),
+    )
+
+    APP_ARCH = (
+        ("Django", "Django"),
+        ("Flask", "Flask"),
+        ("Tornado", "Tornado"),
+        ("Dubbo", "Dubbo"),
+        ("SSH", "SSH"),
+        ("Spring boot", "Spring boot"),
+        ("Spring cloud", "Spring cloud"),
+        ("Laravel", "Laravel"),
+        ("ThinkPHP", "ThinkPHP"),
+        ("Phalcon", "Phalcon"),
+        ("other", "other"),
+    )
+
     name = models.CharField(u"项目名称", max_length=50, unique=True, null=False, blank=False)
     description = models.CharField(u"项目描述", max_length=255, null=True, blank=True)
-    type = models.CharField(u"程序类型", choices=APP_TYPES, max_length=30, null=False, blank=False)
+    language_type = models.CharField(u"语言类型", choices=LANGUAGE_TYPES, max_length=30, null=True, blank=True)
+    app_type = models.CharField(u"程序类型", choices=APP_TYPE, max_length=30, null=True, blank=True)
+    server_type = models.CharField(u"应用服务器", choices=SERVER_TYPE, max_length=30, null=True, blank=True)
+    app_arch = models.CharField(u"程序框架", choices=APP_ARCH, max_length=30, null=True, blank=True)
     appPath = models.CharField(u"程序路径", max_length=255, null=False, blank=False)
     configPath = models.CharField(u"配置文件路径", max_length=255, null=True, blank=True)
     product = models.ForeignKey(
