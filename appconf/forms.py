@@ -41,7 +41,10 @@ class ProjectForm(forms.ModelForm):
         widgets = {
             'name': TextInput(attrs={'class': 'form-control','style': 'width:450px;'}),
             'description': Textarea(attrs={'class': 'form-control','style': 'width:450px; height:100px'}),
-            'type': Select(attrs={'class': 'form-control','style': 'width:450px;'}),
+            'language_type': Select(attrs={'class': 'form-control','style': 'width:450px;'}),
+            'app_type': Select(attrs={'class': 'form-control','style': 'width:450px;'}),
+            'server_type': Select(attrs={'class': 'form-control','style': 'width:450px;'}),
+            'app_arch': Select(attrs={'class': 'form-control','style': 'width:450px;'}),
             'appPath': TextInput(attrs={'class': 'form-control','style': 'width:450px;'}),
             'configPath': TextInput(attrs={'class': 'form-control','style': 'width:450px;'}),
             'product': Select(attrs={'class': 'form-control','style': 'width:450px;'}),

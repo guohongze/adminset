@@ -47,8 +47,6 @@
                             <th>产品线描述</th>
                             <th>负责人姓名</th>
                             <th>负责人电话</th>
-                            <th>负责人微信</th>
-                            <th>负责人QQ</th>
                             <th>操作</th>
                         </tr>
                       </thead>
@@ -60,8 +58,6 @@
                                     <td>{{ product.description }} </td>
                                     <td>{{ product.owner.name }} </td>
                                     <td>{{ product.owner.phone }} </td>
-                                    <td>{{ product.owner.weChat }} </td>
-                                    <td>{{ product.owner.qq }} </td>
                                     <td>
                                         <a href="{% url "product_edit" product.id %}"><span class="btn btn-sm btn-info">编辑</span></a>
                                         <a href="{% url "product_del"%}?id={{ product.id }}" onclick="return confirm('确认删除产品线吗？')"><span class="btn btn-sm btn-danger ">删除</span></a>

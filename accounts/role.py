@@ -45,7 +45,7 @@ def role_edit(request, ids):
     iRole = RoleList.objects.get(id=ids)
     temp_name = "accounts/accounts-header.html"
     if request.method == "POST":
-        form = RoleListForm(request.POST,instance=iRole)
+        form = RoleListForm(request.POST, instance=iRole)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse('role_list'))
