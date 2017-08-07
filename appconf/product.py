@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from django.shortcuts import render, HttpResponseRedirect, RequestContext
+from django.shortcuts import render, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from models import Product
@@ -33,7 +33,7 @@ def product_del(request):
         for product_id in product_id_all.split(','):
             Product.objects.filter(id=product_id).delete()
 
-    return HttpResponseRedirect(reverse('product_list'), RequestContext(request))
+    return HttpResponseRedirect(reverse('product_list'))
 
 
 @login_required
@@ -44,7 +44,7 @@ def product_add(request):
         form = ProductForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('product_list'), RequestContext(request))
+            return HttpResponseRedirect(reverse('product_list'))
     else:
         form = ProductForm()
 
@@ -65,7 +65,7 @@ def product_edit(request, product_id):
         form = ProductForm(request.POST, instance=product)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('product_list'), RequestContext(request))
+            return HttpResponseRedirect(reverse('product_list'))
     else:
         form = ProductForm(instance=product)
 

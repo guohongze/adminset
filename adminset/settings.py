@@ -30,7 +30,7 @@ CELERY_TASK_SERIALIZER = 'json'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["192.168.47.130"]
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 

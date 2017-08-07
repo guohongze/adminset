@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from django.shortcuts import render, HttpResponseRedirect, RequestContext
+from django.shortcuts import render, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from models import Delivery
@@ -33,7 +33,7 @@ def delivery_del(request):
         for project_id in project_id_all.split(','):
             Delivery.objects.filter(id=project_id).delete()
 
-    return HttpResponseRedirect(reverse('delivery_list'), RequestContext(request))
+    return HttpResponseRedirect(reverse('delivery_list'))
 
 
 @login_required
@@ -44,7 +44,7 @@ def delivery_add(request):
         form = DeliveryFrom(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('delivery_list'), RequestContext(request))
+            return HttpResponseRedirect(reverse('delivery_list'))
     else:
         form = DeliveryFrom()
 
@@ -65,7 +65,7 @@ def delivery_edit(request, project_id):
         form = DeliveryFrom(request.POST, instance=project)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('project_list'), RequestContext(request))
+            return HttpResponseRedirect(reverse('project_list'))
     else:
         form = DeliveryFrom(instance=project)
 

@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from django.shortcuts import render, HttpResponseRedirect, RequestContext
+from django.shortcuts import render, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from models import AppOwner
@@ -33,7 +33,7 @@ def appowner_del(request):
         for appowner_id in appowner_id_all.split(','):
             AppOwner.objects.filter(id=appowner_id).delete()
 
-    return HttpResponseRedirect(reverse('appowner_list'), RequestContext(request))
+    return HttpResponseRedirect(reverse('appowner_list'))
 
 
 @login_required
@@ -44,7 +44,7 @@ def appowner_add(request):
         form = AppOwnerForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('appowner_list'), RequestContext(request))
+            return HttpResponseRedirect(reverse('appowner_list'))
     else:
         form = AppOwnerForm()
 
@@ -65,7 +65,7 @@ def appowner_edit(request, appowner_id):
         form = AppOwnerForm(request.POST, instance=appowner)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('appowner_list'), RequestContext(request))
+            return HttpResponseRedirect(reverse('appowner_list'))
     else:
         form = AppOwnerForm(instance=appowner)
 

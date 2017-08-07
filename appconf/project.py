@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from django.shortcuts import render, HttpResponseRedirect, RequestContext
+from django.shortcuts import render, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from models import Project
@@ -33,7 +33,7 @@ def project_del(request):
         for project_id in project_id_all.split(','):
             Project.objects.filter(id=project_id).delete()
 
-    return HttpResponseRedirect(reverse('project_list'), RequestContext(request))
+    return HttpResponseRedirect(reverse('project_list'))
 
 
 @login_required
@@ -44,7 +44,7 @@ def project_add(request):
         form = ProjectForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('project_list'), RequestContext(request))
+            return HttpResponseRedirect(reverse('project_list'))
     else:
         form = ProjectForm()
 
@@ -65,7 +65,7 @@ def project_edit(request, project_id):
         form = ProjectForm(request.POST, instance=project)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('project_list'), RequestContext(request))
+            return HttpResponseRedirect(reverse('project_list'))
     else:
         form = ProjectForm(instance=project)
 
