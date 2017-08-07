@@ -13,4 +13,5 @@ urlpatterns = [
     url(r'^config/', include('config.urls')),
     url(r'^accounts/', include('accounts.urls')),
     url(r'^appconf/', include('appconf.urls')),
+    url(r'^delivery/', include('delivery.urls')),
 ]

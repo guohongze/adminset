@@ -95,6 +95,9 @@ class Project(models.Model):
             verbose_name=u"服务器"
     )
 
+    def __unicode__(self):
+        return self.name
+
 
 
 
