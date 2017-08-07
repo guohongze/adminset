@@ -8,7 +8,7 @@ logs_dir="$main_dir/logs"
 cd "$( dirname "$0"  )"
 cd .. && cd ..
 cur_dir=$(pwd)
-rsync --progress -ra --exclude '.git' $cur_dir/ $adminset_dir
+rsync --progress -ra --delete --exclude '.git' $cur_dir/ $adminset_dir
 #scp $adminset_dir/install/server/ansible/ansible.cfg /etc/ansible/ansible.cfg
 cd $adminset_dir
 pip install -r requirements.txt
