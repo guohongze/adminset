@@ -79,7 +79,7 @@ def user_add(request):
 def user_del(request, ids):
     if ids:
         get_user_model().objects.filter(id=ids).delete()
-    return HttpResponseRedirect(reverse('user_list'), RequestContext(request))
+    return HttpResponseRedirect(reverse('user_list'))
 
 
 @login_required
