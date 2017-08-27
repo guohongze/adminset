@@ -104,6 +104,7 @@ def appowner_edit(request, appowner_id, mini=False):
         'appowner_id': appowner_id,
         'request': request,
         'temp_name': temp_name,
+        'page_type': "whole"
     }
     return render(request, 'appconf/appowner_add_edit.html', results)
 
