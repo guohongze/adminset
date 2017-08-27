@@ -147,7 +147,7 @@ def post_data(url, data):
         if r.text:
             print r.text
         else:
-            print("Server return http status code: {}".format(r.status_code))
+            print("Server return http status code: {0}".format(r.status_code))
     except StandardError as msg:
         print msg
     return True
@@ -178,7 +178,7 @@ def asset_info_post():
     print 'Get the hardwave infos from host:'
     print asset_info()
     print '----------------------------------------------------------'
-    post_data("http://{}/cmdb/collect".format(server_ip), asset_info())
+    post_data("http://{0}/cmdb/collect".format(server_ip), asset_info())
     os.environ["LANG"] = osenv
     return True
 
@@ -289,7 +289,7 @@ def agg_sys_info():
     print sys_info
     json_data = json.dumps(sys_info)
     print '----------------------------------------------------------'
-    post_data("http://{}/monitor/received/sys/info/".format(server_ip), json_data)
+    post_data("http://{0}/monitor/received/sys/info/".format(server_ip), json_data)
     return True
 
 
