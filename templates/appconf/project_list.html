@@ -32,7 +32,9 @@
                 <div class="box-header">
                     <div class="col-sm-2" style="padding-left: 0">
 						 <a href="{% url 'project_add' %}"><li class="btn btn-success" ><b>添加项目</b></li></a>
-                  </div>
+                         <a href="#" onclick="return project_export_excel()"><li name="export" class="btn btn-success search-btn-excel"><b>&nbsp;导出&nbsp;</b></li></a>
+                    </div>
+                    <div id="export"></div>
                 </div>
 
                 <!-- /.box-header -->
@@ -89,7 +91,24 @@
     });
   });
 </script>
+<script>
 
+    function project_export_excel(){
+        var project_id_all = getIDall();
+        if (project_id_all == ''){
+            if(confirm('您没有勾选，是否导出全部信息？')){
+                var args = $("#project_form").serialize();
+                window.location = "{% url 'project_export' %}?export=all&" + args
+            }else{
+                return false;
+            }
+        }else{
+            var args = $("#project_form").serialize();
+            window.location = "{% url 'project_export' %}?export=part&" + args
+        }
+    }
+
+</script>
 <script>
     $('#project_del').click(function () {
         var project_id_all = getIDall();
