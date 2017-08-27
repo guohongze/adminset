@@ -13,10 +13,7 @@ class DeliveryFrom(forms.ModelForm):
 
         widgets = {
             'job_name': widgets.Select(attrs={'class': 'form-control','style': 'width:450px;'}),
-            'description': widgets.Textarea(attrs={'class': 'form-control','style': 'width:450px; height:100px'}),
+            'description': widgets.Textarea(attrs={'class': 'form-control', 'style': 'width:450px; height:100px'}),
             'deploy_policy': widgets.Select(attrs={'class': 'form-control','style': 'width:450px;'}),
-            'source_type': widgets.Select(attrs={'class': 'form-control','style': 'width:450px;'}),
-            'source_address': widgets.TextInput(attrs={'class': 'form-control','style': 'width:450px;'}),
-            'destination_address': widgets.TextInput(attrs={'class': 'form-control','style': 'width:450px;'}),
-            'shell': widgets.Select(attrs={'class': 'form-control','style': 'width:450px;'}),
+            'shell': widgets.Textarea(attrs={'class': 'form-control', 'style': 'width:450px; height:100px'}),
         }

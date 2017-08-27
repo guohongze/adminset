@@ -47,6 +47,7 @@
                             <th>源地址</th>
                             <th>部署位置</th>
                             <th>部署策略</th>
+                            <th>操作</th>
                         </tr>
                       </thead>
                             <tbody>
@@ -54,9 +55,9 @@
                                 <tr class="even gradeX">
                                     <td><input type="checkbox" id="id" class="i-checks" value="{{ project.id }}" name="id" /></td>
                                     <td>{{ project.job_name }} </td>
-                                    <td>{{ project.source_address }} </td>
-                                    <td>{{ project.destination_address }} </td>
-                                    <td>{{ project.depoly_policy }} </td>
+                                    <td>{{ project.job_name.source_address }} </td>
+                                    <td>{{ project.job_name.appPath }} </td>
+                                    <td>{{ project.deploy_policy }} </td>
                                     <td>
                                         <a href="{% url "delivery_edit" project.id %}"><span class="btn btn-sm btn-info">编辑</span></a>
                                         <a href="{% url "delivery_del"%}?project_id={{ project.id }}" onclick="return confirm('确认删除项目吗？')"><span class="btn btn-sm btn-danger ">删除</span></a>
