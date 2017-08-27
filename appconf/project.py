@@ -4,7 +4,7 @@
 from django.shortcuts import render, HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from models import Project
+from appconf.models import Project
 from forms import ProjectForm
 from accounts.permission import permission_verify
 import csv
@@ -104,13 +104,15 @@ def project_export(request):
     response['Content-Disposition'] = "attachment; filename="+file_name
     writer = csv.writer(response)
     writer.writerow([str2gb(u'项目名称'), str2gb(u'项目描述'), str2gb(u'语言类型'), str2gb(u'程序类型'),
-                       str2gb(u'服务器类型'), str2gb(u'程序框架'), str2gb(u'程序路径'), str2gb(u'配置文件路径'),
-                       str2gb(u'所属产品线'), str2gb(u'项目负责人'), str2gb(u'服务器')])
+                     str2gb(u'服务器类型'), str2gb(u'程序框架'), str2gb(u'源类型'), str2gb(u'源地址'),
+                     str2gb(u'程序部署路径'), str2gb(u'配置文件路径'),
+                     str2gb(u'所属产品线'), str2gb(u'项目负责人'), str2gb(u'服务器')])
     for p in project_find:
         server_array = p.serverList
         server_result = ""
         for server in p.serverList.all():
             server_result += server.hostname+"\n"
         writer.writerow([str2gb(p.name), str2gb(p.description), p.language_type, p.app_type, p.server_type,
-                        p.app_arch, p.appPath, p.configPath, str2gb(p.product), str2gb(p.owner), str2gb(server_result)])
+                        p.app_arch, p.source_type, p.source_address, p.appPath, p.configPath, str2gb(p.product),
+                         str2gb(p.owner), str2gb(server_result)])
     return response
