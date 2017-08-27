@@ -84,7 +84,7 @@ def product_edit(request, product_id):
 def project_list(request, product_id):
     temp_name = "appconf/appconf-header.html"
     product = Product.objects.get(id=product_id)
-    projects = product.project_set.all();
+    projects = product.project_set.all()
     results = {
         'temp_name': temp_name,
         'project_list':  projects,
