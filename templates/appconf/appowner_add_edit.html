@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block self_head_css_js %}
+    <script src="/static/layer/layer.js"></script>
+{% endblock %}
+{% block content %}
+
+<script>
+        window.onload=init;
+        function init() {
+            var box = document.getElementById("appconf");
+            box.className="active";
+            var box = document.getElementById("appowner_list");
+            box.className="active";
+        }
+</script>
+
+{% include 'appconf/appowner_base.html' %}
+
+{% endblock %}

@@ -54,7 +54,7 @@
                             {% for product in all_product %}
                                 <tr class="even gradeX">
                                     <td><input type="checkbox" id="id" class="i-checks" value="{{ product.id }}" name="id" /></td>
-                                    <td>{{ product.name }} </td>
+                                    <td><a href="#"><li style="list-style-type:none" onclick="return popWin(this.value)" value="{{ product.id }}">{{ product.name }}</li></a> </td>
                                     <td>{{ product.description }} </td>
                                     <td>{{ product.owner.name }} </td>
                                     <td>{{ product.owner.phone }} </td>
@@ -106,5 +106,17 @@
             });
         }
     });
+</script>
+
+<script>
+function popWin(product_id){
+  layer.open({
+      type: 2,
+      title: '项目列表',
+      area: ['700px', '500px'],
+      shadeClose: true, //点击遮罩关闭
+      content: ['/appconf/product/project_list/' + product_id]
+  });
+}
 </script>
 {% endblock %}

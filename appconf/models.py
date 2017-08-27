@@ -8,7 +8,7 @@ from cmdb.models import Host
 
 class AppOwner(models.Model):
     name = models.CharField(u"负责人姓名", max_length=50, unique=True, null=False, blank=False)
-    phone = models.CharField(u"负责人手机", max_length=30)
+    phone = models.IntegerField(u"负责人手机")
     qq = models.CharField(u"负责人QQ", max_length=100, null=True, blank=True)
     weChat = models.CharField(u"负责人微信", max_length=100, null=True, blank=True)
 
@@ -75,7 +75,7 @@ class Project(models.Model):
     description = models.CharField(u"项目描述", max_length=255, null=True, blank=True)
     language_type = models.CharField(u"语言类型", choices=LANGUAGE_TYPES, max_length=30, null=True, blank=True)
     app_type = models.CharField(u"程序类型", choices=APP_TYPE, max_length=30, null=True, blank=True)
-    server_type = models.CharField(u"应用服务器", choices=SERVER_TYPE, max_length=30, null=True, blank=True)
+    server_type = models.CharField(u"服务器类型", choices=SERVER_TYPE, max_length=30, null=True, blank=True)
     app_arch = models.CharField(u"程序框架", choices=APP_ARCH, max_length=30, null=True, blank=True)
     appPath = models.CharField(u"程序路径", max_length=255, null=False, blank=False)
     configPath = models.CharField(u"配置文件路径", max_length=255, null=True, blank=True)

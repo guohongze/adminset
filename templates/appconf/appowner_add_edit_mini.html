@@ -1,0 +1,20 @@
+{% include 'link_css.html' %}
+{% include 'head_script.html' %}
+<script src="/static/layer/layer.js"></script>
+
+{% include 'appconf/appowner_base.html' %}
+
+{#回传参数至父层#}
+<script type="text/javascript">
+        var index = parent.layer.getFrameIndex(window.name);
+        var status = {{ status }};
+        if(status> 0){
+            var app_owner_id = "{{ owner_id }}";
+            var app_owner_name = "{{ owner_name }}";
+            parent.$("#new_owner_id").val(app_owner_id);
+            parent.$("#new_owner_name").val(app_owner_name);
+            parent.$("#handle_status").val(status);
+            parent.layer.close(index);
+        }
+
+</script>
