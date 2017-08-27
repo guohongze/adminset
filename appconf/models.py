@@ -105,7 +105,6 @@ class Project(models.Model):
     )
     serverList = models.ManyToManyField(
             Host,
-            null=True,
             blank=True,
             verbose_name=u"所在服务器"
     )

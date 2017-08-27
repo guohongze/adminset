@@ -5,13 +5,11 @@
 <br>
 Adminset基于DevOps理念开发，以整合全部运维场景为己任。Adminset是一个真正的基于运维思维而开发的全自动化运维平台。<br>
 
-## v0.5 新功能
-新增脚本执行任务参数<br>
-新增ansible role变量自定义<br>
-设备上报资产信息时自动触发sshkey分发，不再需要手工建立adminset server与客户机的免密认证<br>
+## v0.6 新功能
+CMDB新增应用配置数据库
 
 ## 开发环境
-centos 7.2(1511) django 1.9.8 python 2.7<br>
+centos 7.2(1511) django 1.9.8（兼容Django1.11） python 2.7<br>
 
 ## 服务端安装
 生产服务器建议 4核CPU，8G内存以上.<br>
