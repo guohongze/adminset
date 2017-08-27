@@ -46,6 +46,8 @@ class ProjectForm(forms.ModelForm):
             'server_type': Select(attrs={'class': 'form-control','style': 'width:450px;'}),
             'app_arch': Select(attrs={'class': 'form-control','style': 'width:450px;'}),
             'appPath': TextInput(attrs={'class': 'form-control','style': 'width:450px;'}),
+            'source_type': Select(attrs={'class': 'form-control','style': 'width:450px;'}),
+            'source_address': TextInput(attrs={'class': 'form-control','style': 'width:450px;'}),
             'configPath': TextInput(attrs={'class': 'form-control','style': 'width:450px;'}),
             'product': Select(attrs={'class': 'form-control','style': 'width:450px;'}),
             'owner': Select(attrs={'class': 'form-control','style': 'width:450px;'}),
