@@ -78,7 +78,6 @@ def product_edit(request, product_id):
     return render(request, 'appconf/product_base.html', results)
 
 
-
 @login_required
 @permission_verify()
 def project_list(request, product_id):

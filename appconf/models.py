@@ -20,7 +20,9 @@ class Product(models.Model):
     name = models.CharField(u"产品线名称", max_length=50, unique=True, null=False, blank=False)
     description = models.CharField(u"产品线描述", max_length=255, null=True, blank=True)
     owner = models.ForeignKey(
-        AppOwner, verbose_name=u"产品线负责人"
+        AppOwner, verbose_name=u"产品线负责人",
+        null=True, blank=True,
+        on_delete=models.SET_NULL
     )
 
     def __unicode__(self):
@@ -83,22 +85,27 @@ class Project(models.Model):
     app_type = models.CharField(u"程序类型", choices=APP_TYPE, max_length=30, null=True, blank=True)
     server_type = models.CharField(u"服务器类型", choices=SERVER_TYPE, max_length=30, null=True, blank=True)
     app_arch = models.CharField(u"程序框架", choices=APP_ARCH, max_length=30, null=True, blank=True)
-    source_type = models.CharField(max_length=255, choices=SOURCE_TYPE, verbose_name=u"源类型")
-    source_address = models.CharField(max_length=255, verbose_name=u"源地址")
-    appPath = models.CharField(u"程序部署路径", max_length=255, null=False, blank=False)
+    source_type = models.CharField(max_length=255, choices=SOURCE_TYPE, verbose_name=u"源类型", blank=True)
+    source_address = models.CharField(max_length=255, verbose_name=u"源地址", null=True, blank=True)
+    appPath = models.CharField(u"程序部署路径", max_length=255, null=True, blank=True)
     configPath = models.CharField(u"配置文件路径", max_length=255, null=True, blank=True)
     product = models.ForeignKey(
             Product,
-            null=False,
+            null=True,
+            blank=True,
+            on_delete=models.SET_NULL,
             verbose_name=u"所属产品线"
     )
     owner = models.ForeignKey(
             AppOwner,
-            null=False,
+            null=True,
+            blank=True,
+            on_delete=models.SET_NULL,
             verbose_name=u"项目负责人"
     )
     serverList = models.ManyToManyField(
             Host,
+            null=True,
             blank=True,
             verbose_name=u"所在服务器"
     )

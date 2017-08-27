@@ -84,7 +84,6 @@ def project_edit(request, project_id):
 @login_required
 @permission_verify()
 def project_export(request):
-    temp_name = "appconf/appconf-header.html"
     export = request.GET.get("export", '')
     project_id_list = request.GET.getlist("id", '')
     if export == "part":

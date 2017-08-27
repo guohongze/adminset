@@ -6,7 +6,7 @@ import product
 import project
 
 urlpatterns = [
-    url(r'^/$', product.product_list, name='appconf'),
+    url(r'^$', product.product_list, name='appconf'),
     url(r'^appowner/add/$', appowner.appowner_add, name='appowner_add'),
     url(r'^appowner/add/mini/$', appowner.appowner_add_mini, name='appowner_add_mini'),
     url(r'^appowner/list/$', appowner.appowner_list, name='appowner_list'),
