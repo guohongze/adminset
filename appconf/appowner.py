@@ -52,13 +52,43 @@ def appowner_add(request):
         'form': form,
         'request': request,
         'temp_name': temp_name,
+        'page_type': "whole"
     }
-    return render(request, 'appconf/appowner_base.html', results)
+    return render(request, 'appconf/appowner_add_edit.html', results)
 
 
 @login_required
 @permission_verify()
-def appowner_edit(request, appowner_id):
+def appowner_add_mini(request):
+    status = 0
+    owner_id = 0
+    if request.method == 'POST':
+        form = AppOwnerForm(request.POST)
+        if form.is_valid():
+            form.save()
+            owner_name = request.POST.get('name', '')
+            app_owner = AppOwner.objects.get(name=owner_name)
+            owner_id = app_owner.id
+            status = 1
+        else:
+            status = 2
+    else:
+        form = AppOwnerForm()
+
+    results = {
+        'form': form,
+        'request': request,
+        'status': status,
+        'owner_id': owner_id,
+        'owner_name': request.POST.get('name', ''),
+        'page_type': "mini"
+    }
+    return render(request, 'appconf/appowner_add_edit_mini.html', results)
+
+
+@login_required
+@permission_verify()
+def appowner_edit(request, appowner_id, mini=False):
     appowner = AppOwner.objects.get(id=appowner_id)
     temp_name = "appconf/appconf-header.html"
     if request.method == 'POST':
@@ -75,6 +105,5 @@ def appowner_edit(request, appowner_id):
         'request': request,
         'temp_name': temp_name,
     }
-    return render(request, 'appconf/appowner_base.html', results)
-
+    return render(request, 'appconf/appowner_add_edit.html', results)
 
