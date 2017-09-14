@@ -148,7 +148,7 @@
                                         <td>{{ host.memory }}</td>
                                         <td>{{ host.idc }}</td>
                                         <td class="text-center" data-editable='false'>
-{#                                        <a href="{% url 'asset_edit' %}?id={{ host.id }}" class="btn btn-xs btn-info">编辑</a>#}
+                                        <a class="btn btn-sm btn-info" target="_blank" href="http://{{ host.hostname }}.gtest.com:2222/ssh/host/{{ host.ip }}" class="btn btn-xs btn-info">WebSSH</a>
                                         <a href="#"><li class="btn btn-sm btn-info" onclick="return tanchu(this.value)" value="{{ host.id }}">编辑</li></a>
                                         <a value="{% url 'asset_del' %}?id={{ host.id }}" class="btn btn-sm btn-danger asset_del">删除</a>
                                     </td>

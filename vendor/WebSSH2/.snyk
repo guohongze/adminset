@@ -1,0 +1,55 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.7.1
+# ignores vulnerabilities until expiry date; change duration by modifying expiry date
+ignore:
+  'npm:ms:20170412':
+    - socket.io > socket.io-adapter > socket.io-parser > debug > ms:
+        reason: no patch avail
+        expires: '2017-12-31T14:21:30.266Z'
+      socket.io > debug > ms:
+        reason: will break build
+        expires: '2017-12-31T23:55:06.721Z'
+    - standard > eslint-plugin-import > eslint-module-utils > debug > ms:
+        reason: no patch avail
+        expires: '2017-12-31T14:21:30.266Z'
+      socket.io > engine.io > debug > ms:
+        reason: will break build
+        expires: '2017-12-31T23:55:06.721Z'
+    - socket.io > socket.io-adapter > debug > ms:
+        reason: no patch avail
+        expires: '2017-12-31T14:21:30.267Z'
+      socket.io > socket.io-client > engine.io-client > debug > ms:
+        reason: will break build
+        expires: '2017-12-31T23:55:06.721Z'
+    - socket.io > socket.io-client > debug > ms:
+        reason: no patch avail
+        expires: '2017-12-31T14:21:30.267Z'
+      socket.io > socket.io-parser > debug > ms:
+        reason: will break build
+        expires: '2017-12-31T23:55:06.722Z'
+    - socket.io > socket.io-adapter > debug > ms:
+        reason: no patch avail
+        expires: '2017-12-31T23:54:38.169Z'
+      socket.io > socket.io-client > socket.io-parser > debug > ms:
+        reason: will break build
+        expires: '2017-12-31T23:55:06.722Z'
+    - socket.io > socket.io-client > debug > ms:
+        reason: no patch avail
+        expires: '2017-12-31T23:54:38.169Z'
+      socket.io > socket.io-adapter > debug > ms:
+        reason: no patch avail
+        expires: '2017-12-31T23:55:06.722Z'
+    - socket.io > socket.io-adapter > socket.io-parser > debug > ms:
+        reason: no patch avail
+        expires: '2017-12-31T23:54:38.170Z'
+      socket.io > socket.io-client > debug > ms:
+        reason: no patch avail
+        expires: '2017-12-31T23:55:06.722Z'
+    - socket.io > socket.io-adapter > socket.io-parser > debug > ms:
+        reason: no patch avail
+        expires: '2017-12-31T23:55:06.722Z'
+  'npm:shelljs:20140723':
+    - standard > eslint > shelljs:
+        reason: no patch avail
+        expires: '2017-12-31T14:21:30.267Z'
+patch: {}

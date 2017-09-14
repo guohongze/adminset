@@ -216,6 +216,21 @@ else
 fi
 scp $adminset_dir/install/server/ssh/config ~/.ssh
 
+# install webssh
+echo "install webssh"
+mkdir -p /var/opt/adminset/config/webssh
+scp /var/opt/adminset/install/server/webssh/start_webssh.sh /var/opt/adminset/config/webssh/start_webssh.sh
+scp /var/opt/adminset/install/server/webssh/webssh.service /usr/lib/systemd/system/webssh.service
+chmod +x /var/opt/adminset/config/webssh/start_webssh.sh
+/usr/bin/yum install -y nodejs
+/usr/bin/npm install -g cnpm --registry=https://registry.npm.taobao.org
+/usr/bin/cnpm install forever
+
+systemctl daemon-reload
+systemctl enable webssh.service
+systemctl start webssh.service
+
+
 # 完成安装
 echo "##############install finished###################"
 systemctl daemon-reload
@@ -226,6 +241,7 @@ service celery restart
 service beat restart
 service mongod restart
 service sshd restart
+service webssh restart
 echo "please access website http://server_ip"
 echo "you have installed adminset successfully!!!"
 echo "################################################"
