@@ -15,6 +15,7 @@ mkdir -p $data_dir/scripts
 mkdir -p $data_dir/ansible/playbook
 mkdir -p $data_dir/ansible/roles
 mkdir -p $config_dir
+mkdir -p $config_dir/webssh
 mkdir -p $logs_dir
 mkdir -p $main_dir/pid
 
@@ -43,14 +44,6 @@ else
     esac
 fi
 
-# 分发代码
-if [ ! $cur_dir ] || [ ! $adminset_dir ]
-then
-    echo "install directory info error, please check your system environment program exit"
-    exit 1
-else
-    rsync --delete --progress -ra --exclude '.git' $cur_dir/ $adminset_dir
-fi
 
 # 安装依赖
 echo "####install depandencies####"
@@ -72,7 +65,28 @@ case $yum1 in
 		;;
 esac
 
+# build webssh
+echo "build webssh"
+/usr/bin/yum install -y nodejs
+cd $config_dir/vendor/WebSSH2
+/usr/bin/npm install -g cnpm --registry=https://registry.npm.taobao.org
+/usr/bin/cnpm install --production
+/usr/bin/cnpm install forever
+
+# 分发代码
+if [ ! $cur_dir ] || [ ! $adminset_dir ]
+then
+    echo "install directory info error, please check your system environment program exit"
+    exit 1
+else
+    rsync --delete --progress -ra --exclude '.git' $cur_dir/ $adminset_dir
+fi
 scp $adminset_dir/install/server/ansible/ansible.cfg /etc/ansible/ansible.cfg
+
+# install webssh
+scp /var/opt/adminset/install/server/webssh/webssh.service /usr/lib/systemd/system/webssh.service
+systemctl enable webssh.service
+
 
 #安装数据库
 echo "####install database####"
@@ -215,20 +229,6 @@ else
     echo "you had already have a ssh rsa file."
 fi
 scp $adminset_dir/install/server/ssh/config ~/.ssh
-
-# install webssh
-echo "install webssh"
-mkdir -p /var/opt/adminset/config/webssh
-scp /var/opt/adminset/install/server/webssh/start_webssh.sh /var/opt/adminset/config/webssh/start_webssh.sh
-scp /var/opt/adminset/install/server/webssh/webssh.service /usr/lib/systemd/system/webssh.service
-chmod +x /var/opt/adminset/config/webssh/start_webssh.sh
-/usr/bin/yum install -y nodejs
-/usr/bin/npm install -g cnpm --registry=https://registry.npm.taobao.org
-/usr/bin/cnpm install forever
-
-systemctl daemon-reload
-systemctl enable webssh.service
-systemctl start webssh.service
 
 
 # 完成安装
