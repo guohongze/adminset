@@ -11,6 +11,7 @@ import csv
 import datetime
 from django.contrib.auth.decorators import login_required
 from accounts.permission import permission_verify
+from config.views import get_dir
 import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
@@ -20,6 +21,7 @@ sys.setdefaultencoding('utf8')
 @permission_verify()
 def asset(request):
     temp_name = "cmdb/cmdb-header.html"
+    webssh_domain = get_dir("webssh_domain")
     asset_find = []
     idc_info = Idc.objects.all()
     host_list = Host.objects.all()

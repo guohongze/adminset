@@ -38,6 +38,7 @@ def index(request):
         mongodb_user = config.get('mongodb', 'mongodb_user')
         mongodb_pwd = config.get('mongodb', 'mongodb_pwd')
         mongodb_collection = config.get('mongodb', 'collection')
+        webssh_domain = config.get('webssh', 'domain')
     return render(request, 'config/index.html', locals())
 
 
@@ -70,6 +71,8 @@ def config_save(request):
         mongodb_user = request.POST.get('mongodb_user')
         mongodb_pwd = request.POST.get('mongodb_pwd')
         mongodb_collection = request.POST.get('mongodb_collection')
+        # webssh domain
+        webssh_domain = request.POST.get('webssh_domain')
 
         config = ConfigParser.RawConfigParser()
         dirs = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -97,6 +100,8 @@ def config_save(request):
         config.set('mongodb', 'mongodb_user', mongodb_user)
         config.set('mongodb', 'mongodb_pwd', mongodb_pwd)
         config.set('mongodb', 'collection', mongodb_collection)
+        config.add_section('webssh')
+        config.set('webssh', 'domain', webssh_domain)
         tips = u"保存成功！"
         display_control = ""
         with open(dirs+'/adminset.conf', 'wb') as cfgfile:
@@ -121,6 +126,7 @@ def config_save(request):
             mongodb_user = config.get('mongodb', 'mongodb_user')
             mongodb_pwd = config.get('mongodb', 'mongodb_pwd')
             mongodb_collection = config.get('mongodb', 'collection')
+            webssh_domain = config.get('webssh', 'domain')
     else:
         display_control = "none"
     return render(request, 'config/index.html', locals())
@@ -144,6 +150,7 @@ def get_dir(args):
         mongodb_user = config.get('mongodb', 'mongodb_user')
         mongodb_pwd = config.get('mongodb', 'mongodb_pwd')
         mongodb_collection = config.get('mongodb', 'collection')
+        webssh_domain = config.get('webssh', 'domain')
     # 根据传入参数返回变量以获取配置，返回变量名与参数名相同
     if args:
         return vars()[args]
