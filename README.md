@@ -5,8 +5,8 @@
 <br>
 Adminset基于DevOps理念开发，以整合全部运维场景为己任。Adminset是一个真正的基于运维思维而开发的全自动化运维平台。<br>
 
-## v0.6 新功能
-CMDB新增应用配置数据库
+## v0.7 新功能
+基于ssh2的 WEB terminal
 
 ## 开发环境
 centos 7.2(1511) django 1.9.8（兼容Django1.11） python 2.7<br>
