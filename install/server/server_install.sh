@@ -71,7 +71,7 @@ echo "build webssh"
 cd $cur_dir/vendor/WebSSH2
 /usr/bin/npm install -g cnpm --registry=https://registry.npm.taobao.org
 /usr/bin/cnpm install --production
-/usr/bin/cnpm install forever
+/usr/bin/cnpm install forever -g
 
 # 分发代码
 if [ ! $cur_dir ] || [ ! $adminset_dir ]
