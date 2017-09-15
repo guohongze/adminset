@@ -68,7 +68,7 @@ esac
 # build webssh
 echo "build webssh"
 /usr/bin/yum install -y nodejs
-cd $cur_dir/vendor/webssh
+cd $cur_dir/vendor/WebSSH2
 /usr/bin/npm install -g cnpm --registry=https://registry.npm.taobao.org
 /usr/bin/cnpm install --production
 /usr/bin/cnpm install forever
