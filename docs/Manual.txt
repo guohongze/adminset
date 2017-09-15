@@ -60,6 +60,18 @@
     获取所有组：
     http://your_server_ip/cmdb/get/group/?token=your_token&name=all
 
+#启用webssh
+    需要设置域名解析，默认域名为adminset.cn（可以在配置管理页面进行变更）
+    需要将这个域名做泛解析指向adminset所在的服务器，在本地或公网DNS都行，如果没有可以设置HOSTS解析，但HOSTS不支持泛解析。
+    这样做是为了解决webssh启动时区分不同session进行认证而设置。
+
+    指向完成后点击资产管理中的webssh按钮会触发域名格式如下：
+    {{ host.hostname }}.adminset.cn:2222/ssh/host/{{ host.ip }}
+    如主机名为cmdb IP为 192.168.47.130
+    http://cmdb.adminset.cn:2222/ssh/host/192.168.47.130
+    通过此URL进入webssh访问界面，第一次进入时会询问用户名密码，请填写系统对应的用户和密码即可。
+
+
 # 定时任务用法
     首先新建interval 或crontab
     新建任务填写名字
@@ -122,6 +134,7 @@
     service celery {start|stop|restart}   # 异步任务主程序
     service beat {start|stop|restart}     # 任务调用
     service mongod {start|stop|restart}   # 监控数据库
+    service webssh {start|stop|restart}   # web终端功能
 
 #升级与更新
     强烈建设在升级或更新adminset之前先备份数据库，并在测试环境验证通过，因为adminset在快速的发展过程中，每版本功能与结构变化较大。
@@ -131,7 +144,7 @@
     2）大版本更新：
     如v0.3.0更新到v0.4.0
     adminset/install/server_install.sh
-    如果原在数据库本机上未设置密码则在do you want to install new mysql/mongodb时选择yes可覆盖安装。
+    如果原在数据库本机上未设置密码则在do you want to install new mysql/mongodb时选择yes可覆盖安装，这时会要求再创建一个超管，但不能和以前的超管同名，因为之前已经有数据了。
     如果已设置密码或是独立服务器可以选择no，或者在安装完成后手动修改/var/opt/adminset/main/adminset.conf文件中的相应信息。
     3)二次开发
     rsync.sh脚本只做增量，rsync参数不带--delete选项，不会在生产环境删除代码中已删除的条目,不更新组件配置文件，不会生成新的ORM数据库条目。

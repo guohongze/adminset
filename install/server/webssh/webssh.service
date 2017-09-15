@@ -1,0 +1,16 @@
+[Unit]
+Description=Celery Service
+After=network.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+User=root
+Group=root
+WorkingDirectory=/var/opt/adminset/main/vendor/WebSSH2
+#ExecStart=/var/opt/adminset/config/webssh/start_webssh.sh
+ExecStart=/usr/bin/forever start index.js
+ExecStop=/usr/bin/forever stop index.js
+
+[Install]
+WantedBy=multi-user.target

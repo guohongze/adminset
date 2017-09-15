@@ -1,0 +1,62 @@
+{
+  "listen": {
+    "ip": "0.0.0.0",
+    "port": 2222
+  },
+  "user": {
+    "name": null,
+    "password": null
+  },
+  "ssh": {
+    "host": null,
+    "port": 22,
+    "term": "xterm-color",
+    "readyTimeout": 20000
+  },
+  "useminified": false,
+  "header": {
+    "text": null,
+    "background": "green"
+  },
+  "session": {
+    "name": "WebSSH2",
+    "secret": "mysecret"
+  },
+  "options": {
+    "challengeButton": true
+  },
+  "algorithms": {
+    "kex": [
+      "ecdh-sha2-nistp256",
+      "ecdh-sha2-nistp384",
+      "ecdh-sha2-nistp521",
+      "diffie-hellman-group-exchange-sha256",
+      "diffie-hellman-group14-sha1"
+    ],
+    "cipher": [
+      "aes128-ctr",
+      "aes192-ctr",
+      "aes256-ctr",
+      "aes128-gcm",
+      "aes128-gcm@openssh.com",
+      "aes256-gcm",
+      "aes256-gcm@openssh.com",
+      "aes256-cbc" // for some legacy systems
+    ],
+    "hmac": [
+      "hmac-sha2-256",
+      "hmac-sha2-512",
+      "hmac-sha1" // for some legacy systems
+    ],
+    "compress": [
+      "none",
+      "zlib@openssh.com",
+      "zlib"
+    ]
+  },
+  "serverlog": {
+    "client": false, // proof-of-concept to log commands from client to server
+    "server": false  // not yet implemented
+  },
+  "accesslog": false // http style access logging to console.log
+}
