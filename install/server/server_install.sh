@@ -68,7 +68,7 @@ esac
 # build webssh
 echo "build webssh"
 /usr/bin/yum install -y nodejs
-cd $config_dir/vendor/WebSSH2
+cd $config_dir/webssh
 /usr/bin/npm install -g cnpm --registry=https://registry.npm.taobao.org
 /usr/bin/cnpm install --production
 /usr/bin/cnpm install forever
@@ -84,7 +84,7 @@ fi
 scp $adminset_dir/install/server/ansible/ansible.cfg /etc/ansible/ansible.cfg
 
 # install webssh
-scp /var/opt/adminset/install/server/webssh/webssh.service /usr/lib/systemd/system/webssh.service
+scp /var/opt/adminset/main/install/server/webssh/webssh.service /usr/lib/systemd/system/webssh.service
 systemctl enable webssh.service
 
 
