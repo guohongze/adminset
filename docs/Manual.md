@@ -1,7 +1,7 @@
-#主机名
+#   主机名
     adminset程序依赖主机名，所以被控机器、客户机，都需要设置主机名，主机名唯一，并且可以被解析
     请在 /etc/hosts 或是DNS中加入主机名的解析。
-#install
+#   install
     安装需要使用yum源请保证可用，或使用本地yum源。
     如果ubuntu客户端需要ansible等管理功能，需要开启root登录(配置脚本会自动开始，如不需要请手工关闭)
 
@@ -38,7 +38,7 @@
         http://your_server_ip
         使用自己在安装过程中创建的super admin用户名密码
 
-#程序目录
+#   程序目录
     安装脚本会将文件安装在/var/opt/adminset
     main为程序代码
     config 配置
@@ -46,10 +46,10 @@
     logs 日志
     data 常用数据
 
-#站点导航用法
+#   站点导航用法
     在站点管理中输入常用的运维工具系统后会自动出现在站点导航界面。
 
-#cmdb用法
+#   cmdb用法
     install/client/adminset_agent.py 开户后会自动上报主机相关信息到CMDB
     获取主机信息
     http://your_server_ip/cmdb/get/host/?token=your_token&name=host_name
@@ -60,7 +60,7 @@
     获取所有组：
     http://your_server_ip/cmdb/get/group/?token=your_token&name=all
 
-#启用webssh
+#   启用webssh
     需要设置域名解析，默认域名为adminset.cn（可以在配置管理页面进行变更）
     需要将这个域名做泛解析指向adminset所在的服务器，在本地或公网DNS都行，如果没有可以设置HOSTS解析，但HOSTS不支持泛解析。
     这样做是为了解决webssh启动时区分不同session进行认证而设置。
@@ -87,7 +87,7 @@
     注意：已经运行任务以后，再去修改任务不会立即生效，需要重启beat组件，在任务编排的后台管理中可以重启。
           这是由于celery的BUG导致，会在社区发布稳定版本以后修复。
 
-#ansible用法
+#   ansible用法
     1、自动设置证书认证
     通过adminset_agent自动上报的服务器，可以自动设置免密登入(认书认证)
     前提是已经在客户端做了hosts解析，并且密码与在服务器的系统配置>密钥设置>ssh password
@@ -110,12 +110,12 @@
     CMDB自动上报主机以后，shell界面可以直接调用主机。
     然后将常用脚本上传到/var/opt/adminset/data/scripts 中shell脚本栏将会自动发现脚本。
 
-#监控平台用法
+#   监控平台用法
     当adminset_agent.py自动上报信息到，监控会自动发现并配置，无需干预.
     当监控页面打开时，前端JS每10秒会异步抓取监控数据
     agent默认每60秒上传一次监控数据，可以在adminset_agent.py中自定义
 
-#权限管理
+#   权限管理
     1、新建权限如：
     名字：资产管理
     URL：/cmdb/
@@ -126,7 +126,7 @@
     在角色一栏选择：资产管理员
 
 
-#组件启动管理
+#   组件启动管理
     service adminset {start|stop|restart} # gunicorn管理程序
     service nginx {start|stop|restart}    # web server
     service redis {start|stop|restart}    # 缓存和任务列表
@@ -136,7 +136,7 @@
     service mongod {start|stop|restart}   # 监控数据库
     service webssh {start|stop|restart}   # web终端功能
 
-#升级与更新
+#   升级与更新
     强烈建设在升级或更新adminset之前先备份数据库，并在测试环境验证通过，因为adminset在快速的发展过程中，每版本功能与结构变化较大。
     1）小版本更新：
     如v0.3.6更新到v0.3.7只需下载相应版本的代码到本地然后执行：
