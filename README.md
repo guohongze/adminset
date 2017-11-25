@@ -46,7 +46,7 @@ http://your_server_ip<br>
 使用自己在安装过程中创建的super admin用户名密码
 
 ## 说明
-使用请转到，<a href="https://github.com/guohongze/adminset/blob/master/docs/Manual.txt">使用说明</a><br>
+使用请转到，<a href="https://github.com/guohongze/adminset/blob/master/docs/Manual.md">使用说明</a><br>
 功能请转到，<a href="https://github.com/guohongze/adminset/wiki/AdminSet">功能说明</a><br>
 FAQ请转到，<a href="https://github.com/guohongze/adminset/wiki/FAQ">常见问题</a>
 
