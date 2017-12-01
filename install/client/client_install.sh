@@ -3,7 +3,7 @@ set -e
 
 # 安装依赖包
 os=$(cat /proc/version)
-if (echo $os|grep centos)
+if (echo $os|grep centos) || (echo $os|grep 'Red Hat')
 then
     yum install -y epel-release
     yum install -y gcc smartmontools dmidecode python-pip python-devel  libselinux-python
