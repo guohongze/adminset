@@ -91,7 +91,7 @@ def get_cpu_model():
 
 
 def get_cpu_cores():
-    cpu_cores = {"logical": psutil.cpu_count(logical=False), "physical": psutil.cpu_count()}
+    cpu_cores = {"physical": psutil.cpu_count(logical=False) if psutil.cpu_count(logical=False) else 0, "logical": psutil.cpu_count()}
     return cpu_cores
 
 
