@@ -46,7 +46,6 @@ def delivery_add(request):
         form = DeliveryFrom(request.POST)
         if form.is_valid():
             form.save()
-            os.system("mkdir ")
             return HttpResponseRedirect(reverse('delivery_list'))
     else:
         form = DeliveryFrom()
@@ -89,6 +88,8 @@ def delivery_deploy(request, project_id):
     job_name = project.job_name.name
     source_address = project.job_name.source_address
     app_path = project.job_name.appPath
+
+    os.system("mkdir -p /var/opt/adminset/workspace/{0}/code".format(job_name))
     if app_path == "/":
         return HttpResponse("app deploy destination cannot /")
     # foreign key query need add .all()
