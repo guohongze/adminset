@@ -59,6 +59,7 @@
                                     <td>{{ project.job_name.appPath }} </td>
                                     <td>{{ project.deploy_policy }} </td>
                                     <td>
+                                        <a href="{% url "delivery_deploy" project.job_name.id %}"><span class="btn btn-sm btn-success">部署</span></a>
                                         <a href="{% url "delivery_edit" project.id %}"><span class="btn btn-sm btn-info">编辑</span></a>
                                         <a href="{% url "delivery_del"%}?project_id={{ project.id }}" onclick="return confirm('确认删除项目吗？')"><span class="btn btn-sm btn-danger ">删除</span></a>
                                     </td>

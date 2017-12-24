@@ -1,12 +1,14 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from django.shortcuts import render, HttpResponseRedirect
+from django.shortcuts import render, HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from models import Delivery
 from forms import DeliveryFrom
 from accounts.permission import permission_verify
+from .tasks import deploy
+import os
 
 
 @login_required()
@@ -44,6 +46,7 @@ def delivery_add(request):
         form = DeliveryFrom(request.POST)
         if form.is_valid():
             form.save()
+            os.system("mkdir ")
             return HttpResponseRedirect(reverse('delivery_list'))
     else:
         form = DeliveryFrom()
@@ -78,3 +81,21 @@ def delivery_edit(request, project_id):
     return render(request, 'delivery/delivery_base.html', results)
 
 
+@login_required
+@permission_verify()
+def delivery_deploy(request, project_id):
+    server_list = []
+    project = Delivery.objects.get(id=project_id)
+    job_name = project.job_name.name
+    source_address = project.job_name.source_address
+    app_path = project.job_name.appPath
+    if app_path == "/":
+        return HttpResponse("app deploy destination cannot /")
+    # foreign key query need add .all()
+    servers = project.job_name.serverList.all()
+    for server in servers:
+        server_ip = str(server.ip)
+        server_list.append(server_ip)
+    deploy.delay(job_name, server_list, app_path, source_address)
+
+    return HttpResponse("ok")
