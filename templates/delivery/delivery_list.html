@@ -44,7 +44,7 @@
                                 <input id="checkall" type="checkbox" class="i-checks" name="checkall" value="checkall" data-editable='false' onclick="check_all('project_form')">
                             </th>
                             <th>部署名称</th>
-                            <th>源地址</th>
+                            <th>部署状态</th>
                             <th>部署位置</th>
                             <th>部署策略</th>
                             <th>操作</th>
@@ -55,11 +55,12 @@
                                 <tr class="even gradeX">
                                     <td><input type="checkbox" id="id" class="i-checks" value="{{ project.id }}" name="id" /></td>
                                     <td>{{ project.job_name }} </td>
-                                    <td>{{ project.job_name.source_address }} </td>
+                                    <td>{{ project.job_name.status }} </td>
                                     <td>{{ project.job_name.appPath }} </td>
                                     <td>{{ project.deploy_policy }} </td>
                                     <td>
-                                        <a href="{% url "delivery_deploy" project.job_name.id %}"><span class="btn btn-sm btn-success">部署</span></a>
+                                        <a href="{% url "delivery_deploy" project.job_name_id %}"><span class="btn btn-sm btn-success">部署</span></a>
+                                        <a href="#"><li style="list-style-type:none" class="btn btn-sm btn-default" onclick="return tanchu(this.value)" value="{{ project.job_name.id }}">日志</li></a>
                                         <a href="{% url "delivery_edit" project.id %}"><span class="btn btn-sm btn-info">编辑</span></a>
                                         <a href="{% url "delivery_del"%}?project_id={{ project.id }}" onclick="return confirm('确认删除项目吗？')"><span class="btn btn-sm btn-danger ">删除</span></a>
                                     </td>
@@ -107,5 +108,17 @@
             });
         }
     });
+</script>
+<script>
+function tanchu(n){
+    layer.open({
+    type: 2,
+    title: 'Deploy Log View',
+    closeBtn: 1,
+    area: ['600px', '400px'],
+    shadeClose: true, //点击遮罩关闭
+    content: ['/delivery/delivery/log/' + n]
+  });
+}
 </script>
 {% endblock %}

@@ -1,0 +1,50 @@
+{#{% load mytags %}#}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% include 'link_css.html' %}
+    {% include 'head_script.html' %}
+</head>
+<body>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+    </section>
+
+    <!-- Main content -->
+
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="box">
+{#        <div class="box-header with-border">#}
+{#          <h3 class="box-title">Deployment Logfile</h3>#}
+{##}
+{#          <div class="box-tools pull-right">#}
+{#          </div>#}
+{#        </div>#}
+        <div class="box-body">
+{#        {% for d in line %}#}
+{#        <p>{{ d|res_splict|safe }}</p><br>#}
+{#        {% endfor %}#}
+        {% for d in line %}
+        {{ d }}<br>
+        {% endfor %}
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+          <i class="fa fa-info-circle"></i>
+        </div>
+        <!-- /.box-footer-->
+      </div>
+      <!-- /.box -->
+
+    </section>
+
+  </div>
+</body>
+</html>
+
+

@@ -84,7 +84,7 @@ def delivery_edit(request, project_id):
 @permission_verify()
 def delivery_deploy(request, project_id):
     server_list = []
-    project = Delivery.objects.get(id=project_id)
+    project = Delivery.objects.get(job_name_id=project_id)
     job_name = project.job_name.name
     source_address = project.job_name.source_address
     app_path = project.job_name.appPath
@@ -101,3 +101,15 @@ def delivery_deploy(request, project_id):
         server_list.append(server_ip)
     deploy.delay(job_name, server_list, app_path, source_address, project_id)
     return HttpResponse("ok")
+
+
+@login_required()
+@permission_verify()
+def log(request, project_id):
+    project = Delivery.objects.get(job_name_id=project_id)
+    job_name = project.job_name.name
+    job_workspace = "/var/opt/adminset/workspace/{0}/".format(job_name)
+    log_file = job_workspace + 'logs/deploy-' + str(project.deploy_num) + ".log"
+    with open(log_file, 'r+') as f:
+        line = f.readlines()
+    return render(request, "delivery/results.html", locals())
