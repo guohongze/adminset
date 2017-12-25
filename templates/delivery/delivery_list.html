@@ -18,7 +18,15 @@
             box.className="active";
         }
     </script>
-
+<style type="text/css">
+    #progress_bar
+    {
+        width:132px;
+        border: solid 1px;
+        background-color: aliceblue;
+        height:17px;
+    }
+</style>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -56,19 +64,18 @@
                                     <td><input type="checkbox" id="id" class="i-checks" value="{{ project.id }}" name="id" /></td>
                                     <td>{{ project.job_name }} </td>
                                     <td>
-                                        {% if project.status == False %}
-                                            {{ project.status }}
-                                        {% else %}
-                                            <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
-                                        {% endif %}
+                                         <div id="progress_bar">
+                                             <div id="pb_{{ project.id }}" style="background-color: deepskyblue;height:15px; width: 0;"></div>
+                                         </div>
+{#                                        <i class="fa fa-circle fa-2x" aria-hidden="true" style="color:#00BFFF;"></i>#}
                                     </td>
                                     <td>{{ project.job_name.appPath }} </td>
                                     <td>{{ project.deploy_policy }} </td>
                                     <td>
-                                        <a href="#"><li onclick="return deploy(this.value);" class="btn btn-success" value="{{ project.job_name.id }}"><b>部署</b></li></a>
+                                        <a href="#"><li onclick="return deploy(this.value);" class="btn btn-sm btn-default" value="{{ project.job_name.id }}">部署</li></a>
 {#                                        <a href="{% url "delivery_deploy" project.job_name_id %}"><span class="btn btn-sm btn-success">部署</span></a>#}
-                                        <a href="#"><li style="list-style-type:none" class="btn btn-sm btn-default" onclick="return tanchu(this.value)" value="{{ project.job_name.id }}">日志</li></a>
-                                        <a href="{% url "delivery_edit" project.id %}"><span class="btn btn-sm btn-info">编辑</span></a>
+                                        <a href="#"><li style="list-style-type:none" class="btn btn-sm btn-default" onclick="return tanchu(this.value)" value="{{ project.job_name.id  }}">日志</li></a>
+                                        <a href="{% url "delivery_edit" project.id %}"><span class="btn btn-sm btn-default">编辑</span></a>
                                         <a href="{% url "delivery_del"%}?project_id={{ project.id }}" onclick="return confirm('确认删除项目吗？')"><span class="btn btn-sm btn-danger ">删除</span></a>
                                     </td>
                                 </tr>
@@ -128,21 +135,28 @@ function tanchu(n){
   });
 }
 </script>
+
 <script>
-function deploy(n){
-    layer.open({
-    title: '部署项目',
-    content: '将项目部署到目标服务器',
-    btn: '确定部署',
-    yes:function(n){
-        $.ajax({
-                type: "post",
-                data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
-                url: "/delivery/delivery/deploy/"+n+"/"
-            });
-        layer.msg('开始部署！');
-        }
-    });
+function deploy(args) {
+    if (confirm("确定部署？")) {
+        $.get("/delivery/delivery/deploy/"+args+"/",function(data,status){
+        });
+    }
 }
 </script>
+<script>
+    window.setInterval("status()",2000);
+
+    function status() {
+        {% for project in all_project %}
+            $.get("/delivery/delivery/status/{{ project.id }}/",function(data){
+                var width = parseInt(data)*10;
+                var progress_bar = document.getElementById("pb_{{ project.id }}");
+                var progress_bar = document.getElementById("pb_{{ project.id }}");
+                progress_bar.style.width = width+"px";
+            });
+        {% endfor %}
+    }
+</script>
+
 {% endblock %}

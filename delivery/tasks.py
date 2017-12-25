@@ -6,6 +6,7 @@ from subprocess import Popen, PIPE
 from .models import Delivery
 import os
 import shutil
+from time import sleep
 
 
 @shared_task
@@ -17,6 +18,10 @@ def deploy(job_name, server_list, app_path, source_address, project_id):
     if app_path.endswith("/"):
         app_path += "/"
     # clean build code
+    p1.bar_data = 2
+    p1.save()
+    sleep(5)
+    print p1.bar_data
     if p1.build_clean:
         try:
             shutil.rmtree("{0}code/".format(job_workspace))
@@ -28,6 +33,9 @@ def deploy(job_name, server_list, app_path, source_address, project_id):
     else:
         print "git clone"
         cmd = "git clone {0} {1}code/".format(source_address, job_workspace)
+    p1.bar_data = 3
+    p1.save()
+    sleep(5)
     p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
     data = p.communicate()
     with open(log_file, 'w+') as f:
@@ -39,6 +47,10 @@ def deploy(job_name, server_list, app_path, source_address, project_id):
         data = p.communicate()
         with open(log_file, 'a+') as f:
             f.writelines(data)
+        p1.bar_data += 1
+        p1.save()
+        sleep(5)
     p1.status = False
+    p1.bar_data = 13
     p1.save()
     return data

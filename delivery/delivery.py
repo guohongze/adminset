@@ -9,6 +9,7 @@ from forms import DeliveryFrom
 from accounts.permission import permission_verify
 from .tasks import deploy
 import os
+from time import sleep
 
 
 @login_required()
@@ -85,12 +86,14 @@ def delivery_edit(request, project_id):
 def delivery_deploy(request, project_id):
     server_list = []
     project = Delivery.objects.get(job_name_id=project_id)
+    project.bar_data = 1
     job_name = project.job_name.name
     source_address = project.job_name.source_address
     app_path = project.job_name.appPath
     project.status = True
     project.deploy_num += 1
     project.save()
+    sleep(5)
     os.system("mkdir -p /var/opt/adminset/workspace/{0}/logs".format(job_name))
     if app_path == "/":
         return HttpResponse("app deploy destination cannot /")
@@ -113,3 +116,11 @@ def log(request, project_id):
     with open(log_file, 'r+') as f:
         line = f.readlines()
     return render(request, "delivery/results.html", locals())
+
+
+@login_required()
+@permission_verify()
+def status(request, project_id):
+    project = Delivery.objects.get(id=project_id)
+    bar_data = project.bar_data
+    return HttpResponse(bar_data)
