@@ -51,11 +51,11 @@
                             <th>
                                 <input id="checkall" type="checkbox" class="i-checks" name="checkall" value="checkall" data-editable='false' onclick="check_all('project_form')">
                             </th>
-                            <th>部署名称</th>
-                            <th>部署状态</th>
-                            <th>部署位置</th>
-                            <th>部署策略</th>
-                            <th>操作</th>
+                            <th>Name</th>
+                            <th>Status</th>
+                            <th>Progress</th>
+                            <th>Policy</th>
+                            <th>Action</th>
                         </tr>
                       </thead>
                             <tbody>
@@ -64,16 +64,23 @@
                                     <td><input type="checkbox" id="id" class="i-checks" value="{{ project.id }}" name="id" /></td>
                                     <td>{{ project.job_name }} </td>
                                     <td>
-                                         <div id="progress_bar">
-                                             <div id="pb_{{ project.id }}" style="background-color: deepskyblue;height:15px; width: 0;"></div>
-                                         </div>
-{#                                        <i class="fa fa-circle fa-2x" aria-hidden="true" style="color:#00BFFF;"></i>#}
+                                            <i class="fa fa-circle" aria-hidden="true" style="color:#2D93CA;"></i>
                                     </td>
-                                    <td>{{ project.job_name.appPath }} </td>
+                                    <td>
+                                    {% if project.status == False %}
+                                        <div id="progress_bar_{{ project.job_name.id }}" style="display:none;width:132px;border: solid 1px;background-color: aliceblue;height:17px;">
+                                            <div id="pb_{{ project.job_name.id }}" style="background-color: deepskyblue;height:15px; width: 0;"></div>
+                                        </div>
+                                    {% else %}
+                                        <div id="progress_bar_{{ project.job_name.id }}" style="display:block;width:132px;border: solid 1px;background-color: aliceblue;height:17px;">
+                                            <div id="pb_{{ project.job_name.id }}" style="background-color: deepskyblue;height:15px; width: 0;"></div>
+                                        </div>
+                                    {% endif %}
+
+                                    </td>
                                     <td>{{ project.deploy_policy }} </td>
                                     <td>
                                         <a href="#"><li onclick="return deploy(this.value);" class="btn btn-sm btn-default" value="{{ project.job_name.id }}">部署</li></a>
-{#                                        <a href="{% url "delivery_deploy" project.job_name_id %}"><span class="btn btn-sm btn-success">部署</span></a>#}
                                         <a href="#"><li style="list-style-type:none" class="btn btn-sm btn-default" onclick="return tanchu(this.value)" value="{{ project.job_name.id  }}">日志</li></a>
                                         <a href="{% url "delivery_edit" project.id %}"><span class="btn btn-sm btn-default">编辑</span></a>
                                         <a href="{% url "delivery_del"%}?project_id={{ project.id }}" onclick="return confirm('确认删除项目吗？')"><span class="btn btn-sm btn-danger ">删除</span></a>
@@ -139,6 +146,8 @@ function tanchu(n){
 <script>
 function deploy(args) {
     if (confirm("确定部署？")) {
+        var pb = document.getElementById("progress_bar_"+args);
+        pb.style.display = "block";
         $.get("/delivery/delivery/deploy/"+args+"/",function(data,status){
         });
     }
@@ -151,8 +160,7 @@ function deploy(args) {
         {% for project in all_project %}
             $.get("/delivery/delivery/status/{{ project.id }}/",function(data){
                 var width = parseInt(data)*10;
-                var progress_bar = document.getElementById("pb_{{ project.id }}");
-                var progress_bar = document.getElementById("pb_{{ project.id }}");
+                var progress_bar = document.getElementById("pb_{{ project.job_name.id }}");
                 progress_bar.style.width = width+"px";
             });
         {% endfor %}
