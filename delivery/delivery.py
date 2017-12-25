@@ -88,9 +88,10 @@ def delivery_deploy(request, project_id):
     job_name = project.job_name.name
     source_address = project.job_name.source_address
     app_path = project.job_name.appPath
-    project.status = 1
+    project.status = True
+    project.deploy_num += 1
     project.save()
-    os.system("mkdir -p /var/opt/adminset/workspace/{0}/code".format(job_name))
+    os.system("mkdir -p /var/opt/adminset/workspace/{0}/logs".format(job_name))
     if app_path == "/":
         return HttpResponse("app deploy destination cannot /")
     # foreign key query need add .all()
@@ -99,6 +100,4 @@ def delivery_deploy(request, project_id):
         server_ip = str(server.ip)
         server_list.append(server_ip)
     deploy.delay(job_name, server_list, app_path, source_address, project_id)
-    project.deploy_num += 1
-    project.save()
     return HttpResponse("ok")
