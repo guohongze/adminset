@@ -67,7 +67,7 @@ def delivery_edit(request, project_id):
         form = DeliveryFrom(request.POST, instance=project)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('project_list'))
+            return HttpResponseRedirect(reverse('delivery_list'))
     else:
         form = DeliveryFrom(instance=project)
 
@@ -88,7 +88,8 @@ def delivery_deploy(request, project_id):
     job_name = project.job_name.name
     source_address = project.job_name.source_address
     app_path = project.job_name.appPath
-
+    project.status = 1
+    project.save()
     os.system("mkdir -p /var/opt/adminset/workspace/{0}/code".format(job_name))
     if app_path == "/":
         return HttpResponse("app deploy destination cannot /")
@@ -97,6 +98,7 @@ def delivery_deploy(request, project_id):
     for server in servers:
         server_ip = str(server.ip)
         server_list.append(server_ip)
-    deploy.delay(job_name, server_list, app_path, source_address)
-
+    deploy.delay(job_name, server_list, app_path, source_address, project_id)
+    project.deploy_num += 1
+    project.save()
     return HttpResponse("ok")

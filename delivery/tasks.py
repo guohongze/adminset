@@ -2,12 +2,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 from celery import shared_task
-from django.shortcuts import HttpResponse
 from subprocess import Popen, PIPE
+from .models import Delivery
 
 
 @shared_task
-def deploy(job_name, server_list, app_path, source_address):
+def deploy(job_name, server_list, app_path, source_address, project_id):
     ret = []
     job_workspace = "/var/opt/adminset/workspace/{0}/".format(job_name)
     if app_path.endswith("/"):
@@ -25,4 +25,7 @@ def deploy(job_name, server_list, app_path, source_address):
         with open(job_workspace + '/deploy.log', 'a+') as f:
             f.writelines(data)
         ret.append(data)
+    p1 = Delivery.objects.get(job_name_id=project_id)
+    p1.status = 0
+    p1.save()
     return ret
