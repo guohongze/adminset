@@ -55,11 +55,18 @@
                                 <tr class="even gradeX">
                                     <td><input type="checkbox" id="id" class="i-checks" value="{{ project.id }}" name="id" /></td>
                                     <td>{{ project.job_name }} </td>
-                                    <td>{{ project.job_name.status }} </td>
+                                    <td>
+                                        {% if project.status == False %}
+                                            {{ project.status }}
+                                        {% else %}
+                                            <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+                                        {% endif %}
+                                    </td>
                                     <td>{{ project.job_name.appPath }} </td>
                                     <td>{{ project.deploy_policy }} </td>
                                     <td>
-                                        <a href="{% url "delivery_deploy" project.job_name_id %}"><span class="btn btn-sm btn-success">部署</span></a>
+                                        <a href="#"><li onclick="return deploy(this.value);" class="btn btn-success" value="{{ project.job_name.id }}"><b>部署</b></li></a>
+{#                                        <a href="{% url "delivery_deploy" project.job_name_id %}"><span class="btn btn-sm btn-success">部署</span></a>#}
                                         <a href="#"><li style="list-style-type:none" class="btn btn-sm btn-default" onclick="return tanchu(this.value)" value="{{ project.job_name.id }}">日志</li></a>
                                         <a href="{% url "delivery_edit" project.id %}"><span class="btn btn-sm btn-info">编辑</span></a>
                                         <a href="{% url "delivery_del"%}?project_id={{ project.id }}" onclick="return confirm('确认删除项目吗？')"><span class="btn btn-sm btn-danger ">删除</span></a>
@@ -119,6 +126,23 @@ function tanchu(n){
     shadeClose: true, //点击遮罩关闭
     content: ['/delivery/delivery/log/' + n]
   });
+}
+</script>
+<script>
+function deploy(n){
+    layer.open({
+    title: '部署项目',
+    content: '将项目部署到目标服务器',
+    btn: '确定部署',
+    yes:function(n){
+        $.ajax({
+                type: "post",
+                data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
+                url: "/delivery/delivery/deploy/"+n+"/"
+            });
+        layer.msg('开始部署！');
+        }
+    });
 }
 </script>
 {% endblock %}
