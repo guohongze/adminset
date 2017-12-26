@@ -125,7 +125,7 @@ def log(request, project_id):
 @login_required()
 @permission_verify()
 def status(request, project_id):
-    project = Delivery.objects.get(id=project_id)
+    project = Delivery.objects.get(job_name_id=project_id)
     bar_data = project.bar_data
     status_val = project.status
     ret = {"bar_data": bar_data, "status": status_val}

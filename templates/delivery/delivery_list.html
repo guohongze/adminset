@@ -81,7 +81,7 @@
                                     <td>{{ project.deploy_policy }} </td>
                                     <td>
                                         <a href="#"><li onclick="return deploy(this.value);" class="btn btn-sm btn-default" value="{{ project.job_name.id }}">部署</li></a>
-                                        <a href="#"><li style="list-style-type:none" class="btn btn-sm btn-default" onclick="return tanchu(this.value)" value="{{ project.job_name.id  }}">日志</li></a>
+                                        <a href="#"><li style="list-style-type:none" class="btn btn-sm btn-default" onclick="return tanchu(this.value)" value="{{ project.job_name_id  }}">日志</li></a>
                                         <a href="{% url "delivery_edit" project.id %}"><span class="btn btn-sm btn-default">编辑</span></a>
                                         <a href="{% url "delivery_del"%}?project_id={{ project.id }}" onclick="return confirm('确认删除项目吗？')"><span class="btn btn-sm btn-danger ">删除</span></a>
                                     </td>
@@ -158,7 +158,7 @@ function deploy(args) {
 
     function status() {
         {% for project in all_project %}
-            $.get("/delivery/delivery/status/{{ project.id }}/",function(data){
+            $.get("/delivery/delivery/status/{{ project.job_name_id }}/",function(data){
                 var ret = JSON.parse(data);
                 var width = parseInt(ret.bar_data)*10;
                 var progress_bar = document.getElementById("pb_{{ project.job_name.id }}");
