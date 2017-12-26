@@ -24,9 +24,27 @@
 {#        {% for d in line %}#}
 {#        <p>{{ d|res_splict|safe }}</p><br>#}
 {#        {% endfor %}#}
-        {% for d in line %}
-        {{ d }}<br>
-        {% endfor %}
+{#        {% if line %}#}
+{#            {% for d in line %}#}
+{#            {{ d }}<br>#}
+{#            {% endfor %}#}
+{#        {% else %}#}
+{#            <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>#}
+{#            <span class="sr-only">Loading...</span>#}
+{#        {% endif %}#}
+        <div id="log_ret">
+{#            {% if project.status == False %}#}
+        </div>
+        <div id="loading">
+            <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+            <span class="sr-only">Loading...</span>
+{#            {% endif %}#}
+{#            {% if project.status == True %}#}
+{#                <div id="loading" style="display: block">#}
+{#                    <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>#}
+{#                    <span class="sr-only">Loading...</span>#}
+{#                </div>#}
+{#            {% endif %}#}
         </div>
         <!-- /.box-body -->
         <div class="box-footer">
@@ -40,6 +58,33 @@
 
   </div>
 </body>
+<script>
+    var v1 = window.setInterval("status()",2000);
+
+    function status() {
+            $.get("/delivery/delivery/log2/{{ project_id }}/",function(data){
+                document.getElementById("log_ret").innerHTML = data;
+                //滚动条自动向下滑动
+                $(function(){
+                      var h = $(document).height()-$(window).height();
+                      $(document).scrollTop(h);
+                });
+            });
+
+            $.get("/delivery/delivery/status/{{ project_id }}/",function(data){
+                var ret = JSON.parse(data);
+                if (ret.status == false) {
+{#                    var obj = document.getElementById("loading");#}
+{#                    obj.style.display = "none";#}
+                    // stop the v1 timer 停用计时器以减少查询
+                    window.clearInterval(v1);
+                    document.getElementById("loading").innerHTML = "<h4>project {{ project.job_name }}  {{ project.deploy_num }}th times deploy finished!</h4>";
+
+                }
+
+            });
+    }
+</script>
 </html>
 
 

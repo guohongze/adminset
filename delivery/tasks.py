@@ -49,7 +49,10 @@ def deploy(job_name, server_list, app_path, source_address, project_id):
             f.writelines(data)
         p1.bar_data += 1
         p1.save()
-        sleep(5)
+        sleep(3)
+
+    with open(log_file, 'a+') as f:
+        f.writelines("{0} Deploy End".format(job_name))
     p1.status = False
     p1.bar_data = 13
     p1.save()

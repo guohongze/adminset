@@ -10,6 +10,7 @@ from accounts.permission import permission_verify
 from .tasks import deploy
 import os
 from time import sleep
+import json
 
 
 @login_required()
@@ -110,11 +111,14 @@ def delivery_deploy(request, project_id):
 @permission_verify()
 def log(request, project_id):
     project = Delivery.objects.get(job_name_id=project_id)
-    job_name = project.job_name.name
-    job_workspace = "/var/opt/adminset/workspace/{0}/".format(job_name)
-    log_file = job_workspace + 'logs/deploy-' + str(project.deploy_num) + ".log"
-    with open(log_file, 'r+') as f:
-        line = f.readlines()
+    # job_name = project.job_name.name
+    # try:
+    #     job_workspace = "/var/opt/adminset/workspace/{0}/".format(job_name)
+    #     log_file = job_workspace + 'logs/deploy-' + str(project.deploy_num) + ".log"
+    #     with open(log_file, 'r+') as f:
+    #         line = f.readlines()
+    # except IOError:
+    #     pass
     return render(request, "delivery/results.html", locals())
 
 
@@ -123,4 +127,26 @@ def log(request, project_id):
 def status(request, project_id):
     project = Delivery.objects.get(id=project_id)
     bar_data = project.bar_data
-    return HttpResponse(bar_data)
+    status_val = project.status
+    ret = {"bar_data": bar_data, "status": status_val}
+    data = json.dumps(ret)
+    return HttpResponse(data)
+
+
+@login_required()
+@permission_verify()
+def log2(request, project_id):
+    ret = []
+    project = Delivery.objects.get(job_name_id=project_id)
+    job_name = project.job_name.name
+    try:
+        job_workspace = "/var/opt/adminset/workspace/{0}/".format(job_name)
+        log_file = job_workspace + 'logs/deploy-' + str(project.deploy_num) + ".log"
+        with open(log_file, 'r+') as f:
+            line = f.readlines()
+        for l in line:
+            a = l + "<br>"
+            ret.append(a)
+    except IOError:
+        ret = "Program is Deploying Please waiting<br>"
+    return HttpResponse(ret)

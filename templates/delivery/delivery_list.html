@@ -154,12 +154,13 @@ function deploy(args) {
 }
 </script>
 <script>
-    window.setInterval("status()",2000);
+    var v1 = window.setInterval("status()",2000);
 
     function status() {
         {% for project in all_project %}
             $.get("/delivery/delivery/status/{{ project.id }}/",function(data){
-                var width = parseInt(data)*10;
+                var ret = JSON.parse(data);
+                var width = parseInt(ret.bar_data)*10;
                 var progress_bar = document.getElementById("pb_{{ project.job_name.id }}");
                 progress_bar.style.width = width+"px";
             });

@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^delivery/status/(?P<project_id>\d+)/$', delivery.status, name='delivery_status'),
     url(r'^delivery/edit/(?P<project_id>\d+)/$', delivery.delivery_edit, name='delivery_edit'),
     url(r'^delivery/log/(?P<project_id>\d+)/$', delivery.log, name='delivery_log'),
+    url(r'^delivery/log2/(?P<project_id>\d+)/$', delivery.log2, name='delivery_log2'),
     url(r'^delivery/deploy/(?P<project_id>\d+)/$', delivery.delivery_deploy, name='delivery_deploy'),
     url(r'^delivery/delete/$', delivery.delivery_del, name='delivery_del'),
 ]
