@@ -5,12 +5,12 @@ import delivery
 import tasks
 urlpatterns = [
     url(r'^$', delivery.delivery_list, name='delivery'),
-    url(r'^delivery/add/$', delivery.delivery_add, name='delivery_add'),
-    url(r'^delivery/list/$', delivery.delivery_list, name='delivery_list'),
-    url(r'^delivery/status/(?P<project_id>\d+)/$', delivery.status, name='delivery_status'),
-    url(r'^delivery/edit/(?P<project_id>\d+)/$', delivery.delivery_edit, name='delivery_edit'),
-    url(r'^delivery/log/(?P<project_id>\d+)/$', delivery.log, name='delivery_log'),
-    url(r'^delivery/log2/(?P<project_id>\d+)/$', delivery.log2, name='delivery_log2'),
-    url(r'^delivery/deploy/(?P<project_id>\d+)/$', delivery.delivery_deploy, name='delivery_deploy'),
-    url(r'^delivery/delete/$', delivery.delivery_del, name='delivery_del'),
+    url(r'^add/$', delivery.delivery_add, name='delivery_add'),
+    url(r'^ist/$', delivery.delivery_list, name='delivery_list'),
+    url(r'^status/(?P<project_id>\d+)/$', delivery.status, name='delivery_status'),
+    url(r'^edit/(?P<project_id>\d+)/$', delivery.delivery_edit, name='delivery_edit'),
+    url(r'^log/(?P<project_id>\d+)/$', delivery.log, name='delivery_log'),
+    url(r'^log2/(?P<project_id>\d+)/$', delivery.log2, name='delivery_log2'),
+    url(r'^deploy/(?P<project_id>\d+)/$', delivery.delivery_deploy, name='delivery_deploy'),
+    url(r'^delete/$', delivery.delivery_del, name='delivery_del'),
 ]

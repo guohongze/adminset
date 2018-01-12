@@ -62,7 +62,7 @@
     var v1 = window.setInterval("status()",2000);
 
     function status() {
-            $.get("/delivery/delivery/log2/{{ project_id }}/",function(data){
+            $.get("/delivery/log2/{{ project_id }}/",function(data){
                 document.getElementById("log_ret").innerHTML = data;
                 //滚动条自动向下滑动
                 $(function(){
@@ -71,7 +71,7 @@
                 });
             });
 
-            $.get("/delivery/delivery/status/{{ project_id }}/",function(data){
+            $.get("/delivery/status/{{ project_id }}/",function(data){
                 var ret = JSON.parse(data);
                 if (ret.status == false) {
 {#                    var obj = document.getElementById("loading");#}
