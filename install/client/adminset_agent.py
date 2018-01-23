@@ -143,15 +143,13 @@ def parser_disk_info(diskdata):
 
 def post_data(url, data):
     try:
-        r = requests.session()
-        r.keep_alive = False
-        post_result = r.post(url, data)
-        if post_result.text:
-            print post_result.text
+        r = requests.post(url, data)
+        if r.text:
+            print r.text
         else:
-            print("Server return http status code: {0}".format(post_result.status_code))
-    except StandardError as post_info:
-        print post_info
+            print("Server return http status code: {0}".format(r.status_code))
+    except StandardError as msg:
+        print msg
     return True
 
 
