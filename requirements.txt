@@ -1,4 +1,4 @@
-django==1.9.8
+django==1.11.9
 sh==1.12.9
 mysql-python==1.2.5
 pytest==3.0.7
