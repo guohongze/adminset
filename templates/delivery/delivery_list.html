@@ -122,7 +122,7 @@
             $.ajax({
                 type: "post",
                 data: {project_id_all: project_id_all,csrfmiddlewaretoken: '{{ csrf_token }}'},
-                url: "{% url 'project_del' %}",
+                url: "{% url 'delivery_del' %}",
                 success: function () {
                     parent.location.reload();
                 }
@@ -160,7 +160,7 @@ function deploy(args) {
         {% for project in all_project %}
             $.get("/delivery/status/{{ project.job_name_id }}/",function(data){
                 var ret = JSON.parse(data);
-                var width = parseInt(ret.bar_data)*10;
+                var width = parseInt(ret.bar_data);
                 var progress_bar = document.getElementById("pb_{{ project.job_name.id }}");
                 progress_bar.style.width = width+"px";
             });

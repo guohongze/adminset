@@ -9,11 +9,12 @@ class DeliveryFrom(forms.ModelForm):
 
     class Meta:
         model = Delivery
-        exclude = ("id",)
+        exclude = ("id", "bar_data", "status")
 
         widgets = {
             'job_name': widgets.Select(attrs={'class': 'form-control','style': 'width:450px;'}),
+            'deploy_num': widgets.TextInput(attrs={'class': 'form-control', 'style': 'width:450px;', "readonly": "readonly"}),
             'description': widgets.Textarea(attrs={'class': 'form-control', 'style': 'width:450px; height:100px'}),
-            'deploy_policy': widgets.Select(attrs={'class': 'form-control','style': 'width:450px;'}),
+            'deploy_policy': widgets.Select(attrs={'class': 'form-control', 'style': 'width:450px;'}),
             'shell': widgets.Textarea(attrs={'class': 'form-control', 'style': 'width:450px; height:100px'}),
         }

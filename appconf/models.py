@@ -74,9 +74,8 @@ class Project(models.Model):
     )
 
     SOURCE_TYPE = (
-        ("svn", "svn"),
         ("git", "git"),
-        ("file", "file"),
+        ("svn", "svn"),
     )
 
     name = models.CharField(u"项目名称", max_length=50, unique=True, null=False, blank=False)

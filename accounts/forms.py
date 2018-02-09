@@ -48,7 +48,7 @@ class AddUserForm(forms.ModelForm):
         }
 
     def __init__(self,*args,**kwargs):
-        super(AddUserForm,self).__init__(*args,**kwargs)
+        super(AddUserForm, self).__init__(*args,**kwargs)
         self.fields['username'].label = u'账 号'
         self.fields['username'].error_messages = {'required': u'请输入账号'}
         self.fields['password'].label = u'密 码'
