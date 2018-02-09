@@ -87,14 +87,14 @@ def delivery_edit(request, project_id):
 def delivery_deploy(request, project_id):
     server_list = []
     project = Delivery.objects.get(job_name_id=project_id)
-    project.bar_data = 1
+    project.bar_data = 10
     job_name = project.job_name.name
     source_address = project.job_name.source_address
     app_path = project.job_name.appPath
     project.status = True
     project.deploy_num += 1
     project.save()
-    sleep(5)
+    sleep(3)
     os.system("mkdir -p /var/opt/adminset/workspace/{0}/logs".format(job_name))
     if app_path == "/":
         return HttpResponse("app deploy destination cannot /")

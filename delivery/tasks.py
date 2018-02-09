@@ -8,6 +8,17 @@ import os
 import shutil
 from time import sleep
 
+# class GetRedis(object):
+#     host = get_dir("redis_host")
+#     port = get_dir("redis_port")
+#     db = get_dir("redis_db")
+#     password = get_dir("redis_password")
+#
+#     def connect(self):
+#         conn = redis.StrictRedis(host=self.host, port=self.port,
+#                                  password=self.password, db=self.db)
+#         return conn
+
 
 @shared_task
 def deploy(job_name, server_list, app_path, source_address, project_id):
@@ -18,22 +29,29 @@ def deploy(job_name, server_list, app_path, source_address, project_id):
     if app_path.endswith("/"):
         app_path += "/"
     # clean build code
-    p1.bar_data = 2
+    p1.bar_data = 20
     p1.save()
-    sleep(5)
-    print p1.bar_data
+    sleep(3)
+    cmd = ""
     if p1.build_clean:
         try:
             shutil.rmtree("{0}code/".format(job_workspace))
         except:
             print "dir is not exists"
-    if os.path.exists("{0}code/.git".format(job_workspace)):
-        print "git pull"
-        cmd = "cd {0}code/ && git pull".format(job_workspace)
-    else:
-        print "git clone"
-        cmd = "git clone {0} {1}code/".format(source_address, job_workspace)
-    p1.bar_data = 3
+    if p1.job_name.SOURCE_TYPE == "git":
+        if os.path.exists("{0}code/.git".format(job_workspace)):
+            cmd = "cd {0}code/ && git pull".format(job_workspace)
+        else:
+            cmd = "git clone {0} {1}code/".format(source_address, job_workspace)
+    if p1.job_name.SOURCE_TYPE == "svn":
+        if os.path.exists("{0}code/.svn".format(job_workspace)):
+            cmd = "cd {0}code/ && svn update".format(job_workspace)
+        else:
+            cmd = "svn checkout {0} {1}code/".format(source_address, job_workspace)
+    if p1.job_name.SOURCE_TYPE == "file":
+        os.remove("{0}code/*".format(job_workspace))
+        cmd = "cd {1}code/ && wget {0} ".format(source_address, job_workspace)
+    p1.bar_data = 30
     p1.save()
     sleep(5)
     p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)

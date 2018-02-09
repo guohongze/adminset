@@ -77,17 +77,17 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="user" class="col-sm-2 control-label">User:</label>
-
-                  <div class="col-sm-10">
-                    <input type="text" value="{{ user }}" id="user" name="user" style="width:450px;">
-                  </div>
-                </div>
-                <div class="form-group">
                   <label for="port" class="col-sm-2 control-label">Port:</label>
 
                   <div class="col-sm-10">
                     <input type="text" value="{{ port }}" id="port" name="port" style="width:450px;">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="user" class="col-sm-2 control-label">User:</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" value="{{ user }}" id="user" name="user" style="width:450px;">
                   </div>
                 </div>
                 <div class="form-group">
@@ -142,6 +142,35 @@
                   </div>
                 </div>
                 <hr>
+                    <p><b>Reids</b></p>
+                <div class="form-group">
+                  <label for="redis_host" class="col-sm-2 control-label">Host:</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" value="{{ redis_host }}" id="redis_host" name="redis_host" style="width:450px;">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="redis_port" class="col-sm-2 control-label">Port:</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" value="{{ redis_port }}" id="redis_port" name="redis_port" style="width:450px;">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="redis_password" class="col-sm-2 control-label">password:</label>
+
+                  <div class="col-sm-10">
+                    <input type="password" value="{{ redis_password }}" id="redis_password" name="redis_password" style="width:450px;">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="redis_db" class="col-sm-2 control-label">db:</label>
+                  <div class="col-sm-10">
+                    <input type="text" value="{{ redis_db }}" id="redis_db" name="redis_db" style="width:450px;">
+                  </div>
+                </div>
+                <hr>
                 <p><b>密钥设置</b></p>
                 <div class="form-group">
                   <label for="token" class="col-sm-2 control-label">Token:</label>
@@ -179,6 +208,7 @@
                     </select>
                   </div>
                 </div>
+                <hr>
                 <p><b>webssh域名设置</b></p>
                 <div class="form-group">
                   <label for="webssh_domain" class="col-sm-2 control-label">域名:</label>
@@ -188,6 +218,7 @@
                   </div>
                 </div>
                  </div>
+
 
               <!-- /.box-body -->
               <div class="box-footer">

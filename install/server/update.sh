@@ -12,8 +12,15 @@ rsync --progress -ra --delete --exclude '.git' $cur_dir/ $adminset_dir
 #scp $adminset_dir/install/server/ansible/ansible.cfg /etc/ansible/ansible.cfg
 cd $adminset_dir
 pip install -r requirements.txt
-python manage.py makemigrations
-python manage.py migrate
+
+if [ $1 ]
+then
+    python manage.py makemigrations $1
+    python manage.py migrate
+else
+    python manage.py makemigrations
+    python manage.py migrate
+fi
 echo "####update celery####"
 mkdir -p $config_dir/celery
 scp $adminset_dir/install/server/celery/beat.conf $config_dir/celery/beat.conf

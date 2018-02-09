@@ -39,6 +39,10 @@ def index(request):
         mongodb_pwd = config.get('mongodb', 'mongodb_pwd')
         mongodb_collection = config.get('mongodb', 'collection')
         webssh_domain = config.get('webssh', 'domain')
+        redis_host = config.get('redis', 'redis_host')
+        redis_port = config.get('redis', 'redis_port')
+        redis_password = config.get('redis', 'redis_password')
+        redis_db = config.get('redis', 'redis_db')
     return render(request, 'config/index.html', locals())
 
 
@@ -73,6 +77,11 @@ def config_save(request):
         mongodb_collection = request.POST.get('mongodb_collection')
         # webssh domain
         webssh_domain = request.POST.get('webssh_domain')
+        # redis infon
+        redis_host = request.POST.get('redis_host')
+        redis_port = request.POST.get('redis_port')
+        redis_password = request.POST.get('redis_password')
+        redis_db = request.POST.get('redis_db')
 
         config = ConfigParser.RawConfigParser()
         dirs = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -102,6 +111,11 @@ def config_save(request):
         config.set('mongodb', 'collection', mongodb_collection)
         config.add_section('webssh')
         config.set('webssh', 'domain', webssh_domain)
+        config.add_section('redis')
+        config.set('redis', 'redis_host', redis_host)
+        config.set('redis', 'redis_port', redis_port)
+        config.set('redis', 'redis_password', redis_password)
+        config.set('redis', 'redis_db', redis_db)
         tips = u"保存成功！"
         display_control = ""
         with open(dirs+'/adminset.conf', 'wb') as cfgfile:
@@ -127,6 +141,10 @@ def config_save(request):
             mongodb_pwd = config.get('mongodb', 'mongodb_pwd')
             mongodb_collection = config.get('mongodb', 'collection')
             webssh_domain = config.get('webssh', 'domain')
+            redis_host = config.get('redis', 'redis_host')
+            redis_port = config.get('redis', 'redis_port')
+            redis_password = config.get('redis', 'redis_password')
+            redis_db = config.get('redis', 'redis_db')
     else:
         display_control = "none"
     return render(request, 'config/index.html', locals())
@@ -151,6 +169,10 @@ def get_dir(args):
         mongodb_pwd = config.get('mongodb', 'mongodb_pwd')
         mongodb_collection = config.get('mongodb', 'collection')
         webssh_domain = config.get('webssh', 'domain')
+        redis_host = config.get('redis', 'redis_host')
+        redis_port = config.get('redis', 'redis_port')
+        redis_password = config.get('redis', 'redis_password')
+        redis_db = config.get('redis', 'redis_db')
     # 根据传入参数返回变量以获取配置，返回变量名与参数名相同
     if args:
         return vars()[args]

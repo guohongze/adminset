@@ -6,6 +6,8 @@ LDAP_HOST = '10.10.10.10'
 USER = 'cn=admin,dc=gccmx,dc=cn'
 PASSWORD = 'yourpass'
 BASE_DN = 'dc=gccmx,dc=cn'
+
+
 class LDAPTool:
 
     def __init__(self,ldap_host=None,base_dn=None,user=None,password=None):
