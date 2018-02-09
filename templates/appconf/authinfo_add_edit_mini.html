@@ -1,0 +1,20 @@
+{% include 'link_css.html' %}
+{% include 'head_script.html' %}
+<script src="/static/layer/layer.js"></script>
+
+{% include 'appconf/authinfo_base.html' %}
+
+{#回传参数至父层#}
+<script type="text/javascript">
+        var index = parent.layer.getFrameIndex(window.name);
+        var status = {{ status }};
+        if(status> 0){
+            var auth_info_id = "{{ auth_id }}";
+            var auth_info_name = "{{ auth_name }}";
+            parent.$("#new_auth_id").val(auth_info_id);
+            parent.$("#new_auth_name").val(auth_info_name);
+            parent.$("#handle_status").val(status);
+            parent.layer.close(index);
+        }
+
+</script>

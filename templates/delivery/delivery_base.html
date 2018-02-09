@@ -36,7 +36,19 @@
             <form action="{% url 'delivery_add' %}" method="post">
         {% endif %}
         {% csrf_token %}
-        {{ form.as_p }}
+{#        {{ form.as_p }}#}
+        {% for field in form %}
+            <div class="fieldWrapper">
+                {{ field.errors }}
+                {% if field.html_name == "auth" %}
+                    {{ field.label_tag }} {{ field }}
+                    <a href="#" onclick="return popWin()"><li class="btn btn-success" ><b>添加认证</b></li></a>
+                {% else %}
+                    {{ field.label_tag }} {{ field }}
+                {% endif %}
+            </div>
+        {% endfor %}
+        <p></p>
         <input type="submit" class="btn btn-primary" style="width: 60pt" value="提交">&nbsp;&nbsp;&nbsp;&nbsp;
         <a href="{% url 'delivery_list' %}"><li style="width: 60pt" class="btn btn-primary" value="">返回</li></a><br>
           </form>
@@ -49,7 +61,10 @@
       </div>
       <!-- /.box -->
     </section>
-
+    {#用于接收appowner_base.html中layui子层的传值#}
+    <input id="handle_status" value="" hidden="hidden">
+    <input id="new_auth_id" value="" hidden="hidden">
+    <input id="new_auth_name" value="" hidden="hidden">
   </div>
 {#    <script>#}
 {#        var demo1 = $('select[name="serverList"]').bootstrapDualListbox({#}
@@ -59,5 +74,35 @@
 {#              moveOnSelect: false,#}
 {#        });#}
 {#    </script>#}
+<script>
+function popWin(){
+  layer.open({
+      type: 2,
+      title: '项目列表',
+      area: ['700px', '500px'],
+      shadeClose: true, //点击遮罩关闭
+      content: ['/appconf/authinfo/add/mini/'],
+      end:function(){
+            var handle_status = $("#handle_status").val();
+            if ( handle_status == '1' ) {
+                layer.msg('添加成功！',{
+                    icon: 1,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                },function(){
+                    var new_auth_id = $("#new_auth_id").val();
+                    var new_auth_name = $("#new_auth_name").val();
+                    $('#id_auth').append("<option value="+new_auth_id+" selected='selected'>"+new_auth_name+"</option>");
+                });
+            } else if ( handle_status == '2' ) {
+                layer.msg('添加失败！',{
+                    icon: 2,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                },function(){
 
+                });
+            }
+      }
+  });
+}
+</script>
 {% endblock %}

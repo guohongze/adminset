@@ -2,9 +2,21 @@
 # -*- coding: utf-8 -*-
 
 from django import forms
-from django.forms import widgets
 from django.forms.widgets import *
-from .models import Product, Project, AppOwner
+from .models import Product, Project, AppOwner, AuthInfo
+
+
+class AuthInfoForm(forms.ModelForm):
+
+    class Meta:
+        model = AuthInfo
+        exclude = ("id",)
+        widgets = {
+            'username': TextInput(attrs={'class': 'form-control', 'style': 'width:450px;'}),
+            'password': TextInput(attrs={'class': 'form-control', 'style': 'width:450px'}),
+            'private_key': TextInput(attrs={'class': 'form-control', 'style': 'width:450px;'}),
+            'memo': TextInput(attrs={'class': 'form-control', 'style': 'width:450px;'}),
+        }
 
 
 class AppOwnerForm(forms.ModelForm):

@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load mytags %}
+{% block self_head_css_js %}
+    <script src="/static/layer/layer.js"></script>
+    <script src="/static/js/base.js"></script>
+    <script src="/static/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="/static/plugins/datatables/dataTables.bootstrap.min.js"></script>
+    <script src="/static/plugins/datatables/dataTables.bootstrap.css"></script>
+{% endblock %}
+{% block content %}
+
+    <script>
+        window.onload=init;
+        function init() {
+            var box = document.getElementById("appconf");
+            box.className="active";
+            var box = document.getElementById("authinfo_list");
+            box.className="active";
+        }
+    </script>
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <form action="" method="post" id="authinfo_form">
+                {% csrf_token %}
+            <div class="box">
+                <div class="box-header">
+                    <div class="col-sm-2" style="padding-left: 0">
+						 <a href="{% url 'authinfo_add' %}"><li class="btn btn-success" ><b>添加认证</b></li></a>
+                  </div>
+                </div>
+
+                <!-- /.box-header -->
+                <div class="box-body">
+                  <table class="table table-striped table-bordered" id="authInfoform">
+                      <thead>
+                        <tr>
+                            <th>
+                                <input id="checkall" type="checkbox" class="i-checks" name="checkall" value="checkall" data-editable='false' onclick="check_all('authinfo_form')">
+                            </th>
+                            <th>用户名</th>
+                            <th>密码</th>
+                            <th>备注</th>
+                        </tr>
+                      </thead>
+                            <tbody>
+                            {% for auth in all_authinfo %}
+                                <tr class="even gradeX">
+                                    <td><input type="checkbox" id="id" class="i-checks" value="{{ auth.id }}" name="id" /></td>
+                                    <td>{{ auth.username }} </td>
+                                    <td>{{ auth.password }} </td>
+                                    <td>{{ auth.memo }} </td>
+                                    <td>
+                                        <a href="{% url "authinfo_edit" auth.id %}"><span class="btn btn-sm btn-info">编辑</span></a>
+                                        <a href="{% url "authinfo_del"%}?id={{ auth.id }}" onclick="return confirm('确认删除认证？')"><span class="btn btn-sm btn-danger ">删除</span></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                  </table>
+                  <div class="btn-group">
+                      <input type="button" id="authinfo_del" class="btn btn-danger"   name="del_button" value="删除认证"/>
+                  </div>
+                </div>
+            </div>
+        </form>
+    </section>
+
+</div>
+<script>
+  $(function () {
+    $('#authInfoform').DataTable({
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": true
+    });
+  });
+</script>
+
+<script>
+    $('#authinfo_del').click(function () {
+        var authinfo_id_all = getIDall();
+        if (authinfo_id_all == ''){
+            alert("请至少选择一行!");
+            return false;
+        }
+        if (confirm("确定删除?")) {
+            $.ajax({
+                type: "post",
+                data: {authinfo_id_all: authinfo_id_all,csrfmiddlewaretoken: '{{ csrf_token }}'},
+                url: "{% url 'authinfo_del' %}",
+                success: function () {
+                    parent.location.reload();
+                }
+            });
+        }
+    });
+</script>
+
+{% endblock %}

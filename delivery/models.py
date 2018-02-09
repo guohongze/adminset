@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from appconf.models import Project
+from appconf.models import Project, AuthInfo
 # Create your models here.
 DEPLOY_POLICY = (
     ("Direct", "Direct"),
@@ -12,7 +12,7 @@ DEPLOY_POLICY = (
 
 
 class Delivery(models.Model):
-    job_name = models.ForeignKey(Project, null=False, verbose_name=u"项目名", unique=True)
+    job_name = models.OneToOneField(Project, verbose_name=u"项目名")
     deploy_num = models.IntegerField(verbose_name=u"当前部署次数", default=0)
     description = models.CharField(max_length=255, verbose_name=u"描述", null=True, blank=True)
     deploy_policy = models.CharField(max_length=255, choices=DEPLOY_POLICY, verbose_name=u"部署策略")
@@ -21,6 +21,11 @@ class Delivery(models.Model):
     shell_position = models.BooleanField(verbose_name=u"本地执行", default=False)
     status = models.BooleanField(verbose_name=u"部署状态", default=False)
     bar_data = models.IntegerField(default=0)
+    auth = models.ForeignKey(
+        AuthInfo, verbose_name=u"认证信息",
+        null=True, blank=True,
+        on_delete=models.SET_NULL
+    )
 
     def __unicode__(self):
         return self.job_name

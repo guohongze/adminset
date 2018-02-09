@@ -6,6 +6,16 @@ from django.db import models
 from cmdb.models import Host
 
 
+class AuthInfo(models.Model):
+    username = models.CharField(u"用户名", max_length=50, unique=True, null=False, blank=False)
+    password = models.CharField(u"密码", max_length=50, null=False, blank=False)
+    private_key = models.CharField(u"密钥", max_length=100, blank=True)
+    memo = models.TextField(u"备注信息", max_length=200, blank=True)
+
+    def __unicode__(self):
+        return self.username
+
+
 class AppOwner(models.Model):
     name = models.CharField(u"负责人姓名", max_length=50, unique=True, null=False, blank=False)
     phone = models.CharField(u"负责人手机", max_length=50, null=False, blank=False)

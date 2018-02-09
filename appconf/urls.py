@@ -1,9 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 from django.conf.urls import url, include
-import appowner
-import product
-import project
+import product, project, appowner, authinfo
 
 urlpatterns = [
     url(r'^$', product.product_list, name='appconf'),
@@ -22,4 +20,9 @@ urlpatterns = [
     url(r'^project/edit/(?P<project_id>\d+)/$', project.project_edit, name='project_edit'),
     url(r'^project/delete/$', project.project_del, name='project_del'),
     url(r'^project/export/$', project.project_export, name='project_export'),
+    url(r'^authinfo/add/$', authinfo.authinfo_add, name='authinfo_add'),
+    url(r'^authinfo/add/mini/$', authinfo.authinfo_add_mini, name='authinfo_add_mini'),
+    url(r'^authinfo/list/$', authinfo.authinfo_list, name='authinfo_list'),
+    url(r'^authinfo/edit/(?P<authinfo_id>\d+)/$', authinfo.authinfo_edit, name='authinfo_edit'),
+    url(r'^authinfo/delete/$', authinfo.authinfo_del, name='authinfo_del'),
 ]

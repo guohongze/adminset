@@ -17,4 +17,6 @@ class DeliveryFrom(forms.ModelForm):
             'description': widgets.Textarea(attrs={'class': 'form-control', 'style': 'width:450px; height:100px'}),
             'deploy_policy': widgets.Select(attrs={'class': 'form-control', 'style': 'width:450px;'}),
             'shell': widgets.Textarea(attrs={'class': 'form-control', 'style': 'width:450px; height:100px'}),
+            'auth': widgets.Select(attrs={'class': 'form-control','style': 'width:450px;'}),
+
         }
