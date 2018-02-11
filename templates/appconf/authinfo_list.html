@@ -44,7 +44,6 @@
                                 <input id="checkall" type="checkbox" class="i-checks" name="checkall" value="checkall" data-editable='false' onclick="check_all('authinfo_form')">
                             </th>
                             <th>用户名</th>
-                            <th>密码</th>
                             <th>备注</th>
                         </tr>
                       </thead>
@@ -53,7 +52,6 @@
                                 <tr class="even gradeX">
                                     <td><input type="checkbox" id="id" class="i-checks" value="{{ auth.id }}" name="id" /></td>
                                     <td>{{ auth.username }} </td>
-                                    <td>{{ auth.password }} </td>
                                     <td>{{ auth.memo }} </td>
                                     <td>
                                         <a href="{% url "authinfo_edit" auth.id %}"><span class="btn btn-sm btn-info">编辑</span></a>

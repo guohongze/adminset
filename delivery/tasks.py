@@ -7,6 +7,7 @@ from .models import Delivery
 import os
 import shutil
 from time import sleep
+import re
 
 # class GetRedis(object):
 #     host = get_dir("redis_host")
@@ -21,7 +22,7 @@ from time import sleep
 
 
 @shared_task
-def deploy(job_name, server_list, app_path, source_address, project_id):
+def deploy(job_name, server_list, app_path, source_address, project_id, auth_info):
     ret = []
     p1 = Delivery.objects.get(job_name_id=project_id)
     job_workspace = "/var/opt/adminset/workspace/{0}/".format(job_name)
@@ -40,17 +41,46 @@ def deploy(job_name, server_list, app_path, source_address, project_id):
             print "dir is not exists"
 
     # source type select
-    if p1.job_name.source_type == "git":
-        if os.path.exists("{0}code/.git".format(job_workspace)):
-            cmd = "cd {0}code/ && git pull".format(job_workspace)
-        else:
-            cmd = "git clone {0} {1}code/".format(source_address, job_workspace)
-    if p1.job_name.source_type == "svn":
-        if os.path.exists("{0}code/.svn".format(job_workspace)):
-            cmd = "cd {0}code/ && svn update".format(job_workspace)
-        else:
-            cmd = "svn --non-interactive --username {2} --password {3} co {0} {1}code/".format(
-                    source_address, job_workspace)
+    if auth_info:
+        if p1.job_name.source_type == "git":
+            if os.path.exists("{0}code/.git".format(job_workspace)):
+                cmd = "cd {0}code/ && git pull".format(job_workspace)
+            else:
+                url_type = re.search(r'(@)', source_address)
+                if url_type:
+                    user_len = len(auth_info["username"])
+                    if source_address.startswith("https://"):
+                        url_len = 8
+                        source_address = parser_url(source_address, url_len, user_len, auth_info, url_type)
+                    if source_address.startswith("http://"):
+                        url_len = 7
+                        source_address = parser_url(source_address, url_len, user_len, auth_info, url_type)
+                else:
+                    if source_address.startswith("https://"):
+                        url_len = 8
+                        source_address = parser_url(source_address, url_len, auth_info, url_type)
+                    if source_address.startswith("http://"):
+                        source_address = source_address[:7] + auth_info["username"] + ":" + auth_info["password"] \
+                                         + "@" + source_address[7:]
+                cmd = "git clone {0} {1}code/".format(source_address, job_workspace)
+        if p1.job_name.source_type == "svn":
+            if os.path.exists("{0}code/.svn".format(job_workspace)):
+                cmd = "cd {0}code/ && svn update".format(job_workspace)
+            else:
+                cmd = "svn --non-interactive --trust-server-cert --username {2} --password {3} checkout {0} {1}code/".format(
+                        source_address, job_workspace, auth_info["username"], auth_info["password"])
+    else:
+        if p1.job_name.source_type == "git":
+            if os.path.exists("{0}code/.git".format(job_workspace)):
+                cmd = "cd {0}code/ && git pull".format(job_workspace)
+            else:
+                cmd = "git clone {0} {1}code/".format(source_address, job_workspace)
+        if p1.job_name.source_type == "svn":
+            if os.path.exists("{0}code/.svn".format(job_workspace)):
+                cmd = "cd {0}code/ && svn update".format(job_workspace)
+            else:
+                cmd = "svn checkout {0} {1}code/".format(
+                        source_address, job_workspace)
     data = cmd_exec(cmd)
     with open(log_file, 'w+') as f:
         f.writelines(data)
@@ -81,3 +111,13 @@ def cmd_exec(cmd):
     p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
     data = p.communicate()
     return data
+
+
+def parser_url(source_address, url_len, user_len, auth_info, url_type=None):
+    if url_type:
+        new_suffix = source_address[url_len:][user_len:]
+        final_add = source_address[:url_len] + auth_info["username"] + ":" + auth_info["password"] + new_suffix
+    else:
+        new_suffix = source_address[url_len:]
+        final_add = source_address[:url_len] + auth_info["username"] + ":" + auth_info["password"] + new_suffix
+    return final_add

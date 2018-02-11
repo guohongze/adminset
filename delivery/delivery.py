@@ -92,6 +92,10 @@ def delivery_deploy(request, project_id):
     job_name = project.job_name.name
     source_address = project.job_name.source_address
     app_path = project.job_name.appPath
+    if project.auth:
+        auth_info = {"username": project.auth.username, "password": project.auth.password}
+    else:
+        auth_info = None
     project.status = True
     project.deploy_num += 1
     project.save()
@@ -105,7 +109,8 @@ def delivery_deploy(request, project_id):
     for server in servers:
         server_ip = str(server.ip)
         server_list.append(server_ip)
-    deploy.delay(job_name, server_list, app_path, source_address, project_id)
+    project.bar_data = 15
+    deploy.delay(job_name, server_list, app_path, source_address, project_id, auth_info)
     return HttpResponse("ok")
 
 
