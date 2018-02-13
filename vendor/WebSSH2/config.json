@@ -11,9 +11,15 @@
     "host": null,
     "port": 22,
     "term": "xterm-color",
-    "readyTimeout": 20000
+    "readyTimeout": 20000,
+    "keepaliveInterval": 120000,
+    "keepaliveCountMax": 10
   },
-  "useminified": false,
+  "terminal": {
+    "cursorBlink": true,
+    "scrollback": 10000,
+    "tabStopWidth": 8
+  },
   "header": {
     "text": null,
     "background": "green"
@@ -58,5 +64,6 @@
     "client": false, // proof-of-concept to log commands from client to server
     "server": false  // not yet implemented
   },
-  "accesslog": false // http style access logging to console.log
+  "accesslog": false, // http style access logging to console.log
+  "verify": false, // verification of host key hashes, see hostkeyhashes.json
 }

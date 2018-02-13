@@ -10,10 +10,12 @@
     "dependencies": {
         "mute": [
             "read-config",
-            "socket.io"
+            "socket.io",
+            "standard",
+            "bithound"
         ]
     },
     "ignore": [
-        "public/src/**"
+        "public/webssh2.bundle.js",
     ]
 }

@@ -1,4 +1,43 @@
 # Change Log
+## [0.2.0] 2018-02-10
+Mostly client (browser) related changes in this release
+
+### Added
+- Menu system
+- Fontawesome icons
+- Resizing browser window sends resize events to terminal container as well as SSH session (pty)
+- New terminal options (config.json as well as GET vars)
+  - terminal.cursorBlink - boolean - Cursor blinks (true), does not (false) Default: true.
+  - terminal.scrollback - integer - Lines in the scrollback buffer. Default: 10000.
+  - terminal.tabStopWidth - integer - Tab stops at n characters Default: 8.
+- New serverside (nodejs) terminal configuration options (cursorBlink, scrollback, tabStopWidth)
+- Logging of MRH session (unassigned if not present)
+- Express compression feature
+
+### Changed
+- Updated xterm.js to 3.0.2
+  - See https://github.com/xtermjs/xterm.js/releases/tag/3.0.2
+  - See https://github.com/xtermjs/xterm.js/releases/tag/3.0.1
+  - See https://github.com/xtermjs/xterm.js/releases/tag/3.0.0
+- Moved javascript events out of html into javascript
+- Changed asset packaging from grunt to Webpack to be inline with xterm.js direction
+- Moved logging and credentials buttons to menu system
+- Removed non-minified options (if you need to disable minification, modify webpack scripts and 'npm run build')
+
+### Fixed
+- Resolved loss of terminal foucs when interacting with option buttons (Logging, etc...)
+
+# Change Log
+## [0.1.4] 2018-01-30
+### Changed
+- Moved socket and util out of folders into .js in root.
+- added keepaliveInterval and keepaliveCountMax config options
+
+## [0.1.3] 2017-09-28
+### Changed
+- Upgrade to debug@3.1 to eliminate ReDoS in %o formatter
+- Upgrade Express to 4.15.5 for ReDOS
+- Upgrade basic-auth to v2.0
 ## [0.1.2] 2017-07-31
 ### Added
 - ssh.readyTimeout option in config.json (time in ms, default 20000, 20sec)
