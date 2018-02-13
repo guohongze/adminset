@@ -13,6 +13,7 @@ import re
 @shared_task
 def deploy(job_name, server_list, app_path, source_address, project_id, auth_info):
     ret = []
+    cmd = ""
     p1 = Delivery.objects.get(job_name_id=project_id)
     job_workspace = "/var/opt/adminset/workspace/{0}/".format(job_name)
     log_file = job_workspace + 'logs/deploy-' + str(p1.deploy_num) + ".log"
@@ -23,13 +24,15 @@ def deploy(job_name, server_list, app_path, source_address, project_id, auth_inf
     p1.bar_data = 20
     p1.save()
     sleep(2)
-    if p1.build_clean:
+    if p1.build_clean or p1.version:
         try:
             shutil.rmtree("{0}code/".format(job_workspace))
         except:
             print "code dir is not exists, build clean over"
-
-    cmd = code_clone(job_workspace, auth_info, source_address, p1)
+    if p1.job_name.source_type == "git":
+        cmd = git_clone(job_workspace, auth_info, source_address, p1)
+    if p1.job_name.source_type == "svn":
+        cmd = svn_clone(job_workspace, auth_info, source_address, p1)
     with open(log_file, 'w+') as f:
         f.writelines(cmd)
     data = cmd_exec(cmd)
@@ -75,51 +78,37 @@ def parser_url(source_address, url_len, user_len, auth_info, url_type=None):
     return final_add
 
 
-def code_clone(job_workspace, auth_info, source_address, p1):
+def git_clone(job_workspace, auth_info, source_address, p1):
     if os.path.exists("{0}code/.git".format(job_workspace)):
         cmd = "cd {0}code/ && git pull".format(job_workspace)
         return cmd
-    if os.path.exists("{0}code/.svn".format(job_workspace)):
-        cmd = "cd {0}code/ && svn update".format(job_workspace)
-        return cmd
-    if p1.job_name.source_type == "git" and not p1.job_name.source_address.startswith("http"):
-        cmd = "git clone {0} {1}code/".format(source_address, job_workspace)
-        return cmd
-
-    if auth_info:
-        if p1.job_name.source_type == "svn":
-            cmd = "svn --non-interactive --trust-server-cert --username {2} --password {3} checkout {0} {1}code/".format(
-                    source_address, job_workspace, auth_info["username"], auth_info["password"])
-            return cmd
-        if p1.job_name.source_type == "git" and p1.job_name.source_address.startswith("http"):
-            url_type = re.search(r'(@)', source_address)
-            if url_type:
-                user_len = len(auth_info["username"])
-                if source_address.startswith("https://"):
-                    url_len = 8
-                    source_address = parser_url(source_address, url_len, user_len, auth_info, url_type)
-                else:
-                    url_len = 7
-                    source_address = parser_url(source_address, url_len, user_len, auth_info, url_type)
+    if auth_info and p1.job_name.source_address.startswith("http"):
+        url_type = re.search(r'(@)', source_address)
+        if url_type:
+            user_len = len(auth_info["username"])
+            if source_address.startswith("https://"):
+                url_len = 8
             else:
-                if source_address.startswith("https://"):
-                    url_len = 8
-                    source_address = parser_url(source_address, url_len, auth_info, url_type)
-                else:
-                    source_address = source_address[:7] + auth_info["username"] + ":" + auth_info["password"] \
-                                     + "@" + source_address[7:]
-            cmd = "git clone {0} {1}code/".format(source_address, job_workspace)
-            return cmd
+                url_len = 7
+            source_address = parser_url(source_address, url_len, user_len, auth_info, url_type)
+        else:
+            if source_address.startswith("https://"):
+                url_len = 8
+            else:
+                url_len = 7
+            source_address = parser_url(source_address, url_len, auth_info, url_type)
+    if p1.version:
+        cmd = "git clone -b {2} {0} {1}code/".format(source_address, job_workspace, p1.version)
+    else:
+        cmd = "git clone {0} {1}code/".format(source_address, job_workspace)
+    return cmd
 
-    # else:
-    #     if p1.job_name.source_type == "git":
-    #         if os.path.exists("{0}code/.git".format(job_workspace)):
-    #             cmd = "cd {0}code/ && git pull".format(job_workspace)
-    #         else:
-    #             cmd = "git clone {0} {1}code/".format(source_address, job_workspace)
-    #     if p1.job_name.source_type == "svn":
-    #         if os.path.exists("{0}code/.svn".format(job_workspace)):
-    #             cmd = "cd {0}code/ && svn update".format(job_workspace)
-    #         else:
-    #             cmd = "svn checkout {0} {1}code/".format(
-    #                     source_address, job_workspace)
+
+def svn_clone(job_workspace, auth_info, source_address, p1):
+    if os.path.exists("{0}code/.svn".format(job_workspace)):
+        cmd = "svn --non-interactive --trust-server-cert --username {2} --password {3} update {0} {1}code/".format(
+                source_address, job_workspace, auth_info["username"], auth_info["password"])
+    else:
+        cmd = "svn --non-interactive --trust-server-cert --username {2} --password {3} checkout {0} {1}code/".format(
+                source_address, job_workspace, auth_info["username"], auth_info["password"])
+    return cmd

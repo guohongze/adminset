@@ -149,3 +149,13 @@ def log2(request, project_id):
     except IOError:
         ret = "Program is Deploying Please waiting<br>"
     return HttpResponse(ret)
+
+
+@login_required()
+@permission_verify()
+def task_stop(request, project_id):
+    project = Delivery.objects.get(job_name_id=project_id)
+    project.bar_data = 0
+    project.status = False
+    project.save()
+    return HttpResponse("task stop ok")

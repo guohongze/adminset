@@ -12,5 +12,6 @@ urlpatterns = [
     url(r'^log/(?P<project_id>\d+)/$', delivery.log, name='delivery_log'),
     url(r'^log2/(?P<project_id>\d+)/$', delivery.log2, name='delivery_log2'),
     url(r'^deploy/(?P<project_id>\d+)/$', delivery.delivery_deploy, name='delivery_deploy'),
+    url(r'^taskstop/(?P<project_id>\d+)/$', delivery.task_stop, name='delivery_taskstop'),
     url(r'^delete/$', delivery.delivery_del, name='delivery_del'),
 ]
