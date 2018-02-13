@@ -9,17 +9,6 @@ import shutil
 from time import sleep
 import re
 
-# class GetRedis(object):
-#     host = get_dir("redis_host")
-#     port = get_dir("redis_port")
-#     db = get_dir("redis_db")
-#     password = get_dir("redis_password")
-#
-#     def connect(self):
-#         conn = redis.StrictRedis(host=self.host, port=self.port,
-#                                  password=self.password, db=self.db)
-#         return conn
-
 
 @shared_task
 def deploy(job_name, server_list, app_path, source_address, project_id, auth_info):
@@ -38,7 +27,7 @@ def deploy(job_name, server_list, app_path, source_address, project_id, auth_inf
         try:
             shutil.rmtree("{0}code/".format(job_workspace))
         except:
-            print "dir is not exists"
+            print "code dir is not exists, build clean over"
 
     # source type select
     if auth_info:

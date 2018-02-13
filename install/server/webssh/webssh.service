@@ -9,7 +9,7 @@ User=root
 Group=root
 WorkingDirectory=/var/opt/adminset/main/vendor/WebSSH2
 #ExecStart=/var/opt/adminset/config/webssh/start_webssh.sh
-ExecStart=/usr/bin/forever start index.js
+ExecStart=/usr/bin/forever start --minUptime 1000 --spinSleepTime 1000 index.js
 ExecStop=/usr/bin/forever stop index.js
 
 [Install]
