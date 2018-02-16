@@ -19,14 +19,14 @@ def deploy(job_name, server_list, app_path, source_address, project_id, auth_inf
     log_path = job_workspace + 'logs/'
     log_name = 'deploy-' + str(p1.deploy_num) + ".log"
     with open(log_path + log_name, 'wb+') as f:
-        f.writelines("<h4>Deploying project {} for {1}th</h4>".format(job_name, p1.deploy_num))
+        f.writelines("<h4>Deploying project {0} for {1}th</h4>".format(job_name, p1.deploy_num))
     if not app_path.endswith("/"):
         app_path += "/"
 
     # clean build code
     p1.bar_data = 20
     p1.save()
-    sleep(2)
+    sleep(1)
     if p1.build_clean or p1.version:
         try:
             shutil.rmtree("{0}code/".format(job_workspace))
@@ -37,7 +37,10 @@ def deploy(job_name, server_list, app_path, source_address, project_id, auth_inf
     if p1.job_name.source_type == "svn":
         cmd = svn_clone(job_workspace, auth_info, source_address, p1)
     data = cmd_exec(cmd)
+    p1.bar_data = 30
+    p1.save()
     with open(log_path + log_name, 'ab+') as f:
+        f.writelines(cmd)
         f.writelines(data)
     if p1.shell:
         deploy_shell = job_workspace + 'scripts/deploy-' + str(p1.deploy_num) + ".sh"
@@ -63,7 +66,8 @@ def deploy(job_name, server_list, app_path, source_address, project_id, auth_inf
             with open(log_path + log_name, 'ab+') as f:
                 f.writelines(data)
         if p1.bar_data <= 125:
-            p1.bar_data = +5
+            cur_bar = p1.bar_data
+            p1.bar_data = cur_bar+5
             p1.save()
     if p1.shell and p1.shell_position:
         # cmd = "/usr/bin/bash {0}'".format(deploy_shell)

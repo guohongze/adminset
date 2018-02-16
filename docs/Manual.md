@@ -48,7 +48,7 @@
         如果实现全自动ssh免密登入客户机需要如下几个条件：
         1）客户机的所有密码都相同。
         2）在服务器的配置管理>密钥设置ssh password中写入客户机的密码并保存。
-        3）这样当客户机第一次上报资产信息到服务中去会自动触发ssh密钥分发，自动分发成功能后ansible等其它功能不需要手动再配置ssh免密登陆。
+        3）这样当客户机第一次上报资产信息到服务器中去会自动触发ssh密钥分发，自动分发成功能后ansible等其它功能不需要手动再配置ssh免密登陆。
 
 #   程序目录
     安装脚本会将文件安装在/var/opt/adminset
@@ -85,9 +85,9 @@
             1）源类型，必须与源地址对应，如源码服务器为gitlab选择git，svn选择svn
             2）源地址将会对持续交付产生影响，持续交付中的部署动作将会调用这些信息作为源文件的下载信息。
                支持svn svn协议 如 svn://svn.adminset.com/project
-               支持svn http协议 如 svn://svn.adminset.com/project
+               支持svn http协议 如 http(s)://svn.adminset.com/project
                支持git ssh协议 如 git@gitlab.com/website/project.git 使用ssh协议时请确认相关密钥已经加入到git服务器相应账号中。
-               支持git http协议 如 http(s)://gitlab.com/website/project.git
+               支持git http协议 如 http(s)://github.com/website/project.git
                支持git http协议 如 http(s)://username@gitlab.com/website/project.git
             3）程序部署路径为程序部署在目标服务器的路径，程序将调用rsync做全量或增量同步。
                格式举例: /data/www/project
@@ -129,17 +129,16 @@
     通过adminset_agent自动上报的服务器，可以自动设置免密登入(认书认证)
     前提是已经在客户端做了hosts解析，并且密码与在服务器的系统配置>密钥设置>ssh password
     相同，也就是说如果自动分发密钥必须在系统配置中提前输入密码并保存，系统默认带的密码是root。
-    注意：系统只有在第一次上报信息时会调用ssh密钥分发.如果以后想使用自动密钥分发需要在资产管理中
-    删除服务信息，然后再自动上报即可。
+    注意：系统只有在第一次上报信息时会调用ssh密钥分发.如果以后想使用自动密钥分发需要在资产管理中删除服务信息，然后再自动上报即可。
 
     2、手工设置认证书认证。
     配置免密钥登陆客机(ansible和shell管理客户机需要此配置)
     在服务器上执行
-    ssh-keygen
+    ssh-keygen -q -N "" -t rsa -f /root/.ssh/id_rsa
     ssh-copy-id -i /root/.ssh/id_rsa.pub {客户机IP}
     输入客户机密码后认证成功可以ssh免密登入
 
-    CMDB自动上报主机以后，在ansible页面执行 同步到ansible将主机信息写入ansible的hosts文件
+    CMDB自动上报主机以后，在ansible页面执行"同步数据"按钮 将主机信息写入ansible的hosts文件
     然后将playbook 或是role脚本上传到/var/opt/adminset/data/playbook 或/var/opt/adminset/data/roles
 
 #   shell用法
@@ -149,8 +148,7 @@
 
 #   持续交付用法
     依赖免密登入（与ansible同）
-    持续交付模块具体作用为从源码服务器拉取代码到服务器本地，然后再通过rsync同步到project中指定的
-    目标服务器中。持续交付的部署条目依赖应用管理模块中的项目，是一对一关系。
+    持续交付模块具体作用为从源码服务器拉取代码到服务器本地，然后再通过rsync同步到project中指定的目标服务器中。持续交付的部署条目依赖应用管理模块中的项目，是一对一关系。
     1）部署策略，目前只支持直接部署一种模式。
     2）版本信息，可以不填写版本信息，默认将抓取默认分支
        源服务器为git时 写入git的tag名称 或是分支名如gitlab中的tag为1.8.0 则写入1.8.0，如果按分支发布则写相应分支名。
