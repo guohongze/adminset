@@ -121,6 +121,10 @@ def git_clone(job_workspace, auth_info, source_address, p1):
 
 
 def svn_clone(job_workspace, auth_info, source_address, p1):
+    if p1.version:
+        if not source_address.endswith("/") and not p1.version.endswith('/'):
+            source_address += '/'
+        source_address += p1.version
     if os.path.exists("{0}code/.svn".format(job_workspace)):
         cmd = "svn --non-interactive --trust-server-cert --username {2} --password {3} update {0} {1}code/".format(
                 source_address, job_workspace, auth_info["username"], auth_info["password"])
