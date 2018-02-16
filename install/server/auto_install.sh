@@ -102,7 +102,7 @@ python manage.py migrate
 echo "please create your adminset' super admin:"
 #python manage.py createsuperuser
 source /etc/profile
-/usr/bin/mysql -e "insert into adminset.accounts_userinfo (password,username,email,is_active,is_superuser) values ('pbkdf2_sha256$24000$2odRjOCV1G1V$SGJCqWf0Eqej6bjjxusAojWtZkz99vEJlDbQHUlavT4=','admin','admin@126.com',1,1);"
+/usr/bin/mysql -e "insert into adminset.accounts_userinfo (password,username,email,is_active,is_superuser) values ('pbkdf2_sha256\$24000\$2odRjOCV1G1V\$SGJCqWf0Eqej6bjjxusAojWtZkz99vEJlDbQHUlavT4=','admin','admin@126.com',1,1);"
 scp $adminset_dir/install/server/adminset.service /usr/lib/systemd/system
 systemctl daemon-reload
 chkconfig adminset on
