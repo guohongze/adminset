@@ -15,6 +15,7 @@ webssh更新至0.2.0
 增加客户端rhel支持
 优化CPU抓取逻辑
 导航栏弹出逻辑调整
+优化自动免密钥登陆逻辑
 
 
 
@@ -25,13 +26,13 @@ centos 7.2(1511) django 1.11.9（兼容Django1.9.x） python 2.7<br>
 生产服务器建议 4核CPU，8G内存以上.<br>
 学习测试建议 2核CPU，2G内存以上.<br>
 服务器操作系统版本要求 centos7.2及以上<br>
-自动安装的用户名admin 密码Adminset123<br>
 ```
 git clone https://github.com/guohongze/adminset.git
 adminset/install/server/auto_install.sh
 ```
-手动自定义安装请使用<br>
+说明：手动自定义安装请使用<br>
 adminset/install/server/server_install.sh<br>
+
 
 ## 客户端安装
 客户端脚本目前rhel/centos6、7,ubuntu14.04经过测试<br>
@@ -52,15 +53,17 @@ python adminset_agent.py
 ```
 nohup adminset_agent.py &
 ```
+注意：客户端全部功能需要配置服务器到客户端的ssh免密登录。
 
 ## 访问
 http://your_server_ip<br>
-使用自己在安装过程中创建的super admin用户名密码
+自动安装的用户名admin 密码Adminset123<br>
+手动安装使用自定义创建的super admin用户名密码
 
 ## 说明
-使用请转到，<a href="https://github.com/guohongze/adminset/blob/master/docs/Manual.md">使用说明</a><br>
-功能请转到，<a href="https://github.com/guohongze/adminset/wiki/AdminSet">功能说明</a><br>
-FAQ请转到，<a href="https://github.com/guohongze/adminset/wiki/FAQ">常见问题</a>
+使用参考，<a href="https://github.com/guohongze/adminset/blob/master/docs/Manual.md">使用说明</a><br>
+功能参考，<a href="https://github.com/guohongze/adminset/wiki/AdminSet">功能预览</a><br>
+FAQ参考，<a href="https://github.com/guohongze/adminset/wiki/FAQ">常见问题</a>
 
 # 安全
 建议不要将程序启动在有公网可以直接访问的设备上，如果需要请使用VPN。<br>

@@ -222,13 +222,13 @@ nginx -s reload
 
 # create ssh config
 echo "create ssh-key, you could choose no if you had have ssh key"
-if [ -z ~/.ssh/id_rsa.pub ]
+if [ ! -e ~/.ssh/id_rsa.pub ]
 then
     ssh-keygen -q -N "" -t rsa -f /root/.ssh/id_rsa
 else
     echo "you had already have a ssh rsa file."
 fi
-scp $adminset_dir/install/server/ssh/config ~/.ssh
+scp $adminset_dir/install/server/ssh/config ~/.ssh/config
 
 
 # 完成安装
