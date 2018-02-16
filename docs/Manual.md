@@ -5,24 +5,32 @@
     安装需要使用yum源请保证可用，或使用本地yum源。
     如果ubuntu客户端需要ansible等管理功能，需要开启root登录(配置脚本会自动开始，如不需要请手工关闭)
 
-    服务器安装：
-        1、下载代码
-        git clone https://github.com/guohongze/adminset.git
-        2、执行安装脚本
-        adminset/install/server/server_install.sh
-        安装过程需要输入管理员数据库等交互信息，如果安装中断再次执行server_install.sh即可.
-        安装过程中会生成rsa密钥，位于/root/.ssh 目录下，如果已经存在，忽略即可。
-        3、交互信息
-        1、如果系统开启了selinux会提示：Do you want to disabled selinux?[yes/no]
-           选择yes。(默认yes)
-        2、YUM源选择提示do you want to use an internet yum repository?[yes/no]
-           没有本地的yum源请选择yes，如果有本地的YUM源（包括epel源）请选择no。(默认值yes)
-        3、数据库选择提示：do you want to create a new mysql database?[yes/no]
-           本地没有数据库选择yes自动下载安装mariadb数据库，如已经存在mysql或mariadb数据库选择no，然后填写相关信息主机、端口、用户名、密码。(默认值yes)
-        4、mongodb选择提示：do you want to create a new Mongodb?[YES/no]
-           本地没有mongodb选择yes自动下载安装mongodb数据库，如已经存在mongodb数据库选择no，然后填写相关信息主机、端口、用户名、密码。(默认值yes)
-        5、创建超管用户提示，please create your adminset' super admin: 输入超管用户名、邮件、密码。
-    客户端安装
+    一、服务器安装：
+        1.1、下载代码
+            git clone https://github.com/guohongze/adminset.git
+        1.2、执行安装脚本-自动
+            adminset/install/server/auto_install.sh
+            如果使用自动安装则手动安装跳过,如果手动安装则跳过此步。
+            访问：http://your_server_ip
+            使用用户名admin 密码Adminset123
+        1.3、执行安装脚本-手动
+            1.3.1 adminset/install/server/server_install.sh
+            安装过程需要输入管理员数据库等交互信息，如果安装中断再次执行server_install.sh即可.
+            安装过程中会生成rsa密钥，位于/root/.ssh 目录下，如果已经存在，忽略即可。
+            1.3.2、手动安装交互信息说明
+            1）如果系统开启了selinux会提示：Do you want to disabled selinux?[yes/no]
+               选择yes。(默认yes)
+            2）YUM源选择提示do you want to use an internet yum repository?[yes/no]
+               没有本地的yum源请选择yes，如果有本地的YUM源（包括epel源）请选择no。(默认值yes)
+            3）数据库选择提示：do you want to create a new mysql database?[yes/no]
+               本地没有数据库选择yes自动下载安装mariadb数据库，如已经存在mysql或mariadb数据库选择no，然后填写相关信息主机、端口、用户名、密码。(默认值yes)
+            4）mongodb选择提示：do you want to create a new Mongodb?[YES/no]
+               本地没有mongodb选择yes自动下载安装mongodb数据库，如已经存在mongodb数据库选择no，然后填写相关信息主机、端口、用户名、密码。(默认值yes)
+            5）创建超管用户提示，please create your adminset' super admin: 输入超管用户名、邮件、密码。
+            6）访问：
+               http://your_server_ip
+               使用自己在安装过程中创建的super admin用户名密码
+    二、客户端安装
         说明：为保证注册IP是管理IP（后续会被ansible等调用），客户端的IP抓取目前使用主机名解析，否则报错。 如：主机名为cn-bj-web01 请在/etc/hosts中加入相应的解析 192.168.x.x cn-bj-web01，这样再执行adminset_agent.py 可以保证正常运行。 centos7不进行解析也可获取主机IP.
         step1:安装依赖
         拷贝adminset/install/client/client_install.sh 到客户机上并执行:
@@ -34,9 +42,6 @@
         后台运行请参考：
         nohup adminset_aent.py &
         agent默认每1800秒上传一次资产和硬件信息，可以在adminset_agent.py中自定义
-    访问：
-        http://your_server_ip
-        使用自己在安装过程中创建的super admin用户名密码
 
 #   程序目录
     安装脚本会将文件安装在/var/opt/adminset
@@ -45,21 +50,44 @@
     pid pid文件
     logs 日志
     data 常用数据
+    workspace 持续部署模块工作目录
 
 #   站点导航用法
     在站点管理中输入常用的运维工具系统后会自动出现在站点导航界面。
 
 #   cmdb用法
-    install/client/adminset_agent.py 开户后会自动上报主机相关信息到CMDB
-    获取主机信息
-    http://your_server_ip/cmdb/get/host/?token=your_token&name=host_name
-    获取所有主机：
-    http://your_server_ip/cmdb/get/host/?token=your_token&name=all
-    获取组信息：
-    http://your_server_ip/cmdb/get/group/?token=your_token&name=group_name
-    获取所有组：
-    http://your_server_ip/cmdb/get/group/?token=your_token&name=all
-
+    一、资产管理
+        表关系为主机管理关联IDC管理，每个主机选择一相对应的IDC。
+        表关系为主机管理关联组管理，每个主机选择一相对应的组。
+        组的作用在于任务编排模块的功能在调用组时的依据，比如ansible管理目标机器以组为单为时。
+        组与主机的设置是一对多，意义是对于硬件组的管理，而非逻辑业务组。
+        install/client/adminset_agent.py 开户后会自动上报主机相关信息到CMDB
+        获取主机信息
+        http://your_server_ip/cmdb/get/host/?token=your_token&name=host_name
+        获取所有主机：
+        http://your_server_ip/cmdb/get/host/?token=your_token&name=all
+        获取组信息：
+        http://your_server_ip/cmdb/get/group/?token=your_token&name=group_name
+        获取所有组：
+        http://your_server_ip/cmdb/get/group/?token=your_token&name=all
+    二、应用管理
+        2.1 产品线，一个产品线包含多个项目，表关系为一对多。每个产品线或项目有负责人是多对一。
+        2.2 项目管理
+            1）源类型，必须与源地址对应，如源码服务器为gitlab选择git，svn选择svn
+            2）源地址将会对持续交付产生影响，持续交付中的部署动作将会调用这些信息作为源文件的下载信息。
+               支持svn svn协议 如 svn://svn.adminset.com/project
+               支持svn http协议 如 svn://svn.adminset.com/project
+               支持git ssh协议 如 git@gitlab.com/website/project.git
+               支持git http协议 如 http(s)://gitlab.com/website/project.git
+               支持git http协议 如 http(s)://username@gitlab.com/website/project.git
+            3）程序部署路径为程序部署在目标服务器的路径，程序将调用rsync做全量或增量同步。
+               格式举例: /data/www/project
+            4）配置文件路径暂为实装。
+            5）所在服务器，部署的目标服务器，将会被持续交付模块的部署动作调用。
+         2.3 认证管理
+            此条目中保存所有系统中调用外部资源使用的用户权限信息，如下载私有gitlab repository的用户名
+            与密码，此条目被持续交付中的部署任务所关联。如果部署任务需要外部权限则创建，然后调用。
+            
 #   启用webssh
     需要设置域名解析，默认域名为adminset.cn（可以在配置管理页面进行变更）
     需要将这个域名做泛解析指向adminset所在的服务器，在本地或公网DNS都行，如果没有可以设置HOSTS解析，但HOSTS不支持泛解析。
@@ -149,7 +177,6 @@
     3)二次开发
     rsync.sh脚本只做增量，rsync参数不带--delete选项，不会在生产环境删除代码中已删除的条目,不更新组件配置文件，不会生成新的ORM数据库条目。
     update.sh脚本带--delete选项，同步代码，重新发布各组件的配置文件，并重新生成ORM数据文件（makemigrations migrate）。
-    4）0.5版本结构变动较大，更新请使用server_install.sh 然后在设置数据库时使用现有数据库。
 
 # 安全
     强烈建议不要将程序启动在有公网可以直接访问的设备上，如果需要请使用VPN。
