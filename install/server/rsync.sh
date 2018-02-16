@@ -10,3 +10,4 @@ cd .. && cd ..
 cur_dir=$(pwd)
 rsync --progress -ra --exclude '.git' $cur_dir/ $adminset_dir
 /bin/systemctl restart  adminset.service
+/bin/systemctl restart  celery.service
