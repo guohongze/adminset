@@ -55,7 +55,7 @@
 #   站点导航用法
     在站点管理中输入常用的运维工具系统后会自动出现在站点导航界面。
 
-#   cmdb用法
+#   资产穦用法
     一、资产管理
         表关系为主机管理关联IDC管理，每个主机选择一相对应的IDC。
         表关系为主机管理关联组管理，每个主机选择一相对应的组。
@@ -70,23 +70,25 @@
         http://your_server_ip/cmdb/get/group/?token=your_token&name=group_name
         获取所有组：
         http://your_server_ip/cmdb/get/group/?token=your_token&name=all
-    二、应用管理
-        2.1 产品线，一个产品线包含多个项目，表关系为一对多。每个产品线或项目有负责人是多对一。
-        2.2 项目管理
+
+#    应用管理
+     一、应用管理
+        1.1 产品线，一个产品线包含多个项目，表关系为一对多。每个产品线或项目有负责人是多对一。
+        1.2 项目管理
             1）源类型，必须与源地址对应，如源码服务器为gitlab选择git，svn选择svn
             2）源地址将会对持续交付产生影响，持续交付中的部署动作将会调用这些信息作为源文件的下载信息。
                支持svn svn协议 如 svn://svn.adminset.com/project
                支持svn http协议 如 svn://svn.adminset.com/project
-               支持git ssh协议 如 git@gitlab.com/website/project.git
+               支持git ssh协议 如 git@gitlab.com/website/project.git 使用ssh协议时请确认相关密钥已经加入到git服务器相应账号中。
                支持git http协议 如 http(s)://gitlab.com/website/project.git
                支持git http协议 如 http(s)://username@gitlab.com/website/project.git
             3）程序部署路径为程序部署在目标服务器的路径，程序将调用rsync做全量或增量同步。
                格式举例: /data/www/project
             4）配置文件路径暂为实装。
             5）所在服务器，部署的目标服务器，将会被持续交付模块的部署动作调用。
-         2.3 认证管理
+         1.3 认证管理
             此条目中保存所有系统中调用外部资源使用的用户权限信息，如下载私有gitlab repository的用户名
-            与密码，此条目被持续交付中的部署任务所关联。如果部署任务需要外部权限则创建，然后调用。
+            与密码，此条目被持续交付中的部署任务所关联。如果部署任务需要外部权限则创建，然后调用。  
             
 #   启用webssh
     需要设置域名解析，默认域名为adminset.cn（可以在配置管理页面进行变更）
@@ -100,7 +102,7 @@
     通过此URL进入webssh访问界面，第一次进入时会询问用户名密码，请填写系统对应的用户和密码即可。
 
 
-# 定时任务用法
+#   定时任务用法
     首先新建interval 或crontab
     新建任务填写名字
     选择间隔或crontab
@@ -133,11 +135,24 @@
     CMDB自动上报主机以后，在ansible页面执行 同步到ansible将主机信息写入ansible的hosts文件
     然后将playbook 或是role脚本上传到/var/opt/adminset/data/playbook 或/var/opt/adminset/data/roles
 
-#shell用法
+#   shell用法
     依赖免密登入（与ansible同）
     CMDB自动上报主机以后，shell界面可以直接调用主机。
     然后将常用脚本上传到/var/opt/adminset/data/scripts 中shell脚本栏将会自动发现脚本。
 
+#   持续交付用法
+    持续交付模块具体作用为从源码服务器拉取代码到服务器本地，然后再通过rsync同步到project中指定的
+    目标服务器中。持续交付的部署条目依赖应用管理模块中的项目，是一对一关系。
+    1）部署策略，目前只支持直接部署一种模式。
+    2）版本信息，可以不填写版本信息，默认将抓取默认分支
+       源服务器为git时 写入git的tag名称 或是分支名如gitlab中的tag为1.8.0 则写入1.8.0，如果按分支发布则写相应分支名。
+       源服务器为svn时 写入svn的tag或分支路径如： tags/v1.0 或 branches/br_dev01
+    3）构建清理，勾选后将清除前一次拉取的代码，如果想增量下量代码时请不要勾选此项，不勾选此项将会使用git pull拉取运程代码。
+    4）shell,代码发布后执行的shell，默认会在远程部署目标服务器上依次执行。
+    5）本地执行，勾选后shell中的代码将在adminset所有服务器本地执行。
+    6）认证信息，如果下载代码需要用户名密码等信息，在这些选择，此处调用应用管理中的认证管理。
+    7）清理按钮不会终止部署任务，只会清理部署的状态，用于部署任务意外中止后任务卡进度条的情况。
+    
 #   监控平台用法
     当adminset_agent.py自动上报信息到，监控会自动发现并配置，无需干预.
     当监控页面打开时，前端JS每10秒会异步抓取监控数据
@@ -166,23 +181,21 @@
 
 #   升级与更新
     强烈建设在升级或更新adminset之前先备份数据库，并在测试环境验证通过，因为adminset在快速的发展过程中，每版本功能与结构变化较大。
-    1）小版本更新：
-    如v0.3.6更新到v0.3.7只需下载相应版本的代码到本地然后执行：
-    adminset/install/update.sh
-    2）大版本更新：
-    如v0.3.0更新到v0.4.0
-    adminset/install/server_install.sh
-    如果原在数据库本机上未设置密码则在do you want to install new mysql/mongodb时选择yes可覆盖安装，这时会要求再创建一个超管，但不能和以前的超管同名，因为之前已经有数据了。
-    如果已设置密码或是独立服务器可以选择no，或者在安装完成后手动修改/var/opt/adminset/main/adminset.conf文件中的相应信息。
-    3)二次开发
-    rsync.sh脚本只做增量，rsync参数不带--delete选项，不会在生产环境删除代码中已删除的条目,不更新组件配置文件，不会生成新的ORM数据库条目。
-    update.sh脚本带--delete选项，同步代码，重新发布各组件的配置文件，并重新生成ORM数据文件（makemigrations migrate）。
+    1）版本更新：
+        下载相应版本的代码到本地然后执行：
+        chmdo +x adminset/install/server/update.sh
+        adminset/install/server/update.sh
+    2)二次开发
+        rsync.sh脚本只做增量，rsync参数不带--delete选项，不会在生产环境删除代码中已删除的条目,不更新组件配置文件，不会生成新的ORM数据库条目。
+        update.sh脚本带--delete选项，同步代码，重新发布各组件的配置文件，并重新生成ORM数据文件（makemigrations migrate）。
+        update.sh 可带一个参数，参数为需要更新的应用名，如变更了appconf模块的models只更新appconf可以使用update.sh appconf来更新
 
 # 安全
     强烈建议不要将程序启动在有公网可以直接访问的设备上，如果需要请使用VPN。
     建议生产环境中使用https配置服务器<br>
     建议adminset放在网管区中，并且开启防火墙。
     django的settings中开启了DEBUG，在生产中需要关闭并指定自己的域名。
+    adminset设计初衷为超级管理员工具集成平台，所以后台权限都使用超管权限，如果生产环境中不符合安全要求，需要自定义各后台权限调用。
 
 # 开发者交流
   QQ群：427794947

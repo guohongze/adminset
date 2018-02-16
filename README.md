@@ -5,21 +5,33 @@
 <br>
 Adminset基于DevOps理念开发，以整合全部运维场景为己任。Adminset是一个真正的基于运维思维而开发的全自动化运维平台。<br>
 
-## v0.7 新功能
-基于ssh2的 WEB terminal
+## v0.11 新功能
+django更新至1.11.9
+webssh更新至0.2.0
+新增认证中心功能
+新增持续交付模块
+新增免交互全自动安装
+新增redis可配置选项
+增加客户端rhel支持
+优化CPU抓取逻辑
+导航栏弹出逻辑调整
+
+
 
 ## 开发环境
-centos 7.2(1511) django 1.9.8（兼容Django1.11） python 2.7<br>
+centos 7.2(1511) django 1.11.9（兼容Django1.9.x） python 2.7<br>
 
 ## 服务端安装
 生产服务器建议 4核CPU，8G内存以上.<br>
 学习测试建议 2核CPU，2G内存以上.<br>
 服务器操作系统版本要求 centos7.2及以上<br>
-安装过程需要输入管理员数据库等交互信息<br>
+自动安装的用户名admin 密码Adminset123<br>
 ```
 git clone https://github.com/guohongze/adminset.git
-adminset/install/server/server_install.sh
+adminset/install/server/auto_install.sh
 ```
+手动自定义安装请使用<br>
+adminset/install/server/server_install.sh<br>
 
 ## 客户端安装
 客户端脚本目前rhel/centos6、7,ubuntu14.04经过测试<br>
