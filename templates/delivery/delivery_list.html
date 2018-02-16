@@ -83,7 +83,7 @@
                                         <a href="#"><li onclick="return deploy(this.value);" class="btn btn-sm btn-default" value="{{ project.job_name_id }}">部署</li></a>
                                         <a href="#"><li style="list-style-type:none" class="btn btn-sm btn-default" onclick="return tanchu(this.value)" value="{{ project.job_name_id  }}">日志</li></a>
                                         <a href="{% url "delivery_edit" project.id %}"><span class="btn btn-sm btn-default">编辑</span></a>
-                                        <a href="#"><li onclick="return taskstop(this.value);" class="btn btn-sm btn-default" value="{{ project.job_name_id }}">终止</li></a>
+                                        <a href="#"><li onclick="return taskstop(this.value);" class="btn btn-sm btn-default" value="{{ project.job_name_id }}">清理</li></a>
                                         <a href="{% url "delivery_del"%}?project_id={{ project.id }}" onclick="return confirm('确认删除项目吗？')"><span class="btn btn-sm btn-danger ">删除</span></a>
                                     </td>
                                 </tr>
@@ -154,7 +154,7 @@ function deploy(args) {
     }
 }
 function taskstop(args) {
-    if (confirm("确定终止部署任务？")) {
+    if (confirm("确定清理任务状态？")) {
         var pb = document.getElementById("progress_bar_"+args);
         pb.style.display = "none";
         $.get("/delivery/taskstop/"+args+"/",function(data,status){
