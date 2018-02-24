@@ -68,7 +68,7 @@
         表关系为主机管理关联组管理，每个主机选择一相对应的组。
         组的作用在于任务编排模块的功能在调用组时的依据，比如ansible管理目标机器以组为单为时。
         组与主机的设置是一对多，意义是对于硬件组的管理，而非逻辑业务组。
-        install/client/adminset_agent.py 开户后会自动上报主机相关信息到CMDB
+        install/client/adminset_agent.py 开启后会自动上报主机相关信息到CMDB
         获取主机信息
         http://your_server_ip/cmdb/get/host/?token=your_token&name=host_name
         获取所有主机：
@@ -91,7 +91,7 @@
                支持git http协议 如 http(s)://username@gitlab.com/website/project.git
             3）程序部署路径为程序部署在目标服务器的路径，程序将调用rsync做全量或增量同步。
                格式举例: /data/www/project
-            4）配置文件路径暂为实装。
+            4）配置文件路径功能暂时没有实装，留空白，或加上只相当于注释作用。
             5）所在服务器，部署的目标服务器，将会被持续交付模块的部署动作调用。
          1.3 认证管理
             此条目中保存所有系统中调用外部资源使用的用户权限信息，如下载私有gitlab repository的用户名
