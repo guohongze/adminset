@@ -51,7 +51,7 @@ python adminset_agent.py
 ```
 后台运行请参考：
 ```
-nohup adminset_agent.py &
+nohup python adminset_agent.py &
 ```
 注意：客户端全部功能需要配置服务器到客户端的ssh免密登录。
 
