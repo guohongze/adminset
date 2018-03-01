@@ -108,8 +108,8 @@ def parser_cpu(stdout):
 
 def get_disk_info():
     ret = {}
-    disk_dev = re.compile(r'Disk\s/dev/sd[a-z]{1}')
-    disk_name = re.compile(r'/dev/sd[a-z]{1}')
+    disk_dev = re.compile(r'Disk\s/dev/[a-z]*')
+    disk_name = re.compile(r'/dev/[a-z]*')
     pcmd = Popen(['fdisk', '-l'], shell=False,stdout=PIPE)
     stdout, stderr = pcmd.communicate()
     for i in stdout.split('\n'):
