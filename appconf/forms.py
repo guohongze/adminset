@@ -12,6 +12,7 @@ class AuthInfoForm(forms.ModelForm):
         model = AuthInfo
         exclude = ("id",)
         widgets = {
+            'dis_name': TextInput(attrs={'class': 'form-control', 'style': 'width:450px;'}),
             'username': TextInput(attrs={'class': 'form-control', 'style': 'width:450px;'}),
             'password': TextInput(attrs={'class': 'form-control', 'type': 'password', 'style': 'width:450px'}),
             'private_key': TextInput(attrs={'class': 'form-control', 'style': 'width:450px;'}),

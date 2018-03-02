@@ -66,6 +66,7 @@ class Host(models.Model):
     status = models.CharField(u"设备状态", choices=ASSET_STATUS, max_length=30, null=True, blank=True)
     os = models.CharField(u"操作系统", max_length=100, null=True, blank=True)
     vendor = models.CharField(u"设备厂商", max_length=50, null=True, blank=True)
+    up_time = models.CharField(u"上架时间", max_length=50, null=True, blank=True)
     cpu_model = models.CharField(u"CPU型号", max_length=100, null=True, blank=True)
     cpu_num = models.CharField(u"CPU数量", max_length=100, null=True, blank=True)
     memory = models.CharField(u"内存大小", max_length=30, null=True, blank=True)

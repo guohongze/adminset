@@ -7,13 +7,14 @@ from cmdb.models import Host
 
 
 class AuthInfo(models.Model):
-    username = models.CharField(u"用户名", max_length=50, unique=True, null=False, blank=False)
-    password = models.CharField(u"密码", max_length=50, null=False, blank=False)
+    dis_name = models.CharField(u"认证标识", max_length=50, unique=True, blank=False)
+    username = models.CharField(u"用户名", max_length=50, blank=True)
+    password = models.CharField(u"密码", max_length=50, blank=True)
     private_key = models.CharField(u"密钥", max_length=100, blank=True)
     memo = models.TextField(u"备注信息", max_length=200, blank=True)
 
     def __unicode__(self):
-        return self.username
+        return self.dis_name
 
 
 class AppOwner(models.Model):

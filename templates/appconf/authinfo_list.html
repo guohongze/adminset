@@ -51,7 +51,7 @@
                             {% for auth in all_authinfo %}
                                 <tr class="even gradeX">
                                     <td><input type="checkbox" id="id" class="i-checks" value="{{ auth.id }}" name="id" /></td>
-                                    <td>{{ auth.username }} </td>
+                                    <td>{{ auth.dis_name }} </td>
                                     <td>{{ auth.memo }} </td>
                                     <td>
                                         <a href="{% url "authinfo_edit" auth.id %}"><span class="btn btn-sm btn-info">编辑</span></a>

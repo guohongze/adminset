@@ -22,6 +22,7 @@ class AssetForm(forms.ModelForm):
             'status': Select(attrs={'class': 'form-control', 'style': 'width:530px;'}),
             'os': TextInput(attrs={'class': 'form-control', 'style': 'width:530px;'}),
             'vendor': TextInput(attrs={'class': 'form-control', 'style': 'width:530px;'}),
+            'up_time': TextInput(attrs={'class': 'form-control', 'style': 'width:530px;'}),
             'cpu_model': TextInput(attrs={'class': 'form-control', 'style': 'width:530px;'}),
             'cpu_num': TextInput(attrs={'class': 'form-control', 'style': 'width:530px;'}),
             'memory': TextInput(attrs={'class': 'form-control', 'style': 'width:530px;'}),
