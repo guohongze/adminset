@@ -43,7 +43,11 @@
         后台运行请参考：
         nohup adminset_aent.py &
         agent默认每1800秒上传一次资产和硬件信息，可以在adminset_agent.py中自定义
-
+        
+        注意：客户端全部功能需要配置服务器到客户端的ssh免密登录。
+        客户端正常使用需要修改脚本中的两个字段：
+        token = 'HPcWR7l4NJNJ' token是上传到服务器的密钥可以在WEB界面的系统配置中自定义
+        server_ip = '192.168.47.130' 此项目为adminset server的IP地址
     三、自动免密钥登陆
         如果实现全自动ssh免密登入客户机需要如下几个条件：
         1）客户机的所有密码都相同。

@@ -53,7 +53,11 @@ python adminset_agent.py
 ```
 nohup python adminset_agent.py &
 ```
-注意：客户端全部功能需要配置服务器到客户端的ssh免密登录。
+注意：客户端全部功能需要配置服务器到客户端的ssh免密登录。<br>
+客户端正常使用需要修改脚本中的两个字段：<br>
+token = 'HPcWR7l4NJNJ' token是上传到服务器的密钥可以在WEB界面的系统配置中自定义<br>
+server_ip = '192.168.47.130' 此项目为adminset server的IP地址<br>
+
 
 ## 访问
 http://your_server_ip<br>
