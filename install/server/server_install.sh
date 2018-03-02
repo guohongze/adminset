@@ -74,6 +74,7 @@ cd $cur_dir/vendor/WebSSH2
 #/usr/bin/cnpm install forever -g
 /usr/bin/npm config set registry http://registry.cnpmjs.org
 /usr/bin/npm install --production
+/usr/bin/npm install forever -g
 
 # 分发代码
 if [ ! $cur_dir ] || [ ! $adminset_dir ]
