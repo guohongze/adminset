@@ -41,7 +41,7 @@
         拷贝adminset/install/client/adminset_agent.py 到客户机上并执行：
         python adminset_agent.py
         后台运行请参考：
-        nohup adminset_aent.py &
+        nohup adminset_agent.py &
         agent默认每1800秒上传一次资产和硬件信息，可以在adminset_agent.py中自定义
         
         注意：客户端全部功能需要配置服务器到客户端的ssh免密登录。
