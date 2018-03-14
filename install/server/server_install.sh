@@ -55,10 +55,10 @@ fi
 case $yum1 in
 	yes|y|Y|YES)
 	    yum install -y epel-release
-		yum install -y gcc expect python-pip python-devel ansible smartmontools dmidecode libselinux-python git rsync dos2unix
+		yum install -y gcc expect python-pip python-devel ansible smartmontools dmidecode libselinux-python git rsync tofrodos
 		;;
 	no|n|N|NO)
-        yum install -y gcc python-pip expect python-devel ansible smartmontools dmidecode libselinux-python git rsync dos2unix
+        yum install -y gcc python-pip expect python-devel ansible smartmontools dmidecode libselinux-python git rsync tofrodos
 		;;
 	*)
 		exit 1
