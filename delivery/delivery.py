@@ -4,14 +4,15 @@
 from django.shortcuts import render, HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from models import Delivery
-from forms import DeliveryFrom
+from .models import Delivery
+from .forms import DeliveryFrom
 from accounts.permission import permission_verify
-from .tasks import deploy
+from .tasks import new_deploy
 import os
 from time import sleep
 import json
 import time
+from .file_lib import shell_w_to_file
 
 
 @login_required()
@@ -49,6 +50,17 @@ def delivery_add(request):
         form = DeliveryFrom(request.POST)
         if form.is_valid():
             form.save()
+            p1 = Delivery.objects.get(job_name_id=form.data["job_name"])
+            shell_path = "/var/opt/adminset/workspace/{0}/scripts".format(p1.job_name.name)
+            if not os.path.isdir(shell_path):
+                os.makedirs(shell_path)
+            src_path = shell_w_to_file(shell_cmd=form.data["shell"],
+                            shell_path=shell_path,
+                            shell_name=p1.job_name.name,
+                            code_path=p1.job_name.appPath
+                            )
+            p1.shell_file = src_path
+            p1.save()
             return HttpResponseRedirect(reverse('delivery_list'))
     else:
         form = DeliveryFrom()
@@ -58,6 +70,7 @@ def delivery_add(request):
         'request': request,
         'temp_name': temp_name,
     }
+    #print(results["form"])
     return render(request, 'delivery/delivery_base.html', results)
 
 
@@ -68,8 +81,20 @@ def delivery_edit(request, project_id):
     temp_name = "delivery/delivery-header.html"
     if request.method == 'POST':
         form = DeliveryFrom(request.POST, instance=project)
+        print form.data["shell"]
         if form.is_valid():
             form.save()
+            p1 = Delivery.objects.get(job_name_id=form.data["job_name"])
+            shell_path = "/var/opt/adminset/workspace/{0}/scripts".format(p1.job_name.name)
+            if not os.path.isdir(shell_path):
+                os.makedirs(shell_path)
+            src_path = shell_w_to_file(shell_cmd=form.data["shell"],
+                            shell_path=shell_path,
+                            shell_name=p1.job_name.name,
+                            code_path=p1.job_name.appPath
+                            )
+            p1.shell_file=src_path
+            p1.save()
             return HttpResponseRedirect(reverse('delivery_list'))
     else:
         form = DeliveryFrom(instance=project)
@@ -104,13 +129,15 @@ def delivery_deploy(request, project_id):
     os.system("mkdir -p /var/opt/adminset/workspace/{0}/scripts".format(job_name))
     if app_path == "/":
         return HttpResponse("app deploy destination cannot /")
+        #print(error)
     # foreign key query need add .all()
+
     servers = project.job_name.serverList.all()
     for server in servers:
         server_ip = str(server.ip)
         server_list.append(server_ip)
     project.bar_data = 15
-    deploy.delay(job_name, server_list, app_path, source_address, project_id, auth_info)
+    print new_deploy(job_name, server_list, app_path, source_address, project_id, auth_info)
     return HttpResponse("ok")
 
 

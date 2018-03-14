@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls import url, include
 import delivery
-import tasks
+#import tasks
 urlpatterns = [
     url(r'^$', delivery.delivery_list, name='delivery'),
     url(r'^add/$', delivery.delivery_add, name='delivery_add'),
