@@ -69,14 +69,27 @@ def cabinet_edit(request, cabinet_id):
         form = CabinetForm(request.POST, instance=project)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('cabinet_list'))
+            return HttpResponseRedirect(reverse('cabinet'))
     else:
         form = CabinetForm(instance=project)
 
     results = {
         'form': form,
-        'project_id': cabinet_id,
+        'cabinet_id': cabinet_id,
         'request': request,
         'temp_name': temp_name,
     }
-    return render(request, 'appconf/project_base.html', results)
+    return render(request, 'cmdb/cabinet_base.html', results)
+
+
+@login_required
+@permission_verify()
+def server_list(request, cabinet_id):
+    temp_name = "cmdb/cmdb-header.html"
+    cab = Cabinet.objects.get(id=cabinet_id)
+    servers = cab.serverList.all()
+    results = {
+        'temp_name': temp_name,
+        'server_list':  servers,
+    }
+    return render(request, 'cmdb/cabinet_server_list.html', results)

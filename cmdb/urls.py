@@ -18,6 +18,7 @@ urlpatterns = [
     url(r'^cabinet/$', cabinet.cabinet, name='cabinet'),
     url(r'^cabinet/del/$', cabinet.cabinet_del, name='cabinet_del'),
     url(r'^cabinet/add/$', cabinet.cabinet_add, name='cabinet_add'),
+    url(r'^cabinet/server_list/(?P<cabinet_id>\d+)/$', cabinet.server_list, name='cabinet_server_list'),
     url(r'^cabinet/edit/(?P<cabinet_id>\d+)/$', cabinet.cabinet_edit, name='cabinet_edit'),
     url(r'^idc/$', idc.idc, name='idc'),
     url(r'^idc/add/$', idc.idc_add, name='idc_add'),

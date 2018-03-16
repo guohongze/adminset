@@ -50,7 +50,7 @@
                                 {% for g in allcabinet %}
                                     <tr class="even gradeA">
                                         <td><input type="checkbox" id="u_id" class="item1" value="{{ g.id }}" name="g_check" /></td>
-                                        <td><a href="#"><li style="list-style-type:none" onclick="return tanchu(this.value)" value="{{ g.id }}"> {{ g.name }}</li></a></td>
+                                        <td><a href="#"><li style="list-style-type:none" onclick="return popWin(this.value)" value="{{ g.id }}">{{ g.name }}</li></a> </td>
                                         <td>{{ g.desc }}</td>
 
                                         <td>
@@ -110,31 +110,13 @@ function checkSubmit() {
 }
 </script>
 <script>
-function tanchu(n){
+function popWin(cabinet_id){
   layer.open({
-  type: 2,
-  title: '信息修改',
-  area: ['600px', '450px'],
-  shadeClose: true, //点击遮罩关闭
-  content: ['/cmdb/cabinet/edit/' + n],
-  end:function(){
-        var handle_status = $("#handle_status").val();
-        if ( handle_status == '1' ) {
-            layer.msg('保存成功！',{
-                icon: 1,
-                time: 2000 //2秒关闭（如果不配置，默认是3秒）
-            },function(){
-                history.go(0);
-            });
-        } else if ( handle_status == '2' ) {
-            layer.msg('修改失败！',{
-                icon: 2,
-                time: 2000 //2秒关闭（如果不配置，默认是3秒）
-            },function(){
-                history.go(0);
-            });
-        }
-    }
+      type: 2,
+      title: '项目列表',
+      area: ['700px', '500px'],
+      shadeClose: true, //点击遮罩关闭
+      content: ['/cmdb/cabinet/server_list/' + cabinet_id]
   });
 }
 </script>
