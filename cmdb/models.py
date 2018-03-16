@@ -72,12 +72,26 @@ class Host(models.Model):
     memory = models.CharField(u"内存大小", max_length=30, null=True, blank=True)
     disk = models.CharField(u"硬盘信息", max_length=255, null=True, blank=True)
     sn = models.CharField(u"SN号 码", max_length=60, blank=True)
-    idc = models.ForeignKey(Idc, verbose_name=u"所在机房", on_delete=models.SET_NULL, null=True, blank=True)
     position = models.CharField(u"所在位置", max_length=100, null=True, blank=True)
     memo = models.TextField(u"备注信息", max_length=200, null=True, blank=True)
 
     def __unicode__(self):
         return self.hostname
+
+
+class Cabinet(models.Model):
+    idc = models.ForeignKey(Idc, verbose_name=u"所在机房", on_delete=models.SET_NULL, null=True, blank=True)
+    name = models.CharField(u"机柜", max_length=30, unique=True)
+    desc = models.CharField(u"描述", max_length=100, blank=True)
+
+    serverList = models.ManyToManyField(
+            Host,
+            blank=True,
+            verbose_name=u"所在服务器"
+    )
+
+    def __unicode__(self):
+        return self.name
 
 
 class IpSource(models.Model):

@@ -4,7 +4,7 @@
 from django import forms
 from django.forms.widgets import *
 
-from .models import Host, Idc, HostGroup
+from .models import Host, Idc, HostGroup, Cabinet
 
 
 class AssetForm(forms.ModelForm):
@@ -30,7 +30,7 @@ class AssetForm(forms.ModelForm):
             'sn': TextInput(attrs={'class': 'form-control', 'style': 'width:530px;'}),
             'idc': Select(attrs={'class': 'form-control', 'style': 'width:530px;'}),
             'position': TextInput(attrs={'class': 'form-control', 'style': 'width:530px;', 'placeholder': u'物理机写位置，虚机写宿主'}),
-            'memo': Textarea(attrs={'class': 'form-control', 'style': 'width:530px;'}),
+            'memo': Textarea(attrs={'rows': 4, 'cols': 15, 'class': 'form-control', 'style': 'width:530px;'}),
         }
 
 
@@ -77,3 +77,27 @@ class GroupForm(forms.ModelForm):
     class Meta:
         model = HostGroup
         exclude = ("id", )
+
+
+class CabinetForm(forms.ModelForm):
+
+    def clean(self):
+        cleaned_data = super(CabinetForm, self).clean()
+        value = cleaned_data.get('name')
+        try:
+            Cabinet.objects.get(name=value)
+            self._errors['name'] = self.error_class(["%s的信息已经存在" % value])
+        except Cabinet.DoesNotExist:
+            pass
+        return cleaned_data
+
+    class Meta:
+        model = Cabinet
+        exclude = ("id", )
+
+        widgets = {
+            'name': TextInput(attrs={'class': 'form-control', 'style': 'width:450px;'}),
+            'idc': Select(attrs={'class': 'form-control', 'style': 'width:450px;'}),
+            'desc': Textarea(attrs={'rows': 4, 'cols': 15, 'class': 'form-control', 'style': 'width:450px;'}),
+
+        }

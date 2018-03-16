@@ -20,10 +20,10 @@ cd $cur_dir/vendor/WebSSH2
 #/usr/bin/npm install -g cnpm --registry=https://registry.npm.taobao.org
 #/usr/bin/cnpm install --production
 #/usr/bin/cnpm install forever -g
-/usr/bin/npm config set registry http://registry.cnpmjs.org
-/usr/bin/npm install --production
-/usr/bin/npm install forever -g
-
+#/usr/bin/npm config set registry http://registry.cnpmjs.org
+#/usr/bin/npm install --production
+#/usr/bin/npm install forever -g
+cd $adminset_dir
 if [ $1 ]
 then
     python manage.py makemigrations $1

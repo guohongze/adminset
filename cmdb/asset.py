@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from forms import AssetForm
-from models import Host, Idc, HostGroup, ASSET_STATUS, ASSET_TYPE
+from models import Host, Idc, HostGroup, ASSET_STATUS, ASSET_TYPE, Cabinet
 from django.shortcuts import render, HttpResponse
 from django.db.models import Q
 from cmdb.api import get_object
@@ -35,6 +35,7 @@ def asset(request):
     keyword = request.GET.get('keyword', '')
     export = request.GET.get("export", '')
     group_id = request.GET.get("group_id", '')
+    cabinet_id = request.GET.get("cabinet_id", '')
     idc_id = request.GET.get("idc_id", '')
     asset_id_all = request.GET.getlist("id", '')
 
@@ -42,6 +43,12 @@ def asset(request):
         group = get_object(HostGroup, id=group_id)
         if group:
             asset_find = Host.objects.filter(group=group)
+
+    if cabinet_id:
+        cabinet = get_object(Cabinet, id=cabinet_id)
+        if cabinet:
+            asset_find = Host.objects.filter(cabinet=cabinet)
+
     elif idc_id:
         idc = get_object(Idc, id=idc_id)
         if idc:
