@@ -58,7 +58,8 @@ def asset(request):
     if idc_name:
         asset_find = asset_find.filter(idc__name__contains=idc_name)
     if group_name:
-        asset_find = asset_find.filter(group__name__contains=group_name)
+        get_group = HostGroup.objects.get(name=group_name)
+        asset_find = get_group.serverList.all()
     if asset_type:
         asset_find = asset_find.filter(asset_type__contains=asset_type)
     if status:
