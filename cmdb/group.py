@@ -2,10 +2,12 @@
 # -*- coding: utf-8 -*-
 
 from django.shortcuts import render
-from models import Host, HostGroup
-from forms import GroupForm, IdcForm
+from models import HostGroup
+from forms import GroupForm
 from django.contrib.auth.decorators import login_required
 from accounts.permission import permission_verify
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
 
 
 @login_required()
@@ -33,18 +35,22 @@ def group_add(request):
         else:
             tips = u"增加失败！"
             display_control = ""
-        return render(request, "cmdb/group_add.html", locals())
+        return render(request, "cmdb/group_base.html", locals())
     else:
         display_control = "none"
         group_form = GroupForm()
-        idc_form = IdcForm()
-        return render(request, "cmdb/group_add.html", locals())
+        return render(request, "cmdb/group_base.html", locals())
 
 
 @login_required()
 @permission_verify()
 def group_del(request):
     temp_name = "cmdb/cmdb-header.html"
+
+    group_id = request.GET.get('id', '')
+    if group_id:
+        HostGroup.objects.filter(id=group_id).delete()
+
     if request.method == 'POST':
         group_items = request.POST.getlist('g_check', [])
         if group_items:
@@ -56,42 +62,35 @@ def group_del(request):
 
 @login_required()
 @permission_verify()
-def group_edit(request, ids):
-    obj = HostGroup.objects.get(id=ids)
-    allgroup = HostGroup.objects.all()
-    unselect = Host.objects.filter(group__name=None)
-    members = Host.objects.filter(group__name=obj.name)
-    return render(request, "cmdb/group_edit.html", locals())
-
-
-@login_required()
-@permission_verify()
-def group_save(request):
+def group_edit(request, group_id):
+    project = HostGroup.objects.get(id=group_id)
     temp_name = "cmdb/cmdb-header.html"
     if request.method == 'POST':
-        group_id = request.POST.get('id')
-        name = request.POST.get('name')
-        desc = request.POST.get('desc')
-        members = request.POST.getlist('members', [])
-        unselect = request.POST.getlist('unselect', [])
-        group_item = HostGroup.objects.get(id=group_id)
-        if unselect:
-            for host in unselect:
-                # print "unselect: "+host
-                obj = Host.objects.get(hostname=host)
-                obj.group_id = None
-                obj.save()
-        if members:
-            for host in members:
-                # print "members: "+host
-                obj = Host.objects.get(hostname=host)
-                obj.group_id = group_id
-                obj.save()
-        group_item.name = name
-        group_item.desc = desc
-        group_item.save()
-        obj = group_item
-        status = 1
+        form = GroupForm(request.POST, instance=project)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('group'))
     else:
-        status = 2
-    return render(request, "cmdb/group_edit.html", locals())
+        form = GroupForm(instance=project)
+    display_control = "none"
+    results = {
+        'group_form': form,
+        'group_id': group_id,
+        'request': request,
+        'temp_name': temp_name,
+        'display_control': display_control,
+    }
+    return render(request, 'cmdb/group_base.html', results)
+
+
+@login_required
+@permission_verify()
+def server_list(request, group_id):
+    temp_name = "cmdb/cmdb-header.html"
+    grp = HostGroup.objects.get(id=group_id)
+    servers = grp.serverList.all()
+    results = {
+        'temp_name': temp_name,
+        'server_list':  servers,
+    }
+    return render(request, 'cmdb/group_server_list.html', results)

@@ -1,18 +1,20 @@
 {% extends 'base.html' %}
 {% block self_head_css_js %}
     <script src="/static/layer/layer.js"></script>
+    <script src="/static/js/jquery.bootstrap-duallistbox.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap-duallistbox.css">
 {% endblock %}
 {% block content %}
 <script>
     window.onload=init;
     function init() {
-        showhide(2);
+        showhide();
     }
-    function showhide(n) {
+    function showhide() {
         var box = document.getElementById("group");
         box.className="active";
-        var box = document.getElementById("cmdb");
-        box.className="active";
+        var box2 = document.getElementById("cmdb");
+        box2.className="active";
     }
 </script>
 
@@ -34,7 +36,11 @@
         <div class="box-header with-border">
         </div>
         <div class="box-body">
-      <form action="{% url 'group_add' %}" method="post">
+        {% if group_id %}
+            <form action="{% url 'group_edit' group_id %}" method="post">
+        {% else %}
+            <form action="{% url 'group_add' %}" method="post">
+        {% endif %}
         {% csrf_token %}
         {{ group_form.as_p }}
           <!-- onclick="CheckChinese('test',this.value)" -->
@@ -44,7 +50,7 @@
         </div>
         <!-- /.box-body -->
         <div class="box-footer">
-          <i class="fa fa-info-circle"></i> 请勿重复添加条目,组名不要使用中文。
+          <i class="fa fa-info-circle"></i> 请勿重复添加条目,不建议使用中文。
         </div>
         <!-- /.box-footer-->
       </div>
@@ -52,6 +58,15 @@
     </section>
 
   </div>
+
+<script>
+    var demo1 = $('select[name="serverList"]').bootstrapDualListbox({
+          nonSelectedListLabel: '可选择服务器',
+          selectedListLabel: '已选择服务器',
+          preserveSelectionOnMove: 'moved',
+          moveOnSelect: false
+    });
+</script>
 <script language="javascript" type="text/javascript">
   function CheckChinese(obj,val){
 　　var reg = new RegExp("[\\u4E00-\\u9FFF]+","g");

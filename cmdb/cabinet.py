@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from django.shortcuts import render
-from models import Host, Cabinet
+from models import Cabinet
 from forms import CabinetForm
 from django.contrib.auth.decorators import login_required
 from accounts.permission import permission_verify

@@ -68,15 +68,21 @@ class GroupForm(forms.ModelForm):
         cleaned_data = super(GroupForm, self).clean()
         value = cleaned_data.get('name')
         try:
-            HostGroup.objects.get(name=value)
+            Cabinet.objects.get(name=value)
             self._errors['name'] = self.error_class(["%s的信息已经存在" % value])
-        except HostGroup.DoesNotExist:
+        except Cabinet.DoesNotExist:
             pass
         return cleaned_data
 
     class Meta:
         model = HostGroup
         exclude = ("id", )
+
+        widgets = {
+            'name': TextInput(attrs={'class': 'form-control', 'style': 'width:450px;'}),
+            'desc': Textarea(attrs={'rows': 4, 'cols': 15, 'class': 'form-control', 'style': 'width:450px;'}),
+
+        }
 
 
 class CabinetForm(forms.ModelForm):

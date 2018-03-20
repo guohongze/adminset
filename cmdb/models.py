@@ -48,19 +48,10 @@ class Idc(models.Model):
         verbose_name_plural = verbose_name
 
 
-class HostGroup(models.Model):
-    name = models.CharField(u"组名", max_length=30, unique=True)
-    desc = models.CharField(u"描述", max_length=100, null=True, blank=True)
-
-    def __unicode__(self):
-        return self.name
-
-
 class Host(models.Model):
     hostname = models.CharField(max_length=50, verbose_name=u"主机名", unique=True)
     ip = models.GenericIPAddressField(u"管理IP", max_length=15)
     other_ip = models.CharField(u"其它IP", max_length=100, null=True, blank=True)
-    group = models.ForeignKey(HostGroup, verbose_name=u"设备组", on_delete=models.SET_NULL, null=True, blank=True)
     asset_no = models.CharField(u"资产编号", max_length=50, null=True, blank=True)
     asset_type = models.CharField(u"设备类型", choices=ASSET_TYPE, max_length=30, null=True, blank=True)
     status = models.CharField(u"设备状态", choices=ASSET_STATUS, max_length=30, null=True, blank=True)
@@ -82,6 +73,20 @@ class Host(models.Model):
 class Cabinet(models.Model):
     idc = models.ForeignKey(Idc, verbose_name=u"所在机房", on_delete=models.SET_NULL, null=True, blank=True)
     name = models.CharField(u"机柜", max_length=30, unique=True)
+    desc = models.CharField(u"描述", max_length=100, blank=True)
+
+    serverList = models.ManyToManyField(
+            Host,
+            blank=True,
+            verbose_name=u"所在服务器"
+    )
+
+    def __unicode__(self):
+        return self.name
+
+
+class HostGroup(models.Model):
+    name = models.CharField(u"服务器组名", max_length=30, unique=True)
     desc = models.CharField(u"描述", max_length=100, blank=True)
 
     serverList = models.ManyToManyField(

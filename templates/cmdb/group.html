@@ -11,8 +11,8 @@
     function showhide(n) {
         var box = document.getElementById("cmdb");
         box.className="active";
-        var box = document.getElementById("group");
-        box.className="active";
+        var box2 = document.getElementById("group");
+        box2.className="active";
     }
 </script>
 
@@ -42,6 +42,7 @@
                             </th>
                                     <th>组名</th>
                                     <th>描述</th>
+                                    <th>操作</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -49,8 +50,13 @@
                                 {% for g in allgroup %}
                                     <tr class="even gradeA">
                                         <td><input type="checkbox" id="u_id" class="item1" value="{{ g.id }}" name="g_check" /></td>
-                                        <td><a href="#"><li style="list-style-type:none" onclick="return tanchu(this.value)" value="{{ g.id }}"> {{ g.name }}</li></a></td>
+                                        <td><a href="#"><li style="list-style-type:none" onclick="return popWin(this.value)" value="{{ g.id }}">{{ g.name }}</li></a> </td>
                                         <td>{{ g.desc }}</td>
+
+                                        <td>
+                                            <a href="{% url "group_edit" g.id %}"><span class="btn btn-sm btn-info">编辑</span></a>
+                                            <a href="{% url "group_del"%}?id={{ g.id }}" onclick="return confirm('确认删除？')"><span class="btn btn-sm btn-danger ">删除</span></a>
+                                        </td>
                                     </tr>
                                 {% endfor %}
                                 {% else %}
@@ -59,7 +65,7 @@
                             </tbody>
                   </table>
                     <div class="btn-group">
-						 <button class="btn btn-danger " onclick="return checkSubmit()"><b>删除组</b></button>
+						 <button class="btn btn-danger " onclick="return checkSubmit()"><b>删除</b></button>
                     </div>
                 </div>
             </div>
@@ -104,31 +110,13 @@ function checkSubmit() {
 }
 </script>
 <script>
-function tanchu(n){
+function popWin(group_id){
   layer.open({
-  type: 2,
-  title: '机房信息修改',
-  area: ['600px', '450px'],
-  shadeClose: true, //点击遮罩关闭
-  content: ['/cmdb/group/edit/' + n,],
-  end:function(){
-        var handle_status = $("#handle_status").val();
-        if ( handle_status == '1' ) {
-            layer.msg('保存成功！',{
-                icon: 1,
-                time: 2000 //2秒关闭（如果不配置，默认是3秒）
-            },function(){
-                history.go(0);
-            });
-        } else if ( handle_status == '2' ) {
-            layer.msg('修改失败！',{
-                icon: 2,
-                time: 2000 //2秒关闭（如果不配置，默认是3秒）
-            },function(){
-                history.go(0);
-            });
-        }
-    }
+      type: 2,
+      title: '组成员',
+      area: ['700px', '500px'],
+      shadeClose: true, //点击遮罩关闭
+      content: ['/cmdb/group/server_list/' + group_id]
   });
 }
 </script>
