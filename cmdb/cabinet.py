@@ -72,12 +72,13 @@ def cabinet_edit(request, cabinet_id):
             return HttpResponseRedirect(reverse('cabinet'))
     else:
         form = CabinetForm(instance=project)
-
+    display_control = "none"
     results = {
-        'form': form,
+        'cabinet_form': form,
         'cabinet_id': cabinet_id,
         'request': request,
         'temp_name': temp_name,
+        'display_control': display_control,
     }
     return render(request, 'cmdb/cabinet_base.html', results)
 
