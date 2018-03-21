@@ -2,7 +2,7 @@ django==1.11.9
 sh==1.12.9
 mysql-python==1.2.5
 pytest==3.0.7
-celery==4.0.2
+celery==4.1.0
 django-celery-beat==1.0.1
 gunicorn==19.7.1
 redis==2.10.5
