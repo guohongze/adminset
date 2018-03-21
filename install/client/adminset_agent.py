@@ -2,49 +2,19 @@
 # coding=utf-8
 
 import os
-from subprocess import Popen, PIPE
 import re
 import platform
 import socket
 import time
 import json
 import threading
+import psutil
+import schedule
+import requests
+from subprocess import Popen, PIPE
 
 token = 'HPcWR7l4NJNJ'
 server_ip = '192.168.47.130'
-
-try:
-    import psutil
-except ImportError as msg:
-    print(msg)
-    print("----------------------------------------------")
-    print("begining install psutil module, please waiting")
-    p = Popen('pip install psutil==5.2.2', stdout=PIPE, shell=True)
-    stdout, stderr = p.communicate()
-    print stdout
-    import psutil
-
-try:
-    import schedule
-except ImportError as msg:
-    print msg
-    print("------------------------------------------------")
-    print("begining install schedule module, please waiting")
-    p = Popen('pip install schedule==0.4.3', stdout=PIPE, shell=True)
-    stdout, stderr = p.communicate()
-    print stdout
-    import schedule
-
-try:
-    import requests
-except ImportError as msg:
-    print msg
-    print("------------------------------------------------")
-    print("begining install schedule module, please waiting")
-    p = Popen('pip install requests==2.17.3', stdout=PIPE, shell=True)
-    stdout, stderr = p.communicate()
-    print stdout
-    import requests
 
 
 def get_ip():
@@ -303,8 +273,8 @@ if __name__ == "__main__":
     asset_info_post()
     time.sleep(1)
     agg_sys_info()
-    schedule.every(1800).seconds.do(run_threaded, asset_info_post)
-    schedule.every(60).seconds.do(run_threaded, agg_sys_info)
+    schedule.every(3600).seconds.do(run_threaded, asset_info_post)
+    schedule.every(300).seconds.do(run_threaded, agg_sys_info)
     while True:
         schedule.run_pending()
         time.sleep(1)
