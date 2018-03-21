@@ -54,5 +54,6 @@ else
     echo "your os version is not supported!"
 fi
 echo "####client prepare finished!###"
+systemctl daemon-reload
 service adminsetd start
 service adminsetd restart
