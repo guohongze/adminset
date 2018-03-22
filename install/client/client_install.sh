@@ -32,16 +32,15 @@ trusted-host=mirrors.aliyun.com
 EOF
 
 echo "####install pip packages####"
+mkdir -p /var/opt/adminset/client
 pip install --upgrade pip
-for service in requests psutil schedule
-do
-    if (pip freeze|grep $service)
-    then
-        echo "$service package have installed"
-    else
-        pip install -U $service
-    fi
-done
+pip install virtualenv
+cd /var/opt/adminset/client
+source /var/opt/adminset/client/venv/bin/activate
+virtualenv --no-site-packages venv
+pip install requests==2.11.1
+pip install psutil==5.2.2
+pip install schedule==0.4.3
 
 echo "####config adminset agent####"
 if (echo $os|grep centos) || (echo $os|grep 'Red Hat')

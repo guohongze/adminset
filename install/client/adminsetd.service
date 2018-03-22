@@ -3,8 +3,8 @@ Description=Adminset Agent Script
 After=network.target
 
 [Service]
-WorkingDirectory=/usr/local/bin
-ExecStart=/usr/bin/env python adminset_agent.py
+WorkingDirectory=/var/opt/adminset/client/
+ExecStart="source venv/bin/activate; /usr/bin/env python adminset_agent.py"
 ExecReload=/bin/kill -s HUP $MAINPID
 ExecStop=/bin/kill -s TERM $MAINPID
 User=root
