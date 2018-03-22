@@ -33,10 +33,15 @@ EOF
 
 echo "####install pip packages####"
 pip install --upgrade pip
-pip install -U psutil==5.2.2
-pip install -U schedule==0.4.3
-pip install -U requests==2.11.1
-
+for service in requests psutil schedule
+do
+    if (pip freeze|grep $service)
+    then
+        echo "$service package have installed"
+    else
+        pip install -U $service
+    fi
+done
 
 echo "####config adminset agent####"
 if (echo $os|grep centos) || (echo $os|grep 'Red Hat')
