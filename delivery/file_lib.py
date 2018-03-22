@@ -44,14 +44,16 @@ def update_file(config_file,Keyword,str_name,update_type):
     find_date = ""
     with open(config_file, "r") as f:
         for lin in f:
-            #print len(Keyword), Keyword
             if Keyword in lin:
-                if update_type == "annotation_file" and not lin.startswith("#annotation_file_"):
-                    new_lin = str_name + lin
-                elif update_type == "un_annotation_file" and lin.startswith("#annotation_file_"):
-                    new_lin = lin.replace(str_name, "")
+                if update_type == "annotation_file":
+                    if not lin.startswith("#annotation_file_"):
+                        new_lin = str_name + lin
+                    new_lin = lin
+                elif update_type == "un_annotation_file":
+                    if lin.startswith("#annotation_file_"):
+                        new_lin = lin.replace(str_name, "")
+                    new_lin = lin
                 else:
-                    #print(lin)
                     return "update_type error!"
                 lin = lin.replace(lin, new_lin)
             find_date += lin
@@ -80,7 +82,6 @@ def file_in_str(file_name,str_name):
         return file_name + "in str"
     with open(file_name,'r') as f:
         file_open = f.read()
-    #print type(str_name)
     if isinstance(str_name, list):
         for I in str_name:
             if I in file_open:
@@ -96,6 +97,8 @@ def file_in_str(file_name,str_name):
 def loginfo_to_file(log_file,info):
     with open(log_file, "ab+") as f:
         f.writelines("<br><h5>{0}</h5<br>".format(info))
+        f.read()
+    f.close()
 
 def file_path_zip(src,dest):
     cmd="tar -zcvf {0} {1}".format(src,dest)
@@ -119,6 +122,14 @@ def shell_w_to_file(shell_cmd,shell_path,shell_name,code_path):
 
     with open(shell_path_url, "w") as f:
         f.write(shell_cmd)
+    cmd_exec("/usr/bin/fromdos {0}".format(shell_path_url))
     return shell_path_url
+
+def str_to_list(input_info):
+    if isinstance(input_info, str):
+        out_info = [input_info]
+    else:
+        out_info = input_info
+    return out_info
 
 

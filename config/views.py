@@ -1,12 +1,16 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 from django.shortcuts import render, HttpResponse
-import ConfigParser
 import os
 from django.contrib.auth.decorators import login_required
 from accounts.permission import permission_verify
 from django.contrib.auth import get_user_model
 from lib.log import dic
+try:
+    import configparser
+except:
+    import ConfigParser
+    configparser = ConfigParser
 
 
 @login_required()
@@ -15,7 +19,7 @@ def index(request):
     temp_name = "config/config-header.html"
     display_control = "none"
     dirs = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    config = ConfigParser.ConfigParser()
+    config = configparser.ConfigParser()
     all_level = dic
     with open(dirs+'/adminset.conf', 'r') as cfgfile:
         config.readfp(cfgfile)

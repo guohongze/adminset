@@ -155,6 +155,7 @@ def new_deploy(job_name, server_list, app_path, source_address, project_id, auth
                                  java_script=p1.job_name.java_script,
                                  work_path=p1.job_name.appPath,
                                  obj_name=p1.job_name.name,
+                                 shell_file=p1.shell_file,
                                  exclude=p1.job_name.raync_exclude)
         if lvs_zhuji:
             baocuen(60,True)
@@ -177,6 +178,7 @@ def new_deploy(job_name, server_list, app_path, source_address, project_id, auth
                                  java_script=p1.job_name.java_script,
                                  work_path=p1.job_name.appPath,
                                  obj_name=p1.job_name.name,
+                                 shell_file=p1.shell_file,
                                  exclude=p1.job_name.raync_exclude)
         if lvs_zhuji:
             baocuen(130, True)
@@ -184,16 +186,6 @@ def new_deploy(job_name, server_list, app_path, source_address, project_id, auth
             baocuen(130, False)
             return 1
     elif server_list_len == 1:
-        # ansible_cmd = Ansible_cmd(server_list_1)
-        # ansible_shell = ansible_cmd.rsycn(job_workspace + "/code/", "/opt/")
-        # if ansible_shell[0] == "1":
-        #     with open(log_path + log_name, 'wb+') as f:
-        #         f.writelines("<h4>{0}</h4>".format(ansible_shell[1]))
-        #     baocuen(130, False)
-        #     return 1
-        # else:
-        #     with open(log_path + log_name, 'wb+') as f:
-        #         f.writelines("<h4>{0}</h4>".format(ansible_shell[1]))
         code_rsync_dest(host_group=server_list_1,
                         code_src="{0}/code/".format(job_workspace),
                         code_dest="/war/{0}/{1}".format(p1.job_name.appPath,
@@ -203,8 +195,8 @@ def new_deploy(job_name, server_list, app_path, source_address, project_id, auth
                         work_path=p1.job_name.appPath,
                         obj_name=p1.job_name.name,
                         logfile=log_path + log_name,
+                        shell_file=p1.shell_file,
                         exclude=p1.job_name.raync_exclude)
-
     else:
         baocuen(130, False)
         with open(log_path + log_name, 'ab+') as f:
@@ -230,21 +222,6 @@ def git_clone(job_workspace, auth_info, source_address, p1):
     if not os.path.exists("{0}/code/{1}".format(job_workspace,p1.job_name.name)):
         os.makedirs("{0}/code/{1}".format(job_workspace,p1.job_name.name))
         print "{0}/code/{1}".format(job_workspace,p1.job_name.name)
-    # if auth_info and p1.job_name.source_address.startswith("http"):
-    #     url_type = re.search(r'(@)', source_address)
-    #     if url_type:
-    #         user_len = len(auth_info["username"])
-    #         if source_address.startswith("https://"):
-    #             url_len = 8
-    #         else:
-    #             url_len = 7
-    #         source_address = parser_url(source_address, url_len, user_len, auth_info, url_type)
-    #     else:
-    #         if source_address.startswith("https://"):
-    #             url_len = 8
-    #         else:
-    #             url_len = 7
-    #         source_address = parser_url(source_address, url_len, auth_info, url_type)
     if p1.version:
         cmd = "git clone {0} {1}code/{3}/".format(source_address, job_workspace, p1.version,p1.job_name.name)
     else:

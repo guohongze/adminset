@@ -37,7 +37,6 @@ class Ansible_cmd(object):
         ansible_rsync_opts.append(new_rsync_opts)
         ansible_rsync_opts.append("\"")
         new_ansible_rsync_opts = " ".join(ansible_rsync_opts)
-        print new_ansible_rsync_opts
         cmd_out = cmd_exec(new_ansible_rsync_opts)
         return cmd_out
 
@@ -47,8 +46,14 @@ class Ansible_cmd(object):
         cmd_out = cmd_exec(shell_cmd)
         return cmd_out
 
+
+    def __shell_copy(self,src_file,dest_file):
+        shell_cmd = "ansible {0} -f {1} -m copy -a \"src={2} dest={3}\"".format(self.host_ip,self.forks,src_file,dest_file)
+        cmd_exec(shell_cmd)
     def shell_script(self,script_cmd,logfile):
         if script_cmd == "" or script_cmd == None  or not os.path.isfile(script_cmd):
             loginfo_to_file(logfile,"{0} is not file!".format(script_cmd))
         shell_script_cmd = "ansible {0} -f {1} -m script -a \"{2}\"".format(self.host_ip,self.forks,script_cmd)
-        loginfo_to_file(logfile,shell_script_cmd)
+        cmd_out = cmd_exec(shell_script_cmd)
+        loginfo_to_file(logfile,"<br><h5>{0}</h5>".format(cmd_out))
+        #print cmd_out

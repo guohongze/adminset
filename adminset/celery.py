@@ -1,17 +1,21 @@
-#! /usr/bin/env python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 from __future__ import absolute_import, unicode_literals
 import os
 from celery import Celery
-import ConfigParser
+try:
+    import configparser
+except:
+    import ConfigParser
+    configparser = ConfigParser
 # set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'adminset.settings')
 app = Celery('adminset')
 
 # redis connect code
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-config = ConfigParser.ConfigParser()
+config = configparser.ConfigParser()
 config.read(os.path.join(BASE_DIR, 'adminset.conf'))
 redis_host = config.get('redis', "redis_host")
 redis_port = config.get("redis", "redis_port")
@@ -36,3 +40,4 @@ app.autodiscover_tasks()
 @app.task(bind=True)
 def debug_task(self):
     print('Request: {0!r}'.format(self.request))
+
