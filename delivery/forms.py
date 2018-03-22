@@ -2,14 +2,14 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from django.forms import widgets
-from models import Delivery
+from .models import Delivery
 
 
 class DeliveryFrom(forms.ModelForm):
 
     class Meta:
         model = Delivery
-        exclude = ("id", "bar_data", "status")
+        exclude = ("id", "bar_data", "status","shell_file")
 
         widgets = {
             'job_name': widgets.Select(attrs={'class': 'form-control','style': 'width:450px;'}),
@@ -19,5 +19,4 @@ class DeliveryFrom(forms.ModelForm):
             'deploy_policy': widgets.Select(attrs={'class': 'form-control', 'style': 'width:450px;'}),
             'shell': widgets.Textarea(attrs={'class': 'form-control', 'style': 'width:450px; height:100px'}),
             'auth': widgets.Select(attrs={'class': 'form-control','style': 'width:450px;'}),
-
         }

@@ -1,0 +1,321 @@
+{% extends 'base.html' %}
+{% load mytags %}
+{% block self_head_css_js %}
+    <script src="/static/layer/layer.js"></script>
+    <script src="/static/js/base.js"></script>
+    <script src="/static/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="/static/plugins/datatables/dataTables.bootstrap.min.js"></script>
+    <script src="/static/plugins/datatables/dataTables.bootstrap.css"></script>
+    <link rel="stylesheet" href="/static/layer/layui-v2.2.5/layui/css/layui.css"  media="all">
+    <script type="text/jscript" src="/static/layer/layui-v2.2.5/layui/layui.js" charset="utf-8"></script>
+
+{% endblock %}
+{% block content %}
+<style>
+    .oss_img {
+        width: 70px;
+        heighe: 70px;
+    }
+    .current_directory{
+    	font-family:"微软雅黑", "Dosis", sans-serif; 
+    	color: #A52A2A;
+    }
+    .current_directory_2{
+    	font-family:"微软雅黑", "Dosis", sans-serif; 
+    	color: #A52A2A;
+    }
+    .create_path{
+        font-family:"微软雅黑", "Dosis", sans-serif;
+        color: #A52A2A;
+        height: 100%;
+        border-style:solid;  
+    	border-color: #CDC9C9;
+    	/*box-shadow: 0 0 15px #03a9f4;*/
+    }
+</style>
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <!--<form action="" method="get" id="asset_form">-->
+        {% csrf_token %}
+            <div class="box">
+                <div class="box-header">
+                    <div class="col-sm-2" style="padding-left: 0">
+						 <a><li class="btn btn-success" ><b>返回上层</b></li></a>
+                    </div>
+                    <div class="col-sm-2" style="padding-left: 0">
+                    	<table>
+                    		<tr>
+                    			<th><li class="btn btn-success oss_path_create"><b>创建目录</b></li></th>
+                                <th>
+                                    <input type="text"  name="fname" id="oss_path_name" class="create_path">
+                                </th>
+                    		</tr>
+                    	</table>
+                    </div>
+                    <div class="col-sm-2" style="padding-left: 0">
+
+                    </div>
+                    <div class="col-sm-2" style="padding-left: 0">
+						 <li><b><span>当前目录: </span><span class="current_directory_2">/</span><span class="current_directory" name="/"></span></b></li></a>
+                    </div>
+                </div>
+
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div style="width: 100%;">
+                        <table style="width: 100%;" id="oss_path">
+                        </table>
+                        <table style="width: 100%;" id="oss_img">
+                        </table>
+                    </div>
+                    <!--
+                    	图片上传功能
+                    -->
+                    <div id="oss_upload_file" class="oss—yincan" style="width: 100%;">
+						<div class="layui-upload-drag" id="test10" style="width: 100%;">
+						  	<i class="layui-icon"></i>
+						  	<p>点击上传，或将文件拖拽到此处,一次最多上传30个文件！</p>
+						</div>
+						<div style="position:relative"></div>
+					</div>
+                </div>
+            </div>
+        <!--</form>-->
+    </section>
+
+{#用于接收asset_edit.html中layui子层的传值#}
+<!--<input id="handle_status" value="" hidden="hidden">-->
+</div>
+<script>
+    $(function(){
+//  	$('.oss—yincan').hide();
+    	//首页数据获取
+	    get_oss_info("/ossmanager/get_file")
+        //JS添加文件夹点击事件
+        $("#oss_path").delegate("img", "dblclick", function(){
+        	//console.log($(this).parent().next().attr("name"));
+        	var click_name = $(this).parent().next().attr("name");
+        	var route_path_url = '/ossmanager/get_file?ssgjz=' + click_name
+        	get_oss_info(route_path_url);
+        	//console.log(route_path_url)
+        })
+        //上层目录按钮点击事件
+        $(".btn-success").click(function(){
+        	var dangq = $(".current_directory").attr("name").split("/")
+        	if (dangq.length == 2){
+        		if (dangq[0] == ""){
+        			return 0
+        		}
+        		else {
+        			get_oss_info("/ossmanager/get_file");
+        			return 0
+        		};
+        	}
+        	if (dangq.length > 3){
+        		var dangq_1 = dangq.slice(0,dangq.length-2)
+        		var dangq_2 = dangq_1.join("/")
+        		get_oss_info("/ossmanager/get_file?ssgjz=" + dangq_2);
+        		return 0
+        	}
+        	else {
+        		get_oss_info("/ossmanager/get_file?ssgjz=" + dangq[0]);
+        		return 0
+        	}
+        })
+    });
+    //*********图片上传******************
+	layui.use('upload', function() {
+//			var $ = layui.jquery,
+		dd = new Array()
+		dd[0] = $(".current_directory").attr("name")
+		console.log(dd[0])
+		upload = layui.upload;
+		 upload.render({
+			elem: '#test10',
+			url: '/ossmanager/upload_file',
+			method: "post",
+			accept: "file",
+			exts: "jpg|png|gif|bmp|jpeg|mp3|mp4",
+			auto: true,
+			size: 4096,
+			data: {
+				path_name: dd
+			},
+			multiple: true,
+			number: 30,
+			drag: true,
+			bindAction: '#upload_file_button',
+			before: function(obj) { //obj参数包含的信息，跟 choose回调完全一致，可参见上文。
+				dd[0] = $(".current_directory").attr("name")
+				console.log(dd[0])
+				var index_3 = layer.load(1, {
+			  		shade: [0.1,'#fff'] //0.1透明度的白色背景
+				});
+			},
+			done: function(res) {
+				layer.closeAll();
+				console.log(res.upload_status)
+				layer.msg(res.upload_status);
+			},
+			error: function(res) {
+				layer.closeAll();
+				layer.msg("上传失败");
+			}
+			
+		});
+	});
+
+	//创建目录
+	$(".oss_path_create").click(function(){
+	    var create_name = $("#oss_path_name").val()
+	    var father_path = $(".current_directory").attr("name")
+	    //var get_oss_info = new get_oss_info()
+	    if(create_name != ""){
+	    	var index_1 = layer.load(1, {
+		  		shade: [0.1,'#fff'] //0.1透明度的白色背景
+			});
+	    	var json_data = {
+	    		"create_oss_path": father_path + create_name
+	    	}
+	    	$.ajax({
+    			type: "POST",
+    			url:　"/ossmanager/path_create",
+    			data: JSON.stringify(json_data),
+    			contentType: "application/json",
+				dataType: "json",
+				success: function(data, status) {
+//					layer.closeAll(); //关闭loading
+					console.log(father_path);
+					console.log(data);
+					var route_path_url = '/ossmanager/get_file?ssgjz=' + father_path
+        			get_oss_info(route_path_url);
+        			layer.msg(data["creste_status"]);
+				},
+				error: function(data){
+					console.log(data)
+				}
+    		});
+			
+	    }
+	    else {
+	    	$("#oss_path_name").css("border-color","red");
+	    	layer.msg("没有填写目录名称！");
+	    }	
+	});
+	$("#oss_path_name").focus(function(){
+		$("#oss_path_name").css("border-color","#008B00");
+	})
+	/*====================django ajax ======*/
+	jQuery(document).ajaxSend(function(event, xhr, settings) {
+	    function getCookie(name) {
+	        var cookieValue = null;
+	        if (document.cookie && document.cookie != '') {
+	            var cookies = document.cookie.split(';');
+	            for (var i = 0; i < cookies.length; i++) {
+	                var cookie = jQuery.trim(cookies[i]);
+	                // Does this cookie string begin with the name we want?
+	                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+	                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+	                    break;
+	                }
+	            }
+	        }
+	        return cookieValue;
+	    }
+	    function sameOrigin(url) {
+	        // url could be relative or scheme relative or absolute
+	        var host = document.location.host; // host + port
+	        var protocol = document.location.protocol;
+	        var sr_origin = '//' + host;
+	        var origin = protocol + sr_origin;
+	        // Allow absolute or scheme relative URLs to same origin
+	        return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
+	            (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+	            // or any other URL that isn't scheme relative or absolute i.e relative.
+	            !(/^(\/\/|http:|https:).*/.test(url));
+	    }
+	    function safeMethod(method) {
+	        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+	    }
+	
+	    if (!safeMethod(settings.type) && sameOrigin(settings.url)) {
+	        xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+	    }
+	});
+	/*===============================django ajax end===*/
+var get_oss_info = function(get_url){
+    		var index_1 = layer.load(1, {
+		  		shade: [0.1,'#fff'] //0.1透明度的白色背景
+			});
+	        $.get(get_url,function(data,status){
+	        	if (get_url != "/"){
+	        		$("#oss_path").children().remove()
+					$("#oss_img").children().remove()
+					$(".current_directory").attr("name",data.path_danqian)
+					$(".current_directory").text(data.path_danqian)
+	        	}
+	            var path_list = ['<tr style="width: 100%;">'];
+	            var img_list = ['<tr style="width: 100%;">'];
+	            //console.log(data.xia_dir.length);
+	            for(var i = 0; i < data.xia_dir.length; i++) {
+	                if ((i%10) == 0){
+	                    path_list.push('</tr><tr style="width: 100%;">');
+	                };
+	                file_name_1 = data.xia_dir[i]["file_name"].split("/")
+	                file_name_2 = file_name_1[file_name_1.length-2]
+//	                console.log(file_name_1,file_name_2)
+	                path_list.push('<td style="width: 10%;">\
+	                                    <div>\
+	                                        <img src="/static/img/folder-yellow-32.png" class="img-rounded" width="70px" heighe="70px">\
+	                                    </div>\
+	                                    <div name=' + data.xia_dir[i]["file_name"] + '>' + file_name_2 + '</div>\
+	                                </td>');
+	
+	            };
+	             path_list.push("</tr>");
+	            new_html = path_list.join("");
+	            $("#oss_path").append(new_html);
+	
+	            for(var i = 0; i < data.data.length; i++) {
+	                if ((i%10) == 0){
+	                    img_list.push('</tr><tr style="width: 100%;">');
+	                };
+	                if (data.data[i]["file_name"].indexOf(".mp3") != -1){
+	                	img_list.push('<td style="width: 10%;">\
+	                                    <div><img src="/static/img/mp3.png" class="img-rounded" style="width: 70px; heighe: 70px;">\
+	                                    </div>\
+	                                    <div>' + data.data[i]["file_name"] + '</div>\
+	                                </td>');
+	                }
+	                else{
+		                img_list.push('<td style="width: 10%;">\
+		                                    <div><img src="' + data.data[i]["file_url"] + '" class="img-rounded"  style="width: 70px; heighe: 70px;">\
+		                                    </div>\
+		                                    <div>' + data.data[i]["file_name"] + '</div>\
+		                                </td>');
+	                }
+	
+	            };
+	             img_list.push("</tr>");
+	            new_img_list = img_list.join("");
+	            $("#oss_img").append(new_img_list);
+	            layer.close(index_1);
+	        })
+	        
+	    };
+	    
+	    var str_out_str = function(str_name,out_str){
+	    	if (str_name.endsWith(out_str)){
+	    		return true
+	    	}
+	    	return false
+	    }
+</script>
+
+{% endblock %}

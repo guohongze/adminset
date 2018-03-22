@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from accounts.permission import permission_verify
 import json
 import time
-from api import GetSysData
+from .api import GetSysData
 TIME_SECTOR = (
             3600,
             3600*3,

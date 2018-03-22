@@ -6,6 +6,7 @@
     <script src="/static/plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="/static/plugins/datatables/dataTables.bootstrap.min.js"></script>
     <script src="/static/plugins/datatables/dataTables.bootstrap.css"></script>
+    <script src="https://cdn.bootcss.com/echarts/4.0.4/echarts-en.common.js"></script>
 {% endblock %}
 {% block content %}
 
@@ -93,22 +94,38 @@
                   <div class="btn-group">
                       <input type="button" id="project_del" class="btn btn-danger"   name="del_button" value="删除项目"/>
                   </div>
-                </div>
             </div>
         </form>
     </section>
+   <section class="content">
+       <div class="box">
+           <div class="box-header">
+                <div class="col-sm-2" style="padding-left: 0">
+                     <li class="btn btn-success" ><b>代码发布矩阵图</b></li>
+                </div>
+           </div>
+           <div class="box-body">
+               <table width="100%" bgcolor="0">
+                   <tr>
+                       <td><div id="main_bingtu" style="width: 300px; height: 200px"></div></td>
+                       <td><div id="main_bingtu2" style="width: 400px; height: 200px"></div></td>
+                   </tr>
+               </table>
+           </div>
+       </div>
+   </section>
+
 
 </div>
 <script>
   $(function () {
     $('#projectform').DataTable({
-        "aLengthMenu":[5,10],
-        "paging": true,
-        "lengthChange": true,
-        "searching": true,
-        "ordering": true,
-        "info": true,
-        "autoWidth": true
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": true
     });
   });
 </script>
@@ -176,6 +193,76 @@ function taskstop(args) {
             });
         {% endfor %}
     }
+</script>
+<script>
+var myChart = echarts.init(document.getElementById('main_bingtu'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: '发布统计'
+            },
+            tooltip: {},
+            legend: {
+                data:['总和']
+            },
+            xAxis: {
+                data: ["webapp2","bbs"]
+            },
+            yAxis: {},
+            series: [{
+                name: '总和',
+                type: 'bar',
+                data: [5, 20, 36, 10, 10, 20]
+            }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+</script>
+<script>
+var myChart = echarts.init(document.getElementById('main_bingtu2'));
+        option = {
+            title : {
+                text: '某站点用户访问来源',
+                subtext: '纯属虚构',
+                x:'center'
+            },
+            tooltip : {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+            },
+            series : [
+                {
+                    name: '访问来源',
+                    type: 'pie',
+                    radius : '55%',
+                    center: ['50%', '60%'],
+                    data:[
+                        {value:335, name:'直接访问'},
+                        {value:310, name:'邮件营销'},
+                        {value:234, name:'联盟广告'},
+                        {value:135, name:'视频广告'},
+                        {value:1548, name:'搜索引擎'}
+                    ],
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
 </script>
 
 {% endblock %}

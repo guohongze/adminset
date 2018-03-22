@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls import url, include
 from . import system, manage
-import api
+from monitor import api
 
 
 urlpatterns = [

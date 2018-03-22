@@ -12,7 +12,6 @@ class AuthInfoForm(forms.ModelForm):
         model = AuthInfo
         exclude = ("id",)
         widgets = {
-            'dis_name': TextInput(attrs={'class': 'form-control', 'style': 'width:450px;'}),
             'username': TextInput(attrs={'class': 'form-control', 'style': 'width:450px;'}),
             'password': TextInput(attrs={'class': 'form-control', 'type': 'password', 'style': 'width:450px'}),
             'private_key': TextInput(attrs={'class': 'form-control', 'style': 'width:450px;'}),
@@ -64,5 +63,10 @@ class ProjectForm(forms.ModelForm):
             'configPath': TextInput(attrs={'class': 'form-control','style': 'width:450px;'}),
             'product': Select(attrs={'class': 'form-control','style': 'width:450px;'}),
             'owner': Select(attrs={'class': 'form-control','style': 'width:450px;'}),
+            'lvs_type': Select(attrs={'class': 'form-control','style': 'width:450px;'}),
+            'lvs_host_ip': TextInput(attrs={'class': 'form-control','style': 'width:450px;'}),
+            'java_script': TextInput(attrs={'class': 'form-control','style': 'width:450px;'}),
+            'lvs_cofnig_path': TextInput(attrs={'class': 'form-control','style': 'width:450px;'}),
+            'raync_exclude': TextInput(attrs={'class': 'form-control','style': 'width:450px;'}),
             'serverList': forms.SelectMultiple(attrs={'class': 'form-control', 'size':'10', 'multiple': 'multiple'}),
         }

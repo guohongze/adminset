@@ -4,8 +4,8 @@
 from django.shortcuts import render, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from models import AuthInfo
-from forms import AuthInfoForm
+from .models import AuthInfo
+from .forms import AuthInfoForm
 from accounts.permission import permission_verify
 
 
@@ -64,8 +64,8 @@ def authinfo_add_mini(request):
         form =AuthInfoForm(request.POST)
         if form.is_valid():
             form.save()
-            auth_name = request.POST.get('dis_name', '')
-            auth_info = AuthInfo.objects.get(dis_name=auth_name)
+            auth_name = request.POST.get('username', '')
+            auth_info = AuthInfo.objects.get(username=auth_name)
             authinfo_id = auth_info.id
             status = 1
         else:
@@ -78,7 +78,7 @@ def authinfo_add_mini(request):
         'request': request,
         'status': status,
         'auth_id': authinfo_id,
-        'auth_name': request.POST.get('dis_name', ''),
+        'auth_name': request.POST.get('username', ''),
         'page_type': "mini"
     }
     return render(request, 'appconf/authinfo_add_edit_mini.html', results)

@@ -7,14 +7,13 @@ from cmdb.models import Host
 
 
 class AuthInfo(models.Model):
-    dis_name = models.CharField(u"认证标识", max_length=50, unique=True, blank=False)
-    username = models.CharField(u"用户名", max_length=50, blank=True)
-    password = models.CharField(u"密码", max_length=50, blank=True)
+    username = models.CharField(u"用户名", max_length=50, unique=True, null=False, blank=False)
+    password = models.CharField(u"密码", max_length=50, null=False, blank=False)
     private_key = models.CharField(u"密钥", max_length=100, blank=True)
     memo = models.TextField(u"备注信息", max_length=200, blank=True)
 
     def __unicode__(self):
-        return self.dis_name
+        return self.username
 
 
 class AppOwner(models.Model):
@@ -89,6 +88,11 @@ class Project(models.Model):
         ("svn", "svn"),
     )
 
+    LVS_TYPE = (
+        ("nginx", "nginx"),
+        ("haproxy","haproxy"),
+    )
+
     name = models.CharField(u"项目名称", max_length=50, unique=True, null=False, blank=False)
     description = models.CharField(u"项目描述", max_length=255, null=True, blank=True)
     language_type = models.CharField(u"语言类型", choices=LANGUAGE_TYPES, max_length=30, null=True, blank=True)
@@ -98,7 +102,15 @@ class Project(models.Model):
     source_type = models.CharField(max_length=255, choices=SOURCE_TYPE, verbose_name=u"源类型", blank=True)
     source_address = models.CharField(max_length=255, verbose_name=u"源地址", null=True, blank=True)
     appPath = models.CharField(u"程序部署路径", max_length=255, null=True, blank=True)
-    configPath = models.CharField(u"配置文件路径", max_length=255, null=True, blank=True)
+    lvs_type = models.CharField(max_length=50, choices=LVS_TYPE, verbose_name=u"负载均衡类型", blank=True)
+    configPath = models.CharField(u"本地负载均衡配置文件路径", max_length=255, null=True, blank=True)
+    lvs_host_ip = models.CharField(u"负载均衡地址", max_length=50, null=True,blank=True)
+    java_script = models.CharField(u"启动/停止脚本", max_length=255, null=False,blank=True)
+    lvs_cofnig_path = models.CharField(u"负载均衡配置文件目录", max_length=255, null=True ,blank=True)
+    raync_exclude = models.CharField(u"排除同步文件名", max_length=255, null=True, blank=True)
+
+
+
     product = models.ForeignKey(
             Product,
             null=True,

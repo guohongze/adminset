@@ -3,7 +3,7 @@
 # update by guohongze@126.com
 from django import forms
 from django.contrib import auth
-from models import UserInfo, RoleList, PermissionList
+from .models import UserInfo, RoleList, PermissionList
 
 
 class LoginUserForm(forms.Form):

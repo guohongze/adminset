@@ -21,6 +21,7 @@ class Delivery(models.Model):
     shell_position = models.BooleanField(verbose_name=u"本地执行", default=False)
     status = models.BooleanField(verbose_name=u"部署状态", default=False)
     deploy_num = models.IntegerField(verbose_name=u"部署次数", default=0)
+    shell_file = models.CharField(max_length=255, verbose_name=u"脚本路径", blank=True)
     bar_data = models.IntegerField(default=0)
     auth = models.ForeignKey(
         AuthInfo, verbose_name=u"认证信息",
