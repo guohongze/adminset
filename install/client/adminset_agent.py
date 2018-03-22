@@ -95,7 +95,7 @@ def post_data(url, data):
 def asset_info():
     data_info = dict()
     data_info['memory'] = get_mem_total()
-    data_info['disk'] = get_disk_info()
+    data_info['disk'] = str(get_disk_info())
     cpuinfo = parser_cpu(get_cpu_model())
     cpucore = get_cpu_cores()
     data_info['cpu_num'] = cpucore['logical']
