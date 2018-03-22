@@ -3,7 +3,7 @@ set -e
 
 cd "$( dirname "$0"  )"
 cur_dir=$(pwd)
-
+work_dir=/var/opt/adminset/client
 # 安装依赖包
 os=$(cat /proc/version)
 if (echo $os|grep centos) || (echo $os|grep 'Red Hat')
@@ -32,12 +32,12 @@ trusted-host=mirrors.aliyun.com
 EOF
 
 echo "####install pip packages####"
-mkdir -p /var/opt/adminset/client
+mkdir -p $work_dir
 pip install --upgrade pip
 pip install virtualenv
-cd /var/opt/adminset/client
-source /var/opt/adminset/client/venv/bin/activate
-virtualenv --no-site-packages venv
+cd $work_dir
+/usr/bin/virtualenv --no-site-packages venv
+source $work_dir/venv/bin/activate
 pip install requests==2.11.1
 pip install psutil==5.2.2
 pip install schedule==0.4.3
@@ -45,20 +45,20 @@ pip install schedule==0.4.3
 echo "####config adminset agent####"
 if (echo $os|grep centos) || (echo $os|grep 'Red Hat')
 then
-    scp $cur_dir/adminset_agent.py /usr/local/bin/
+    scp $cur_dir/adminset_agent.py $work_dir
     scp $cur_dir/adminsetd.service /usr/lib/systemd/system/
-    dos2unix /usr/local/bin/adminset_agent.py
+    dos2unix $work_dir/adminset_agent.py
     dos2unix /usr/lib/systemd/system/adminsetd.service
 elif (echo $os|grep Ubuntu)
 then
     scp $cur_dir/adminset_agent.py /usr/local/bin/
     scp $cur_dir/adminsetd.service /etc/systemd/system/
-    fromdos /usr/local/bin/adminset_agent.py
+    fromdos $work_dir/adminset_agent.py
     fromdos /etc/systemd/system/adminsetd.service
 else
     echo "your os version is not supported!"
 fi
 echo "####client prepare finished!###"
 systemctl daemon-reload
-service adminsetd start
-service adminsetd restart
+echo "please modify adminset_agent parameter ServerIP and Token then execute command:"
+echo "service adminsetd start"

@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 WorkingDirectory=/var/opt/adminset/client/
-ExecStart="source venv/bin/activate; /usr/bin/env python adminset_agent.py"
+ExecStart=/var/opt/adminset/client/venv/bin/python adminset_agent.py
 ExecReload=/bin/kill -s HUP $MAINPID
 ExecStop=/bin/kill -s TERM $MAINPID
 User=root
