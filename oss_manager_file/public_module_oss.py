@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import oss2,logging, os
+import oss2,logging, os, re
 #from .redis_input import redis_put
 import traceback
 try:
@@ -25,6 +25,7 @@ class OS_file_operation(object):
         self.access_key_secret = access_key_secret
         self.bucket_name = bucket_name
         self.endpoint = endpoint
+
 
     def oss_upload(self,oss_file_name,oss_file_path):
         try:
@@ -66,6 +67,7 @@ class OS_file_operation(object):
         auth = oss2.Auth(self.access_key_id,self.access_key_secret)
         bucket = oss2.Bucket(auth,self.endpoint,self.bucket_name)
         oss_tmp_new = ""
+
         for i in oss2.ObjectIterator(bucket):
             oss_tmp_new += i.key + "\n"
         with open(oss_tmp,"w") as f:
@@ -83,15 +85,15 @@ def oss_tmp_file(bucket_name):
         oss_get.oss_get_to_file(oss_tmp)
     return oss_tmp
 
-def oss_updata_path(bucket_name):
+def oss_updata_path(new_bucket_name):
     dirs = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     config = configparser.ConfigParser()
     with open(dirs + '/adminset.conf', 'r') as cfgfile:
         config.readfp(cfgfile)
         oss_updata_dir = config.get("oss_updata_file_path","updata_file_dir")
-    if not os.path.isdir("%s/%s" % (oss_updata_dir,bucket_name)):
-        os.makedirs("%s/%s" % (oss_updata_dir,bucket_name))
-    return "%s/%s" % (oss_updata_dir,bucket_name)
+    if not os.path.isdir("%s/%s" % (oss_updata_dir,new_bucket_name)):
+        os.makedirs("%s/%s" % (oss_updata_dir,new_bucket_name))
+    return "%s/%s" % (oss_updata_dir,new_bucket_name)
 
 class oss_local_file(object):
     """oss 缓存文件处理"""
@@ -100,22 +102,16 @@ class oss_local_file(object):
         self.bucket_name = bucket_name
         self.oss_tmp = oss_tmp_file(self.bucket_name)
     def get_obj(self,prefix="/"):
-        oss_out = []
+        oss_out_1 = []
         with open(self.oss_tmp, "r") as f:
             if prefix == "/":
                 for i in f.readlines():
                     oss_obj = i.replace("\n", "").split("/")
-                    print oss_obj
-                    if len(oss_obj) < 3:
-                        if oss_obj[-1] == "":
-                        #if oss_obj[-1].endswith("/"):
-                            oss_out.append("/".join(oss_obj))
-                        elif len(oss_obj) == 2 and oss_obj[-1] != "":
-                            pass
-                        elif len(oss_obj) == 1:
-                            oss_out.append("http://%s.%s/%s" %(self.bucket_name,self.endpoint,"/".join(oss_obj)))
-                        else:
-                            pass
+                    if len(oss_obj) == 1:
+                        oss_out_1.append("http://%s.%s/%s" % (self.bucket_name, self.endpoint, "/".join(oss_obj)))
+                    if len(oss_obj) > 1:
+                        oss_out_1.append(oss_obj[0]+ "/")
+                oss_out= list(set(oss_out_1))
 
             else:
                 lin_j = 0
@@ -124,18 +120,18 @@ class oss_local_file(object):
                         lin_j += 1
                         if lin_j != 1:
                             oss_obj = lin.replace("\n", "").replace(prefix, "", 1).split("/")
-                            if len(oss_obj) < 3:
-                                if oss_obj[-1] == "":
-                                    oss_out.append(prefix + "/".join(oss_obj))
-                                else:
-                                    oss_out.append(
-                                        "http://%s.%s/%s%s" % (self.bucket_name,self.endpoint,prefix,"/".join(oss_obj)))
+                            if len(oss_obj) == 1:
+                                oss_out_1.append(
+                                    "http://%s.%s/%s%s" % (self.bucket_name, self.endpoint, prefix, "/".join(oss_obj)))
+                            if len(oss_obj) > 1:
+                                oss_out_1.append(prefix + oss_obj[0] + "/")
+                oss_out = list(set(oss_out_1))
+
         return oss_out
 
     def create_path_obj(self,obj_name):
         with open(self.oss_tmp, "r") as f:
             for lin in f:
-                print lin
                 if obj_name in lin:
                     return "1"
         with open(self.oss_tmp, "ab+") as f:

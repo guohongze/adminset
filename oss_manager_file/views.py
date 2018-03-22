@@ -55,7 +55,8 @@ def get_file(request):
         oss_file,oss_d = [],[]
         if ssgjz == "":
             ssgjz = "/"
-        print ssgjz
+        else:
+            ssgjz = gjzjianche(ssgjz)
         for lie in os_show.get_obj(ssgjz):
             if lie.endswith("/"):
                 oss_d.append({"file_name":lie})
@@ -65,6 +66,7 @@ def get_file(request):
         if len(oss_file) > 1:
             if re.search(r'/$',oss_file[0]["file_name"]):
                 oss_d_d = path_file(re.sub("http://{0}.{1}/".format(bucket_name,endpoint),"",oss_file[0]["file_name"]))
+                #print "http://{0}.{1}/".format(bucket_name,endpoint)
                 del oss_file[0]
             else:
                 oss_d_d=path_file(ssgjz)
