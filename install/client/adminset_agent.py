@@ -1,16 +1,8 @@
 #!/usr/bin/env python
 # coding=utf-8
 
-import os
-import re
-import platform
-import socket
-import time
-import json
-import threading
-import psutil
-import schedule
-import requests
+import os, platform, socket, time, json, threading
+import psutil, schedule, requests
 from subprocess import Popen, PIPE
 
 token = 'HPcWR7l4NJNJ'
@@ -77,38 +69,15 @@ def parser_cpu(stdout):
 
 
 def get_disk_info():
-    ret = {}
-    disk_dev = re.compile(r'Disk\s/dev/[a-z]*')
-    disk_name = re.compile(r'/dev/[a-z]*')
-    pcmd = Popen(['fdisk', '-l'], shell=False,stdout=PIPE)
-    stdout, stderr = pcmd.communicate()
+    ret = []
+    cmd = "fdisk -l|egrep '^Disk\s/dev/[a-z]+:\s\w*'"
+    p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
+    stdout, stderr = p.communicate()
     for i in stdout.split('\n'):
-        disk = re.match(disk_dev,i)
-        if disk:
-            dk = re.search(disk_name, disk.group()).group()
-            n = Popen('smartctl -i %s' % dk, shell=True, stdout=PIPE)
-            p = n.communicate()
-            ret[dk] = p
+        disk_info = i.split(",")
+        if disk_info[0]:
+            ret.append(disk_info[0])
     return ret
-
-
-def parser_disk_info(diskdata):
-    pd = {}
-    disknum = diskdata.keys()
-    device_model = re.compile(r'(Device Model):(\s+.*)')
-    serial_number = re.compile(r'(Serial Number):(\s+[\d\w]{1,30})')
-    firmware_version = re.compile(r'(Firmware Version):(\s+[\w]{1,20})')
-    user_capacity = re.compile(r'(User Capacity):(\s+[\d,]{1,50})')
-    for num in disknum:
-        t = str(diskdata[num])
-        for line in t.split('\n'):
-            user = re.search(user_capacity,line)
-            if user:
-                diskvo = user.groups()[1].strip()
-                nums = int(diskvo.replace(',',''))
-                endnum = str(nums/1000/1000/1000)
-                pd[num] = endnum
-    return json.dumps(pd)
 
 
 def post_data(url, data):
@@ -126,7 +95,7 @@ def post_data(url, data):
 def asset_info():
     data_info = dict()
     data_info['memory'] = get_mem_total()
-    data_info['disk'] = parser_disk_info(get_disk_info())
+    data_info['disk'] = get_disk_info()
     cpuinfo = parser_cpu(get_cpu_model())
     cpucore = get_cpu_cores()
     data_info['cpu_num'] = cpucore['logical']
