@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import oss2,logging, os, re
+import oss2, os
 #from .redis_input import redis_put
 import traceback
 try:
