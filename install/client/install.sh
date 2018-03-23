@@ -60,5 +60,5 @@ else
 fi
 echo "####client prepare finished!###"
 systemctl daemon-reload
-echo "please modify adminset_agent parameter ServerIP and Token then execute command:"
-echo "service adminsetd start"
+chkconfig adminsetd on
+service adminsetd start
