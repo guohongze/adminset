@@ -75,5 +75,6 @@ FAQ参考，<a href="https://github.com/guohongze/adminset/wiki/FAQ">常见问�
 由于开发方便，在django的settings中开启了DEBUG，在生产中需要关闭并指定自己的域名。
 
 # 开发者交流
-请加入开发者群，注明来自github
-<img src="https://github.com/guohongze/adminset/blob/master/static/dist/img/qq.png"></img>
+请加入开发者群
+1号群 427794947(已满)
+2号群 536962005
