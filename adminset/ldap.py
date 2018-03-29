@@ -22,8 +22,8 @@ class LDAPTool:
         try:
             self.ldapconn = ldap.open(ldap_host)
             self.ldapconn.simple_bind(user,password)
-        except ldap.LDAPError,e:
-            print e
+        except ldap.LDAPError as e:
+            print(e)
 
 #根据表单提交的用户名，检索该用户的dn,一条dn就相当于数据库里的一条记录。
 #在ldap里类似cn=username,ou=users,dc=gccmx,dc=cn,验证用户密码，必须先检索出该DN
@@ -48,8 +48,8 @@ class LDAPTool:
                 return result_data[0][0]
             else:
                 return None
-        except ldap.LDAPError, e:
-            print e
+        except ldap.LDAPError as e:
+            print(e)
 
 #查询用户记录，返回需要的信息
     def ldap_get_user(self,uid=None):
@@ -69,8 +69,8 @@ class LDAPTool:
                 return result
             else:
                 return None
-        except ldap.LDAPError, e:
-            print e
+        except ldap.LDAPError as e:
+            print(e)
 
 #用户验证，根据传递来的用户名和密码，搜索LDAP，返回boolean值
     def ldap_get_vaild(self,uid=None,passwd=None):
@@ -81,8 +81,8 @@ class LDAPTool:
                 return True
             else:
                 return False
-        except ldap.LDAPError,e:
-            print e
+        except ldap.LDAPError as e:
+            print(e)
 
 #修改用户密码
     def ldap_update_pass(self,uid=None,oldpass=None,newpass=None):
@@ -93,5 +93,5 @@ class LDAPTool:
             obj.simple_bind_s(target_cn,oldpass)
             obj.passwd_s(target_cn,oldpass,newpass)
             return True
-        except ldap.LDAPError,e:
+        except ldap.LDAPError:
             return False

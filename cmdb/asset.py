@@ -1,20 +1,24 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from forms import AssetForm
-from models import Host, Idc, HostGroup, ASSET_STATUS, ASSET_TYPE
-from django.shortcuts import render, HttpResponse
-from django.db.models import Q
-from cmdb.api import get_object
-from cmdb.api import pages, str2gb
 import csv
 import datetime
-from django.contrib.auth.decorators import login_required
-from accounts.permission import permission_verify
-from config.views import get_dir
 import sys
-reload(sys)
-sys.setdefaultencoding('utf8')
+
+from accounts.permission import permission_verify
+from cmdb.api import get_object, pages, str2gb
+from config.views import get_dir
+from django.contrib.auth.decorators import login_required
+from django.db.models import Q
+from django.shortcuts import HttpResponse, render
+from forms import AssetForm
+from models import ASSET_STATUS, ASSET_TYPE, Host, HostGroup, Idc
+
+try:
+    reload(sys)  # Python 2
+    sys.setdefaultencoding('utf8')
+except NameError:
+    pass         # Python 3
 
 
 @login_required()

@@ -30,7 +30,7 @@ def deploy(job_name, server_list, app_path, source_address, project_id, auth_inf
     if p1.build_clean or p1.version:
         try:
             shutil.rmtree("{0}code/".format(job_workspace))
-        except StandardError as msg:
+        except Exception as msg:
             print("code dir is not exists, build clean over")
     if p1.job_name.source_type == "git":
         cmd = git_clone(job_workspace, auth_info, source_address, p1)
