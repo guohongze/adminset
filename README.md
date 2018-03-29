@@ -76,5 +76,5 @@ FAQ参考，<a href="https://github.com/guohongze/adminset/wiki/FAQ">常见问�
 
 # 开发者交流
 请加入开发者群
-1号群 427794947(已满)
+1号群 427794947(已满)<br>
 2号群 536962005
