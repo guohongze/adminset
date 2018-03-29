@@ -22,7 +22,8 @@
                       <thead>
                         <tr>
                             <th>服务器名</th>
-                            <th>IP</th>
+                            <th>管理IP</th>
+                            <th>所在位置</th>
                         </tr>
                       </thead>
                             <tbody>
@@ -30,6 +31,7 @@
                                 <tr class="even gradeX">
                                     <td><a href="{% url "asset_edit" project.id %}" target="_blank">{{ project.hostname }}</a></td>
                                     <td>{{ project.ip }} </td>
+                                    <td>{{ project.position }} </td>
                                 </tr>
                             {% endfor %}
                             </tbody>

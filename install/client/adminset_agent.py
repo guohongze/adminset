@@ -4,7 +4,7 @@
 import os, platform, socket, time, json, threading
 import psutil, schedule, requests
 from subprocess import Popen, PIPE
-
+AGENT_VERSION = "0.20"
 token = 'bURrwSbKyR9N'
 server_ip = 'adminset.huatuop.com'
 
@@ -108,6 +108,7 @@ def asset_info():
     data_info['osver'] = platform.linux_distribution()[0] + " " + platform.linux_distribution()[1] + " " + platform.machine()
     data_info['hostname'] = platform.node()
     data_info['token'] = token
+    data_info['agent_version'] = AGENT_VERSION
     return json.dumps(data_info)
 
 

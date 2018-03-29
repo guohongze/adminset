@@ -62,3 +62,5 @@ echo "####client prepare finished!###"
 systemctl daemon-reload
 chkconfig adminsetd on
 service adminsetd start
+echo "####client install finished!###"
+echo "please using <service adminsetd start|restart|stop> manage adminset agent"
