@@ -5,8 +5,8 @@ import os, platform, socket, time, json, threading
 import psutil, schedule, requests
 from subprocess import Popen, PIPE
 AGENT_VERSION = "0.20"
-token = 'bURrwSbKyR9N'
-server_ip = 'adminset.huatuop.com'
+token = 'HPcWR7l4NJNJ'
+server_ip = '192.168.47.130'
 
 
 def get_ip():

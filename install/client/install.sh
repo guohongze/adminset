@@ -34,7 +34,7 @@ EOF
 echo "####install pip packages####"
 mkdir -p $work_dir
 pip install --upgrade pip
-pip install virtualenv==15.1.0
+pip install virtualenv==15.2.0
 cd $work_dir
 /usr/bin/virtualenv --no-site-packages venv
 source $work_dir/venv/bin/activate
