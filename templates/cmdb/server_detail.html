@@ -28,7 +28,7 @@
                                     <td>{{ host.hostname }}</td>
                                 </tr>
                                 <tr class="even gradeX">
-                                    <td>IP</td>
+                                    <td>管理IP</td>
                                     <td>{{ host.ip }}</td>
                                 </tr>
                                 <tr class="even gradeX">
@@ -36,18 +36,60 @@
                                     <td>{{ host.cpu_model }}</td>
                                 </tr>
                                 <tr class="even gradeX">
-                                    <td>CPU核心</td>
+                                    <td>CPU逻辑核心</td>
                                     <td>{{ host.cpu_num }}</td>
                                 </tr>
                                 <tr class="even gradeX">
                                     <td>内存信息</td>
-                                    <td>{{ host.memory }}</td>
+                                    <td>{{ host.memory }}G</td>
                                 </tr>
                                 <tr class="even gradeX">
-                                    <td>硬盘信息</td>
+                                <td>硬盘信息</td>
+                                <td>
                                     {% for d in disk %}
-                                    <td>{{ d }}</td>
+                                    {{ d }}<br>
                                     {% endfor %}
+                                </td>
+                                </tr>
+                                <tr class="even gradeX">
+                                    <td>sn</td>
+                                    <td>{{ host.sn }}G</td>
+                                </tr>
+                                <tr class="even gradeX">
+                                    <td>操作系统</td>
+                                    <td>{{ host.os }}</td>
+                                </tr>
+                                <tr class="even gradeX">
+                                    <td>设备厂商</td>
+                                    <td>{{ host.vendor }}</td>
+                                </tr>
+                                <tr class="even gradeX">
+                                    <td>所在机房</td>
+                                    <td>{{ host.idc }}</td>
+                                </tr>
+                                <tr class="even gradeX">
+                                    <td>资产编号</td>
+                                    <td>{{ host.asset_no }}</td>
+                                </tr>
+                                <tr class="even gradeX">
+                                    <td>设备类型</td>
+                                    <td>{{ host.asset_type }}</td>
+                                </tr>
+                                <tr class="even gradeX">
+                                    <td>设备状态</td>
+                                    <td>{{ host.status }}</td>
+                                </tr>
+                                <tr class="even gradeX">
+                                    <td>上架时间</td>
+                                    <td>{{ host.up_time }}</td>
+                                </tr>
+                                <tr class="even gradeX">
+                                    <td>所在位置</td>
+                                    <td>{{ host.position }}</td>
+                                </tr>
+                                <tr class="even gradeX">
+                                    <td>说明</td>
+                                    <td>{{ host.memo }}</td>
                                 </tr>
                             </tbody>
                   </table>

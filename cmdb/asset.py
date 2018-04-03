@@ -210,4 +210,5 @@ def asset_edit(request, ids):
 @permission_verify()
 def server_detail(request, ids):
     host = Host.objects.get(id=ids)
+    disk = eval(host.disk)
     return render(request, 'cmdb/server_detail.html', locals())
