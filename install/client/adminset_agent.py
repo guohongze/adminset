@@ -21,29 +21,29 @@ except ImportError as msg:
     print("begining install psutil module, please waiting")
     p = Popen('pip install psutil==5.2.2', stdout=PIPE, shell=True)
     stdout, stderr = p.communicate()
-    print stdout
+    print(stdout)
     import psutil
 
 try:
     import schedule
 except ImportError as msg:
-    print msg
+    print(msg)
     print("------------------------------------------------")
     print("begining install schedule module, please waiting")
     p = Popen('pip install schedule==0.4.3', stdout=PIPE, shell=True)
     stdout, stderr = p.communicate()
-    print stdout
+    print(stdout)
     import schedule
 
 try:
     import requests
 except ImportError as msg:
-    print msg
+    print(msg)
     print("------------------------------------------------")
     print("begining install schedule module, please waiting")
     p = Popen('pip install requests==2.17.3', stdout=PIPE, shell=True)
     stdout, stderr = p.communicate()
-    print stdout
+    print(stdout)
     import requests
 
 
@@ -145,11 +145,11 @@ def post_data(url, data):
     try:
         r = requests.post(url, data)
         if r.text:
-            print r.text
+            print(r.text)
         else:
             print("Server return http status code: {0}".format(r.status_code))
-    except StandardError as msg:
-        print msg
+    except Exception as msg:
+        print(msg)
     return True
 
 
@@ -175,9 +175,9 @@ def asset_info():
 def asset_info_post():
     osenv = os.environ["LANG"]
     os.environ["LANG"] = "us_EN.UTF8"
-    print 'Get the hardwave infos from host:'
-    print asset_info()
-    print '----------------------------------------------------------'
+    print('Get the hardwave infos from host:')
+    print(asset_info())
+    print('----------------------------------------------------------')
     post_data("http://{0}/cmdb/collect".format(server_ip), asset_info())
     os.environ["LANG"] = osenv
     return True
@@ -277,18 +277,17 @@ def get_net_info():
 
 def agg_sys_info():
 
-    print 'Get the system infos from host:'
-    sys_info = dict()
-    sys_info['hostname'] = platform.node()
-    sys_info['cpu'] = get_sys_cpu()
-    sys_info['mem'] = get_sys_mem()
-    sys_info['disk'] = get_sys_disk()
-    sys_info['net'] = get_net_info()
-    sys_info['token'] = token
+    print('Get the system infos from host:')
+    sys_info = {'hostname': platform.node(),
+                'cpu': get_sys_cpu(),
+                'mem': get_sys_mem(),
+                'disk': get_sys_disk(),
+                'net': get_net_info(),
+                'token': token}
 
-    print sys_info
+    print(sys_info)
     json_data = json.dumps(sys_info)
-    print '----------------------------------------------------------'
+    print('----------------------------------------------------------')
     post_data("http://{0}/monitor/received/sys/info/".format(server_ip), json_data)
     return True
 

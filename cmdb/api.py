@@ -14,7 +14,7 @@ from config.views import get_dir
 
 try:
     import json
-except ImportError, e:
+except ImportError:
     import simplejson as json
 
 
