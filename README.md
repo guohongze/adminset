@@ -5,28 +5,21 @@
 <br>
 Adminset基于DevOps理念开发，以整合全部运维场景为己任。Adminset是一个真正的基于运维思维而开发的全自动化运维平台。<br>
 
-## v0.11 新功能
-django更新至1.11.9
-webssh更新至0.2.0
-新增认证中心功能
-新增持续交付模块
-新增免交互全自动安装
-新增redis可配置选项
-增加客户端rhel支持
-优化CPU抓取逻辑
-导航栏弹出逻辑调整
-优化自动免密钥登陆逻辑
-
+## v0.20 新功能
+python3.6语法兼容<br>
+全新CMDB数据模型<br>
+agent后台启动管理<br>
+agent部署使用venv<br>
+更新celery 4.1.0<br>
 
 
 ## 开发环境
 centos 7.2(1511) django 1.11.9 python 2.7<br>
 
 ## 服务端安装
-生产服务器建议 4核CPU，8G内存以上.<br>
+生产服务器建议 4核CPU，6G内存以上.<br>
 学习测试建议 2核CPU，2G内存以上.<br>
 服务器操作系统版本要求 centos7.2及以上<br>
-注意：master分支可能处于开发中，拉取稳定版请使用tag或release页面的版本。
 ```
 git clone https://github.com/guohongze/adminset.git
 adminset/install/server/auto_install.sh
@@ -40,24 +33,21 @@ adminset/install/server/server_install.sh<br>
 客户端python版本支持2.6.6及以上<br>
 说明：为保证注册IP是管理IP（后续会被ansible等调用），客户端的IP抓取目前使用主机名解析，否则报错。 
 如：主机名为cn-bj-web01 请在/etc/hosts中加入相应的解析 192.168.x.x cn-bj-web01，这样再执行adminset_agent.py 可以保证正常运行。
-#### step1:
-拷贝install/client/client_install.sh 到客户机上并执行:
+#### step1: 修改文件install/client/adminset_agent.py :
 ```
-install/client/client_install.sh
+客户端正常使用需要修改脚本中的两个字段：
+token = 'HPcWR7l4NJNJ'        #token是上传到服务器的密钥可以在WEB界面的系统配置中自定义<br>
+server_ip = '192.168.47.130'  #此项目为adminset server的IP地址<br>
 ```
-#### step2:
-拷贝install/client/adminset_agent.py 到客户机上并执行:
+#### step2: 拷贝install/client/ 目录到客户机的任意位置并执行:
 ```
-python adminset_agent.py
+sh install/client/install.sh
 ```
-后台运行请参考：
+#### step3: 客户端管理
 ```
-nohup python adminset_agent.py &
+service adminsetd start|stop|restart|status
 ```
 注意：客户端全部功能需要配置服务器到客户端的ssh免密登录。<br>
-客户端正常使用需要修改脚本中的两个字段：<br>
-token = 'HPcWR7l4NJNJ' token是上传到服务器的密钥可以在WEB界面的系统配置中自定义<br>
-server_ip = '192.168.47.130' 此项目为adminset server的IP地址<br>
 
 
 ## 访问
