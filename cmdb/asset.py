@@ -39,6 +39,7 @@ def asset(request):
     keyword = request.GET.get('keyword', '')
     export = request.GET.get("export", '')
     group_id = request.GET.get("group_id", '')
+    cabinet_id = request.GET.get("cabinet_id", '')
     idc_id = request.GET.get("idc_id", '')
     asset_id_all = request.GET.getlist("id", '')
 
@@ -46,6 +47,12 @@ def asset(request):
         group = get_object(HostGroup, id=group_id)
         if group:
             asset_find = Host.objects.filter(group=group)
+
+    if cabinet_id:
+        cabinet = get_object(Cabinet, id=cabinet_id)
+        if cabinet:
+            asset_find = Host.objects.filter(cabinet=cabinet)
+
     elif idc_id:
         idc = get_object(Idc, id=idc_id)
         if idc:
@@ -55,7 +62,8 @@ def asset(request):
     if idc_name:
         asset_find = asset_find.filter(idc__name__contains=idc_name)
     if group_name:
-        asset_find = asset_find.filter(group__name__contains=group_name)
+        get_group = HostGroup.objects.get(name=group_name)
+        asset_find = get_group.serverList.all()
     if asset_type:
         asset_find = asset_find.filter(asset_type__contains=asset_type)
     if status:
@@ -94,10 +102,10 @@ def create_asset_excel(export, asset_id_all):
             file_name = 'adminset_cmdb_' + now + '.csv'
             response['Content-Disposition'] = "attachment; filename="+file_name
             writer = csv.writer(response)
-            writer.writerow([str2gb(u'主机名'), str2gb(u'IP地址'), str2gb(u'其它IP'), str2gb(u'主机组'),
+            writer.writerow([str2gb(u'主机名'), str2gb(u'IP地址'), str2gb(u'其它IP'), str2gb(u'所在机房'),
                              str2gb(u'资产编号'), str2gb(u'设备类型'), str2gb(u'设备状态'), str2gb(u'操作系统'),
                              str2gb(u'设备厂商'), str2gb(u'CPU型号'), str2gb(u'CPU核数'), str2gb(u'内存大小'),
-                             str2gb(u'硬盘信息'), str2gb(u'SN号码'), str2gb(u'所在机房'), str2gb(u'所在位置'),
+                             str2gb(u'硬盘信息'), str2gb(u'SN号码'), str2gb(u'所在位置'),
                              str2gb(u'备注信息')])
             for h in asset_find:
                 if h.asset_type:
@@ -110,10 +118,10 @@ def create_asset_excel(export, asset_id_all):
                     a_status = ASSET_STATUS[at_as-1][1]
                 else:
                     a_status = ""
-                writer.writerow([str2gb(h.hostname), h.ip, h.other_ip, str2gb(h.group), str2gb(h.asset_no),
+                writer.writerow([str2gb(h.hostname), h.ip, h.other_ip, str2gb(h.idc), str2gb(h.asset_no),
                                  str2gb(a_type), str2gb(a_status), str2gb(h.os), str2gb(h.vendor),
                                  str2gb(h.cpu_model), str2gb(h.cpu_num), str2gb(h.memory), str2gb(h.disk),
-                                 str2gb(h.sn), str2gb(h.idc), str2gb(h.position), str2gb(h.memo)])
+                                 str2gb(h.sn), str2gb(h.position), str2gb(h.memo)])
             return response
 
     if export == "all":
@@ -123,9 +131,9 @@ def create_asset_excel(export, asset_id_all):
         file_name = 'adminset_cmdb_' + now + '.csv'
         response['Content-Disposition'] = "attachment; filename=" + file_name
         writer = csv.writer(response)
-        writer.writerow([str2gb('主机名'), str2gb('IP地址'), str2gb('其它IP'), str2gb('主机组'), str2gb('资产编号'),
+        writer.writerow([str2gb('主机名'), str2gb('IP地址'), str2gb('其它IP'), str2gb('所在机房'), str2gb('资产编号'),
                          str2gb('设备类型'), str2gb('设备状态'), str2gb('操作系统'), str2gb('设备厂商'), str2gb('CPU型号'),
-                         str2gb('CPU核数'), str2gb('内存大小'), str2gb('硬盘信息'), str2gb('SN号码'), str2gb('所在机房'),
+                         str2gb('CPU核数'), str2gb('内存大小'), str2gb('硬盘信息'), str2gb('SN号码'),
                          str2gb('所在位置'), str2gb('备注信息')])
         for h in host:
             if h.asset_type:
@@ -138,9 +146,9 @@ def create_asset_excel(export, asset_id_all):
                 a_status = ASSET_STATUS[at_as-1][1]
             else:
                 a_status = ""
-            writer.writerow([str2gb(h.hostname), h.ip, h.other_ip, str2gb(h.group), str2gb(h.asset_no), str2gb(a_type),
+            writer.writerow([str2gb(h.hostname), h.ip, h.other_ip, str2gb(h.idc), str2gb(h.asset_no), str2gb(a_type),
                              str2gb(a_status), str2gb(h.os), str2gb(h.vendor), str2gb(h.cpu_model), str2gb(h.cpu_num),
-                             str2gb(h.memory), str2gb(h.disk), str2gb(h.sn), str2gb(h.idc), str2gb(h.position),
+                             str2gb(h.memory), str2gb(h.disk), str2gb(h.sn), str2gb(h.position),
                              str2gb(h.memo)])
         return response
 
@@ -202,3 +210,11 @@ def asset_edit(request, ids):
         af = AssetForm(instance=obj)
 
     return render(request, 'cmdb/asset_edit.html', locals())
+
+
+@login_required
+@permission_verify()
+def server_detail(request, ids):
+    host = Host.objects.get(id=ids)
+    disk = eval(host.disk)
+    return render(request, 'cmdb/server_detail.html', locals())

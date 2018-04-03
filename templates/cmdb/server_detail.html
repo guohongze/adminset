@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% include 'link_css.html' %}
+    {% include 'head_script.html' %}
+    <script src="/static/layer/layer.js"></script>
+    <script src="/static/js/base.js"></script>
+</head>
+<body>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+    </section>
+    <section class="content">
+        <div class="box">
+                <div class="box-body">
+                  <table class="table table-striped table-bordered" id="product_project_table">
+                      <thead>
+                        <tr>
+                            <th>项目</th>
+                            <th>数值</th>
+                        </tr>
+                      </thead>
+                            <tbody>
+                                <tr class="even gradeX">
+                                    <td>主机名</td>
+                                    <td>{{ host.hostname }}</td>
+                                </tr>
+                                <tr class="even gradeX">
+                                    <td>管理IP</td>
+                                    <td>{{ host.ip }}</td>
+                                </tr>
+                                <tr class="even gradeX">
+                                    <td>CPU型号</td>
+                                    <td>{{ host.cpu_model }}</td>
+                                </tr>
+                                <tr class="even gradeX">
+                                    <td>CPU逻辑核心</td>
+                                    <td>{{ host.cpu_num }}</td>
+                                </tr>
+                                <tr class="even gradeX">
+                                    <td>内存信息</td>
+                                    <td>{{ host.memory }}G</td>
+                                </tr>
+                                <tr class="even gradeX">
+                                <td>硬盘信息</td>
+                                <td>
+                                    {% for d in disk %}
+                                    {{ d }}<br>
+                                    {% endfor %}
+                                </td>
+                                </tr>
+                                <tr class="even gradeX">
+                                    <td>sn</td>
+                                    <td>{{ host.sn }}G</td>
+                                </tr>
+                                <tr class="even gradeX">
+                                    <td>操作系统</td>
+                                    <td>{{ host.os }}</td>
+                                </tr>
+                                <tr class="even gradeX">
+                                    <td>设备厂商</td>
+                                    <td>{{ host.vendor }}</td>
+                                </tr>
+                                <tr class="even gradeX">
+                                    <td>所在机房</td>
+                                    <td>{{ host.idc }}</td>
+                                </tr>
+                                <tr class="even gradeX">
+                                    <td>资产编号</td>
+                                    <td>{{ host.asset_no }}</td>
+                                </tr>
+                                <tr class="even gradeX">
+                                    <td>设备类型</td>
+                                    <td>{{ host.asset_type }}</td>
+                                </tr>
+                                <tr class="even gradeX">
+                                    <td>设备状态</td>
+                                    <td>{{ host.status }}</td>
+                                </tr>
+                                <tr class="even gradeX">
+                                    <td>上架时间</td>
+                                    <td>{{ host.up_time }}</td>
+                                </tr>
+                                <tr class="even gradeX">
+                                    <td>所在位置</td>
+                                    <td>{{ host.position }}</td>
+                                </tr>
+                                <tr class="even gradeX">
+                                    <td>说明</td>
+                                    <td>{{ host.memo }}</td>
+                                </tr>
+                            </tbody>
+                  </table>
+                </div>
+        </div>
+    </section>
+</div>
+<script>
+  $(function () {
+    $('#product_project_table').DataTable({
+      "paging": true,
+      "lengthChange": true,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": true
+    });
+  });
+</script>
+</body>
+</html>
+

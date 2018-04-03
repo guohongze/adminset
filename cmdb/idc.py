@@ -3,9 +3,11 @@
 
 from django.shortcuts import render
 from forms import IdcForm
-from .models import Idc
+from .models import Idc, Cabinet
 from django.contrib.auth.decorators import login_required
 from accounts.permission import permission_verify
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
 
 
 @login_required()
@@ -29,11 +31,11 @@ def idc_add(request):
         else:
             tips = u"增加失败！"
             display_control = ""
-        return render(request, "cmdb/idc_add.html", locals())
+        return render(request, "cmdb/idc_base.html", locals())
     else:
         display_control = "none"
         idc_form = IdcForm()
-        return render(request, "cmdb/idc_add.html", locals())
+        return render(request, "cmdb/idc_base.html", locals())
 
 
 @login_required()
@@ -51,39 +53,35 @@ def idc_del(request):
 
 @login_required()
 @permission_verify()
-def idc_edit(request, ids):
-    obj = Idc.objects.get(id=ids)
-    allidc = Idc.objects.all()
-    return render(request, "cmdb/idc_edit.html", locals())
-
-
-@login_required()
-@permission_verify()
-def idc_save(request):
+def idc_edit(request, idc_id):
+    project = Idc.objects.get(id=idc_id)
     temp_name = "cmdb/cmdb-header.html"
     if request.method == 'POST':
-        idc_id = request.POST.get('id')
-        mini = request.POST.get('idc_mini')
-        name = request.POST.get('name')
-        address = request.POST.get('address')
-        tel = request.POST.get('tel')
-        contact = request.POST.get('contact')
-        contact_phone = request.POST.get('contact_phone')
-        jigui = request.POST.get('jigui')
-        ip_range = request.POST.get('ip_range')
-        bandwidth = request.POST.get('bandwidth')
-        idc_item = Idc.objects.get(id=idc_id)
-        idc_item.name = name
-        idc_item.address = address
-        idc_item.tel = tel
-        idc_item.contact = contact
-        idc_item.contact_phone = contact_phone
-        idc_item.jigui = jigui
-        idc_item.ip_range = ip_range
-        idc_item.bandwidth = bandwidth
-        idc_item.save()
-        obj = idc_item
-        status = 1
+        form = IdcForm(request.POST, instance=project)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('idc'))
     else:
-        status = 2
-    return render(request, "cmdb/idc_edit.html", locals())
+        form = IdcForm(instance=project)
+    display_control = "none"
+    results = {
+        'idc_form': form,
+        'idc_id': idc_id,
+        'request': request,
+        'temp_name': temp_name,
+        'display_control': display_control,
+    }
+    return render(request, 'cmdb/idc_base.html', results)
+
+
+@login_required
+@permission_verify()
+def cabinet_list(request, cabinet_id):
+    temp_name = "cmdb/cmdb-header.html"
+    cab = Idc.objects.get(id=cabinet_id)
+    cabinets = cab.cabinet_set.all()
+    results = {
+        'temp_name': temp_name,
+        'cabinet_list':  cabinets,
+    }
+    return render(request, 'cmdb/idc_cabinet_list.html', results)

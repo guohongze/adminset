@@ -8,7 +8,6 @@ class HostAdmin(admin.ModelAdmin):
     list_display = [
         'hostname',
         'ip',
-        'group',
         'vendor',
         'os',
         'cpu_model',

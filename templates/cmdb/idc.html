@@ -6,13 +6,13 @@
 <script>
     window.onload=init;
     function init() {
-        showhide(2);
+        showhide();
     }
-    function showhide(n) {
+    function showhide() {
         var box = document.getElementById("cmdb");
         box.className="active";
-        var box = document.getElementById("idc");
-        box.className="active";
+        var box2 = document.getElementById("idc");
+        box2.className="active";
     }
 </script>
 
@@ -41,13 +41,12 @@
                                 <input type="checkbox" onclick="checkAll(this, 'item1');" />
                             </th>
                                     <th>机房名称</th>
-                                    <th>机房地址</th>
+                                    <th>机房标识</th>
                                     <th>机房电话</th>
                                     <th>客户经理</th>
                                     <th>移动电话</th>
-                                    <th>机柜信息</th>
-                                    <th>IP范围</th>
-                                    <th>接入带宽</th>
+                                    <th>备注</th>
+                                    <th>操作</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -55,14 +54,16 @@
                                 {% for idc in idc_info %}
                                     <tr class="even gradeA">
                                         <td><input type="checkbox" id="u_id" class="item1" value="{{ idc.id }}" name="idc_check" /></td>
-                                        <td><a href="#"><li style="list-style-type:none" onclick="return tanchu(this.value)" value="{{ idc.id }}"> {{ idc.name }}</li></a></td>
-                                        <td>{{ idc.address }}</td>
+                                        <td><a href="#"><li style="list-style-type:none" onclick="return popWin(this.value)" value="{{ idc.id }}">{{ idc.name }}</li></a> </td>
+                                        <td>{{ idc.ids }}</td>
                                         <td>{{ idc.tel }}</td>
                                         <td>{{ idc.contact }}</td>
                                         <td>{{ idc.contact_phone }}</td>
-                                        <td>{{ idc.jigui }}</td>
-                                        <td>{{ idc.ip_range }}</td>
-                                        <td>{{ idc.bandwidth }}</td>
+                                        <td>{{ idc.memo }}</td>
+                                        <td>
+                                            <a href="{% url "idc_edit" idc.id %}"><span class="btn btn-sm btn-info">编辑</span></a>
+                                            <a href="{% url "idc_del"%}?id={{ idc.id }}" onclick="return confirm('确认删除？')"><span class="btn btn-sm btn-danger ">删除</span></a>
+                                        </td>
                                     </tr>
                                 {% endfor %}
                                 {% else %}
@@ -113,6 +114,17 @@ function checkSubmit() {
     if (!confirm("确定删除？")) {
         window.event.returnValue = false;
     }
+}
+</script>
+<script>
+function popWin(idc_id){
+  layer.open({
+      type: 2,
+      title: '机柜列表',
+      area: ['700px', '500px'],
+      shadeClose: true, //点击遮罩关闭
+      content: ['/cmdb/idc/cabinetlist/' + idc_id]
+  });
 }
 </script>
 <script>

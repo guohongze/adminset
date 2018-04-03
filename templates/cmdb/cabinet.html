@@ -11,7 +11,7 @@
     function showhide(n) {
         var box = document.getElementById("cmdb");
         box.className="active";
-        var box2 = document.getElementById("group");
+        var box2 = document.getElementById("cabinet");
         box2.className="active";
     }
 </script>
@@ -24,12 +24,12 @@
 
     <!-- Main content -->
     <section class="content">
-        <form action="{% url 'group_del' %}" method="post">
+        <form action="{% url 'cabinet_del' %}" method="post">
                 {% csrf_token %}
             <div class="box">
                 <div class="box-header">
                     <div class="btn-group">
-						 <a href="{% url 'group_add' %}"><li class="btn btn-success" ><b>添加组</b></li></a>
+						 <a href="{% url 'cabinet_add' %}"><li class="btn btn-success" ><b>添加机柜</b></li></a>
                   </div>
                 </div>
                 <!-- /.box-header -->
@@ -40,22 +40,22 @@
                             <th>
                                 <input type="checkbox" onclick="checkAll(this, 'item1');" />
                             </th>
-                                    <th>组名</th>
+                                    <th>机柜</th>
                                     <th>描述</th>
                                     <th>操作</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {% if allgroup %}
-                                {% for g in allgroup %}
+                                {% if allcabinet %}
+                                {% for g in allcabinet %}
                                     <tr class="even gradeA">
                                         <td><input type="checkbox" id="u_id" class="item1" value="{{ g.id }}" name="g_check" /></td>
                                         <td><a href="#"><li style="list-style-type:none" onclick="return popWin(this.value)" value="{{ g.id }}">{{ g.name }}</li></a> </td>
                                         <td>{{ g.desc }}</td>
 
                                         <td>
-                                            <a href="{% url "group_edit" g.id %}"><span class="btn btn-sm btn-info">编辑</span></a>
-                                            <a href="{% url "group_del"%}?id={{ g.id }}" onclick="return confirm('确认删除？')"><span class="btn btn-sm btn-danger ">删除</span></a>
+                                            <a href="{% url "cabinet_edit" g.id %}"><span class="btn btn-sm btn-info">编辑</span></a>
+                                            <a href="{% url "cabinet_del"%}?id={{ g.id }}" onclick="return confirm('确认删除？')"><span class="btn btn-sm btn-danger ">删除</span></a>
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -110,13 +110,13 @@ function checkSubmit() {
 }
 </script>
 <script>
-function popWin(group_id){
+function popWin(cabinet_id){
   layer.open({
       type: 2,
-      title: '组成员',
+      title: '服务器列表',
       area: ['700px', '500px'],
       shadeClose: true, //点击遮罩关闭
-      content: ['/cmdb/group/server_list/' + group_id]
+      content: ['/cmdb/cabinet/server_list/' + cabinet_id]
   });
 }
 </script>
