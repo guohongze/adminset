@@ -26,6 +26,7 @@ centos 7.2(1511) django 1.11.9（兼容Django1.9.x） python 2.7<br>
 生产服务器建议 4核CPU，8G内存以上.<br>
 学习测试建议 2核CPU，2G内存以上.<br>
 服务器操作系统版本要求 centos7.2及以上<br>
+注意：master分支可能处于开发中，拉取稳定版请使用tag或release页面的版本。
 ```
 git clone https://github.com/guohongze/adminset.git
 adminset/install/server/auto_install.sh
