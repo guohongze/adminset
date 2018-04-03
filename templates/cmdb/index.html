@@ -17,8 +17,8 @@
     function showhide(n) {
         var box = document.getElementById("cmdb");
         box.className="active";
-        var box = document.getElementById("asset");
-        box.className="active";
+        var box2 = document.getElementById("asset");
+        box2.className="active";
     }
 </script>
 <script>
@@ -141,7 +141,7 @@
                                 {% for host in assets.object_list %}
                                     <tr class="even gradeX">
                                         <td><input type="checkbox" id="id" class="i-checks" value="{{ host.id }}" name="id" /></td>
-                                        <td><a href="#"><li style="list-style-type:none" onclick="return tanchu(this.value)" value="{{ host.id }}"> {{ host.hostname }}</li></a></td>
+                                        <td><a href="#"><li style="list-style-type:none" onclick="return detail(this.value)" value="{{ host.id }}"> {{ host.hostname }}</li></a></td>
                                         <td>{{ host.ip }}</td>
                                         <td>{{ host.group }}</td>
                                         <td>{{ host.cpu_num }}</td>
@@ -214,6 +214,18 @@ function tanchu(n){
                 });
             }
         }
+  });
+}
+</script>
+<script>
+function detail(n){
+    layer.open({
+    type: 2,
+    title: '主机信息',
+    closeBtn: 1,
+    area: ['700px', '550px'],
+    shadeClose: true, //点击遮罩关闭
+    content: ['/cmdb/asset/detail/' + n]
   });
 }
 </script>

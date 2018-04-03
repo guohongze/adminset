@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from __future__ import unicode_literals
 from forms import AssetForm
 from models import Host, Idc, HostGroup, ASSET_STATUS, ASSET_TYPE, Cabinet
 from django.shortcuts import render, HttpResponse
@@ -12,9 +13,6 @@ import datetime
 from django.contrib.auth.decorators import login_required
 from accounts.permission import permission_verify
 from config.views import get_dir
-import sys
-reload(sys)
-sys.setdefaultencoding('utf8')
 
 
 @login_required()
@@ -206,3 +204,10 @@ def asset_edit(request, ids):
         af = AssetForm(instance=obj)
 
     return render(request, 'cmdb/asset_edit.html', locals())
+
+
+@login_required
+@permission_verify()
+def server_detail(request, ids):
+    host = Host.objects.get(id=ids)
+    return render(request, 'cmdb/server_detail.html', locals())
