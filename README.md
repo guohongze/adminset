@@ -20,7 +20,7 @@ webssh更新至0.2.0
 
 
 ## 开发环境
-centos 7.2(1511) django 1.11.9（兼容Django1.9.x） python 2.7<br>
+centos 7.2(1511) django 1.11.9 python 2.7<br>
 
 ## 服务端安装
 生产服务器建议 4核CPU，8G内存以上.<br>
@@ -77,5 +77,4 @@ FAQ参考，<a href="https://github.com/guohongze/adminset/wiki/FAQ">常见问�
 
 # 开发者交流
 请加入开发者群<br>
-1号群 427794947(已满)<br>
-2号群 536962005
+2号群 536962005<br>
