@@ -12,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.shortcuts import HttpResponse, render
 from forms import AssetForm
-from models import ASSET_STATUS, ASSET_TYPE, Host, HostGroup, Idc
+from models import ASSET_STATUS, ASSET_TYPE, Host, HostGroup, Idc, Cabinet
 
 try:
     reload(sys)  # Python 2
