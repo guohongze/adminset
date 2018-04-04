@@ -219,5 +219,5 @@ def server_detail(request, ids):
     try:
         disk = eval(host.disk)
     except Exception as e:
-        print e
+        print(e)
     return render(request, 'cmdb/server_detail.html', locals())
