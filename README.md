@@ -41,7 +41,8 @@ server_ip = '192.168.47.130'  #此项目为adminset server的IP地址<br>
 ```
 #### step2: 拷贝install/client/ 目录到客户机的任意位置并执行:
 ```
-sh install/client/install.sh
+cd client
+sh install.sh
 ```
 #### step3: 客户端管理
 ```
