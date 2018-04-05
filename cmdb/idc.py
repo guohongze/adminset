@@ -42,6 +42,9 @@ def idc_add(request):
 @permission_verify()
 def idc_del(request):
     temp_name = "cmdb/cmdb-header.html"
+    idc_id = request.GET.get('id', '')
+    if idc_id:
+        Idc.objects.filter(id=idc_id).delete()
     if request.method == 'POST':
         idc_items = request.POST.getlist('idc_check', [])
         if idc_items:
