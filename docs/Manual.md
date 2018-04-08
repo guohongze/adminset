@@ -200,16 +200,20 @@
 
 #   升级与更新
     强烈建设在升级或更新adminset之前先备份数据库，并在测试环境验证通过，因为adminset在快速的发展过程中，每版本功能与结构变化较大。
+    0.20 表结构变更较大，不兼容0.1x版本，如果升级请导出数据再导入。
     1）版本更新：
-        下载相应版本的代码到本地然后执行：
+        下载相应版本的代码到本地，建议下载到/opt/adminset，然后执行：
         chmdo +x adminset/install/server/update.sh
         adminset/install/server/update.sh
     2)二次开发
         rsync.sh脚本只做增量，rsync参数不带--delete选项，不会在生产环境删除代码中已删除的条目,不更新组件配置文件，不会生成新的ORM数据库条目。
         update.sh脚本带--delete选项，同步代码，重新发布各组件的配置文件，并重新生成ORM数据文件（makemigrations migrate）。
         update.sh 可带一个参数，参数为需要更新的应用名，如变更了appconf模块的models只更新appconf可以使用update.sh appconf来更新。
-    3) 0.20 表结构变更较大，不兼容0.1x版本，如果升级请导出数据再导入。
-
+        注意：如果做表结构变更，把新生成的{app_name}/migrations中的000X_initial.py文件提交到代码中，以保证更新时ORM配置正确。
+        
+    3) 自动化部署
+        在自动化部署软件如jenkins或adminset中，拉取代码到本地后，再用命令将其复制到更新目标机器的/opt/adminset 目录，然后执行：
+        adminset/install/server/update.sh。（这一切的前提要求已经初次安装过adminset服务端）
 # 安全
     强烈建议不要将程序启动在有公网可以直接访问的设备上，如果需要请使用VPN。
     建议生产环境中使用https配置服务器<br>
