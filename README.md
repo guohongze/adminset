@@ -61,6 +61,12 @@ http://your_server_ip<br>
 功能参考，<a href="https://github.com/guohongze/adminset/wiki/AdminSet">功能预览</a><br>
 FAQ参考，<a href="https://github.com/guohongze/adminset/wiki/FAQ">常见问题</a>
 
+# adminset demo
+每2小时重置一次数据<br>
+http://115.28.147.154<br>
+用户名admin 密码Adminset123<br>
+webssh用户名密码相同<br>
+
 # 安全
 建议不要将程序启动在有公网可以直接访问的设备上，如果需要请使用VPN。<br>
 建议生产环境中使用https配置服务器<br>
