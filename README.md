@@ -69,3 +69,9 @@ FAQ参考，<a href="https://github.com/guohongze/adminset/wiki/FAQ">常见问�
 # 开发者交流
 请加入开发者群<br>
 2号群 536962005<br>
+
+# 支持adminset
+支持adminset发展，款项用于adminset社区运营，网站服务器租赁等。<br>
+<img src="https://github.com/guohongze/adminset/blob/master/static/dist/img/alipay.png"></img> 
+
+
