@@ -10,7 +10,7 @@ cd .. && cd ..
 cur_dir=$(pwd)
 cd $adminset_dir
 pip install -r requirements.txt
-
+rsync --progress -ra --delete --exclude '.git' $cur_dir/ $adminset_dir
 cd $adminset_dir
 if [ $1 ]
 then
