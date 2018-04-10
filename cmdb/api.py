@@ -101,6 +101,8 @@ def collect(request):
         osver = asset_info['osver']
         hostname = asset_info['hostname']
         ip = asset_info['ip']
+        if not ip or not hostname:
+            return HttpResponse("Error your agent ip or hostname is empty! Please resolve your hostname.")
         # asset_type = ""
         # status = ""
         try:
