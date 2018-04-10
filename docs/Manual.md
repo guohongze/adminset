@@ -37,17 +37,18 @@
  
         客户端正常使用需要修改脚本中的两个字段：
         token = 'HPcWR7l4NJNJ'        #token是上传到服务器的密钥可以在WEB界面的系统配置中自定义<br>
-        server_ip = '192.168.47.130'  #此项目为adminset server的IP地址<br>
+        server_ip = '192.168.47.130'  #此项目为adminset server的IP地址，支持域名<br>
 
         #### step2: 拷贝install/client/ 目录到客户机的任意位置并执行:
 
         cd client
-        sh install.sh
+        /bin/bash install.sh
 
         #### step3: 客户端管理
         
         service adminsetd start|stop|restart|status
         客户端会被默认安装在/var/opt/adminset/client/ 目录下
+        agent日志文件/var/opt/adminset/client/agent.log
         agent默认每3600秒上传一次资产和硬件信息，可以在adminset_agent.py中自定义
         注意：客户端全部功能需要配置服务器到客户端的ssh免密登录。
         
@@ -65,6 +66,7 @@
     logs 日志
     data 常用数据
     workspace 持续部署模块工作目录
+    client 为客户端目录
 
 #   站点导航用法
     在站点管理中输入常用的运维工具系统后会自动出现在站点导航界面。
@@ -197,6 +199,7 @@
     service beat {start|stop|restart}     # 任务调用
     service mongod {start|stop|restart}   # 监控数据库
     service webssh {start|stop|restart}   # web终端功能
+    service adminsetd {start|stop|restart}   # 客户端
 
 #   升级与更新
     强烈建设在升级或更新adminset之前先备份数据库，并在测试环境验证通过，因为adminset在快速的发展过程中，每版本功能与结构变化较大。

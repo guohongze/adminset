@@ -29,7 +29,7 @@ adminset/install/server/server_install.sh<br>
 
 
 ## 客户端安装
-客户端脚本目前rhel/centos6、7,ubuntu14.04经过测试<br>
+客户端脚本目前rhel/centos6、centos7,ubuntu16.04<br>
 客户端python版本支持2.6.6及以上<br>
 说明：为保证注册IP是管理IP（后续会被ansible等调用），客户端的IP抓取目前使用主机名解析，否则报错。 
 如：主机名为cn-bj-web01 请在/etc/hosts中加入相应的解析 192.168.x.x cn-bj-web01，这样再执行adminset_agent.py 可以保证正常运行。
@@ -42,7 +42,7 @@ server_ip = '192.168.47.130'  #此项目为adminset server的IP地址<br>
 #### step2: 拷贝install/client/ 目录到客户机的任意位置并执行:
 ```
 cd client
-sh install.sh
+/bin/bash install.sh
 ```
 #### step3: 客户端管理
 ```
