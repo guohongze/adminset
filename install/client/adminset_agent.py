@@ -130,14 +130,14 @@ def asset_info():
 def asset_info_post():
     pversion = platform.python_version()
     pv = re.search(r'2.6', pversion)
-    if not pv.group():
+    if not pv:
         osenv = os.environ["LANG"]
         os.environ["LANG"] = "us_EN.UTF8"
     logging.info('Get the hardwave infos from host:')
     logging.info(asset_info())
     logging.info('----------------------------------------------------------')
     post_data("http://{0}/cmdb/collect".format(server_ip), asset_info())
-    if not pv.group():
+    if not pv:
         os.environ["LANG"] = osenv
     return True
 
