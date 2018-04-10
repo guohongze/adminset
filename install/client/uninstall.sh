@@ -8,6 +8,7 @@ os=$(cat /proc/version)
 if (echo $os|grep centos) || (echo $os|grep 'Red Hat')
 then
     rm -rf /var/lib/systemd/system/adminsetd.service
+    rm -rf /etc/init.d/adminsetd
 elif (echo $os|grep Ubuntu)
 then
     rm -rf /etc/systemd/system/adminsetd.service

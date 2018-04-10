@@ -1,17 +1,32 @@
 #!/usr/bin/env python
 # coding=utf-8
-
-import os, platform, socket, time, json, threading
+import os, re, platform, socket, time, json, threading
 import psutil, schedule, requests
 from subprocess import Popen, PIPE
-AGENT_VERSION = "0.20"
+import logging
+AGENT_VERSION = "0.21"
 token = 'HPcWR7l4NJNJ'
 server_ip = '192.168.47.130'
 
 
+def log(log_name, path=None):
+    logging.basicConfig(level=logging.INFO,
+                format='%(asctime)s %(levelname)s %(message)s',
+                datefmt='%Y%m%d %H:%M:%S',
+                filename=path+log_name,
+                filemode='ab+')
+    return logging.basicConfig
+
+log("agent.log", "/var/opt/adminset/client/")
+
+
 def get_ip():
-    hostname = socket.getfqdn(socket.gethostname())
-    ipaddr = socket.gethostbyname(hostname)
+    try:
+        hostname = socket.getfqdn(socket.gethostname())
+        ipaddr = socket.gethostbyname(hostname)
+    except Exception as msg:
+        print(msg)
+        ipaddr = ''
     return ipaddr
 
 
@@ -84,11 +99,11 @@ def post_data(url, data):
     try:
         r = requests.post(url, data)
         if r.text:
-            print(r.text)
+            logging.info(r.text)
         else:
-            print("Server return http status code: {0}".format(r.status_code))
+            logging.info("Server return http status code: {0}".format(r.status_code))
     except Exception as msg:
-        print(msg)
+        logging.info(msg)
     return True
 
 
@@ -113,13 +128,17 @@ def asset_info():
 
 
 def asset_info_post():
-    osenv = os.environ["LANG"]
-    os.environ["LANG"] = "us_EN.UTF8"
-    print('Get the hardwave infos from host:')
-    print(asset_info())
-    print('----------------------------------------------------------')
+    pversion = platform.python_version()
+    pv = re.search(r'2.6', pversion)
+    if not pv.group():
+        osenv = os.environ["LANG"]
+        os.environ["LANG"] = "us_EN.UTF8"
+    logging.info('Get the hardwave infos from host:')
+    logging.info(asset_info())
+    logging.info('----------------------------------------------------------')
     post_data("http://{0}/cmdb/collect".format(server_ip), asset_info())
-    os.environ["LANG"] = osenv
+    if not pv.group():
+        os.environ["LANG"] = osenv
     return True
 
 
@@ -217,7 +236,7 @@ def get_net_info():
 
 def agg_sys_info():
 
-    print('Get the system infos from host:')
+    logging.info('Get the system infos from host:')
     sys_info = {'hostname': platform.node(),
                 'cpu': get_sys_cpu(),
                 'mem': get_sys_mem(),
@@ -225,9 +244,9 @@ def agg_sys_info():
                 'net': get_net_info(),
                 'token': token}
 
-    print(sys_info)
+    logging.info(sys_info)
     json_data = json.dumps(sys_info)
-    print('----------------------------------------------------------')
+    logging.info('----------------------------------------------------------')
     post_data("http://{0}/monitor/received/sys/info/".format(server_ip), json_data)
     return True
 
@@ -236,9 +255,14 @@ def run_threaded(job_func):
     job_thread = threading.Thread(target=job_func)
     job_thread.start()
 
+def get_pid():
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    pid = str(os.getpid())
+    with open(BASE_DIR+"/adminsetd.pid", "wb+") as pid_file:
+        pid_file.writelines(pid)
 
 if __name__ == "__main__":
-
+    get_pid()
     asset_info_post()
     time.sleep(1)
     agg_sys_info()
