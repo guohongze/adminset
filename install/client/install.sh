@@ -13,7 +13,8 @@ then
     yum install -y gcc smartmontools dmidecode python-pip python-devel  libselinux-python dos2unix
 elif (echo $os|grep Ubuntu)
 then
-    apt-get install smartmontools dmidecode python-pip python-dev tofrodos
+    apt-get update
+    apt-get install -y gcc smartmontools dmidecode python-pip python-dev tofrodos
     sed -i "s/PermitRootLogin/\#PermitRootLogin/g" /etc/ssh/sshd_config
     service ssh restart
 else
