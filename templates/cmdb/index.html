@@ -130,7 +130,6 @@
                             </th>
                                     <th>主机名</th>
                                     <th>管理IP</th>
-                                    <th>属组</th>
                                     <th>CPU</th>
                                     <th>内存(G)</th>
                                     <th>机房</th>
@@ -143,7 +142,6 @@
                                         <td><input type="checkbox" id="id" class="i-checks" value="{{ host.id }}" name="id" /></td>
                                         <td><a href="#"><li style="list-style-type:none" onclick="return detail(this.value)" value="{{ host.id }}"> {{ host.hostname }}</li></a></td>
                                         <td>{{ host.ip }}</td>
-                                        <td>{{ host.group }}</td>
                                         <td>{{ host.cpu_num }}</td>
                                         <td>{{ host.memory }}</td>
                                         <td>{{ host.idc }}</td>
