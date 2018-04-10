@@ -50,7 +50,7 @@ $.get("/monitor/get/cpu/{{ hostname }}/"+timing).done(function (data) {
         ]
     });
 });
-}, 10000);
+}, 2000);
 </script>
 <script type="text/javascript">
 var mymemory = echarts.init(document.getElementById('memory'));
@@ -105,7 +105,7 @@ $.get("/monitor/get/mem/{{ hostname }}/"+timing).done(function (data) {
         ]
     });
 });
-}, 10000);
+}, 2000);
 </script>
 {% for p in partitions_len %}
 <script type="text/javascript">
@@ -161,7 +161,7 @@ $.get("/monitor/get/disk/{{ hostname }}/"+timing+"/"+{{ p }}).done(function (dat
         ]
     });
 });
-}, 10000);
+}, 2000);
 </script>
 {% endfor %}
 {% for nic in nic_len %}
@@ -270,6 +270,6 @@ $.get("/monitor/get/net/{{ hostname }}/"+timing+"/"+{{ nic }}).done(function (da
         }]
     });
 });
-}, 10000);
+}, 2000);
 </script>
 {% endfor %}
