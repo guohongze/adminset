@@ -174,7 +174,8 @@
       "searching": false,
       "ordering": true,
       "info": true,
-      "autoWidth": true
+      "autoWidth": true,
+      "bStateSave": true
     });
   });
 </script>
@@ -201,12 +202,14 @@ function tanchu(n){
                     icon: 1,
                     time: 2000 //2秒关闭（如果不配置，默认是3秒）
                 },function(){
+                    history.go(0);
                 });
             } else if ( handle_status == '2' ) {
                 layer.msg('修改失败！',{
                     icon: 2,
                     time: 2000 //2秒关闭（如果不配置，默认是3秒）
                 },function(){
+                    history.go(0);
                 });
             }
         }
