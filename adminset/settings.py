@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'monitor',
     'appconf',
     'delivery',
+    'zabbix',
     'django_celery_results',
     'django_celery_beat',
     'django.contrib.admin',
@@ -60,6 +61,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'jsonrpc',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -71,6 +73,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'adminset.middleware.AccessMiddleware',
 ]
 
 ROOT_URLCONF = 'adminset.urls'

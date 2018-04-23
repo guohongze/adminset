@@ -1,0 +1,232 @@
+{% extends 'base.html' %}
+{% block self_head_css_js %}
+    <script src="/static/layer/layer.js"></script>
+{% endblock %}
+{% block content %}
+
+<div class="content-wrapper">
+    <section class="content-header">
+    </section>
+        <section class="content">
+            <div class="row">
+              <div class="col-sm-6 col-md-6">
+                <div class="thumbnail">
+                <div>
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">×</button>
+                            <h4>主机绑定到zabbix</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div id="host_list" ></div>
+                            <select class="form-control" id="zabbix_group">
+                            </select>
+                            <br>
+                            <br>
+                            <button class="btn btn-primary" id="create">绑定</button>
+                        </div>
+                      </div>
+			<dl class="dl-horizontal" id="zb_content"></dl>
+                   </div>
+                 </div>
+                      <dl class="dl-horizontal" id="zb_content"></dl>
+                </div> <!--end of temple-->
+	    </div>
+           </div>
+    </section>
+</div>
+
+
+<script>
+{% block js %}
+function getlist(){
+    zabbix_group = $("#zabbix_group");
+    sync_host_list = $("#host_list");
+    var url = "/zabbix/listapi?method=zabbix_gettem"
+    $.getJSON('/zabbix/listapi?method=zbhost_allhost', function(data){
+         sync_host_list.empty();
+         server_list = JSON.parse(data['result']);
+         if(server_list['code'] == 0){
+             $.each(server_list['result'], function(n, obj){
+             html = '<div class="checkbox">';
+             html += '<label>';
+             html += '<input type="checkbox" name="zabbix_hosts" class="zabbix_hosts" value="'+obj.hostid+'">';
+             html += obj.host;
+             html += '</label>';
+             html += '</div>';
+             sync_host_list.append(html);
+            });
+         }
+         else {
+             swal(data['errmsg']);
+         }
+    });
+    $.getJSON(url,function(data){
+     	 data = JSON.parse(data['result']);
+     	if(data['code'] == 0){
+	   $.each(data['result'], function(n, obj){
+	       zabbix_group.append("<option value='"+obj.templateid+"'>"+obj.name+"</option>");
+	   })
+     	}else
+     	{
+	   swal(data['errmsg'])
+      	}
+     });
+
+    $("#create").click(function(){
+	hostids = new Array();
+    	$("input[name='zabbix_hosts']:checked").each(function (i, n) {
+            hostids[i] = n.value
+        });
+    	zabbix_groupid = $("#zabbix_group").val();
+    	$.post('/zabbix/zabbixapi',{method:"link_tem",hostids:hostids.toString(), groupid:zabbix_groupid},
+    	function(data){
+    	  data=JSON.parse(data);   //将json串转换为对象，然后取值
+    	  data =  JSON.parse(data['result']) //object
+          if(data['code'] == 0){
+  	     swal({
+    		title:"success",
+    		text:"添加成功",
+    		type:"success",
+    		confirmButtonText:'添加zabbi主机成功'
+    	     },function(){
+    		location.reload()
+   	     })
+    	  }else{
+    		swal(data['errmsg'])
+    	  }
+
+        })
+    });   /*end of create*/
+
+   $("#clean").click(function(){
+      hostids = new Array();
+      $("input[name='zabbix_hosts']:checked").each(function (i, n) {
+	  hostids[i] = n.value
+      });
+      zabbix_groupid = $("#zabbix_group").val();
+      $.post('/zabbix/zabbixapi',{method:"unlink_tem",hostids:hostids.toString(), groupid:zabbix_groupid},
+	    function(data){
+		data=JSON.parse(data);   //将json串转换为对象，然后取值
+		data = JSON.parse(data['result']) //object
+		console.log(data)
+		if(data['code'] == 0){
+		    swal({
+		    title:"success",
+		    text:"删除成功",
+		    type:"success",
+		    confirmButtonText:'成功解绑模板'
+	    },function(){
+		location.reload()
+	    })
+		}else{
+		swal(data['errmsg'])
+		}
+
+	     })
+     })   /*end of clean*/
+
+ }  /*end of all*/
+
+getlist()
+
+function inster_zabbix_data(data){
+    $.each( data, function(num, obj){
+        console.debug(obj);
+        html = "";
+        html += get_host_html(obj);
+        html += get_template_html(obj);
+        $("#zb_content").append(html)
+    });
+}
+
+function get_host_html(data){
+    html = '<dt><label class="checkbox-inline"><input type="checkbox" value="'+data.hostid+'" name="zb_hosts">'+data.name+'</label></dt>';
+    return html
+}
+function get_template_html(data){
+    hostname = data.hostname;
+    hostid = data.hostid;
+    html = '<dd>';
+    html += '<ul class="list-inline">';
+    $.each( data.parentTemplates, function(num, obj){
+        html += '<li>'+obj.name;
+        data =   "template='"+obj.name+"'  hostid='"+hostid+"'  templateid='"+obj.templateid+"' hostname='"+hostname+"'";
+        html += ' <span class="glyphicon glyphicon-remove unlink" aria-hidden="true" '+data+' ></li>';
+    });
+    html += '</ul>';
+    html += '</dd>';
+    return html
+}
+
+function get_templeate(){
+    $.getJSON("/zabbix/listapi?method=zabbix_tem",function(data){
+                data = JSON.parse(data['result']);
+                console.log(data);
+                if(data['code'] == 0){
+		     inster_zabbix_data(data['result'])
+
+                }else
+                {
+                        swal(data['errmsg'])
+                }
+          })
+	}
+
+    get_templeate()
+
+    $("#zb_content").on("click", ".unlink", function(){
+        // console.info($("input[name='zb_hosts']:checked"));
+        // console.info($("input[class='zb_hosts']:checked"));
+        // var value = $(".zb_hosts:checked").val());
+        console.log($('input[name=zb_hosts]:checked').val());
+        // alert(typeof(value) == "undefined"));
+        // console.log($('input[name=zb_hosts]:checked').prop("checked"))
+        
+        let input_checked=$('input[name=zb_hosts]:checked').val();
+	      click_obj = $(this);
+        cli_hostid = click_obj.attr('hostid');
+        cli_templateid = click_obj.attr('templateid');
+        cli_template = click_obj.attr('template')
+        if(input_checked!=undefined){
+            swal({
+            title: "确定删除吗?",
+            text: "将从 "+ cli_hostid +" 上取消关联 "+ cli_template +" 模板",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            cancelButtonText: "取消",
+            confirmButtonText: "删除",
+            closeOnConfirm: false },
+                function(){
+                    $.post("/zabbix/zabbix_template", {method:"unlink_tem",hostid: cli_hostid, templateid: cli_templateid} , function(data){
+                        data=JSON.parse(data);   //将json串转换为对象，然后取值
+                        data = JSON.parse(data['result']) //object
+                        console.log(data);
+                        if (data['code'] == 0){
+                            swal("操作成功", "模板解绑成功", "success");
+                            $('input[name=zb_hosts]:checked').prop("checked",false)
+                            click_obj.parents('li').remove()
+                        }else{
+                            swal("操作失败", data, "error");
+                        }
+
+                    });
+
+                });
+          }else{
+            alert("未选上")
+          }
+      
+    })
+
+
+
+
+{% endblock %}
+</script>
+
+{% endblock %}
+

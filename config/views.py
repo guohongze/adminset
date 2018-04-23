@@ -173,6 +173,11 @@ def get_dir(args):
         redis_port = config.get('redis', 'redis_port')
         redis_password = config.get('redis', 'redis_password')
         redis_db = config.get('redis', 'redis_db')
+        zabbix_url = config.get('zabbix', 'url')
+        zabbix_user = config.get('zabbix', 'user')
+        zabbix_passwd = config.get('zabbix', 'password')
+        login_url = config.get('zabbix', 'login_url')
+        graph = config.get('zabbix', 'graph')
     # 根据传入参数返回变量以获取配置，返回变量名与参数名相同
     if args:
         return vars()[args]

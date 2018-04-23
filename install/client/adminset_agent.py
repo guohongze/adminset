@@ -4,7 +4,7 @@ import os, re, platform, socket, time, json, threading
 import psutil, schedule, requests
 from subprocess import Popen, PIPE
 import logging
-AGENT_VERSION = "0.23"
+AGENT_VERSION = "0.21"
 token = 'HPcWR7l4NJNJ'
 server_ip = '192.168.47.130'
 

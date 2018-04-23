@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% block title %}监控管理 - zabbix监控主机添加 - OPS{% endblock %}
+{% block content %}
+
+    
+<script src="{{  url_for('static',filename='opsplatform/js/jquery-2.1.1.js') }}"></script>
+<script type="text/javascript">var csrftoken = "{{ csrf_token() }}"</script>
+
+            <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-lg-8">
+                    <h2>zabbix监控主机添加</h2>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="{{ url_for("main.index") }}">Home</a>
+                        </li>
+
+                        <li class="active">
+                            <strong>zabbix监控主机添加</strong>
+                        </li>
+                    </ol>
+                </div>
+
+            </div>
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Line scatter diagram</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h5>请先上传需要添加主机的文本文件<code>&lt;'hostlist.xls'&gt;</code>请务必保持文件格式如下所示:</h5>
+                            <table class="table table-bordered">
+                              <thead>
+                                <tr>
+                                  <th>主机名称</th>
+                                  <th>显示名</th>
+                                  <th>IP地址</th>
+                                  <th>分组名称</th>
+                                  <th>模板名称</th>
+                                  <th>主机位置</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td>sz-shipgs-1</td>
+                                  <td>sz-shipgs-1</td>
+                                  <td>10.1.1.1</td>
+                                  <td>Game_Server</td>
+                                  <td>Template OS Linux</td>
+                                  <td>cn-hangzhou-e</td>
+                                </tr>
+                                <tr>
+                                  <td>sz-shipgs-2</td>
+                                  <td>sz-shipgs-2</td>
+                                  <td>10.1.1.2</td>
+                                  <td>Game_Server</td>
+                                  <td>Template OS Linux</td>
+                                  <td>cn-hangzhou-e</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <form action="" method=post enctype=multipart/form-data>
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+
+                                  <p>
+                                      <input  type=file name=file>
+                                      <input type=submit value=upload >
+                                  </p>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+
+                {% if result %}
+                <div class="col-lg-6">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>导入结果</h5>
+                        </div>
+                        <div class="ibox-content">
+                        <textarea style="margin: 0px 0px 10px; height: 500px; width: 650px; outline: none; background-color: rgb(0, 0, 0); color: rgb(240, 240, 240);font-family:-webkit-body;font-size: large;">
+------ Import Server Start ------
+{% for res in result %}
+{{ res }}
+{% endfor -%}
+------ Import Server Done   ------
+</textarea>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            </div>
+        </div>
+
+
+{% endblock %}

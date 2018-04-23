@@ -38,6 +38,100 @@
     });
 </script>
 
+<div class="modal fade" id="update" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4>同步到zabbix</h4>
+            </div>
+            <div class="modal-body">
+                <div id="host_list"></div>
+                <select class="form-control" id="zabbix_group">
+                </select>
+                <br>
+                <br>
+                <button class="btn btn-primary" id="create">提交</button>
+            </div>
+            <div class="modal-footer">
+                <input class="btn btn-default" data-dismiss="modal" aria-hidden="true" type="button" value="取消">
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!--监控查看 -->
+<div id="monitor" class="modal fade text-center" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="display: inline-block; width: 60%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">监控查看</h4>
+            </div><!--modal-header end-->
+
+            <div class="modal-body">
+                <p hidden id="errorMsg" class="text-danger" style="color:red">监控查看</p> <!-- foe error msg-->
+                <form class="form-horizontal" id="ChangePasswdForm">
+                    <input id="passwdid" type="hidden" name="passwdid">  <!--update need id-->
+                    <div class="form-group">
+                        <div class="col-sm-10" id="graph">
+
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="modal-footer">
+                            <button class="btn btn-warning" data-dismiss="modal">退出</button>
+                        </div>
+                    </div><!--button end-->
+                </form>
+            </div><!-- /.modal-body-->
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<!-- 模态框（Modal） -->
+<div class="modal fade text-center" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="display: inline-block; width: 60%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    监控查看
+                </h4>
+            </div>
+            <div class="modal-body">
+                <!--在这里添加一些文本-->
+                <p hidden id="errorMsg" class="text-danger" style="color:red">监控查看</p> <!-- foe error msg-->
+                <!--<form class="form-horizontal" id="ChangePasswdForm">-->
+                    <!--<input id="passwdid" type="hidden" name="passwdid">  &lt;!&ndash;update need id&ndash;&gt;-->
+                    <!--<div class="form-group">-->
+                        <div class="col-sm-10" id="graph">
+
+
+                        </div>
+                    <!--</div>-->
+
+            </div>
+            <div class="modal-footer">
+                <!--<button type="button" class="btn btn-default" data-dismiss="modal">关闭-->
+                <!--</button>-->
+                <!--<button type="button" class="btn btn-primary">-->
+                <!--提交更改-->
+                <!--</button>-->
+                <button class="btn btn-warning" data-dismiss="modal">退出</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -49,10 +143,15 @@
         {% csrf_token %}
             <div class="box">
                 <div class="box-header">
-                    <div class="col-sm-2" style="padding-left: 0">
-						 <a href="{% url 'asset_add' %}"><li class="btn btn-success" ><b>添加设备</b></li></a>
+                  <div class="col-sm-2" style="padding-left: 0">
+			<a href="{% url 'asset_add' %}"><li class="btn btn-success" ><b>添加设备</b></li></a>
                   </div>
-                <div class="col-sm-5" style="padding-left: 0px">
+                  <div class="col-sm-2" style="padding-right: 0">
+                    <a href="#" onclick="return updatezabbix()">
+                        <li class="btn btn-success"><b>update zabbix</b></li>
+                    </a>
+                  </div>
+                  <div class="col-sm-4" style="padding-left: 0px">
                             <label>
                                 <select name="idc" class="form-control m-b input-sm" onchange="change_info()">
                                     <option value="">机房</option>
@@ -149,7 +248,8 @@
                                         <a class="btn btn-sm btn-info" target="_blank" href="http://{{ host.hostname }}.{{ webssh_domain }}:2222/ssh/host/{{ host.ip }}" class="btn btn-xs btn-info">WebSSH</a>
                                         <a href="#"><li class="btn btn-sm btn-info" onclick="return tanchu(this.value)" value="{{ host.id }}">编辑</li></a>
                                         <a value="{% url 'asset_del' %}?id={{ host.id }}" class="btn btn-sm btn-danger asset_del">删除</a>
-                                    </td>
+					<a href="#"><li class="btn btn-sm btn-info" onclick="return monitor_btn(this)" value="{{ host.ip }}">监控</li></a>       
+                             </td>
                                     </tr>
                                 {% endfor %}
                             </tbody>
@@ -174,8 +274,7 @@
       "searching": false,
       "ordering": true,
       "info": true,
-      "autoWidth": true,
-      "bStateSave": true
+      "autoWidth": true
     });
   });
 </script>
@@ -186,6 +285,7 @@ function checkSubmit() {
     }
 }
 </script>
+
 <script>
 function tanchu(n){
     layer.open({
@@ -216,6 +316,7 @@ function tanchu(n){
   });
 }
 </script>
+
 <script>
 function detail(n){
     layer.open({
@@ -228,6 +329,7 @@ function detail(n){
   });
 }
 </script>
+
 <script>
     function change_info(){
         var args = $("#asset_form").serialize();
@@ -254,6 +356,7 @@ function detail(n){
         }
         });
 </script>
+
 <script>
     $('#asset_del').click(function () {
         var asset_id_all = getIDall();
@@ -272,6 +375,102 @@ function detail(n){
             });
         }
     });
+</script>
+
+<script>
+    function updatezabbix() {
+        $('#update').modal('show')
+        zabbix_group = $("#zabbix_group");
+        sync_host_list = $("#host_list");
+
+        var url = "/zabbix/listapi?method=zabbix";
+        $.getJSON('/zabbix/listapi?method=zbhost', function (data) {
+            sync_host_list.empty();
+            server_list = JSON.parse(data['result']);
+            if (server_list['code'] == 0) {
+                var html="";
+                $.each(server_list['result'], function (n, obj) {
+                    html = '<div class="checkbox" id="checkbox">';
+                    html += '<label>';
+                    html += '<input type="checkbox" name="zabbix_hosts" class="zabbix_hosts" value="' + obj.ip + '">';
+                    html += obj.ip;
+                    html += '</label>';
+                    html += '</div>';
+                   sync_host_list.append(html);
+                });
+            }
+            else {
+
+                swal(data['errmsg']);
+            }
+
+        });
+
+        $.getJSON(url, function (data) {
+            data = JSON.parse(data['result']);
+            console.debug(data);
+            if (data['code'] == 0) {
+                $.each(data['result'], function (n, obj) {
+                    console.debug(obj);
+                    zabbix_group.append("<option value='" + obj.groupid + "'>" + obj.name + "</option>");
+                })
+            } else {
+                swal(data['errmsg'])
+            }
+        })
+    }
+
+    $("#create").click(function () {
+        hostids = new Array();
+        $("input[name='zabbix_hosts']:checked").each(function (i, n) {
+            hostids[i] = n.value
+        });
+        console.log(hostids)
+        zabbix_groupid = $("#zabbix_group").val();
+        console.log(zabbix_groupid)
+        $.post('/zabbix/zabbixapi', {method: "add", hostids: hostids.toString(), groupid: zabbix_groupid},
+            function (data) {
+                data = JSON.parse(data);   //将json串转换为对象，然后取值
+                data = JSON.parse(data['result']) //object
+                console.log(data)
+                if (data['code'] == 0) {
+                    swal({
+                        title: "success",
+                        text: "添加成功",
+                        type: "success",
+                        confirmButtonText: '添加zabbi主机成功'
+                    }, function () {
+                        location.reload()
+                    })
+                } else {
+                    swal(data['errmsg'])
+                }
+            })
+    })
+    /*end of create*/
+</script>
+
+<script>
+    function monitor_btn(obj) {
+	var thisObj=$(obj);
+        var ip=thisObj.attr("value"); 
+        console.debug(ip); 
+        var url = "/zabbix/getapi?method=" + "graph" + "&ip=" + ip;
+        $.getJSON(url, function (data) {
+            data = JSON.parse(data['result'])
+            if (data['code'] == 0) {
+                var str = ''
+                $.each(data.result, function (n, value) {
+                    str += "<img src=/static" + value + " " + 'style="width:100%"/><br >'
+                })
+                var mymodal = $('#myModal');
+                mymodal.find('.modal-body').html(str);
+                mymodal.modal('show');
+            } else {
+                swal("Error", data['errmsg'], "error")
+            }
+        })
+    }
 </script>
 
 {% endblock %}
