@@ -34,7 +34,8 @@ EOF
 
 echo "####install pip packages####"
 mkdir -p $work_dir
-
+pip install -U pip==9.0.3
+pip install virtualenv==15.2.0
 source /etc/profile
 
 echo "####config adminset agent####"
@@ -42,17 +43,13 @@ if (echo $os|grep centos) || (echo $os|grep 'Red Hat')
 then
     if (rpm -ql python|grep 2.6)
     then
-        pip install -U pip==9.0.3
-        pip install virtualenv==14.0.0
-        pip install setuptools==28.5.0
+        pip install setuptools==0.6rc11
         scp $cur_dir/adminset_agent.py $work_dir
         scp $cur_dir/adminsetd /etc/init.d/
         dos2unix $work_dir/adminset_agent.py
         dos2unix /etc/init.d/adminsetd
         chmod +x /etc/init.d/adminsetd
     else
-        pip install -U pip==9.0.3
-        pip install virtualenv==15.2.0
         scp $cur_dir/adminset_agent.py $work_dir
         scp $cur_dir/adminsetd.service /usr/lib/systemd/system/
         dos2unix $work_dir/adminset_agent.py
@@ -62,8 +59,6 @@ then
     chkconfig adminsetd on
 elif (echo $os|grep Ubuntu)
 then
-    pip install -U pip==9.0.3
-    pip install virtualenv==15.2.0
     scp $cur_dir/adminset_agent.py $work_dir
     scp $cur_dir/adminsetd.service /etc/systemd/system/
     fromdos $work_dir/adminset_agent.py
@@ -77,7 +72,7 @@ fi
 cd $work_dir
 virtualenv venv
 source $work_dir/venv/bin/activate
-#pip install python-daemon==2.1.2
+pip install python-daemon==2.1.2
 pip install requests==2.11.1
 pip install psutil==5.2.2
 pip install schedule==0.4.3

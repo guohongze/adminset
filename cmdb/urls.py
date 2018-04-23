@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-from django.conf.urls import url, include
+from django.conf.urls import url
 from cmdb import api, idc, asset, group, cabinet
 
 

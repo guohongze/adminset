@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block title %}监控管理 - zabbix监控主机删除 -OPS{% endblock %}
+{% block content %}
+<script src="{{  url_for('static',filename='opsplatform/js/jquery-2.1.1.js') }}"></script>
+<script type="text/javascript">var csrftoken = "{{ csrf_token() }}"</script>
+
+            <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-lg-8">
+                    <h2>zabbix监控主机删除</h2>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="{{ url_for("main.index") }}">Home</a>
+                        </li>
+
+                        <li class="active">
+                            <strong>zabbix监控主机删除</strong>
+                        </li>
+                    </ol>
+                </div>
+
+            </div>
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>Line scatter diagram</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <h5>请填写需要删除的主机<code>&lt;主机名&gt;</code>以 逗号 隔开.</h5>
+                             <form role="form" action='{{ url_for('zabbix.zabbixdel') }}' method='post'>
+                                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                  <div class="form-group">
+                                        <textarea type="text" name="contenet" class="form-control" rows="4" placeholder="host1,host2,host3..." style="margin: 0px 0px 10px; height: 200px; width: 100%; background-color: write;color: black"></textarea>
+                                  </div>
+                                      <button type="submit" class="btn btn-primary"> Run </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                {% if result %}
+                <div class="col-lg-6">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>删除结果</h5>
+                        </div>
+                        <div class="ibox-content">
+                        <textarea style="margin: 0px 0px 10px; height: 500px; width: 650px; outline: none; background-color: rgb(0, 0, 0); color: rgb(240, 240, 240);font-family:-webkit-body;font-size: large;">
+------ Delete Server Start ------
+{% for res in result %}
+{{ res }}
+{% endfor -%}
+------ Delete Server Done   ------
+</textarea>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            </div>
+        </div>
+
+
+{% endblock %}

@@ -25,3 +25,19 @@ def log(log_name, level="info", path=None):
                 filename=log_path+log_name,
                 filemode='ab+')
     return logging.basicConfig
+
+def log1(log_name, level="info", path=None):
+
+    if path:
+        log_path = path+'/'
+    else:
+        log_path = BASE_DIR
+
+    logging.basicConfig(level=dic[level],
+                # format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
+                format='%(asctime)s %(levelname)s %(message)s',
+                datefmt='%Y%m%d %H:%M:%S',
+                filename=log_path+log_name,
+                filemode='ab+')
+    logger = logging.basicConfig
+    return logger
