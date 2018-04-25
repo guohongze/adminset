@@ -86,6 +86,7 @@ def asset(request):
         response = create_asset_excel(export, asset_id_all)
         return response
     assets_list, p, assets, page_range, current_page, show_first, show_end = pages(asset_find, request)
+    last_page = page_range[len(page_range)-1]
     return render(request, 'cmdb/index.html', locals())
 
 

@@ -90,6 +90,9 @@
                             {% endfor %}
                             </tbody>
                   </table>
+                <div class="row">
+                    {% include 'paginator.html' %}
+                </div>
                   <div class="btn-group">
                       <input type="button" id="project_del" class="btn btn-danger"   name="del_button" value="删除项目"/>
                   </div>
@@ -102,12 +105,12 @@
 <script>
   $(function () {
     $('#projectform').DataTable({
-        "aLengthMenu":[5,10],
-        "paging": true,
-        "lengthChange": true,
+        //"aLengthMenu":[5,10],
+        "paging": false,
+        "lengthChange": false,
         "searching": true,
         "ordering": true,
-        "info": true,
+        "info": false,
         "autoWidth": true
     });
   });

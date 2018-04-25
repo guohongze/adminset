@@ -154,6 +154,9 @@
                                 {% endfor %}
                             </tbody>
                   </table>
+                <div class="row">
+                    {% include 'paginator.html' %}
+                </div>
                     <div class="btn-group">
                         <input type="button" id="asset_del" class="btn btn-danger"   name="del_button" value="删除设备"/>
                     </div>
@@ -169,11 +172,11 @@
   $(function () {
     $("#example1").DataTable();
     $('#dataform').DataTable({
-      "paging": true,
-      "lengthChange": true,
+      "paging": false,
+      "lengthChange": false,
       "searching": false,
       "ordering": true,
-      "info": true,
+      "info": false,
       "autoWidth": true,
       "bStateSave": true
     });
