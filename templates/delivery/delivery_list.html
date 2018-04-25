@@ -59,7 +59,7 @@
                         </tr>
                       </thead>
                             <tbody>
-                            {% for project in all_project %}
+                            {% for project in deploys.object_list %}
                                 <tr class="even gradeX">
                                     <td><input type="checkbox" id="id" class="i-checks" value="{{ project.id }}" name="id" /></td>
                                     <td>{{ project.job_name }} </td>

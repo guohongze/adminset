@@ -12,18 +12,18 @@ import os
 from time import sleep
 import json
 import time
+from cmdb.api import pages
 
 
 @login_required()
 @permission_verify()
 def delivery_list(request):
+    all_project = []
     temp_name = "delivery/delivery-header.html"
     all_project = Delivery.objects.all()
-    results = {
-        'temp_name': temp_name,
-        'all_project':  all_project,
-    }
-    return render(request, 'delivery/delivery_list.html', results)
+    deploys_list, p, deploys, page_range, current_page, show_first, show_end = pages(all_project, request)
+    last_page = page_range[len(page_range)-1]
+    return render(request, 'delivery/delivery_list.html', locals())
 
 
 @login_required
