@@ -7,7 +7,7 @@
                 </li>
             {% else %}
                 <li class="paginate_button previous" aria-controls="editable" tabindex="0" id="editable_previous">
-                     <a class="page" href="?page=1">Start Page</a>
+                     <a class="page" href="?page=1">Start</a>
                 </li>
             {% endif %}
             {% ifequal show_first 1 %}
@@ -29,7 +29,7 @@
                 </li>
             {% else %}
                 <li class="paginate_button next" aria-controls="editable" tabindex="0" id="editable_next">
-                    <a class="page" href="?page={{ end_page }}">Next Page</a>
+                    <a class="page" href="?page={{ end_page }}">End</a>
                 </li>
             {% endif %}
         </ul>
