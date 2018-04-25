@@ -67,6 +67,7 @@ def pages(post_objects, request):
 
     page_range = page_list_return(len(paginator.page_range), current_page)
     end_page = len(paginator.page_range)
+
     try:
         page_objects = paginator.page(current_page)
     except (EmptyPage, InvalidPage):
