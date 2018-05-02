@@ -121,6 +121,38 @@
                 </div>
 
                 <!-- /.box-header -->
+            <div class="col-md-5">
+
+                       <label>
+                    <select name="page_len" id="page_len" class="form-control m-b input-sm" onchange="page_change()">
+                        {% ifequal page_len '10' %}
+                            <option value="10" selected>10</option>
+                        {% else %}
+                            <option value="10">10</option>
+                        {% endifequal %}
+                        {% ifequal page_len '20' %}
+                            <option value="20" selected>20</option>
+                        {% else %}
+                            <option value="20">20</option>
+                        {% endifequal %}
+                        {% ifequal page_len '50' %}
+                            <option value="50" selected>50</option>
+                        {% else %}
+                            <option value="50">50</option>
+                        {% endifequal %}
+                        {% ifequal page_len '100' %}
+                            <option value="100" selected>100</option>
+                        {% else %}
+                            <option value="100">100</option>
+                        {% endifequal %}
+                        {% ifequal page_len '200' %}
+                            <option value="200" selected>200</option>
+                        {% else %}
+                            <option value="200">200</option>
+                        {% endifequal %}
+                    </select>
+                            </label>
+            </div>
                 <div class="box-body">
                   <table class="table table-striped table-bordered" id="dataform">
                       <thead>
@@ -235,6 +267,11 @@ function detail(n){
     function change_info(){
         var args = $("#asset_form").serialize();
         window.location = "{% url 'cmdb' %}?" + args
+    }
+
+    function page_change(){
+        var args = $("#page_len").val();
+        window.location = "{% url 'cmdb' %}?page={{ current_page }}&" + "page_len=" + args;
     }
 
     function export_excel(){

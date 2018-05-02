@@ -28,11 +28,11 @@ def asset(request):
     webssh_domain = get_dir("webssh_domain")
     asset_find = []
     idc_info = Idc.objects.all()
-    host_list = Host.objects.all()
     group_info = HostGroup.objects.all()
     asset_types = ASSET_TYPE
     asset_status = ASSET_STATUS
     idc_name = request.GET.get('idc', '')
+    page_len = request.GET.get('page_len', '')
     group_name = request.GET.get('group', '')
     asset_type = request.GET.get('asset_type', '')
     status = request.GET.get('status', '')
