@@ -56,9 +56,9 @@
             }
 
             searchArray.push(old_href);
-{#            if (searchArray.length > 1) {#}
-{#                $(this).attr('href', searchArray.join('&'));#}
-{#            }#}
+            if (searchArray.length > 1) {
+                $(this).attr('href', searchArray.join('&'));
+            }
 {#            sleep(1000)#}
         })
     });

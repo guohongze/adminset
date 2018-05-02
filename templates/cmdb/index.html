@@ -123,8 +123,8 @@
                 <!-- /.box-header -->
             <div class="col-md-5">
 
-                       <label>
-                    <select name="page_len" id="page_len" class="form-control m-b input-sm" onchange="page_change()">
+                <label for="page_len">
+                    <select name="page_len" id="page_len" class="form-control m-b input-sm" onchange="change_info()">
                         {% ifequal page_len '10' %}
                             <option value="10" selected>10</option>
                         {% else %}
@@ -267,11 +267,6 @@ function detail(n){
     function change_info(){
         var args = $("#asset_form").serialize();
         window.location = "{% url 'cmdb' %}?" + args
-    }
-
-    function page_change(){
-        var args = $("#page_len").val();
-        window.location = "{% url 'cmdb' %}?page={{ current_page }}&" + "page_len=" + args;
     }
 
     function export_excel(){
