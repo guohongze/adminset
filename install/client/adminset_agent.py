@@ -4,7 +4,7 @@ import os, re, platform, socket, time, json, threading
 import psutil, schedule, requests
 from subprocess import Popen, PIPE
 import logging
-AGENT_VERSION = "0.23"
+AGENT_VERSION = "1.0"
 token = 'HPcWR7l4NJNJ'
 server_ip = '192.168.47.130'
 
@@ -255,11 +255,18 @@ def run_threaded(job_func):
     job_thread = threading.Thread(target=job_func)
     job_thread.start()
 
+
 def get_pid():
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     pid = str(os.getpid())
     with open(BASE_DIR+"/adminsetd.pid", "wb+") as pid_file:
         pid_file.writelines(pid)
+
+
+def clean_log():
+    os.system("> /var/opt/adminset/agent.log")
+    logging.info("clean agent log")
+
 
 if __name__ == "__main__":
     get_pid()
@@ -268,6 +275,7 @@ if __name__ == "__main__":
     agg_sys_info()
     schedule.every(3600).seconds.do(run_threaded, asset_info_post)
     schedule.every(300).seconds.do(run_threaded, agg_sys_info)
+    schedule.every().monday.at("00:20").do(run_threaded, clean_log)
     while True:
         schedule.run_pending()
         time.sleep(1)
