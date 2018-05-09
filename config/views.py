@@ -1,7 +1,11 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 from django.shortcuts import render, HttpResponse
-import ConfigParser
+try:
+    import configparser as cf
+except Exception as msg:
+    print(msg)
+    import ConfigParser as cf
 import os
 from django.contrib.auth.decorators import login_required
 from accounts.permission import permission_verify
@@ -15,7 +19,7 @@ def index(request):
     temp_name = "config/config-header.html"
     display_control = "none"
     dirs = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    config = ConfigParser.ConfigParser()
+    config = cf.RawConfigParser()
     all_level = dic
     with open(dirs+'/adminset.conf', 'r') as cfgfile:
         config.readfp(cfgfile)
@@ -83,7 +87,7 @@ def config_save(request):
         redis_password = request.POST.get('redis_password')
         redis_db = request.POST.get('redis_db')
 
-        config = ConfigParser.RawConfigParser()
+        config = cf.RawConfigParser()
         dirs = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         config.add_section('config')
         config.set('config', 'ansible_path', ansible_path)
@@ -151,7 +155,7 @@ def config_save(request):
 
 
 def get_dir(args):
-    config = ConfigParser.RawConfigParser()
+    config = cf.RawConfigParser()
     dirs = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     with open(dirs+'/adminset.conf', 'r') as cfgfile:
         config.readfp(cfgfile)
