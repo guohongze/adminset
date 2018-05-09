@@ -50,9 +50,10 @@
         客户端会被默认安装在/var/opt/adminset/client/ 目录下
         agent日志文件/var/opt/adminset/client/agent.log
         agent默认每3600秒上传一次资产和硬件信息，可以在adminset_agent.py中自定义
+        agent每周一凌晨会清空所有之前生成的日志，如需要历史日志，请自行备份。
         注意：客户端全部功能需要配置服务器到客户端的ssh免密登录。
         
-    三、自动免密钥登陆
+    三、自动免密钥登陆（此功能为可选，可以手动建立SSH信任）
         如果实现全自动ssh免密登入客户机需要如下几个条件：
         1）客户机的所有密码都相同。
         2）在服务器的配置管理>密钥设置ssh password中写入客户机的密码并保存。
@@ -204,19 +205,23 @@
 #   升级与更新
     强烈建设在升级或更新adminset之前先备份数据库，并在测试环境验证通过，因为adminset在快速的发展过程中，每版本功能与结构变化较大。
     0.20 表结构变更较大，不兼容0.1x版本，如果升级请导出数据再导入。
-    1）版本更新：
+    1) 同中版号升级（如0.2x升级到0.26）
+        下载相应版本的代码到本地，建议下载到/opt/adminset，然后执行：
+        chmdo +x adminset/install/server/rsync.sh
+        adminset/install/server/rsync.sh
+    2）不同中版号更新(如0.2x升级到0.3x)：
         下载相应版本的代码到本地，建议下载到/opt/adminset，然后执行：
         chmdo +x adminset/install/server/update.sh
         adminset/install/server/update.sh
-    2)二次开发
+    3)二次开发
         rsync.sh脚本只做增量，rsync参数不带--delete选项，不会在生产环境删除代码中已删除的条目,不更新组件配置文件，不会生成新的ORM数据库条目。
         update.sh脚本带--delete选项，同步代码，重新发布各组件的配置文件，并重新生成ORM数据文件（makemigrations migrate）。
         update.sh 可带一个参数，参数为需要更新的应用名，如变更了appconf模块的models只更新appconf可以使用update.sh appconf来更新。
-        注意：如果做表结构变更，把新生成的{app_name}/migrations中的000X_initial.py文件提交到代码中，以保证更新时ORM配置正确。
-        
-    3) 自动化部署
+        注意：如果做表结构变更，把新生成的{app_name}/migrations中的000X_initial.py文件提交到代码中，以保证更新时ORM配置正确。 
+    4) 自动化部署
         在自动化部署软件如jenkins或adminset中，拉取代码到本地后，再用命令将其复制到更新目标机器的/opt/adminset 目录，然后执行：
-        adminset/install/server/update.sh。（这一切的前提要求已经初次安装过adminset服务端）
+        adminset/install/server/update.sh 或rsync.sh(同中版号)。（这一切的前提要求已经初次安装过adminset服务端）
+    
 # 安全
     强烈建议不要将程序启动在有公网可以直接访问的设备上，如果需要请使用VPN。
     建议生产环境中使用https配置服务器<br>
