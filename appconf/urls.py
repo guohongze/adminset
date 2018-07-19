@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 from django.conf.urls import url, include
-import product, project, appowner, authinfo
+from appconf import product, project, appowner, authinfo
 
 urlpatterns = [
     url(r'^$', product.product_list, name='appconf'),

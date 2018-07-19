@@ -3,7 +3,7 @@
 from __future__ import absolute_import, unicode_literals
 from celery import shared_task
 from subprocess import Popen, PIPE
-from .models import Delivery
+from delivery.models import Delivery
 import os
 import shutil
 from time import sleep

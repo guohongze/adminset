@@ -4,8 +4,8 @@
 from django.shortcuts import render, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from models import AuthInfo
-from forms import AuthInfoForm
+from appconf.models import AuthInfo
+from appconf.forms import AuthInfoForm
 from accounts.permission import permission_verify
 
 

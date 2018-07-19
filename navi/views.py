@@ -3,7 +3,7 @@
 
 from .models import navi
 from django.shortcuts import render
-from forms import navi_form
+from navi.forms import navi_form
 from django.contrib.auth.decorators import login_required
 from accounts.permission import permission_verify
 

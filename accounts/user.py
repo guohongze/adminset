@@ -4,9 +4,9 @@
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import auth
-from forms import LoginUserForm, EditUserForm, ChangePasswordForm
+from accounts.forms import LoginUserForm, EditUserForm, ChangePasswordForm
 from django.contrib.auth import get_user_model
-from forms import AddUserForm
+from accounts.forms import AddUserForm
 from django.core.urlresolvers import reverse
 from accounts.permission import permission_verify
 

@@ -6,7 +6,7 @@ from django_celery_results.models import TaskResult
 from django.contrib.auth.decorators import login_required
 from accounts.permission import permission_verify
 from cmdb.api import get_object
-from forms import PeriodicTaskForm, IntervalForm, CrontabForm, TaskResultForm
+from setup.forms import PeriodicTaskForm, IntervalForm, CrontabForm, TaskResultForm
 from subprocess import Popen, PIPE
 import os, time
 

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from django.shortcuts import render
-from forms import IdcForm
+from cmdb.forms import IdcForm
 from .models import Idc, Cabinet
 from django.contrib.auth.decorators import login_required
 from accounts.permission import permission_verify

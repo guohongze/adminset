@@ -11,8 +11,8 @@ from config.views import get_dir
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.shortcuts import HttpResponse, render
-from forms import AssetForm
-from models import ASSET_STATUS, ASSET_TYPE, Host, HostGroup, Idc, Cabinet
+from cmdb.forms import AssetForm
+from cmdb.models import ASSET_STATUS, ASSET_TYPE, Host, HostGroup, Idc, Cabinet
 
 try:
     reload(sys)  # Python 2

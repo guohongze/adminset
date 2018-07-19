@@ -1,9 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 from django.conf.urls import url, include
-from . import system, manage
-import api
-
+from monitor import system, manage, api
 
 urlpatterns = [
     url(r'^system/$', system.index, name='monitor'),

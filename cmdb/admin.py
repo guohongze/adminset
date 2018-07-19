@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 from django.contrib import admin
-from models import Host, HostGroup, IpSource, Idc, InterFace, UserInfo
+from cmdb.models import Host, HostGroup, IpSource, Idc, InterFace, UserInfo
 
 
 class HostAdmin(admin.ModelAdmin):

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # 2017.3 update by guohongze@126.com
 from django.http import HttpResponse
-from models import Host, HostGroup, ASSET_TYPE, ASSET_STATUS
+from cmdb.models import Host, HostGroup, ASSET_TYPE, ASSET_STATUS
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
 from django.views.decorators.csrf import csrf_exempt
 from lib.common import token_verify

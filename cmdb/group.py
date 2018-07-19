@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 from django.shortcuts import render
-from models import HostGroup
-from forms import GroupForm
+from cmdb.models import HostGroup
+from cmdb.forms import GroupForm
 from django.contrib.auth.decorators import login_required
 from accounts.permission import permission_verify
 from django.http import HttpResponseRedirect
