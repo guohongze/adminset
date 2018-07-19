@@ -5,8 +5,12 @@
 <br>
 Adminset基于DevOps理念开发，以整合全部运维场景为己任。Adminset是一个真正的基于运维思维而开发的全自动化运维平台。<br>
 
-## v0.3 新功能
+## v0.2 新功能
 python3.6语法兼容<br>
+全新CMDB数据模型<br>
+agent后台启动管理<br>
+agent部署使用venv<br>
+更新celery 4.1.0<br>
 
 
 ## 开发环境
