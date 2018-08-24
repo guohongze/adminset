@@ -153,10 +153,10 @@ def config_save(request):
         config.set('ldap', 'ldap_manager', ldap_manager)
         config.set('ldap', 'ldap_password', ldap_password)
         config.set('ldap', 'ldap_filter', ldap_filter)
-        config.get('ldap', 'require_group', require_group)
-        config.get('ldap', 'nickname', nickname)
-        config.get('ldap', 'is_active', is_active)
-        config.get('ldap', 'is_superuser', is_superuser)
+        config.set('ldap', 'require_group', require_group)
+        config.set('ldap', 'nickname', nickname)
+        config.set('ldap', 'is_active', is_active)
+        config.set('ldap', 'is_superuser', is_superuser)
         tips = u"保存成功！"
         display_control = ""
         with open(dirs+'/adminset.conf', 'wb') as cfgfile:
