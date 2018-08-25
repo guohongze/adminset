@@ -237,7 +237,8 @@ if ldap_enable == "True":
     AUTH_LDAP_GROUP_SEARCH = LDAPSearch(
         base_dn,
         ldap.SCOPE_SUBTREE,
-        '(objectClass=posixGroup)',
+        #'(objectClass=posixGroup)',
+        '(objectClass=*)',
     )
     AUTH_LDAP_GROUP_TYPE = PosixGroupType(name_attr='cn')
     #
@@ -259,6 +260,7 @@ if ldap_enable == "True":
         # 'last_name': 'sn',
         'nickname': nickname,
         'email': 'mail',
+        'ldap_name': 'cn',
     }
 
     if is_active and not is_superuser:

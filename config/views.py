@@ -162,7 +162,7 @@ def config_save(request):
         with open(dirs+'/adminset.conf', 'wb') as cfgfile:
             config.write(cfgfile)
         with open(dirs+'/adminset.conf', 'r') as cfgfile:
-            config.readfp(cfgfile)
+            config.read_file(cfgfile)
             a_path = config.get('config', 'ansible_path')
             r_path = config.get('config', 'roles_path')
             p_path = config.get('config', 'playbook_path')
