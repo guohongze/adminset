@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render, HttpResponse
 try:
-    import configparser as cf
+    import configparser as cp
 except Exception as msg:
     print(msg)
-    import ConfigParser as cf
+    import ConfigParser as cp
 import os
 from django.contrib.auth.decorators import login_required
 from accounts.permission import permission_verify
@@ -19,8 +19,10 @@ def index(request):
     temp_name = "config/config-header.html"
     display_control = "none"
     dirs = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    config = cf.RawConfigParser()
+    config = cp.RawConfigParser()
     all_level = dic
+    all_filter = ("OpenLDAP", "WindowsAD")
+    ldap_choice = ("True", "False")
     with open(dirs+'/adminset.conf', 'r') as cfgfile:
         config.readfp(cfgfile)
         a_path = config.get('config', 'ansible_path')
@@ -47,6 +49,17 @@ def index(request):
         redis_port = config.get('redis', 'redis_port')
         redis_password = config.get('redis', 'redis_password')
         redis_db = config.get('redis', 'redis_db')
+        ldap_enable = config.get('ldap', 'ldap_enable')
+        ldap_server = config.get('ldap', 'ldap_server')
+        ldap_port = config.get('ldap', 'ldap_port')
+        base_dn = config.get('ldap', 'base_dn')
+        ldap_manager = config.get('ldap', 'ldap_manager')
+        ldap_password = config.get('ldap', 'ldap_password')
+        ldap_filter = config.get('ldap', 'ldap_filter')
+        require_group = config.get('ldap', 'require_group')
+        nickname = config.get('ldap', 'nickname')
+        is_active = config.get('ldap', 'is_active')
+        is_superuser = config.get('ldap', 'is_superuser')
     return render(request, 'config/index.html', locals())
 
 
@@ -55,12 +68,12 @@ def index(request):
 def config_save(request):
     temp_name = "config/config-header.html"
     if request.method == 'POST':
-        # path info
+        # path
         ansible_path = request.POST.get('ansible_path')
         roles_path = request.POST.get('roles_path')
         pbook_path = request.POST.get('pbook_path')
         scripts_path = request.POST.get('scripts_path')
-        # db info
+        # db
         engine = request.POST.get('engine')
         host = request.POST.get('host')
         port = request.POST.get('port')
@@ -70,24 +83,36 @@ def config_save(request):
         # cmdb_api_token
         token = request.POST.get('token')
         ssh_pwd = request.POST.get('ssh_pwd')
-        # log info
+        # log
         log_path = request.POST.get('log_path')
         log_level = request.POST.get('log_level')
-        # mongodb info
+        # mongodb
         mongodb_ip = request.POST.get('mongodb_ip')
         mongodb_port = request.POST.get('mongodb_port')
         mongodb_user = request.POST.get('mongodb_user')
         mongodb_pwd = request.POST.get('mongodb_pwd')
         mongodb_collection = request.POST.get('mongodb_collection')
-        # webssh domain
+        # webssh
         webssh_domain = request.POST.get('webssh_domain')
-        # redis infon
+        # redis
         redis_host = request.POST.get('redis_host')
         redis_port = request.POST.get('redis_port')
         redis_password = request.POST.get('redis_password')
         redis_db = request.POST.get('redis_db')
+        #ldap
+        ldap_enable = request.POST.get('ldap_enable')
+        ldap_server = request.POST.get('ldap_server')
+        ldap_port = request.POST.get('ldap_port')
+        base_dn = request.POST.get('base_dn')
+        ldap_manager = request.POST.get('ldap_manager')
+        ldap_password = request.POST.get('ldap_password')
+        ldap_filter = request.POST.get('ldap_filter')
+        require_group = request.POST.get('require_group')
+        nickname = request.POST.get('nickname')
+        is_active = request.POST.get('is_active')
+        is_superuser = request.POST.get('is_superuser')
 
-        config = cf.RawConfigParser()
+        config = cp.RawConfigParser()
         dirs = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         config.add_section('config')
         config.set('config', 'ansible_path', ansible_path)
@@ -120,6 +145,18 @@ def config_save(request):
         config.set('redis', 'redis_port', redis_port)
         config.set('redis', 'redis_password', redis_password)
         config.set('redis', 'redis_db', redis_db)
+        config.add_section('ldap')
+        config.set('ldap', 'ldap_enable', ldap_enable)
+        config.set('ldap', 'ldap_server', ldap_server)
+        config.set('ldap', 'ldap_port', ldap_port)
+        config.set('ldap', 'base_dn', base_dn)
+        config.set('ldap', 'ldap_manager', ldap_manager)
+        config.set('ldap', 'ldap_password', ldap_password)
+        config.set('ldap', 'ldap_filter', ldap_filter)
+        config.set('ldap', 'require_group', require_group)
+        config.set('ldap', 'nickname', nickname)
+        config.set('ldap', 'is_active', is_active)
+        config.set('ldap', 'is_superuser', is_superuser)
         tips = u"保存成功！"
         display_control = ""
         with open(dirs+'/adminset.conf', 'wb') as cfgfile:
@@ -149,13 +186,24 @@ def config_save(request):
             redis_port = config.get('redis', 'redis_port')
             redis_password = config.get('redis', 'redis_password')
             redis_db = config.get('redis', 'redis_db')
+            ldap_enable = config.get('ldap', 'ldap_enable')
+            ldap_server = config.get('ldap', 'ldap_server')
+            ldap_port = config.get('ldap', 'ldap_port')
+            base_dn = config.get('ldap', 'base_dn')
+            ldap_manager = config.get('ldap', 'ldap_manager')
+            ldap_password = config.get('ldap', 'ldap_password')
+            ldap_filter = config.get('ldap', 'ldap_filter')
+            require_group = config.get('ldap', 'require_group')
+            nickname = config.get('ldap', 'nickname')
+            is_active = config.get('ldap', 'is_active')
+            is_superuser = config.get('ldap', 'is_superuser')
     else:
         display_control = "none"
     return render(request, 'config/index.html', locals())
 
 
 def get_dir(args):
-    config = cf.RawConfigParser()
+    config = cp.RawConfigParser()
     dirs = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     with open(dirs+'/adminset.conf', 'r') as cfgfile:
         config.readfp(cfgfile)
@@ -177,6 +225,17 @@ def get_dir(args):
         redis_port = config.get('redis', 'redis_port')
         redis_password = config.get('redis', 'redis_password')
         redis_db = config.get('redis', 'redis_db')
+        ldap_enable = config.get('ldap', 'ldap_enable')
+        ldap_server = config.get('ldap', 'ldap_server')
+        ldap_port = config.get('ldap', 'ldap_port')
+        base_dn = config.get('ldap', 'base_dn')
+        ldap_manager = config.get('ldap', 'ldap_manager')
+        ldap_password = config.get('ldap', 'ldap_password')
+        ldap_filter = config.get('ldap', 'ldap_filter')
+        require_group = config.get('ldap', 'require_group')
+        nickname = config.get('ldap', 'nickname')
+        is_active = config.get('ldap', 'is_active')
+        is_superuser = config.get('ldap', 'is_superuser')
     # 根据传入参数返回变量以获取配置，返回变量名与参数名相同
     if args:
         return vars()[args]

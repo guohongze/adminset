@@ -144,8 +144,7 @@
                 <hr>
                     <p><b>Reids</b></p>
                 <div class="form-group">
-                  <label for="redis_host" class="col-sm-2 control-label">Host:</label>
-
+                  <label for="_host" class="col-sm-2 control-label">Host:</label>
                   <div class="col-sm-10">
                     <input type="text" value="{{ redis_host }}" id="redis_host" name="redis_host" style="width:450px;">
                   </div>
@@ -201,9 +200,11 @@
 
                   <div class="col-sm-10">
                     <select name="log_level" class="form-control" style="width:450px;">
-                            <option value="{{ log_level }}" selected="selected"> {{ log_level }}</option>
+                            <option value="{{ log_level }}" selected="selected">{{ log_level }}</option>
                         {% for key,value in all_level.items %}
-                            <option value="{{ key }}"> {{ key }}</option>
+                            {% if key != log_level %}
+                            <option value="{{ key }}">{{ key }}</option>
+                            {% endif %}
                         {% endfor %}
                     </select>
                   </div>
@@ -217,15 +218,105 @@
                     <input type="text" value="{{ webssh_domain }}" id="webssh_domain" name="webssh_domain" style="width:450px;" placeholder="webssh访问域名设置">
                   </div>
                 </div>
+
+                <hr>
+                    <p><b>LDAP</b></p>
+                <div class="form-group">
+                  <label for="ldap_enable" class="col-sm-2 control-label">ldap_enable:</label>
+
+                  <div class="col-sm-10">
+                    <select name="ldap_enable" class="form-control" style="width:450px;">
+                            <option value="{{ ldap_enable }}" selected="selected">{{ ldap_enable }}</option>
+                        {% for key in ldap_choice %}
+                            {% if key != ldap_enable %}
+                                <option value="{{ key }}">{{ key }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                  </div>
+                    </div>
+                <div class="form-group">
+                  <label for="ldap_server" class="col-sm-2 control-label">ldap_server:</label>
+                  <div class="col-sm-10">
+                    <input type="text" value="{{ ldap_server }}" id="ldap_server" name="ldap_server" style="width:450px;">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="ldap_port" class="col-sm-2 control-label">ldap_port:</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" value="{{ ldap_port }}" id="ldap_port" name="ldap_port" style="width:450px;">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="base_dn" class="col-sm-2 control-label">base_dn:</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" value="{{ base_dn }}" id="base_dn" name="base_dn" style="width:450px;">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="ldap_manager" class="col-sm-2 control-label">ldap_manager:</label>
+                  <div class="col-sm-10">
+                    <input type="text" value="{{ ldap_manager }}" id="ldap_manager" name="ldap_manager" style="width:450px;">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="ldap_password" class="col-sm-2 control-label">ldap_password:</label>
+                  <div class="col-sm-10">
+                    <input type="password" value="{{ ldap_password }}" id="ldap_password" name="ldap_password" style="width:450px;">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="ldap_filter" class="col-sm-2 control-label">ldap_filter:</label>
+
+                  <div class="col-sm-10">
+                    <select name="ldap_filter" class="form-control" style="width:450px;">
+                            <option value="{{ ldap_filter }}" selected="selected">{{ ldap_filter }}</option>
+                        {% for key in all_filter %}
+                            {% if key != ldap_filter %}
+                            <option value="{{ key }}">{{ key }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                  </div>
                  </div>
 
+                <div class="form-group">
+                  <label for="require_group" class="col-sm-2 control-label">require_group:</label>
+                  <div class="col-sm-10">
+                    <input type="text" value="{{ require_group }}" id="require_group" name="require_group" style="width:450px;">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="nickname" class="col-sm-2 control-label">nickname:</label>
+                  <div class="col-sm-10">
+                    <input type="text" value="{{ nickname }}" id="nickname" name="nickname" style="width:450px;">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="is_active" class="col-sm-2 control-label">is_active:</label>
+                  <div class="col-sm-10">
+                    <input type="text" value="{{ is_active }}" id="is_active" name="is_active" style="width:450px;">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="is_superuser" class="col-sm-2 control-label">is_superuser:</label>
+                  <div class="col-sm-10">
+                    <input type="text" value="{{ is_superuser }}" id="is_superuser" name="is_superuser" style="width:450px;">
+                  </div>
+                </div>
 
               <!-- /.box-body -->
               <div class="box-footer">
                 <button type="submit" onclick="checkSubmit()" class="btn btn-info pull-left" style="width: 120px"><b>保存(save)</b></button>
+                &nbsp;<div class="btn btn-info pull-left" style="width: 120px" onclick="return test1();"><b>重启(adminset)</b></div>
               </div>
               <!-- /.box-footer -->
+                </div>
             </form>
+        <div class="form-group">
+        </div>
 
 </div>
 </div>
@@ -245,6 +336,24 @@ function get_token() {
     $.post('/config/token/',{csrfmiddlewaretoken: '{{ csrf_token }}'},function(data){
         document.getElementById("token").value = data;
     });
+}
+</script>
+<script>
+function loading(){
+    var index = layer.load(1, {
+    shade: [0.5,'#f4f4f4'] //0.1透明度的白色背景
+
+});
+}
+function test1(){
+            $.ajax({
+                type: "get",
+                url: "{% url 'job_backend_task' 'adminset' 'restart' %}"
+            });
+    var index = layer.load(1, {
+    shade: [0.5,'#f4f4f4'] //0.1透明度的白色背景
+});
+    location.reload();
 }
 </script>
 {% endblock %}

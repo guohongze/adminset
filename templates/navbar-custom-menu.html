@@ -110,7 +110,7 @@
                 <img src="/static/dist/img/logo.jpg" class="img-circle" alt="User Image">
 
                 <p>
-                    {{ request.user.username }}
+                    {{ request.user.nickname }}
                     {{ request.user.email }}
                 </p>
               </li>
@@ -132,7 +132,11 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="{% url 'change_password' %}" class="btn btn-default btn-flat">变更密码</a>
+                    {% if request.user.ldap_name %}
+                        <a href="{% url 'change_ldap_password' %}" class="btn btn-default btn-flat">变更密码</a>
+                    {% else %}
+                        <a href="{% url 'change_password' %}" class="btn btn-default btn-flat">变更密码</a>
+                    {% endif %}
                 </div>
                 <div class="pull-right">
                   <a href="{% url "logout" %}" class="btn btn-default btn-flat">退出登录</a>
