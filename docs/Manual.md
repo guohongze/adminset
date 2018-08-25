@@ -190,7 +190,21 @@
     3、新建用户
     在角色一栏选择：资产管理员
 
-
+#   LDAP认证
+    支持openldap和WindowsAD，启动LDAP认证以后原有本地账号也可使用。
+    启用LDAP：
+    1、在adminset->系统配置 界面的LDAP区域选择ldap_enable True
+    2、ldap_server 必填信息，例：ldap://ldap.scimall.net.cn
+    3、ldap_port 可选信息，如果修改过ldap服务器的端口，请填写。
+    4、base_dn 必填信息，例：ou=dev,dc=gldap,dc=com
+    5、ldap_manager 必填信息，例：cn=admin,dc=gldap,dc=com
+    6、ldap_password 必填信息，LDAP管理账户密码。
+    7、ldap_filter 必选信息，根据实际情况选择。
+    8、require_group 可选信息，允许登入的ldap组，例：cn=enable,dc=gldap,dc=com 此组需要在LDAP服务器中创建，objectClass类型必须为posixGroup
+    9、nickname 可选信息，用户名，例：cn
+    10、is_active 可选信息，自动激活ldap某个组的账号，如果不写此信息ldap用户默认在adminset中为禁用状态，此组需要在LDAP服务器中创建，objectClass类型必须为posixGroup
+    11、is_superuser 可选信息，自动激活ldap中某个组的账号为超管，此组需要在LDAP服务器中创建，objectClass类型必须为posixGroup
+    
 #   组件启动管理
     service adminset {start|stop|restart} # gunicorn管理程序
     service nginx {start|stop|restart}    # web server
