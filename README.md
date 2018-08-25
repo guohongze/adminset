@@ -5,7 +5,7 @@
 <br>
 Adminset基于DevOps理念开发，以整合全部运维场景为己任。Adminset是一个真正的基于运维思维而开发的全自动化运维平台。<br>
 
-## v0.3 新功能
+## v0.30 新功能
 支持openldap和windowsAd的LDAP认证<br>
 支持更改LDAP账号密码变更<br>
 celery更新4.2.0<br>
