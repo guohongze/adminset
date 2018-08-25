@@ -7,7 +7,7 @@ Adminset基于DevOps理念开发，以整合全部运维场景为己任。Admins
 
 ## v0.3 新功能
 支持openldap和windowsAd的LDAP认证<br>
-支持更改LDAP账号害惨 <br>
+支持更改LDAP账号密码变更<br>
 celery更新4.2.0<br>
 agent自动清理日志<br>
 python3.6.6语法兼容<br>
