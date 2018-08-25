@@ -87,6 +87,7 @@ def user_del(request, ids):
 @permission_verify()
 def user_edit(request, ids):
     user = get_user_model().objects.get(id=ids)
+    ldap_name = user.ldap_name
     if request.method == 'POST':
         form = EditUserForm(request.POST, instance=user)
         if form.is_valid():
