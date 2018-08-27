@@ -201,7 +201,7 @@
     6、ldap_password 必填信息，LDAP管理账户密码。
     7、ldap_filter 必选信息，根据实际情况选择。
     8、require_group 可选信息，允许登入的ldap组，例：cn=enable,dc=gldap,dc=com 此组需要在LDAP服务器中创建，objectClass类型必须为posixGroup
-    9、nickname 可选信息，用户名，例：cn
+    9、nickname 必选信息，用户名，例：cn
     10、is_active 可选信息，自动激活ldap某个组的账号，如果不写此信息ldap用户默认在adminset中为禁用状态，此组需要在LDAP服务器中创建，objectClass类型必须为posixGroup
     11、is_superuser 可选信息，自动激活ldap中某个组的账号为超管，此组需要在LDAP服务器中创建，objectClass类型必须为posixGroup
     
