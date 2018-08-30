@@ -24,4 +24,5 @@ urlpatterns = [
     url(r'^permission/list/$', permission.permission_list, name='permission_list'),
     url(r'^permission/edit/(?P<ids>\d+)/$', permission.permission_edit, name='permission_edit'),
     url(r'^permission/delete/(?P<ids>\d+)/$', permission.permission_del, name='permission_del'),
+    url(r'^permission/user_permission/$', permission.get_user_permission, name='get_user_permission'),
 ]
