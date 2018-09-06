@@ -126,6 +126,6 @@ def host_info(request, hostname, timing):
         p = len(n["net"])
         for x in range(p):
             nic_len.append(x)
-    return render(request, "monitor/host_info_{}.html".format(timing), locals())
+    return render(request, "monitor/host_info.html", locals())
 
 
