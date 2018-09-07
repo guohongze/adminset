@@ -79,9 +79,9 @@ def idc_edit(request, idc_id):
 
 @login_required
 @permission_verify()
-def cabinet_list(request, cabinet_id):
+def cabinet_list(request, idc_id):
     temp_name = "cmdb/cmdb-header.html"
-    cab = Idc.objects.get(id=cabinet_id)
+    cab = Idc.objects.get(id=idc_id)
     cabinets = cab.cabinet_set.all()
     results = {
         'temp_name': temp_name,

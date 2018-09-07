@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 {% block self_head_css_js %}
     <script src="/static/layer/layer.js"></script>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="/static/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+	<script type="text/javascript" src="/static/ztree/js/jquery.ztree.core.js"></script>
 {% endblock %}
 {% block content %}
 <script>
@@ -15,15 +18,33 @@
         box.className="active";
     }
 </script>
+<SCRIPT type="text/javascript">
+   var setting = {
+      async: {
+         enable: true,
+         autoParam:["id"],
+         type: "post",
+         url: "{% url 'host_tree' %}"
+      }
+      };
+
+
+   $(document).ready(function(){
+      $.fn.zTree.init($("#treeDemo"), setting);
+   });
+
+</SCRIPT>
 
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
 
     </section>
-
     <!-- Main content -->
     <section class="content">
+    <div style="float: left">
+		<ul id="treeDemo" class="ztree"></ul>
+	</div>
     <div>
         <div class="box-body" >
         {% if all_host %}

@@ -1,0 +1,39 @@
+
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+{#	<link rel="stylesheet" href="/static/ztree/css/demo.css" type="text/css">#}
+	<link rel="stylesheet" href="/static/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+{#	<script type="text/javascript" src="/static/ztree/js/jquery-1.4.4.min.js"></script>#}
+	<script type="text/javascript" src="/static/ztree/js/jquery.ztree.core.js"></script>
+	<!--  <script type="text/javascript" src="../../../js/jquery.ztree.excheck.js"></script>
+	  <script type="text/javascript" src="../../../js/jquery.ztree.exedit.js"></script>-->
+	<SCRIPT type="text/javascript">
+		<!--
+		var setting = {	};
+{#        {% for idc in idcs %}#}
+		var zNodes =[
+			{ name:"111133", open:true,
+				children: [
+					{ name:"父节点11 - 折叠",
+						children: [
+							{ name:"叶子节点111"},
+							{ name:"叶子节点112"},
+							{ name:"叶子节点113"},
+							{ name:"叶子节点114"}
+						]},
+					{ name:"父节点12 - 折叠",
+						children: [
+							{ name:"叶子节点121"},
+							{ name:"叶子节点122"},
+							{ name:"叶子节点123"},
+							{ name:"叶子节点124"}
+						]},
+					{ name:"父节点13 - 没有子节点", isParent:true}
+				]}
+
+		];
+{#        {% endfor %}#}
+		$(document).ready(function(){
+			$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+		});
+		//-->
+	</SCRIPT>
