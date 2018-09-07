@@ -138,14 +138,14 @@ def host_tree():
     for idc in Idc.objects.all():
         single_server_list = []
         for host in idc.host_set.all():
-            single_server_list.append({'name': host.hostname, 'url': "/monitor/system/{}/0/".format(host.hostname)})
+            single_server_list.append({'name': host.hostname, 'url': "/monitor/system/{}/0/".format(host.hostname), 'target':"myframe"})
         cabinet_list = []
         cabinets = idc.cabinet_set.all()
         for cabinet in cabinets:
             server_list = []
             servers = cabinet.serverList.all()
             for server in servers:
-                server_data = {'name': server.hostname, 'url': "/monitor/system/{}/0/".format(server.hostname)}
+                server_data = {'name': server.hostname, 'url': "/monitor/system/{}/0/".format(server.hostname), 'target':"myframe"}
                 server_list.append(server_data)
             cabinet_data = {'name': cabinet.name, 'children': server_list}
             cabinet_list.append(cabinet_data)
@@ -162,7 +162,7 @@ def group_tree():
         server_list = []
         servers = group.serverList.all()
         for server in servers:
-            server_data = {'name': server.hostname, 'url': "/monitor/system/{}/0/".format(server.hostname)}
+            server_data = {'name': server.hostname, 'url': "/monitor/system/{}/0/".format(server.hostname), "target": "_self"}
             server_list.append(server_data)
         group_data = {'name': group.name, 'children': server_list}
         group_node.append(group_data)
@@ -179,7 +179,7 @@ def product_tree():
             server_list = []
             servers = pjs.serverList.all()
             for server in servers:
-                server_data = {'name': server.hostname, 'url': "/monitor/system/{}/0/".format(server.hostname)}
+                server_data = {'name': server.hostname, 'url': "/monitor/system/{}/0/".format(server.hostname), "target": "_self"}
                 server_list.append(server_data)
             project_data = {'name': pjs.name, 'children': server_list}
             project_list.append(project_data)
