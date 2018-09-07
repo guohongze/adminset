@@ -162,7 +162,7 @@ def group_tree():
         server_list = []
         servers = group.serverList.all()
         for server in servers:
-            server_data = {'name': server.hostname, 'url': "/monitor/system/{}/0/".format(server.hostname), "target": "_self"}
+            server_data = {'name': server.hostname, 'url': "/monitor/system/{}/0/".format(server.hostname), 'target':"myframe"}
             server_list.append(server_data)
         group_data = {'name': group.name, 'children': server_list}
         group_node.append(group_data)
@@ -179,7 +179,7 @@ def product_tree():
             server_list = []
             servers = pjs.serverList.all()
             for server in servers:
-                server_data = {'name': server.hostname, 'url': "/monitor/system/{}/0/".format(server.hostname), "target": "_self"}
+                server_data = {'name': server.hostname, 'url': "/monitor/system/{}/0/".format(server.hostname), 'target':"myframe"}
                 server_list.append(server_data)
             project_data = {'name': pjs.name, 'children': server_list}
             project_list.append(project_data)
