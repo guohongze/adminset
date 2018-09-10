@@ -150,7 +150,7 @@ def host_tree():
             cabinet_data = {'name': cabinet.name, 'children': server_list}
             cabinet_list.append(cabinet_data)
             del server_list
-        data = {"name": idc.name, "open": True, "children": cabinet_list + single_server_list }
+        data = {"name": idc.name, "open": False, "children": cabinet_list + single_server_list }
         del cabinet_list
         host_node.append(data)
     return host_node
@@ -164,7 +164,7 @@ def group_tree():
         for server in servers:
             server_data = {'name': server.hostname, 'url': "/monitor/system/{}/0/".format(server.hostname), 'target':"myframe"}
             server_list.append(server_data)
-        group_data = {'name': group.name, 'children': server_list}
+        group_data = {'name': group.name, "open": False, 'children': server_list}
         group_node.append(group_data)
         del server_list
     return group_node
@@ -184,7 +184,7 @@ def product_tree():
             project_data = {'name': pjs.name, 'children': server_list}
             project_list.append(project_data)
             del server_list
-        data = {"name": pdt.name, "open": True, "children": project_list}
+        data = {"name": pdt.name, "open": False, "children": project_list}
         del project_list
         product_node.append(data)
     return product_node
