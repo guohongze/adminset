@@ -138,7 +138,8 @@ def host_tree():
     for idc in Idc.objects.all():
         single_server_list = []
         for host in idc.host_set.all():
-            single_server_list.append({'name': host.hostname, 'url': "/monitor/system/{}/0/".format(host.hostname), 'target':"myframe"})
+            if not host.cabinet_set.all():
+                single_server_list.append({'name': host.hostname, 'url': "/monitor/system/{}/0/".format(host.hostname), 'target':"myframe"})
         cabinet_list = []
         cabinets = idc.cabinet_set.all()
         for cabinet in cabinets:
