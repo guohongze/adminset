@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from django.shortcuts import render, HttpResponse
-from api import GetSysData
+from monitor.api import GetSysData
 from django.contrib.auth.decorators import login_required
 from accounts.permission import permission_verify
 from cmdb.models import Host

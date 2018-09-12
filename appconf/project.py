@@ -5,7 +5,7 @@ from django.shortcuts import render, HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from appconf.models import Project
-from forms import ProjectForm
+from appconf.forms import ProjectForm
 from accounts.permission import permission_verify
 import csv
 import datetime

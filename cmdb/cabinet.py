@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 from django.shortcuts import render
-from models import Cabinet
-from forms import CabinetForm
+from cmdb.models import Cabinet
+from cmdb.forms import CabinetForm
 from django.contrib.auth.decorators import login_required
 from accounts.permission import permission_verify
 from django.http import HttpResponseRedirect

@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from forms import PermissionListForm
-from models import UserInfo, RoleList, PermissionList
+from accounts.forms import PermissionListForm
+from accounts.models import UserInfo, RoleList, PermissionList
 
 
 def permission_verify():
@@ -118,3 +118,16 @@ def permission_del(request, ids):
     PermissionList.objects.filter(id=ids).delete()
 
     return HttpResponseRedirect(reverse('permission_list'))
+
+
+@login_required
+def get_user_permission(request):
+    ret = []
+    iUser = UserInfo.objects.get(username=request.user)
+    role_permission = RoleList.objects.get(name=iUser.role)
+    role_permission_list = role_permission.permission.all()
+    for p in role_permission_list:
+        d = p.name
+        ret.append(d.encode('ascii'))
+    data = ",".join(ret)
+    return HttpResponse(str(data))

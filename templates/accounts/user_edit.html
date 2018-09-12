@@ -16,7 +16,7 @@
         <div class="box">
             <!-- /.box-header -->
             <!-- form start -->
-    <form class="form-horizontal" role="form" action={% url "user_edit" ids %} method="POST" >
+    <form class="form-horizontal" role="form" method="post" action={% url "user_edit" ids %}>
     {% csrf_token %}
               <div class="box-body">
         {% for item in form %}
@@ -35,7 +35,9 @@
         <div class="form-group">
             <div class="box-footer" style="margin-left: 10px;width: 530px;">
                 <button type="submit" class="btn btn-primary pull-left" style="width: 120px">更新信息</button>&nbsp;&nbsp;
-                <a class="btn btn-danger" href="{% url "reset_password" ids %}" style="width: 120px" onclick="return confirm('确认重置密码？')">重置密码</a>
+                {% if not ldap_name %}
+                    <a class="btn btn-danger" href="{% url "reset_password" ids %}" style="width: 120px" onclick="return confirm('确认重置密码？')">重置密码</a>
+                {% endif %}
             </div>
         </div>
               </div>

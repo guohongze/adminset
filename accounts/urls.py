@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 from django.conf.urls import url, include
-from accounts import user, role, permission
+from accounts import user, role, permission, gldap
 
 
 urlpatterns = [
@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'^user/edit/(?P<ids>\d+)/$', user.user_edit, name='user_edit'),
     url(r'^reset/password/(?P<ids>\d+)/$', user.reset_password, name='reset_password'),
     url(r'^change/password/$', user.change_password, name='change_password'),
+    url(r'^change/ldap/password/$', user.change_ldap, name='change_ldap_password'),
     url(r'^role/add/$', role.role_add, name='role_add'),
     url(r'^role/list/$', role.role_list, name='role_list'),
     url(r'^role/edit/(?P<ids>\d+)/$', role.role_edit, name='role_edit'),
@@ -23,4 +24,5 @@ urlpatterns = [
     url(r'^permission/list/$', permission.permission_list, name='permission_list'),
     url(r'^permission/edit/(?P<ids>\d+)/$', permission.permission_edit, name='permission_edit'),
     url(r'^permission/delete/(?P<ids>\d+)/$', permission.permission_del, name='permission_del'),
+    url(r'^permission/user_permission/$', permission.get_user_permission, name='get_user_permission'),
 ]

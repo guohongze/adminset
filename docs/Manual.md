@@ -176,21 +176,48 @@
     7）清理按钮不会终止部署任务，只会清理部署的状态，用于部署任务意外中止后任务卡进度条的情况。
     
 #   监控平台用法
-    当adminset_agent.py自动上报信息到，监控会自动发现并配置，无需干预.
+    当adminset_agent.py自动上报信息，监控会自动发现并配置，无需干预.
     当监控页面打开时，前端JS每10秒会异步抓取监控数据
     agent默认每60秒上传一次监控数据，可以在adminset_agent.py中自定义
+    注意：监控平台依赖机房、组、或产品线，如果新加入一台服务器不属于任何机房、组或产品线，那么它将不会出现在监控平台中。
+          如果需要在监控平台显示，最简单的方法就是将服务器加入某个机房或组或产品线的项目中。
 
 #   权限管理
     1、新建权限如：
-    名字：资产管理
+    名字：cmdb
     URL：/cmdb/
     2、新建角色：
     名字：资产管理员
     可选择权限：资产管理
     3、新建用户
     在角色一栏选择：资产管理员
+    4、根据权限显示左边菜单栏，系统会根据用户的角色信息来显示对应的左边栏菜单。
+    但是在权限管理中的名字必须符合如下要求
+    权限名字为 navi 则用户会显示站点导航，以此类推
+    cmdb 资产管理 
+    appconf 应用管理 
+    setup 任务编排 
+    delivery 持续交付 
+    monitor 监控平台 
+    accounts 用户管理 
+    config 配置管理
 
 
+#   LDAP认证
+    支持openldap和WindowsAD，启动LDAP认证以后原有本地账号也可使用。
+    启用LDAP：
+    1、在adminset->系统配置 界面的LDAP区域选择ldap_enable True
+    2、ldap_server 必填信息，例：ldap://ldap.scimall.net.cn
+    3、ldap_port 可选信息，如果修改过ldap服务器的端口，请填写。
+    4、base_dn 必填信息，例：ou=dev,dc=gldap,dc=com
+    5、ldap_manager 必填信息，例：cn=admin,dc=gldap,dc=com
+    6、ldap_password 必填信息，LDAP管理账户密码。
+    7、ldap_filter 必选信息，根据实际情况选择。
+    8、require_group 可选信息，允许登入的ldap组，例：cn=enable,dc=gldap,dc=com 此组需要在LDAP服务器中创建，objectClass类型必须为posixGroup
+    9、nickname 必选信息，用户名，例：cn
+    10、is_active 可选信息，自动激活ldap某个组的账号，如果不写此信息ldap用户默认在adminset中为禁用状态，此组需要在LDAP服务器中创建，objectClass类型必须为posixGroup
+    11、is_superuser 可选信息，自动激活ldap中某个组的账号为超管，此组需要在LDAP服务器中创建，objectClass类型必须为posixGroup
+    
 #   组件启动管理
     service adminset {start|stop|restart} # gunicorn管理程序
     service nginx {start|stop|restart}    # web server

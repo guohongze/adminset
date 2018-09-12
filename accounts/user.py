@@ -4,11 +4,12 @@
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import auth
-from forms import LoginUserForm, EditUserForm, ChangePasswordForm
+from accounts.forms import LoginUserForm, EditUserForm, ChangePasswordForm, ChangeLdapPasswordForm
 from django.contrib.auth import get_user_model
-from forms import AddUserForm
+from accounts.forms import AddUserForm
 from django.core.urlresolvers import reverse
 from accounts.permission import permission_verify
+from accounts.gldap import change_ldap_passwd
 
 
 def login(request):
@@ -86,6 +87,7 @@ def user_del(request, ids):
 @permission_verify()
 def user_edit(request, ids):
     user = get_user_model().objects.get(id=ids)
+    ldap_name = user.ldap_name
     if request.method == 'POST':
         form = EditUserForm(request.POST, instance=user)
         if form.is_valid():
@@ -121,7 +123,7 @@ def change_password(request):
         form = ChangePasswordForm(user=request.user, data=request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('logout'))
+            return HttpResponseRedirect(reverse('user_list'))
     else:
         form = ChangePasswordForm(user=request.user)
     kwargs = {
@@ -130,3 +132,22 @@ def change_password(request):
         'temp_name': temp_name,
     }
     return render(request, 'accounts/change_password.html', kwargs)
+
+
+@login_required
+def change_ldap(request):
+    temp_name = "accounts/accounts-header.html"
+    if request.method == 'POST':
+        form = ChangeLdapPasswordForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            newpwd = form.clean_new_password2()
+            change_ldap_passwd(request.user, newpwd)
+            return HttpResponseRedirect(reverse('user_list'))
+    else:
+        form = ChangeLdapPasswordForm(user=request.user)
+    kwargs = {
+        'form': form,
+        'request': request,
+        'temp_name': temp_name,
+    }
+    return render(request, 'accounts/change_ldap_password.html', kwargs)

@@ -36,7 +36,7 @@ fi
 echo "####install depandencies####"
 yum install -y epel-release
 yum install -y gcc expect python-pip python-devel ansible smartmontools dmidecode libselinux-python git rsync dos2unix
-yum install -y openssl openssl-devel
+yum install -y openssl openssl-devel openldap-devel
 # build webssh
 echo "build webssh"
 /usr/bin/yum install -y nodejs
@@ -89,11 +89,11 @@ index-url = http://mirrors.aliyun.com/pypi/simple/
 [install]
 trusted-host=mirrors.aliyun.com
 EOF
+pip install -U pip
 pip install kombu==4.1.0
-pip install celery==4.0.2
+pip install celery==4.2.0
 pip install billiard==3.5.0.3
 pip install pytz==2017.2
-pip install kombu==4.1.0
 cd $adminset_dir/vendor/django-celery-results-master
 python setup.py build
 python setup.py install

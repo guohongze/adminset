@@ -1,13 +1,13 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
-
+from __future__ import absolute_import
 from django.shortcuts import render, HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from models import Delivery
-from forms import DeliveryFrom
+from delivery.models import Delivery
+from delivery.forms import DeliveryFrom
 from accounts.permission import permission_verify
-from .tasks import deploy
+from delivery.tasks import deploy
 import os
 from time import sleep
 import json

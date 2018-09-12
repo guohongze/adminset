@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 {% block self_head_css_js %}
+    <script src="/static/js/echarts.min.js"></script>
     <script src="/static/layer/layer.js"></script>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="/static/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+    <link rel="stylesheet" href="/static/ztree/css/demo.css" type="text/css">
+    <script type="text/javascript" src="/static/ztree/js/jquery.ztree.core.js"></script>
 {% endblock %}
 {% block content %}
 <script>
@@ -15,37 +20,52 @@
         box.className="active";
     }
 </script>
+<SCRIPT type="text/javascript">
+   var setting = {
+        async: {
+            enable: true,
+            autoParam:["name"],
+            type: "post",
+            url: "{% url 'host_tree' %}"
+        },
+
+
+{#	callback: {#}
+{#		onClick: zTreeOnClick#}
+{#	},#}
+
+        view: {
+            dblClickExpand: false,//双击节点时，是否自动展开父节点的标识
+            showLine: true,//是否显示节点之间的连线
+{#            fontCss:{'color':'black','font-weight':'bold'},//字体样式函数#}
+            selectedMulti: false //设置是否允许同时选中多个节点
+        }
+
+      };
+{#   function zTreeOnClick(event, treeId, treeNode) {#}
+{#    alert(treeNode.tId + ", " + treeNode.name);#}
+//}
+   $(document).ready(function(){
+      $.fn.zTree.init($("#treeDemo"), setting);
+   });
+
+</SCRIPT>
 
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
 
     </section>
-
     <!-- Main content -->
     <section class="content">
-    <div>
-        <div class="box-body" >
-        {% if all_host %}
-            {% for host in all_host %}
-                <a href="{% url 'host_info' host.hostname 0 %}">
-                    <div class="col-md-3" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
-                      <div class="box box-info">
-                        <div class="box-header with-border">
-                          <h3 class="box-title" >{{ host.hostname }}</h3>
-                        </div><!-- /.box-header -->
-                        <div class="box-body">
-                          {{ host.ip }}
-                        </div><!-- /.box-body -->
-                      </div><!-- /.box -->
-                    </div>
-                </a>
-            {% endfor %}
-        {% endif %}
+    <div class="zTreeDemoBackground left">
+		<ul id="treeDemo" class="ztree"></ul>
+	</div>
+    <div class="right">
+        <iframe name="myframe" width="650" height="450" frameborder="0"></iframe>
         </div>
         <!-- /.box-body -->
         <!-- /.box-footer-->
-      </div>
 
       <!-- Your Page Content Here -->
     </section>
