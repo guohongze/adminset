@@ -12,6 +12,7 @@ cd .. && cd ..
 cur_dir=$(pwd)
 mkdir -p $adminset_dir
 mkdir -p $data_dir/scripts
+mkdir -p $data_dir/files
 mkdir -p $data_dir/ansible/playbook
 mkdir -p $data_dir/ansible/roles
 mkdir -p $config_dir
