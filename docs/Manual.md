@@ -217,6 +217,10 @@
     9、nickname 必选信息，用户名，例：cn
     10、is_active 可选信息，自动激活ldap某个组的账号，如果不写此信息ldap用户默认在adminset中为禁用状态，此组需要在LDAP服务器中创建，objectClass类型必须为posixGroup
     11、is_superuser 可选信息，自动激活ldap中某个组的账号为超管，此组需要在LDAP服务器中创建，objectClass类型必须为posixGroup
+
+#   文件管理
+    可以通过WEB直接对adminset 服务端的脚本文件进行管理。
+    这些文件可以直接被任务编排模块直接调用。
     
 #   组件启动管理
     service adminset {start|stop|restart} # gunicorn管理程序
