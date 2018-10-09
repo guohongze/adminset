@@ -112,9 +112,6 @@ systemctl daemon-reload
 chkconfig adminset on
 service adminset start
 
-#安装elfinder
-cd $adminset_dir/vendor/elfinder
-python setup.py install
 
 #安装redis
 echo "####install redis####"
