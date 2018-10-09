@@ -34,6 +34,7 @@
         <li id="setup"><a href="{% url 'job_list' %}"><i class="fa fa-cogs"></i> <span>任务编排</span></a></li>
         <li id="delivery"><a href="{% url 'delivery' %}"><i class="fa fa-retweet"></i> <span>持续交付</span></a></li>
         <li id="monitor"><a href="{% url 'monitor' %}"><i class="fa fa-television"></i> <span>监控平台</span></a></li>
+        <li id="mfile"><a href="{% url 'mfile' %}"><i class="fa fa-folder-open"></i> <span>文件管理</span></a></li>
         <li id="accounts"><a href="{% url 'user_list' %}"><i class="fa fa-users"></i> <span>用户管理</span></a></li>
         <li id="config"><a href="{% url 'config' %}"><i class="fa fa fa-cog"></i> <span>系统配置</span></a></li>
         {% else %}
@@ -43,6 +44,7 @@
         <li id="setup" style="display: none"><a href="{% url 'job_list' %}"><i class="fa fa-cogs"></i> <span>任务编排</span></a></li>
         <li id="delivery" style="display: none"><a href="{% url 'delivery' %}"><i class="fa fa-retweet"></i> <span>持续交付</span></a></li>
         <li id="monitor" style="display: none"><a href="{% url 'monitor' %}"><i class="fa fa-television"></i> <span>监控平台</span></a></li>
+        <li id="mfile"><a href="{% url 'mfile' %}"><i class="fa fa-folder-open"></i> <span>文件管理</span></a></li>
         <li id="accounts" style="display: none"><a href="{% url 'user_list' %}"><i class="fa fa-users"></i> <span>用户管理</span></a></li>
         <li id="config" style="display: none"><a href="{% url 'config' %}"><i class="fa fa fa-cog"></i> <span>系统配置</span></a></li>
           {% endif %}

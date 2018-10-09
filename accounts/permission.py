@@ -124,10 +124,13 @@ def permission_del(request, ids):
 def get_user_permission(request):
     ret = []
     iUser = UserInfo.objects.get(username=request.user)
-    role_permission = RoleList.objects.get(name=iUser.role)
-    role_permission_list = role_permission.permission.all()
-    for p in role_permission_list:
-        d = p.name
-        ret.append(d.encode('ascii'))
+    try:
+        role_permission = RoleList.objects.get(name=iUser.role)
+        role_permission_list = role_permission.permission.all()
+        for p in role_permission_list:
+            d = p.name
+            ret.append(d.encode('ascii'))
+    except:
+        data = "Role list is empty"
     data = ",".join(ret)
     return HttpResponse(str(data))

@@ -14,4 +14,6 @@ urlpatterns = [
     url(r'^accounts/', include('accounts.urls')),
     url(r'^appconf/', include('appconf.urls')),
     url(r'^delivery/', include('delivery.urls')),
+    url(r'^mfile/', include('mfile.urls')),
+    url(r'^elfinder/',include('elfinder.urls')),
 ]

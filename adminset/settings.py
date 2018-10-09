@@ -66,6 +66,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'elfinder',
+    'storages',
+    'mfile'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -295,3 +298,8 @@ if ldap_enable == "True":
     )
 
 AUTH_USER_MODEL = 'accounts.UserInfo'
+# MEDIA_ROOT = os.path.join(BASE_DIR,'mfile/media')
+MEDIA_ROOT = os.path.join('/var/opt/adminset/data')
+MEDIA_URL = '/media/'
+
+DEFAULT_FILE_STORAGE = 'storages.backends.sftpstorage.SFTPStorage'

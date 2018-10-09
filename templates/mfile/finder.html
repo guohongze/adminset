@@ -1,0 +1,122 @@
+{% extends 'base.html'%}
+{% block title %}File management{% endblock %}
+{% load staticfiles %}
+{% block self_head_css_js %}
+<link rel="stylesheet" href="{% static "plugins/toastr/toastr.css" %}">
+<link rel="stylesheet" type="text/css" href="http://apps.bdimg.com/libs/jqueryui/1.9.2/themes/smoothness/jquery-ui.css">
+<!-- elFinder CSS (REQUIRED) -->
+<link rel="stylesheet" type="text/css" href="{% static "elfinder/css/elfinder.full.css"%}">
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+{%endblock%}
+{% block content %}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+{#        <div class="col-md-12">#}
+          <div class="box box-primary">
+            <div class="box-body no-padding">
+              <!-- THE CALENDAR -->
+              <div id="finder"></div>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /. box -->
+{#        </div>#}
+    </section>
+
+</div>
+
+{% endblock %}
+{% block self_footer_js %}
+<script src="{% static "plugins/jquery-ui/jquery-ui.js"%}"></script>
+<!-- elFinder JS (REQUIRED) -->
+<script src="{% static "elfinder/js/elfinder.full.js"%}"></script>
+<script type="text/javascript" charset="utf-8">
+(function($){
+        var i18nPath = 'js/i18n',
+                start = function(lng) {
+                        // disable HTML quicklook plugin
+                        elFinder.prototype.commands.quicklook.plugins[1] = null;
+                        <!--var high = $('body').find('.sidebar')[0].clientHeight;-->
+                        $().ready(function() {
+                                //console.log($(".content"));
+                                // Documentation for client options:
+                                // https://github.com/Studio-42/elFinder/wiki/Client-configuration-options
+                                var elfinderInstance = $('#finder').elfinder({
+                                        resizable: false,
+                                        height: '490px',
+                                        url: '/elfinder/yawd-connector/default/files/', // connector URL (REQUIRED)
+                                        //url: 'http://hypweb.net/elFinder-nightly/demo/2.1/php-jsb/basic.php',
+                                        lang: lng,                    // language (OPTIONAL)
+                                        debug: ['error', 'warning', 'event-destroy'],
+                                        dragUploadAllow: true,
+                                        soundPath: "{% static 'elfinder/sounds/rm.wav' %}"
+                                }).elfinder('instance');
+
+                                // set document.title dynamically etc.
+                                var title = document.title;
+                                elfinderInstance.bind('open', function(event) {
+                                        var data = event.data || null;
+                                        var path = '';
+                                        
+                                        if (data && data.cwd) {
+                                                path = elfinderInstance.path(data.cwd.hash) || null;
+                                        }
+                                        document.title =  path? path + ':' + title : title;
+                                });
+
+                                // fit to window.height on window.resize
+                                <!--var resizeTimer = null;-->
+                                <!--$(window).resize(function() {-->
+                                        <!--resizeTimer && clearTimeout(resizeTimer);-->
+                                        <!--resizeTimer = setTimeout(function() {-->
+                                                <!--var h = parseInt(high);-->
+                                                <!--if (h != parseInt($('#finder').height())) {-->
+                                                        <!--elfinderInstance.resize('1000px', high);-->
+                                                <!--}-->
+                                        <!--}, 0);-->
+                                <!--});-->
+                        });
+                },
+                loct = window.location.search,
+                full_lng, locm, lng;
+        
+        // detect language
+        if (loct && (locm = loct.match(/lang=([a-zA-Z_-]+)/))) {
+                full_lng = locm[1];
+        } else {
+                full_lng = (navigator.browserLanguage || navigator.language || navigator.userLanguage);
+        }
+        lng = full_lng.substr(0,2);
+        if (lng == 'ja') lng = 'jp';
+        else if (lng == 'pt') lng = 'pt_BR';
+        else if (lng == 'zh') lng = (full_lng.substr(0,5) == 'zh-tw')? 'zh_TW' : 'zh_CN';
+
+        if (lng != 'en') {
+                $.ajax({
+                        url : '',
+                        cache : true,
+                        dataType : 'script'
+                })
+                .done(function() {
+                        start(lng);
+                })
+                .fail(function() {
+                        start('en');
+                });
+        } else {
+                start(lng);
+        }
+})(jQuery);
+</script>
+
+{% endblock %}
