@@ -20,11 +20,11 @@ ipaddress==1.0.18
 asn1crypto==0.23.0
 bcrypt==3.1.4
 cffi==1.11.2
-cryptography==2.1.3
+cryptography==2.3
 django-storages==1.6.5
 idna==2.6
 olefile==0.44
-paramiko==2.4.0
+paramiko==2.4.1
 Pillow==4.3.0
 pyasn1==0.4.1
 pycparser==2.18
