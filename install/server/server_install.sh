@@ -12,6 +12,7 @@ cd .. && cd ..
 cur_dir=$(pwd)
 mkdir -p $adminset_dir
 mkdir -p $data_dir/scripts
+mkdir -p $data_dir/files
 mkdir -p $data_dir/ansible/playbook
 mkdir -p $data_dir/ansible/roles
 mkdir -p $config_dir
@@ -174,10 +175,12 @@ index-url = http://mirrors.aliyun.com/pypi/simple/
 [install]
 trusted-host=mirrors.aliyun.com
 EOF
-pip install kombu==4.1.0
-pip install celery==4.2.0
+pip install --ignore-installed enum34==1.1.6
+pip install --ignore-installed ipaddress==1.0.18
+pip install kombu==4.2.1
+pip install celery==4.2.1
 pip install billiard==3.5.0.3
-pip install pytz==2017.2
+pip install pytz==2017.3
 cd $adminset_dir/vendor/django-celery-results-master
 python setup.py build
 python setup.py install
