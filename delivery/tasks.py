@@ -49,9 +49,15 @@ def deploy(job_name, server_list, app_path, source_address, project_id, auth_inf
             f.writelines(p1.shell)
         cmd = "/usr/bin/dos2unix {}".format(deploy_shell)
         data = cmd_exec(cmd)
+    exclue_file = "{0}/code/rsync_exclude.txt".format(job_workspace)
+
     for server in server_list:
-        cmd = "rsync --progress -raz --delete --exclude '.git' --exclude '.svn' {0}/code/ {1}:{2}".format(
-                job_workspace, server, app_path)
+        if os.path.exists(exclue_file):
+            cmd = "rsync --progress -raz --delete --exclude-from {3} {0}/code/ {1}:{2}".format(
+                    job_workspace, server, app_path, exclue_file)
+        else:
+            cmd = "rsync --progress -raz --delete --exclude '.git' --exclude '.svn' {0}/code/ {1}:{2}".format(
+                    job_workspace, server, app_path)
         data = cmd_exec(cmd)
         with open(log_path + log_name, 'ab+') as f:
             f.writelines(cmd)
