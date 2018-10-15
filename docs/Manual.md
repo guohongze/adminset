@@ -202,6 +202,7 @@
     monitor 监控平台 
     accounts 用户管理 
     config 配置管理
+    mfile 文件管理
 
 
 #   LDAP认证
