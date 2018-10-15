@@ -24,7 +24,7 @@ cryptography==2.3
 django-storages==1.6.5
 idna==2.6
 olefile==0.44
-paramiko==2.4.1
+paramiko==2.4.2
 Pillow==4.3.0
 pyasn1==0.4.1
 pycparser==2.18
