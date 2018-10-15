@@ -109,7 +109,8 @@ def delivery_deploy(request, project_id):
         server_ip = str(server.ip)
         server_list.append(server_ip)
     project.bar_data = 15
-    deploy.delay(job_name, server_list, app_path, source_address, project_id, auth_info)
+    rsync_status = project.rsync_delete
+    deploy.delay(job_name, server_list, app_path, source_address, project_id, auth_info, rsync_status)
     return HttpResponse("ok")
 
 
