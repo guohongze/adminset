@@ -46,5 +46,6 @@ echo "##############install finished###################"
 systemctl daemon-reload
 nginx -s reload
 service adminset restart
+service celery restart
 echo "you have updated adminset successfully!!!"
 echo "################################################"
