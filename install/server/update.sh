@@ -26,8 +26,8 @@ cd $cur_dir/vendor/WebSSH2
 cd $adminset_dir
 if [ $1 ]
 then
-    python manage.py makemigrations $1
-    python manage.py migrate
+    python manage.py makemigrations
+    python manage.py migrate $1
 else
     python manage.py makemigrations
     python manage.py migrate
