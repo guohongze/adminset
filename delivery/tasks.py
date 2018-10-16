@@ -33,8 +33,6 @@ def deploy(job_name, server_list, app_path, source_address, project_id, auth_inf
                 f.writelines("******STEP: CLEAN PREVIOUS BUILDS******\n")
             shutil.rmtree("{0}code/".format(job_workspace))
         except Exception as msg:
-            with open(log_path + log_name, 'ab+') as f:
-                f.writelines(msg)
             print("code dir is not exists, build clean over")
 
     with open(log_path + log_name, 'ab+') as f:
