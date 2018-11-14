@@ -77,15 +77,15 @@ def pages(post_objects, request):
     except (EmptyPage, InvalidPage):
         page_objects = paginator.page(paginator.num_pages)
 
-    if current_page >= 5:
-        show_first = 1
-    else:
-        show_first = 0
-
-    if current_page <= (len(paginator.page_range) - 3):
-        show_end = 1
-    else:
-        show_end = 0
+    # if current_page >= 5:
+    #     show_first = 1
+    # else:
+    show_first = 0
+    #
+    # if current_page <= (len(paginator.page_range) - 3):
+    #     show_end = 1
+    # else:
+    show_end = 0
 
     # 所有对象， 分页器， 本页对象， 所有页码， 本页页码，是否显示第一页，是否显示最后一页
     return post_objects, paginator, page_objects, page_range, current_page, show_first, show_end, end_page
