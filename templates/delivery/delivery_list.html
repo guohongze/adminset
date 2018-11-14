@@ -42,6 +42,38 @@
 						 <a href="{% url 'delivery_add' %}"><li class="btn btn-success" ><b>添加项目</b></li></a>
                   </div>
                 </div>
+            <div class="col-md-5">
+
+                <label for="page_len">
+                    <select name="page_len" id="page_len" class="form-control m-b input-sm" onchange="change_info()">
+                        {% ifequal page_len '10' %}
+                            <option value="10" selected>10</option>
+                        {% else %}
+                            <option value="10">10</option>
+                        {% endifequal %}
+                        {% ifequal page_len '20' %}
+                            <option value="20" selected>20</option>
+                        {% else %}
+                            <option value="20">20</option>
+                        {% endifequal %}
+                        {% ifequal page_len '50' %}
+                            <option value="50" selected>50</option>
+                        {% else %}
+                            <option value="50">50</option>
+                        {% endifequal %}
+                        {% ifequal page_len '100' %}
+                            <option value="100" selected>100</option>
+                        {% else %}
+                            <option value="100">100</option>
+                        {% endifequal %}
+                        {% ifequal page_len '200' %}
+                            <option value="200" selected>200</option>
+                        {% else %}
+                            <option value="200">200</option>
+                        {% endifequal %}
+                    </select>
+                            </label>
+            </div>
 
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -180,5 +212,10 @@ function taskstop(args) {
         {% endfor %}
     }
 </script>
-
+<script>
+    function change_info(){
+        var args = $("#project_form").serialize();
+        window.location = "{% url 'delivery' %}?" + args
+    }
+</script>
 {% endblock %}

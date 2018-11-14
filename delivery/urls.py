@@ -5,7 +5,7 @@ from delivery import deli, tasks
 urlpatterns = [
     url(r'^$', deli.delivery_list, name='delivery'),
     url(r'^add/$', deli.delivery_add, name='delivery_add'),
-    url(r'^ist/$', deli.delivery_list, name='delivery_list'),
+    url(r'^list/$', deli.delivery_list, name='delivery_list'),
     url(r'^status/(?P<project_id>\d+)/$', deli.status, name='delivery_status'),
     url(r'^edit/(?P<project_id>\d+)/$', deli.delivery_edit, name='delivery_edit'),
     url(r'^log/(?P<project_id>\d+)/$', deli.log, name='delivery_log'),

@@ -21,6 +21,7 @@ def delivery_list(request):
     all_project = []
     temp_name = "delivery/delivery-header.html"
     all_project = Delivery.objects.all()
+    page_len = request.GET.get('page_len', '')
     deploys_list, p, deploys, page_range, current_page, show_first, show_end, end_page = pages(all_project, request)
     return render(request, 'delivery/delivery_list.html', locals())
 
