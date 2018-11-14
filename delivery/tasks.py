@@ -55,7 +55,7 @@ def deploy(job_name, server_list, app_path, source_address, project_id, auth_inf
         deploy_shell_name = 'deploy-' + str(p1.deploy_num) + ".sh"
         with open(deploy_shell, 'wb+') as f:
             f.writelines(p1.shell)
-        cmd = "/usr/bin/dos2unix {}".format(deploy_shell)
+        cmd = "/bin/dos2unix {}".format(deploy_shell)
         data = cmd_exec(cmd)
     exclude_file = "{0}/code/exclude.txt".format(job_workspace)
     with open(log_path + log_name, 'ab+') as f:
@@ -90,7 +90,7 @@ def deploy(job_name, server_list, app_path, source_address, project_id, auth_inf
             data = cmd_exec(cmd)
             with open(log_path + log_name, 'ab+') as f:
                 f.writelines(data)
-            cmd = "ssh {1} '/usr/bin/bash /tmp/{0}'".format(deploy_shell_name, server)
+            cmd = "ssh {1} '/bin/bash /tmp/{0}'".format(deploy_shell_name, server)
             data = cmd_exec(cmd)
             with open(log_path + log_name, 'ab+') as f:
                 f.writelines(data)
