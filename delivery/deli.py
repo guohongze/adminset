@@ -70,7 +70,9 @@ def delivery_edit(request, project_id):
         form = DeliveryFrom(request.POST, instance=project)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('delivery_list'))
+            status = 1
+        else:
+            status = 2
     else:
         form = DeliveryFrom(instance=project)
 
@@ -80,7 +82,7 @@ def delivery_edit(request, project_id):
         'request': request,
         'temp_name': temp_name,
     }
-    return render(request, 'delivery/delivery_base.html', results)
+    return render(request, 'delivery/delivery_edit.html', locals())
 
 
 @login_required
