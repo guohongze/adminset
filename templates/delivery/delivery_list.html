@@ -114,7 +114,7 @@
                                     <td>
                                         <a href="#"><li onclick="return deploy(this.value);" class="btn btn-sm btn-default" value="{{ project.job_name_id }}">部署</li></a>
                                         <a href="#"><li style="list-style-type:none" class="btn btn-sm btn-default" onclick="return tanchu(this.value)" value="{{ project.job_name_id  }}">日志</li></a>
-                                        <a href="{% url "delivery_edit" project.id %}"><span class="btn btn-sm btn-default">编辑</span></a>
+                                        <a href="#"><li onclick="return tanchu_edit(this.value) " value="{{ project.job_name_id  }}" class="btn btn-sm btn-default">编辑</li></a>
                                         <a href="#"><li onclick="return taskstop(this.value);" class="btn btn-sm btn-default" value="{{ project.job_name_id }}">清理</li></a>
                                         <a href="{% url "delivery_del"%}?project_id={{ project.id }}" onclick="return confirm('确认删除项目吗？')"><span class="btn btn-sm btn-danger ">删除</span></a>
                                     </td>
@@ -179,7 +179,37 @@ function tanchu(n){
   });
 }
 </script>
-
+{#用于接收asset_edit.html中layui子层的传值#}
+<input id="handle_status" value="" hidden="hidden">
+<script>
+function tanchu_edit(n){
+  layer.open({
+  type: 2,
+  title: '信息修改',
+  area: ['600px', '450px'],
+  shadeClose: true, //点击遮罩关闭
+  content: ['/delivery/edit/' + n],
+  end:function(){
+        var handle_status = $("#handle_status").val();
+        if ( handle_status == '1' ) {
+            layer.msg('保存成功！',{
+                icon: 1,
+                time: 2000 //2秒关闭（如果不配置，默认是3秒）
+            },function(){
+                history.go(0);
+            });
+        } else if ( handle_status == '2' ) {
+            layer.msg('修改失败！',{
+                icon: 2,
+                time: 2000 //2秒关闭（如果不配置，默认是3秒）
+            },function(){
+                history.go(0);
+            });
+        }
+    }
+  });
+}
+</script>
 <script>
 function deploy(args) {
     if (confirm("确定部署？")) {
