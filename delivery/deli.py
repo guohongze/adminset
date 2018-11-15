@@ -64,7 +64,7 @@ def delivery_add(request):
 @login_required
 @permission_verify()
 def delivery_edit(request, project_id):
-    project = Delivery.objects.get(id=project_id)
+    project = Delivery.objects.get(job_name_id=project_id)
     temp_name = "delivery/delivery-header.html"
     if request.method == 'POST':
         form = DeliveryFrom(request.POST, instance=project)
