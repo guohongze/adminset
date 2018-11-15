@@ -11,7 +11,7 @@ redis==2.10.5
 psutil==5.2.2
 schedule==0.4.3
 pymongo==3.3.0
-requests==2.11.1
+requests==2.20.0
 django-db==0.0.7
 ldap3==2.5.1
 #elfinder requirements
