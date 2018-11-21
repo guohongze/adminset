@@ -94,8 +94,12 @@ def delivery_deploy(request, project_id):
     job_name = project.job_name.name
     source_address = project.job_name.source_address
     app_path = project.job_name.appPath
+    source_auth = project.source_auth
     if project.auth:
-        auth_info = {"username": project.auth.username, "password": project.auth.password}
+        auth_info = {"username": project.auth.username,
+                     "password": project.auth.password,
+                     "deploy_port": project.auth.deploy_port,
+                     }
     else:
         auth_info = None
     project.status = True
@@ -113,7 +117,7 @@ def delivery_deploy(request, project_id):
         server_list.append(server_ip)
     project.bar_data = 15
     rsync_status = project.rsync_delete
-    deploy.delay(job_name, server_list, app_path, source_address, project_id, auth_info, rsync_status)
+    deploy.delay(job_name, server_list, app_path, source_address, project_id, auth_info, rsync_status, source_auth)
     return HttpResponse("ok")
 
 

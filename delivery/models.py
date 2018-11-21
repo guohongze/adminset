@@ -23,6 +23,7 @@ class Delivery(models.Model):
     status = models.BooleanField(verbose_name=u"部署状态", default=False)
     deploy_num = models.IntegerField(verbose_name=u"部署次数", default=0)
     bar_data = models.IntegerField(default=0)
+    source_auth = models.BooleanField(verbose_name=u"源码认证", default=False)
     auth = models.ForeignKey(
         AuthInfo, verbose_name=u"认证信息",
         null=True, blank=True,
