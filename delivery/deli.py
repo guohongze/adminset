@@ -194,3 +194,33 @@ def get_log(request, project_id, logname):
             l += "<br>"
             ret.append(l)
     return HttpResponse(ret)
+
+
+@login_required()
+@permission_verify()
+def log_del(request):
+    project_id = request.GET.get('project_id', '')
+    logname = request.GET.get('logname', '')
+    project = Delivery.objects.get(job_name_id=project_id)
+    job_name = project.job_name.name
+    log_path = "/var/opt/adminset/workspace/{0}/logs/".format(job_name)
+    log_file = log_path + logname
+    if project_id and logname:
+        os.remove(log_file)
+
+    return HttpResponse("ok")
+
+
+@login_required()
+@permission_verify()
+def log_delall(request):
+    project_id = request.GET.get('project_id', '')
+    project = Delivery.objects.get(job_name_id=project_id)
+    job_name = project.job_name.name
+    log_path = "/var/opt/adminset/workspace/{0}/logs/".format(job_name)
+    for l_file in os.walk(log_path):
+        for l in l_file[2]:
+            del_file = log_path + l
+            os.remove(del_file)
+
+    return HttpResponse("ok")
