@@ -27,7 +27,10 @@ cd $adminset_dir
 if [ $1 ]
 then
     python manage.py makemigrations
-    python manage.py migrate $1
+    for app in $*
+    do
+        python manage.py migrate $app
+    done
 else
     python manage.py makemigrations
     python manage.py migrate
