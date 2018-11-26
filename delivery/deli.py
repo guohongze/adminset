@@ -8,7 +8,7 @@ from delivery.models import Delivery
 from delivery.forms import DeliveryFrom
 from accounts.permission import permission_verify
 from delivery.tasks import deploy
-import os
+import os, re
 from time import sleep
 import json
 import time
@@ -166,3 +166,31 @@ def task_stop(request, project_id):
     project.status = False
     project.save()
     return HttpResponse("task stop ok")
+
+
+@login_required()
+@permission_verify()
+def logs_history(request, project_id):
+    project = Delivery.objects.get(job_name_id=project_id)
+    job_name = project.job_name.name
+    log_path = "/var/opt/adminset/workspace/{0}/logs".format(job_name)
+    for logs in os.walk(log_path):
+        logs_history = logs[2]
+    return render(request, "delivery/logs_history.html", locals())
+
+
+@login_required()
+@permission_verify()
+def get_log(request, project_id, logname):
+    ret = []
+    project = Delivery.objects.get(job_name_id=project_id)
+    job_name = project.job_name.name
+    log_path = "/var/opt/adminset/workspace/{0}/logs/".format(job_name)
+    # log_path = "/var/opt/adminset/workspace/{0}/logs/".format(job_name)
+    log_file = log_path + logname
+    with open(log_file, 'r+') as f:
+        line = f.readlines()
+        for l in line:
+            l += "<br>"
+            ret.append(l)
+    return HttpResponse(ret)

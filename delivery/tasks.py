@@ -6,7 +6,7 @@ from subprocess import Popen, PIPE
 from delivery.models import Delivery
 import os
 import shutil
-from time import sleep
+from time import sleep, ctime
 import re
 import sh
 
@@ -26,7 +26,11 @@ def deploy(job_name, server_list, app_path, source_address, project_id, auth_inf
     log_path = job_workspace + 'logs/'
     log_name = 'deploy-' + str(p1.deploy_num) + ".log"
     with open(log_path + log_name, 'wb+') as f:
-        f.writelines("<h4>Deploying Project {0} For {1} Th</h4><br>".format(job_name, p1.deploy_num))
+        f.writelines("<h4>Deploying Project {0} For {1} Th</h4>\n".format(job_name, p1.deploy_num))
+        f.writelines("Code version: {0}".format(p1.version))
+        f.writelines("\n")
+        f.writelines("Deploy time: {0}".format(ctime()))
+        f.writelines("\n\n")
     if not app_path.endswith("/"):
         app_path += "/"
 

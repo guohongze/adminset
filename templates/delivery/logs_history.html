@@ -18,13 +18,13 @@
                   <table class="table table-striped table-bordered" id="product_project_table">
                       <thead>
                         <tr>
-                            <th>构建历史记录</th>
+                            <th>构建日志</th>
                         </tr>
                       </thead>
                             <tbody>
                             {% for log in logs_history %}
                                 <tr class="even gradeX">
-                                    <td>{{ log }}</td>
+                                    <td><a href="/delivery/get/logs/{{ project_id }}/{{ log }}/">{{ log }}</a></td>
                                 </tr>
                             {% endfor %}
                             </tbody>

@@ -113,8 +113,8 @@
                                     <td>{{ project.deploy_policy }} </td>
                                     <td>
                                         <a href="#"><li onclick="return deploy(this.value);" class="btn btn-sm btn-default" value="{{ project.job_name_id }}">部署</li></a>
-                                        <a href="#"><li style="list-style-type:none" class="btn btn-sm btn-default" onclick="return tanchu(this.value)" value="{{ project.job_name_id  }}">当前日志</li></a>
-                                        <a href="#"><li style="list-style-type:none" class="btn btn-sm btn-default" onclick="return logs_history(this.value)" value="{{ project.job_name_id  }}">历史日志</li></a>
+                                        <a href="#"><li style="list-style-type:none" class="btn btn-sm btn-default" onclick="return tanchu(this.value)" value="{{ project.job_name_id  }}">日志</li></a>
+                                        <a href="#"><li style="list-style-type:none" class="btn btn-sm btn-default" onclick="return logs_history(this.value)" value="{{ project.job_name_id  }}">历史</li></a>
                                         <a href="#"><li onclick="return tanchu_edit(this.value) " value="{{ project.job_name_id  }}" class="btn btn-sm btn-default">编辑</li></a>
                                         <a href="#"><li onclick="return taskstop(this.value);" class="btn btn-sm btn-default" value="{{ project.job_name_id }}">清理</li></a>
                                         <a href="{% url "delivery_del"%}?project_id={{ project.id }}" onclick="return confirm('确认删除项目吗？')"><span class="btn btn-sm btn-danger ">删除</span></a>
@@ -186,7 +186,7 @@ function logs_history(n){
     closeBtn: 1,
     area: ['600px', '400px'],
     shadeClose: true, //点击遮罩关闭
-    content: ['/delivery/logs_history/' + n]
+    content: ['/delivery/logs/history/' + n]
   });
 }
 </script>
