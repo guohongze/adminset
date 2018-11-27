@@ -108,7 +108,7 @@ def deploy(job_name, server_list, app_path, source_address, project_id, auth_inf
             data = cmd_exec(cmd)
             with open(log_path + log_name, 'ab+') as f:
                 f.writelines(data)
-            cmd = "ssh -P {3} {2}@{1} '/bin/bash /tmp/{0}'".format(deploy_shell_name, server, username, deploy_port)
+            cmd = "ssh -p {3} {2}@{1} '/bin/bash /tmp/{0}'".format(deploy_shell_name, server, username, deploy_port)
             data = cmd_exec(cmd)
             with open(log_path + log_name, 'ab+') as f:
                 f.writelines(data)
