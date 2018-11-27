@@ -104,7 +104,7 @@ def deploy(job_name, server_list, app_path, source_address, project_id, auth_inf
         if p1.shell and not p1.shell_position:
             with open(log_path + log_name, 'ab+') as f:
                 f.writelines("******STEP: SHELL EXECUTE ON REMOTE******\n\n")
-            cmd = "scp -P {3} {0} {2}:{1}:/tmp".format(deploy_shell, server, username, deploy_port)
+            cmd = "scp -P {3} {0} {2}@{1}:/tmp".format(deploy_shell, server, username, deploy_port)
             data = cmd_exec(cmd)
             with open(log_path + log_name, 'ab+') as f:
                 f.writelines(data)
