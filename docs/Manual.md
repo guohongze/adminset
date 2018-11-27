@@ -251,7 +251,7 @@
     3)二次开发
         rsync.sh脚本只做增量，rsync参数不带--delete选项，不会在生产环境删除代码中已删除的条目,不更新组件配置文件，不会生成新的ORM数据库条目。
         update.sh脚本带--delete选项，同步代码，重新发布各组件的配置文件，并重新生成ORM数据文件（makemigrations migrate）。
-        update.sh 可带一个参数，参数为需要更新的应用名，如变更了appconf模块的models只更新appconf可以使用update.sh appconf来更新。
+        update.sh 可带一个参数，参数为需要更新的应用名，如变更了appconf模块的models只更新appconf可以使用update.sh appconf来更新,如果变更了两个模块直接写两个模块名即可./update.sh cmdb appconf。
         注意：如果做表结构变更，把新生成的{app_name}/migrations中的000X_initial.py文件提交到代码中，以保证更新时ORM配置正确。 
     4) 自动化部署
         在自动化部署软件如jenkins或adminset中，拉取代码到本地后，再用命令将其复制到更新目标机器的/opt/adminset 目录，然后执行：
