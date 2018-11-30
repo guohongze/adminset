@@ -4,6 +4,7 @@
 import csv
 import datetime
 import sys
+import os
 
 from accounts.permission import permission_verify
 from cmdb.api import get_object, pages, str2gb
@@ -102,11 +103,11 @@ def create_asset_excel(export, asset_id_all):
             file_name = 'adminset_cmdb_' + now + '.csv'
             response['Content-Disposition'] = "attachment; filename="+file_name
             writer = csv.writer(response)
-            writer.writerow([str2gb(u'主机名'), str2gb(u'IP地址'), str2gb(u'其它IP'), str2gb(u'所在机房'),
-                             str2gb(u'资产编号'), str2gb(u'设备类型'), str2gb(u'设备状态'), str2gb(u'操作系统'),
-                             str2gb(u'设备厂商'), str2gb(u'CPU型号'), str2gb(u'CPU核数'), str2gb(u'内存大小'),
-                             str2gb(u'硬盘信息'), str2gb(u'SN号码'), str2gb(u'所在位置'),
-                             str2gb(u'备注信息')])
+            writer.writerow([str2gb(u'hostname'), str2gb(u'ip'), str2gb(u'other_ip'), str2gb(u'idc'),
+                             str2gb(u'asset_no'), str2gb(u'asset_type'), str2gb(u'status'), str2gb(u'os'),
+                             str2gb(u'vendor'), str2gb(u'cpu_model'), str2gb(u'cpu_num'), str2gb(u'memory'),
+                             str2gb(u'disk'), str2gb(u'sn'), str2gb(u'position'),
+                             str2gb(u'memo')])
             for h in asset_find:
                 if h.asset_type:
                     at_num = int(h.asset_type)
@@ -131,10 +132,11 @@ def create_asset_excel(export, asset_id_all):
         file_name = 'adminset_cmdb_' + now + '.csv'
         response['Content-Disposition'] = "attachment; filename=" + file_name
         writer = csv.writer(response)
-        writer.writerow([str2gb('主机名'), str2gb('IP地址'), str2gb('其它IP'), str2gb('所在机房'), str2gb('资产编号'),
-                         str2gb('设备类型'), str2gb('设备状态'), str2gb('操作系统'), str2gb('设备厂商'), str2gb('CPU型号'),
-                         str2gb('CPU核数'), str2gb('内存大小'), str2gb('硬盘信息'), str2gb('SN号码'),
-                         str2gb('所在位置'), str2gb('备注信息')])
+        writer.writerow([str2gb(u'hostname'), str2gb(u'ip'), str2gb(u'other_ip'), str2gb(u'idc'),
+                         str2gb(u'asset_no'), str2gb(u'asset_type'), str2gb(u'status'), str2gb(u'os'),
+                         str2gb(u'vendor'), str2gb(u'cpu_model'), str2gb(u'cpu_num'), str2gb(u'memory'),
+                         str2gb(u'disk'), str2gb(u'sn'), str2gb(u'position'),
+                         str2gb(u'memo')])
         for h in host:
             if h.asset_type:
                 at_num = int(h.asset_type)
@@ -151,6 +153,57 @@ def create_asset_excel(export, asset_id_all):
                              str2gb(h.memory), str2gb(h.disk), str2gb(h.sn), str2gb(h.position),
                              str2gb(h.memo)])
         return response
+
+
+@login_required()
+@permission_verify()
+def asset_import(request):
+    temp_name = "cmdb/cmdb-header.html"
+    if request.method == "POST":
+        uf = request.FILES.get('asset_import')
+        with open("/var/opt/adminset/data/files/asset.csv", "wb+") as f:
+            for chunk in uf.chunks(chunk_size=1024):
+                f.write(chunk)
+        try:
+            filename = "/var/opt/adminset/data/files/asset.csv"
+            with open(filename, "rb") as f:
+                title = next(csv.reader(f))
+                for data in csv.reader(f):
+                    if data[0] == "hostname":
+                        continue
+                    try:
+                        host = Host.objects.get(hostname=data[0])
+                    except Exception as msg:
+                        host = Host()
+                        host.hostname = data[0]
+                    host.ip = data[1]
+                    host.other_ip = data[2]
+                    if data[3]:
+                        try:
+                            host.idc = data[3]
+                        except:
+                            pass
+                    host.asset_no = data[4]
+                    host.asset_type = data[5]
+                    host.status = data[6]
+                    host.os = data[7]
+                    host.vendor = data[8]
+                    host.cpu_model = data[9]
+                    host.cpu_num = data[10]
+                    host.memory = data[11]
+                    host.disk = data[12]
+                    host.sn = data[13]
+                    host.position = data[14]
+                    host.memo = data[15]
+                    host.save()
+            os.remove(filename)
+            status = 1
+        except Exception as e:
+            print(e)
+            print("import asset csv file error!")
+            status = 2
+
+    return render(request, 'cmdb/import.html', locals())
 
 
 @login_required()

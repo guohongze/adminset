@@ -114,6 +114,8 @@
                                         <b>&nbsp;搜索&nbsp;</b>
                                     </button>
                                     <a href="#" onclick="return export_excel()"><li name="export" class="btn btn-success search-btn-excel"><b>&nbsp;导出&nbsp;</b></li></a>
+                                    <a href="#"><li class="btn btn-info search-btn-excel" onclick="return asset_import()"><b>&nbsp;导入&nbsp;</b></li></a>
+
                                 </div>
                             </div>
                         </div>
@@ -236,15 +238,11 @@ function tanchu(n){
                 layer.msg('保存成功！',{
                     icon: 1,
                     time: 2000 //2秒关闭（如果不配置，默认是3秒）
-                },function(){
-                    history.go(0);
                 });
             } else if ( handle_status == '2' ) {
                 layer.msg('修改失败！',{
                     icon: 2,
                     time: 2000 //2秒关闭（如果不配置，默认是3秒）
-                },function(){
-                    history.go(0);
                 });
             }
         }
@@ -260,6 +258,45 @@ function detail(n){
     area: ['700px', '550px'],
     shadeClose: true, //点击遮罩关闭
     content: ['/cmdb/asset/detail/' + n]
+  });
+}
+</script>
+<script>
+function asset_import(){
+    layer.open({
+    type: 2,
+    title: 'Asset Import',
+    closeBtn: 1,
+    area: ['700px', '550px'],
+    shadeClose: true, //点击遮罩关闭
+    content: ['/cmdb/asset/import/'],
+{#    end:function(){#}
+{#                layer.msg('导入成功！',{#}
+{#                    icon: 1,#}
+{#                    time: 2000 //2秒关闭（如果不配置，默认是3秒）#}
+{#                },function(){#}
+{#                    history.go(0);#}
+{#                });#}
+{#        }#}
+    end:function(){
+    var handle_status = $("#handle_status").val();
+    if ( handle_status == '1' ) {
+        layer.msg('导入成功！',{
+            icon: 1,
+            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+        },function(){
+            parent.location.reload();
+        });
+    } else if ( handle_status == '2' ) {
+        layer.msg('导入失败！',{
+            icon: 2,
+            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+        },function(){
+            parent.location.reload();
+        });
+    }
+}
+
   });
 }
 </script>
