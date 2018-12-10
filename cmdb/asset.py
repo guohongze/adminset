@@ -7,7 +7,7 @@ import sys
 import os
 
 from accounts.permission import permission_verify
-from cmdb.api import get_object, pages, str2gb
+from cmdb.api import get_object, pages, str2gb, str2gb2utf8
 from config.views import get_dir
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
@@ -103,11 +103,11 @@ def create_asset_excel(export, asset_id_all):
             file_name = 'adminset_cmdb_' + now + '.csv'
             response['Content-Disposition'] = "attachment; filename="+file_name
             writer = csv.writer(response)
-            writer.writerow([str2gb(u'hostname'), str2gb(u'ip'), str2gb(u'other_ip'), str2gb(u'idc'),
-                             str2gb(u'asset_no'), str2gb(u'asset_type'), str2gb(u'status'), str2gb(u'os'),
-                             str2gb(u'vendor'), str2gb(u'cpu_model'), str2gb(u'cpu_num'), str2gb(u'memory'),
-                             str2gb(u'disk'), str2gb(u'sn'), str2gb(u'position'),
-                             str2gb(u'memo')])
+            writer.writerow([str2gb('hostname'), str2gb('ip'), str2gb('other_ip'), str2gb('idc'),
+                             str2gb('asset_no'), str2gb('asset_type'), str2gb('status'), str2gb('os'),
+                             str2gb('vendor'), str2gb('cpu_model'), str2gb('cpu_num'), str2gb('memory'),
+                             str2gb('disk'), str2gb('sn'), str2gb('position'),
+                             str2gb('memo')])
             for h in asset_find:
                 if h.asset_type:
                     at_num = int(h.asset_type)
@@ -132,11 +132,11 @@ def create_asset_excel(export, asset_id_all):
         file_name = 'adminset_cmdb_' + now + '.csv'
         response['Content-Disposition'] = "attachment; filename=" + file_name
         writer = csv.writer(response)
-        writer.writerow([str2gb(u'hostname'), str2gb(u'ip'), str2gb(u'other_ip'), str2gb(u'idc'),
-                         str2gb(u'asset_no'), str2gb(u'asset_type'), str2gb(u'status'), str2gb(u'os'),
-                         str2gb(u'vendor'), str2gb(u'cpu_model'), str2gb(u'cpu_num'), str2gb(u'memory'),
-                         str2gb(u'disk'), str2gb(u'sn'), str2gb(u'position'),
-                         str2gb(u'memo')])
+        writer.writerow([str2gb('hostname'), str2gb('ip'), str2gb('other_ip'), str2gb('idc'),
+                         str2gb('asset_no'), str2gb('asset_type'), str2gb('status'), str2gb('os'),
+                         str2gb('vendor'), str2gb('cpu_model'), str2gb('cpu_num'), str2gb('memory'),
+                         str2gb('disk'), str2gb('sn'), str2gb('position'),
+                         str2gb('memo')])
         for h in host:
             if h.asset_type:
                 at_num = int(h.asset_type)
@@ -169,32 +169,48 @@ def asset_import(request):
             with open(filename, "rb") as f:
                 title = next(csv.reader(f))
                 for data in csv.reader(f):
-                    if data[0] == "hostname":
+                    data0 = str2gb2utf8(data[0])
+                    if data0 == "hostname":
                         continue
                     try:
-                        host = Host.objects.get(hostname=data[0])
+                        host = Host.objects.get(hostname=data0)
                     except Exception as msg:
                         host = Host()
-                        host.hostname = data[0]
+                        host.hostname = data0
                     host.ip = data[1]
-                    host.other_ip = data[2]
+                    host.other_ip = str2gb2utf8(data[2])
                     if data[3]:
                         try:
-                            host.idc = data[3]
-                        except:
-                            pass
-                    host.asset_no = data[4]
-                    host.asset_type = data[5]
-                    host.status = data[6]
-                    host.os = data[7]
-                    host.vendor = data[8]
-                    host.cpu_model = data[9]
-                    host.cpu_num = data[10]
-                    host.memory = data[11]
-                    host.disk = data[12]
-                    host.sn = data[13]
-                    host.position = data[14]
-                    host.memo = data[15]
+                            idc_name = str2gb2utf8(data[3])
+                            print("idc name is : {}".format(idc_name))
+                            print("idc name type: {}".format(type(idc_name)))
+                            item = Idc.objects.get(name=idc_name)
+                            host.idc_id = item.id
+                        except Exception as e:
+                            print(e)
+                            print("idc info import error")
+                    host.asset_no = str2gb2utf8(data[4])
+                    if data[5]:
+                        asset_type = str2gb2utf8(data[5])
+                        for x, v in ASSET_TYPE:
+                            if v == asset_type:
+                                ret = x
+                        host.asset_type = ret
+                    if data[6]:
+                        status = str2gb2utf8(data[6])
+                        for x, v in ASSET_STATUS:
+                            if v == status:
+                                ret = x
+                        host.status = ret
+                    host.os = str2gb2utf8(data[7])
+                    host.vendor = str2gb2utf8(data[8])
+                    host.cpu_model = str2gb2utf8(data[9])
+                    host.cpu_num = str2gb2utf8(data[10])
+                    host.memory = str2gb2utf8(data[11])
+                    host.disk = (data[12])
+                    host.sn = str2gb2utf8(data[13])
+                    host.position = str2gb2utf8(data[14])
+                    host.memo = str2gb2utf8(data[15])
                     host.save()
             os.remove(filename)
             status = 1

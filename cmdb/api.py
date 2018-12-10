@@ -26,6 +26,14 @@ def str2gb(args):
     return str(args).encode('gb2312')
 
 
+def str2gb2utf8(args):
+    """
+    :参数 args:
+    :返回: GB2312编码
+    """
+    return str(args).decode('gb2312').encode('utf-8')
+
+
 def get_object(model, **kwargs):
     """
     use this function for query
