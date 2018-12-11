@@ -160,11 +160,11 @@ def asset_import(request):
     temp_name = "cmdb/cmdb-header.html"
     if request.method == "POST":
         uf = request.FILES.get('asset_import')
-        with open("/var/opt/adminset/data/files/asset.csv", "wb+") as f:
+        with open("/var/opt/adminset/data/asset.csv", "wb+") as f:
             for chunk in uf.chunks(chunk_size=1024):
                 f.write(chunk)
         try:
-            filename = "/var/opt/adminset/data/files/asset.csv"
+            filename = "/var/opt/adminset/data/asset.csv"
             with open(filename, "rb") as f:
                 title = next(csv.reader(f))
                 for data in csv.reader(f):
