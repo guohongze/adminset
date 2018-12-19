@@ -16,4 +16,6 @@ urlpatterns = [
     url(r'^delivery/', include('delivery.urls')),
     url(r'^mfile/', include('mfile.urls')),
     url(r'^elfinder/',include('elfinder.urls')),
+    url(r'^branches/',include('branches.urls')),
+
 ]

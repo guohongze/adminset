@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% block self_head_css_js %}
+    <script src="/static/layer/layer.js"></script>
+{% endblock %}
+{% block content %}
+
+    <script>
+        window.onload=init;
+        function init() {
+            var box = document.getElementById("branches");
+            box.className="active";
+            var box2 = document.getElementById("branch_list");
+            box2.className="active";
+        }
+    </script>
+
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+    </section>
+
+    <!-- Main content -->
+
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="box">
+        <div class="box-header with-border">
+        </div>
+        <div class="box-body">
+        {% if branch_id %}
+            <form action="{% url 'branch_edit' branch_id %}" method="post">
+        {% else %}
+            <form action="{% url 'branch_add' %}" method="post">
+        {% endif %}
+        {% csrf_token %}
+        <!--{{ form.as_p }}-->
+        {% for field in form %}
+            <div class="fieldWrapper">
+                {{ field.errors }}
+                {% if field.html_name == "owner" %}
+                    {{ field.label_tag }} {{ field }}
+                    <a href="#" onclick="return popWin()"><li class="btn btn-success" ><b>添加负责人</b></li></a>
+                {% else %}
+                    {{ field.label_tag }} {{ field }}
+                {% endif %}
+            </div>
+        {% endfor %}
+        <br>
+        <br>
+        <input type="submit" class="btn btn-primary" style="width: 60pt" value="提交">&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="{% url 'branch_list' %}"><li style="width: 60pt" class="btn btn-primary" value="">返回</li></a><br>
+          </form>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+          <i class="fa fa-info-circle"></i> 请勿重复添加条目
+        </div>
+        <!-- /.box-footer-->
+      </div>
+      <!-- /.box -->
+    </section>
+    {#用于接收appowner_base.html中layui子层的传值#}
+    <input id="handle_status" value="" hidden="hidden">
+    <input id="new_owner_id" value="" hidden="hidden">
+    <input id="new_owner_name" value="" hidden="hidden">
+  </div>
+<script>
+function popWin(){
+  layer.open({
+      type: 2,
+      title: '项目列表',
+      area: ['700px', '500px'],
+      shadeClose: true, //点击遮罩关闭
+      content: ['/appconf/appowner/add/mini/'],
+      end:function(){
+            var handle_status = $("#handle_status").val();
+            if ( handle_status == '1' ) {
+                layer.msg('添加成功！',{
+                    icon: 1,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                },function(){
+                    var new_owner_id = $("#new_owner_id").val();
+                    var new_owner_name = $("#new_owner_name").val();
+                    $('#id_owner').append("<option value="+new_owner_id+" selected='selected'>"+new_owner_name+"</option>");
+                });
+            } else if ( handle_status == '2' ) {
+                layer.msg('添加失败！',{
+                    icon: 2,
+                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                },function(){
+
+                });
+            }
+      }
+  });
+}
+</script>
+{% endblock %}
