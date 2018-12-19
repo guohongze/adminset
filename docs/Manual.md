@@ -84,6 +84,7 @@
             每个主机可以属于不同的组，多对多关系。
             组的作用在于任务编排模块的功能在调用组时的依据，比如ansible管理目标机器以组为单为时。
             组与主机的设置是多对多，属于逻辑组。
+         
         install/client/adminset_agent.py 开启后会自动上报主机相关信息到CMDB
         获取主机信息
         http://your_server_ip/cmdb/get/host/?token=your_token&name=host_name
@@ -93,7 +94,12 @@
         http://your_server_ip/cmdb/get/group/?token=your_token&name=group_name
         获取所有组：
         http://your_server_ip/cmdb/get/group/?token=your_token&name=all
-
+        资产的导入出导出：
+            导出：点击资产管理界面导出按钮，导出格式为csv。
+            导入：必须使用adminset导出的的csv格式进行导入。
+                  在导入时如果自定义所在机房必须是adminset系统中存在的机房。
+                  在导入时设备类型必须是下列之一，物理机、虚拟机、容器、网络设备、安全设备、其它。
+                  在导入时设备状态必须下列之一，使用中、未使用、故障、其它。
 #    应用管理
      一、应用管理
         1.1 产品线，一个产品线包含多个项目，表关系为一对多。每个产品线或项目有负责人是多对一。
@@ -221,7 +227,6 @@
     9、nickname 必选信息，用户名，例：cn
     10、is_active 可选信息，自动激活ldap某个组的账号，如果不写此信息ldap用户默认在adminset中为禁用状态，此组需要在LDAP服务器中创建，objectClass类型必须为posixGroup
     11、is_superuser 可选信息，自动激活ldap中某个组的账号为超管，此组需要在LDAP服务器中创建，objectClass类型必须为posixGroup
-
 #   文件管理
     可以通过WEB直接对adminset 服务端的脚本文件进行管理。
     这些文件可以直接被任务编排模块直接调用。
