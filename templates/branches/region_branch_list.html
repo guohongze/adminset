@@ -21,19 +21,19 @@
                   <table class="table table-striped table-bordered" id="product_project_table">
                       <thead>
                         <tr>
-                            <th>项目名称</th>
-                            <th>程序类型</th>
+                            <th>机构名称</th>
                             <th>负责人姓名</th>
                             <th>负责人电话</th>
+                            <th>所在地址</th>
                         </tr>
                       </thead>
                             <tbody>
-                            {% for project in project_list %}
+                            {% for branch in branches %}
                                 <tr class="even gradeX">
-                                    <td><a href="{% url "project_edit" project.id %}" target="_blank">{{ project.name }}</a></td>
-                                    <td>{{ project.language_type }} </td>
-                                    <td>{{ project.owner.name }} </td>
-                                    <td>{{ project.owner.phone }} </td>
+                                    <td><a href="{% url "branch_edit" branch.id %}" target="_blank">{{ branch.name }}</a></td>
+                                    <td>{{ branch.owner.name }} </td>
+                                    <td>{{ branch.owner.phone }} </td>
+                                    <td>{{ branch.address }} </td>
                                 </tr>
                             {% endfor %}
                             </tbody>

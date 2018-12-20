@@ -1,18 +1,21 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from django.shortcuts import render, HttpResponseRedirect, get_object_or_404
+from django.shortcuts import render, HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from branches.models import Branch
 from branches.forms import BranchForm
 from accounts.permission import permission_verify
+import csv
+import datetime
+from cmdb.api import str2gb
 
 
 @login_required()
 @permission_verify()
 def branch_list(request):
-    temp_name = "branches/branch_header.html"
+    temp_name = "branches/header.html"
     all_branch = Branch.objects.all()
     results = {
         'temp_name': temp_name,
@@ -39,7 +42,7 @@ def branch_del(request):
 @login_required
 @permission_verify()
 def branch_add(request):
-    temp_name = "branches/branch_header.html"
+    temp_name = "branches/header.html"
     if request.method == 'POST':
         form = BranchForm(request.POST)
         if form.is_valid():
@@ -59,8 +62,8 @@ def branch_add(request):
 @login_required
 @permission_verify()
 def branch_edit(request, branch_id):
-    branch_obj = get_object_or_404(Branch, pk=branch_id)
-    temp_name = "branches/branch_header.html"
+    branch_obj = Branch.objects.get(id=branch_id)
+    temp_name = "branches/header.html"
     if request.method == 'POST':
         form = BranchForm(request.POST, instance=branch_obj)
         if form.is_valid():
@@ -80,16 +83,41 @@ def branch_edit(request, branch_id):
 
 @login_required
 @permission_verify()
-def project_list(request, branch_id):
-    pass
-    # temp_name = "appconf/appconf-header.html"
-    # product = Product.objects.get(id=product_id)
-    # projects = product.project_set.all()
-    # results = {
-    #     'temp_name': temp_name,
-    #     'project_list':  projects,
-    # }
-    # return render(request, 'appconf/product_project_list.html', results)
+def branch_export(request):
+    export = request.GET.get("export", '')
+    branch_id_list = request.GET.getlist("id", '')
+    if export == "part":
+        if branch_id_list:
+            branch_find = []
+            for branch_id in branch_id_list:
+                branch_item = Branch.objects.get(id=branch_id)
+                if branch_item:
+                    branch_find.append(branch_item)
+
+    if export == "all":
+        branch_find = Branch.objects.all()
+
+    response = HttpResponse(content_type='text/csv')
+    now = datetime.datetime.now().strftime('%Y_%m_%d_%H_%M')
+    file_name = 'adminset_branch_' + now + '.csv'
+    response['Content-Disposition'] = "attachment; filename="+file_name
+    writer = csv.writer(response)
+    writer.writerow([str2gb(u'机构名称'), str2gb(u'机构地址'), str2gb(u'负责人'), str2gb(u'电话'),
+                     str2gb(u'说明'),])
+    for p in branch_find:
+        writer.writerow([str2gb(p.name), str2gb(p.address), p.owner, p.telphone,
+                         str2gb(p.owner)])
+    return response
 
 
-
+@login_required
+@permission_verify()
+def resource_detail(request, branch_id):
+    temp_name = "branches/header.html"
+    branch = Branch.objects.get(id=branch_id)
+    resources = branch.resource_set.all()
+    results = {
+        'temp_name': temp_name,
+        'resources':  resources,
+    }
+    return render(request, 'branches/branch_resource_list.html', results)
