@@ -7,7 +7,7 @@ Adminset基于DevOps理念开发，以整合全部运维场景为己任。Admins
 
 ## K8S北京班1开班了
 面授日期：2019年1月12,13
-<a href="https://www.unixhot.com/project/2?from=timeline#10006-weixin-1-52626-6b3bffd01fdde4900130bc5a2751b6d1">功能预览</a><br>
+<a href="https://www.unixhot.com/project/2?from=timeline#10006-weixin-1-52626-6b3bffd01fdde4900130bc5a2751b6d1">报名</a><br>
 以往历史学员全部上线K8S生产环境，报名从速，品质保证。4天学习外加长期技术支持。
 
 ## v0.30 新功能
