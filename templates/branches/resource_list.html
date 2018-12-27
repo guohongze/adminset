@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% load mytags %}
+{% block self_head_css_js %}
+    <script src="/static/layer/layer.js"></script>
+    <script src="/static/js/base.js"></script>
+    <script src="/static/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="/static/plugins/datatables/dataTables.bootstrap.min.js"></script>
+    <script src="/static/plugins/datatables/dataTables.bootstrap.css"></script>
+{% endblock %}
+{% block content %}
+
+    <script>
+        window.onload=init;
+        function init() {
+            var box = document.getElementById("branches");
+            box.className="active";
+            var box2 = document.getElementById("resource_list");
+            box2.className="active";
+        }
+    </script>
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <form action="" method="post" id="resource_form">
+                {% csrf_token %}
+            <div class="box">
+                <div class="box-header">
+                    <div class="col-sm-2" style="padding-left: 0">
+						 <a href="{% url 'resource_add' %}"><li class="btn btn-success" ><b>添加资源</b></li></a>
+                         <a class="btn btn-info" target="_blank" href="{% url 'resource_export' %}">导出资源</a>
+                  </div>
+                </div>
+
+                <!-- /.box-header -->
+                <div class="box-body">
+                  <table class="table table-striped table-bordered" id="resource_form">
+                      <thead>
+                        <tr>
+                            <th>
+                                <input id="checkall" type="checkbox" class="i-checks" name="checkall" value="checkall" data-editable='false' onclick="check_all('resource_form')">
+                            </th>
+                            <th>资源编码</th>
+                            <th>资源名称</th>
+                            <th>预算金额</th>
+                            <th>实际金额</th>
+                            <th>合同编号</th>
+                            <th>合同开始</th>
+                            <th>合同结束</th>
+                            <th>供应商名</th>
+                            <th>操作</th>
+                        </tr>
+                      </thead>
+                            <tbody>
+                            {% for r in resources %}
+                                <tr class="even gradeX">
+                                    <td><input type="checkbox" id="id" class="i-checks" value="{{ r.id }}" name="id" /></td>
+                                    <td><a href="{% url "resource_edit" r.id %}" target="_blank">{{ r.sn }}</a></td>
+                                    <td>{{ r.name }} </td>
+                                    <td>{{ r.budget }} </td>
+                                    <td>{{ r.paid }} </td>
+                                    <td>{{ r.contract }} </td>
+                                    <td>{{ r.contract_start }} </td>
+                                    <td>{{ r.contract_end }} </td>
+                                    <td>{{ r.supplier }} </td>
+                                    <td>
+                                        <a href="{% url "resource_edit" r.id %}"><span class="btn btn-sm btn-info">编辑</span></a>
+                                        <a href="{% url "resource_del"%}?id={{ r.id }}" onclick="return confirm('确认删除？')"><span class="btn btn-sm btn-danger ">删除</span></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                  </table>
+                  <div class="btn-group">
+                      <input type="button" id="resource_del" class="btn btn-danger"   name="del_button" value="删除资源"/>
+                  </div>
+                </div>
+            </div>
+        </form>
+    </section>
+
+</div>
+<script>
+  $(function () {
+    $('#resource_form').DataTable({
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": true
+    });
+  });
+</script>
+
+<script>
+    $('#resource_del').click(function () {
+        var resource_id_all = getIDall();
+        if (resource_id_all == ''){
+            alert("请至少选择一行!");
+            return false;
+        }
+        if (confirm("确定删除?")) {
+            $.ajax({
+                type: "post",
+                data: {resource_id_all: resource_id_all,csrfmiddlewaretoken: '{{ csrf_token }}'},
+                url: "{% url 'resource_del' %}",
+                success: function () {
+                    parent.location.reload();
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}

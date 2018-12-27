@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% load mytags %}
+{% block self_head_css_js %}
+    <script src="/static/layer/layer.js"></script>
+    <script src="/static/js/base.js"></script>
+    <script src="/static/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="/static/plugins/datatables/dataTables.bootstrap.min.js"></script>
+    <script src="/static/plugins/datatables/dataTables.bootstrap.css"></script>
+{% endblock %}
+{% block content %}
+
+    <script>
+        window.onload=init;
+        function init() {
+            var box = document.getElementById("branches");
+            box.className="active";
+            var box2 = document.getElementById("region_list");
+            box2.className="active";
+        }
+    </script>
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <form action="" method="post" id="region_form">
+                {% csrf_token %}
+            <div class="box">
+                <div class="box-header">
+                    <div class="col-sm-2" style="padding-left: 0">
+						 <a href="{% url 'region_add' %}"><li class="btn btn-success" ><b>添加区域</b></li></a>
+                  </div>
+                </div>
+
+                <!-- /.box-header -->
+                <div class="box-body">
+                  <table class="table table-striped table-bordered" id="productform">
+                      <thead>
+                        <tr>
+                            <th>
+                                <input id="checkall" type="checkbox" class="i-checks" name="checkall" value="checkall" data-editable='false' onclick="check_all('region_form')">
+                            </th>
+                            <th>区域名称</th>
+                            <th>区域描述</th>
+                            <th>负责人</th>
+                            <th>电话</th>
+                            <th>操作</th>
+                        </tr>
+                      </thead>
+                            <tbody>
+                            {% for region in regions %}
+                                <tr class="even gradeX">
+                                    <td><input type="checkbox" id="id" class="i-checks" value="{{ region.id }}" name="id" /></td>
+                                    <td><a href="#"><li style="list-style-type:none" onclick="return popWin(this.value)" value="{{ region.id }}">{{ region.name }}</li></a> </td>
+                                    <td>{{ region.description }} </td>
+                                    <td>{{ region.owner.name }} </td>
+                                    <td>{{ region.owner.phone }} </td>
+                                    <td>
+                                        <a href="{% url "region_edit" region.id %}"><span class="btn btn-sm btn-info">编辑</span></a>
+                                        <a href="{% url "region_del"%}?id={{ region.id }}" onclick="return confirm('确认删除区域吗？')"><span class="btn btn-sm btn-danger ">删除</span></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                  </table>
+                  <div class="btn-group">
+                      <input type="button" id="region_del" class="btn btn-danger"   name="del_button" value="删除区域"/>
+                  </div>
+                </div>
+            </div>
+        </form>
+    </section>
+
+</div>
+<script>
+  $(function () {
+    $('#region_form').DataTable({
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": true
+    });
+  });
+</script>
+
+<script>
+    $('#region_del').click(function () {
+        var region_id_all = getIDall();
+        if (region_id_all == ''){
+            alert("请至少选择一行!");
+            return false;
+        }
+        if (confirm("确定删除?")) {
+            $.ajax({
+                type: "post",
+                data: {region_id_all: region_id_all,csrfmiddlewaretoken: '{{ csrf_token }}'},
+                url: "{% url 'region_del' %}",
+                success: function () {
+                    parent.location.reload();
+                }
+            });
+        }
+    });
+</script>
+
+<script>
+function popWin(region_id){
+  layer.open({
+      type: 2,
+      title: '项目列表',
+      area: ['700px', '500px'],
+      shadeClose: true, //点击遮罩关闭
+      content: ['/branches/region/branch_detail/' + region_id]
+  });
+}
+</script>
+{% endblock %}
