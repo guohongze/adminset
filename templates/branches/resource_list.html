@@ -32,6 +32,7 @@
                 <div class="box-header">
                     <div class="col-sm-2" style="padding-left: 0">
 						 <a href="{% url 'resource_add' %}"><li class="btn btn-success" ><b>添加资源</b></li></a>
+                         <a class="btn btn-info" target="_blank" href="{% url 'resource_export' %}">导出资源</a>
                   </div>
                 </div>
 
@@ -43,12 +44,13 @@
                             <th>
                                 <input id="checkall" type="checkbox" class="i-checks" name="checkall" value="checkall" data-editable='false' onclick="check_all('resource_form')">
                             </th>
+                            <th>资源编码</th>
                             <th>资源名称</th>
                             <th>预算金额</th>
+                            <th>实际金额</th>
                             <th>合同编号</th>
                             <th>合同开始</th>
                             <th>合同结束</th>
-                            <th>实际金额</th>
                             <th>供应商名</th>
                             <th>操作</th>
                         </tr>
@@ -57,13 +59,14 @@
                             {% for r in resources %}
                                 <tr class="even gradeX">
                                     <td><input type="checkbox" id="id" class="i-checks" value="{{ r.id }}" name="id" /></td>
-                                    <td><a href="{% url "resource_edit" r.id %}" target="_blank">{{ r.name }}</a></td>
+                                    <td><a href="{% url "resource_edit" r.id %}" target="_blank">{{ r.sn }}</a></td>
+                                    <td>{{ r.name }} </td>
                                     <td>{{ r.budget }} </td>
+                                    <td>{{ r.paid }} </td>
                                     <td>{{ r.contract }} </td>
                                     <td>{{ r.contract_start }} </td>
                                     <td>{{ r.contract_end }} </td>
-                                    <td>{{ r.paid }} </td>
-                                    <td>{{ r.suppier }} </td>
+                                    <td>{{ r.supplier }} </td>
                                     <td>
                                         <a href="{% url "resource_edit" r.id %}"><span class="btn btn-sm btn-info">编辑</span></a>
                                         <a href="{% url "resource_del"%}?id={{ r.id }}" onclick="return confirm('确认删除？')"><span class="btn btn-sm btn-danger ">删除</span></a>
@@ -73,7 +76,7 @@
                             </tbody>
                   </table>
                   <div class="btn-group">
-                      <input type="button" id="resource_del" class="btn btn-danger"   name="del_button" value="删除分支"/>
+                      <input type="button" id="resource_del" class="btn btn-danger"   name="del_button" value="删除资源"/>
                   </div>
                 </div>
             </div>

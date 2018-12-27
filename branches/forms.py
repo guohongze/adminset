@@ -42,6 +42,7 @@ class ResourceForm(forms.ModelForm):
         model = Resource
         exclude = ("id",)
         widgets = {
+            'sn': TextInput(attrs={'class': 'form-control', 'style': 'width:450px;'}),
             'name': TextInput(attrs={'class': 'form-control', 'style': 'width:450px;'}),
             'spec': TextInput(attrs={'class': 'form-control', 'style': 'width:450px;'}),
             'budget': TextInput(attrs={'class': 'form-control', 'style': 'width:450px;'}),

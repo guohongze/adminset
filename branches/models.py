@@ -48,6 +48,7 @@ class Branch(models.Model):
 
 
 class Resource(models.Model):
+    sn = models.CharField(max_length=255, verbose_name="资源编码", blank=False, null=False)
     name = models.CharField(max_length=255, verbose_name="资源名称", blank=False, null=False)
     spec = models.CharField(max_length=255, verbose_name="资源规格", blank=False, null=False)
     budget = models.CharField(max_length=255, verbose_name="预算金额", blank=True, null=True)
@@ -69,7 +70,7 @@ class Resource(models.Model):
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        verbose_name=u"联系人"
+        verbose_name=u"供应商联系人"
     )
     description = models.CharField(max_length=255, verbose_name="合同说明", blank=True, null=True)
 
