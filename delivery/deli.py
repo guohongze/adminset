@@ -205,7 +205,7 @@ def log_del(request):
     job_name = project.job_name.name
     log_path = "/var/opt/adminset/workspace/{0}/logs/".format(job_name)
     log_file = log_path + logname
-    if project_id and logname:
+    if project_id and "../" not in logname:
         os.remove(log_file)
 
     return HttpResponse("ok")
