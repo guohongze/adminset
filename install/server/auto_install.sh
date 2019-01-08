@@ -68,7 +68,7 @@ systemctl enable webssh.service
 echo "####install database####"
 echo "installing a new mariadb...."
 yum install -y mariadb-server mariadb-devel
-service mariadb start
+systemctl mariadb start
 chkconfig mariadb on
 mysql -e "CREATE DATABASE if not exists adminset DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;"
 
@@ -112,14 +112,14 @@ source /etc/profile
 scp $adminset_dir/install/server/adminset.service /usr/lib/systemd/system
 systemctl daemon-reload
 chkconfig adminset on
-service adminset start
+systemctl adminset start
 
 
 #安装redis
 echo "####install redis####"
 yum install redis -y
 chkconfig redis on
-service redis start
+systemctl redis start
 
 # 安装celery
 echo "####install celery####"
@@ -132,8 +132,8 @@ chmod +x $config_dir/celery/start_celery.sh
 systemctl daemon-reload
 chkconfig celery on
 chkconfig beat on
-service celery start
-service beat start
+systemctl celery start
+systemctl beat start
 
 # 安装nginx
 echo "####install nginx####"
@@ -141,7 +141,7 @@ yum install nginx -y
 chkconfig nginx on
 scp $adminset_dir/install/server/nginx/adminset.conf /etc/nginx/conf.d
 scp $adminset_dir/install/server/nginx/nginx.conf /etc/nginx
-service nginx start
+systemctl nginx start
 nginx -s reload
 
 # create ssh config
@@ -158,14 +158,14 @@ scp $adminset_dir/install/server/ssh/config ~/.ssh/config
 # 完成安装
 echo "##############install finished###################"
 systemctl daemon-reload
-service redis restart
-service mariadb restart
-service adminset restart
-service celery restart
-service beat restart
-service mongod restart
-service sshd restart
-service webssh restart
+systemctl redis restart
+systemctl mariadb restart
+systemctl adminset restart
+systemctl celery restart
+systemctl beat restart
+systemctl mongod restart
+systemctl sshd restart
+systemctl webssh restart
 echo "please access website http://server_ip"
 echo "you have installed adminset successfully!!!"
 echo "################################################"

@@ -23,10 +23,17 @@ log("agent.log", "/var/opt/adminset/client/")
 def get_ip():
     try:
         hostname = socket.getfqdn(socket.gethostname())
-        ipaddr = socket.gethostbyname(hostname)
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect(('223.5.5.5', 80))
+        ipaddr = s.getsockname()[0]
+
     except Exception as msg:
         print(msg)
         ipaddr = ''
+
+    finally:
+        s.close()
+
     return ipaddr
 
 
