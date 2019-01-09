@@ -49,12 +49,6 @@ else
 fi
 scp $adminset_dir/install/server/ansible/ansible.cfg /etc/ansible/ansible.cfg
 
-# install webssh
-cd $adminset_dir/vendor/webssh/
-/usr/bin/env python setup.py install
-scp /var/opt/adminset/main/install/server/webssh/webssh.service /usr/lib/systemd/system/webssh.service
-/bin/systemctl enable webssh.service
-
 #安装数据库
 echo "####install database####"
 echo "installing a new mariadb...."
@@ -102,6 +96,11 @@ source /etc/profile
 scp $adminset_dir/install/server/adminset.service /usr/lib/systemd/system
 /bin/systemctl enable adminset.service
 
+# install webssh
+cd $adminset_dir/vendor/webssh/
+/usr/bin/env python setup.py install
+scp /var/opt/adminset/main/install/server/webssh/webssh.service /usr/lib/systemd/system/webssh.service
+/bin/systemctl enable webssh.service
 
 #安装redis
 echo "####install redis####"
