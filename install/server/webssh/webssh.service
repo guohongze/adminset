@@ -1,16 +1,14 @@
 [Unit]
-Description=Celery Service
+Description=Webssh Service
 After=network.target
 
 [Service]
-Type=oneshot
-RemainAfterExit=true
+Type=simple
 User=root
 Group=root
-WorkingDirectory=/var/opt/adminset/main/vendor/WebSSH2
-#ExecStart=/var/opt/adminset/config/webssh/start_webssh.sh
-ExecStart=/usr/bin/forever start --minUptime 1000 --spinSleepTime 1000 index.js
-ExecStop=/usr/bin/forever stop index.js
+WorkingDirectory=/var/opt/adminset/main/vendor/webssh/webssh
+ExecStart=/usr/bin/wssh --xsrf=False --log-file-prefix=/var/opt/adminset/logs/webssh.log
+ExecStop=/bin/kill -s TERM $MAINPID
 
 [Install]
 WantedBy=multi-user.target

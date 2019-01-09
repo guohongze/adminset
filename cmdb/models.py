@@ -3,7 +3,7 @@
 
 from __future__ import unicode_literals
 from django.db import models
-
+from appconf.models import AuthInfo
 
 ASSET_STATUS = (
     (str(1), u"使用中"),
@@ -53,6 +53,7 @@ class Idc(models.Model):
 class Host(models.Model):
     hostname = models.CharField(max_length=50, verbose_name=u"主机名", unique=True)
     ip = models.GenericIPAddressField(u"管理IP", max_length=15)
+    account = models.ForeignKey(AuthInfo, verbose_name=u"账号信息", on_delete=models.SET_NULL, null=True, blank=True)
     idc = models.ForeignKey(Idc, verbose_name=u"所在机房", on_delete=models.SET_NULL, null=True, blank=True)
     other_ip = models.CharField(u"其它IP", max_length=100, blank=True)
     asset_no = models.CharField(u"资产编号", max_length=50, blank=True)

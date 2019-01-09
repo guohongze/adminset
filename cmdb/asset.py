@@ -289,3 +289,10 @@ def server_detail(request, ids):
     except Exception as e:
         print(e)
     return render(request, 'cmdb/server_detail.html', locals())
+
+
+@login_required()
+@permission_verify()
+def webssh(request, ids):
+    host = Host.objects.get(id=ids)
+    return render(request, 'cmdb/webssh.html', locals())

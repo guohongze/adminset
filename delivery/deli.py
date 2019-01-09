@@ -111,7 +111,7 @@ def delivery_deploy(request, project_id):
     if app_path == "/":
         return HttpResponse("app deploy destination cannot /")
     # foreign key query need add .all()
-    servers = project.job_name.serverList.all()
+    servers = project.serverList.all()
     for server in servers:
         server_ip = str(server.ip)
         server_list.append(server_ip)

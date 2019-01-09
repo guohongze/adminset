@@ -38,16 +38,6 @@ echo "####install depandencies####"
 yum install -y epel-release
 yum install -y gcc expect python-pip python-devel ansible smartmontools dmidecode libselinux-python git rsync dos2unix
 yum install -y openssl openssl-devel openldap-devel
-# build webssh
-echo "build webssh"
-/usr/bin/yum install -y nodejs
-cd $cur_dir/vendor/WebSSH2
-#/usr/bin/npm install -g cnpm --registry=https://registry.npm.taobao.org
-#/usr/bin/cnpm install --production
-#/usr/bin/cnpm install forever -g
-/usr/bin/npm config set registry http://registry.cnpmjs.org
-/usr/bin/npm install --production
-/usr/bin/npm install forever -g
 
 # 分发代码
 if [ ! $cur_dir ] || [ ! $adminset_dir ]
@@ -60,25 +50,25 @@ fi
 scp $adminset_dir/install/server/ansible/ansible.cfg /etc/ansible/ansible.cfg
 
 # install webssh
+cd $adminset_dir/vendor/webssh/
+/usr/bin/env python setup.py install
 scp /var/opt/adminset/main/install/server/webssh/webssh.service /usr/lib/systemd/system/webssh.service
-systemctl enable webssh.service
-
+/bin/systemctl enable webssh.service
 
 #安装数据库
 echo "####install database####"
 echo "installing a new mariadb...."
 yum install -y mariadb-server mariadb-devel
-service mariadb start
-chkconfig mariadb on
+/bin/systemctl start mariadb
 mysql -e "CREATE DATABASE if not exists adminset DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;"
-
+/bin/systemctl enable mariadb.service
 
 # 安装mongodb
 echo "####install mongodb####"
 echo "installing a new Mongodb...."
 yum install -y mongodb mongodb-server
-/bin/systemctl start mongod 
-/bin/systemctl enable mongod 
+/bin/systemctl enable mongod.service
+/bin/systemctl start mongod.service
 
 # 安装主程序
 echo "####install adminset####"
@@ -110,16 +100,14 @@ echo "please create your adminset' super admin:"
 source /etc/profile
 /usr/bin/mysql -e "insert into adminset.accounts_userinfo (password,username,email,is_active,is_superuser) values ('pbkdf2_sha256\$24000\$2odRjOCV1G1V\$SGJCqWf0Eqej6bjjxusAojWtZkz99vEJlDbQHUlavT4=','admin','admin@126.com',1,1);"
 scp $adminset_dir/install/server/adminset.service /usr/lib/systemd/system
-systemctl daemon-reload
-chkconfig adminset on
-service adminset start
+/bin/systemctl enable adminset.service
 
 
 #安装redis
 echo "####install redis####"
 yum install redis -y
-chkconfig redis on
-service redis start
+/bin/systemctl start redis
+/bin/systemctl enable redis.service
 
 # 安装celery
 echo "####install celery####"
@@ -129,20 +117,19 @@ scp $adminset_dir/install/server/celery/celery.service /usr/lib/systemd/system
 scp $adminset_dir/install/server/celery/start_celery.sh $config_dir/celery/start_celery.sh
 scp $adminset_dir/install/server/celery/beat.service /usr/lib/systemd/system
 chmod +x $config_dir/celery/start_celery.sh
-systemctl daemon-reload
-chkconfig celery on
-chkconfig beat on
-service celery start
-service beat start
+/bin/systemctl daemon-reload
+/bin/systemctl enable celery.service
+/bin/systemctl enable beat.service
+/bin/systemctl start celery.service
+/bin/systemctl start beat.service
 
 # 安装nginx
 echo "####install nginx####"
 yum install nginx -y
-chkconfig nginx on
 scp $adminset_dir/install/server/nginx/adminset.conf /etc/nginx/conf.d
 scp $adminset_dir/install/server/nginx/nginx.conf /etc/nginx
-service nginx start
-nginx -s reload
+/bin/systemctl start nginx.service
+/bin/systemctl enable nginx
 
 # create ssh config
 echo "create ssh-key, you could choose no if you had have ssh key"
@@ -157,15 +144,15 @@ scp $adminset_dir/install/server/ssh/config ~/.ssh/config
 
 # 完成安装
 echo "##############install finished###################"
-systemctl daemon-reload
-service redis restart
-service mariadb restart
-service adminset restart
-service celery restart
-service beat restart
-service mongod restart
-service sshd restart
-service webssh restart
+/bin/systemctl daemon-reload
+/bin/systemctl restart mariadb
+/bin/systemctl restart celery
+/bin/systemctl restart beat
+/bin/systemctl restart mongod
+/bin/systemctl restart webssh
+/bin/systemctl restart nginx
+/bin/systemctl restart sshd
+/bin/systemctl restart adminset
 echo "please access website http://server_ip"
 echo "you have installed adminset successfully!!!"
 echo "################################################"

@@ -3,7 +3,6 @@
 
 from __future__ import unicode_literals
 from django.db import models
-from cmdb.models import Host
 
 
 class AuthInfo(models.Model):
@@ -113,11 +112,6 @@ class Project(models.Model):
             blank=True,
             on_delete=models.SET_NULL,
             verbose_name=u"项目负责人"
-    )
-    serverList = models.ManyToManyField(
-            Host,
-            blank=True,
-            verbose_name=u"所在服务器"
     )
 
     def __unicode__(self):

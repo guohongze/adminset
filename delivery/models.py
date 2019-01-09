@@ -4,6 +4,8 @@ from __future__ import absolute_import, unicode_literals
 
 from django.db import models
 from appconf.models import Project, AuthInfo
+from cmdb.models import Host
+
 # Create your models here.
 DEPLOY_POLICY = (
     ("Direct", "Direct"),
@@ -28,6 +30,11 @@ class Delivery(models.Model):
         AuthInfo, verbose_name=u"认证信息",
         null=True, blank=True,
         on_delete=models.SET_NULL
+    )
+    serverList = models.ManyToManyField(
+            Host,
+            blank=True,
+            verbose_name=u"所在服务器"
     )
 
     def __unicode__(self):

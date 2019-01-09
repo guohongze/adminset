@@ -13,17 +13,7 @@ rsync --progress -ra --delete --exclude '.git' $cur_dir/ $adminset_dir
 cd $adminset_dir
 pip install -r requirements.txt
 
-# build webssh
-echo "build webssh"
-/usr/bin/yum install -y nodejs
-cd $cur_dir/vendor/WebSSH2
-#/usr/bin/npm install -g cnpm --registry=https://registry.npm.taobao.org
-#/usr/bin/cnpm install --production
-#/usr/bin/cnpm install forever -g
-/usr/bin/npm config set registry http://registry.cnpmjs.org
-/usr/bin/npm install --production
-/usr/bin/npm install forever -g
-cd $adminset_dir
+#sql make migrations
 if [ $1 ]
 then
     python manage.py makemigrations
@@ -44,6 +34,8 @@ scp $adminset_dir/install/server/celery/beat.service /usr/lib/systemd/system
 chmod +x $config_dir/celery/start_celery.sh
 scp $adminset_dir/install/server/nginx/adminset.conf /etc/nginx/conf.d
 scp $adminset_dir/install/server/nginx/nginx.conf /etc/nginx
+scp $adminset_dir/install/server/nginx/adminset.conf /etc/nginx/conf.d
+scp $adminset_dir/install/server/webssh/webssh.service /usr/lib/systemd/system
 nginx -s reload
 echo "##############install finished###################"
 systemctl daemon-reload
