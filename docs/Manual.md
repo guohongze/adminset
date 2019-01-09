@@ -14,7 +14,7 @@
             如果使用自动安装则手动安装跳过,如果手动安装则跳过此步。
             访问：http://your_server_ip
             使用用户名admin 密码Adminset123
-        1.3、执行安装脚本-手动
+        1.3、执行安装脚本-手动(不建议)
             1.3.1 adminset/install/server/server_install.sh
             安装过程需要输入管理员数据库等交互信息，如果安装中断再次执行server_install.sh即可.
             安装过程中会生成rsa密钥，位于/root/.ssh 目录下，如果已经存在，忽略即可。
@@ -122,9 +122,11 @@
     1）在应用管理>认证管理>添加认证下新建条目，填写ssh用户名，密码,端口号等信息。
     2）在资产管理中选择主机点击编辑，选择对应的账号信息。
     3）点击webssh按钮即可连接。
-    注意：
+    注意(可选参考)：
     webssh服务器使用8888端口，webssh服务开放在0.0.0.0上
     生产环境请在/usr/lib/systemd/system/webssh.service中修改启动参数为：
+    ExecStart=/usr/bin/wssh --xsrf=False --address='x.x.x.x' --maxconn=100 --log-file-prefix=/var/opt/adminset/logs/webssh.log
+    x.x.x.x IP不要使用公网地址，使用内网服务器的地址。
     
 
 
