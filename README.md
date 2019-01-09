@@ -5,22 +5,18 @@
 <br>
 Adminset基于DevOps理念开发，以整合全部运维场景为己任。Adminset是一个真正的基于运维思维而开发的全自动化运维平台。<br>
 
-## K8S北京班1开班了
-面授日期：2019年1月12,13
-<a href="https://www.unixhot.com/project/2?from=timeline#10006-weixin-1-52626-6b3bffd01fdde4900130bc5a2751b6d1">报名</a><br>
-以往历史学员全部上线K8S生产环境，报名从速，品质保证。4天学习外加长期技术支持。
-
-## v0.30 新功能
-支持openldap和windowsAd的LDAP认证<br>
-支持更改LDAP账号密码变更<br>
-celery更新4.2.1<br>
-agent自动清理日志<br>
-python3.6.6语法兼容<br>
-脚本文件统一WEB管理<br>
-
+## v0.40 新功能
+全新Web SSH平台<br>
+分支机构IT资源管理<br>
+资产CSV导入导出<br>
+根据用户权限展示左边菜单栏<br>
+监控平台支持树状结构菜单<br>
+脚本统一管理平台<br>
+持续交付平台优化<br>
+django安全更新<br>
 
 ## 开发环境
-centos 7.2(1511) django 1.11.9 python 2.7<br>
+centos 7.2(1511) django 1.11.16 python 2.7<br>
 
 ## 服务端安装
 生产服务器建议 4核CPU，6G内存以上.<br>
@@ -71,10 +67,10 @@ FAQ参考，<a href="https://github.com/guohongze/adminset/wiki/FAQ">常见问�
 每2小时重置一次数据<br>
 http://115.28.147.154<br>
 用户名admin 密码Adminset123<br>
-webssh用户名密码相同<br>
 
 # 安全
-建议不要将程序启动在有公网可以直接访问的设备上，如果需要请使用VPN。<br>
+强烈建议不要将程序启动在有公网可以直接访问的设备上<br>
+如果需要公网访问请使用VPN。<br>
 建议生产环境中使用https配置服务器<br>
 由于开发方便，在django的settings中开启了DEBUG，在生产中需要关闭并指定自己的域名。
 
