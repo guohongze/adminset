@@ -331,7 +331,8 @@ class IndexHandler(MixinHandler, tornado.web.RequestHandler):
         pass
 
     def get(self):
-        self.render('index.html', debug=self.debug)
+        raise tornado.web.HTTPError(403, 'Fobbiden.')
+        # self.render('index.html', debug=self.debug)
 
     @tornado.gen.coroutine
     def post(self):

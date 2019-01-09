@@ -15,6 +15,7 @@ class AssetForm(forms.ModelForm):
         widgets = {
             'hostname': TextInput(attrs={'class': 'form-control', 'style': 'width:530px;', 'placeholder': u'必填项'}),
             'ip': TextInput(attrs={'class': 'form-control', 'style': 'width:530px;', 'placeholder': u'必填项'}),
+            'account': Select(attrs={'class': 'form-control', 'style': 'width:530px;'}),
             'other_ip': TextInput(attrs={'class': 'form-control', 'style': 'width:530px;'}),
             'group': Select(attrs={'class': 'form-control', 'style': 'width:530px;'}),
             'asset_no': TextInput(attrs={'class': 'form-control', 'style': 'width:530px;'}),

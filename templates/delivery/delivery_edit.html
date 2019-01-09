@@ -5,6 +5,8 @@
     <title>Title</title>
     {% include 'link_css.html' %}
     {% include 'head_script.html' %}
+    <script src="/static/js/jquery.bootstrap-duallistbox.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap-duallistbox.css">
 </head>
 <body>
 <div class="content-wrapper">
@@ -57,6 +59,14 @@
             parent.$("#handle_status").val('2');
             parent.layer.close(index);
         }
+</script>
+<script>
+    var demo1 = $('select[name="serverList"]').bootstrapDualListbox({
+          nonSelectedListLabel: '可选择服务器',
+          selectedListLabel: '已选择服务器',
+          preserveSelectionOnMove: 'moved',
+          moveOnSelect: false
+    });
 </script>
 </body>
 </html>
