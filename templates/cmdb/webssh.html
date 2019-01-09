@@ -28,7 +28,7 @@
   </head>
   <body>
     <div class="container">
-      <form id="connect" action="http://192.168.47.130:8888" style="display: none" method="post" enctype="multipart/form-data"{% if debug %} novalidate{% endif %}>
+      <form id="connect" action="" style="display: none" method="post" enctype="multipart/form-data"{% if debug %} novalidate{% endif %}>
         <div class="row">
           <div class="col">
             <label for="Hostname">Hostname</label>
@@ -77,7 +77,9 @@
     <script src="/static/webssh/js/main.js"></script>
   <script>
       $(document).ready(function(){
-        $('#connect').submit();
+      var path = 'http://' + window.location.host + ':8888';
+      $('#connect').attr("action", path).submit();
+{#        $('#connect').submit();#}
     });
   </script>
   </body>
