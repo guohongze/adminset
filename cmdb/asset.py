@@ -295,5 +295,4 @@ def server_detail(request, ids):
 @permission_verify()
 def webssh(request, ids):
     host = Host.objects.get(id=ids)
-    webssh_domain = get_dir("webssh_domain")
     return render(request, 'cmdb/webssh.html', locals())
