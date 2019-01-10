@@ -9,6 +9,7 @@ import json
 import time
 from monitor.api import GetSysData
 from django.views.decorators.csrf import csrf_exempt
+from delivery.models import Delivery
 
 TIME_SECTOR = (
             3600,
@@ -178,7 +179,8 @@ def product_tree():
         projects = pdt.project_set.all()
         for pjs in projects:
             server_list = []
-            servers = pjs.serverList.all()
+            p2 = Delivery.objects.get(job_name_id=pjs.id)
+            servers = p2.serverList.all()
             for server in servers:
                 server_data = {'name': server.hostname, 'url': "/monitor/system/{}/0/".format(server.hostname), 'target':"myframe"}
                 server_list.append(server_data)
