@@ -172,29 +172,29 @@ def group_tree():
     return group_node
 
 
-def product_tree():
-    product_node = []
-    for pdt in Product.objects.all():
-        project_list = []
-        projects = pdt.project_set.all()
-        for pjs in projects:
-            server_list = []
-            p2 = Delivery.objects.get(job_name_id=pjs.id)
-            servers = p2.serverList.all()
-            for server in servers:
-                server_data = {'name': server.hostname, 'url': "/monitor/system/{}/0/".format(server.hostname), 'target':"myframe"}
-                server_list.append(server_data)
-            project_data = {'name': pjs.name, 'children': server_list}
-            project_list.append(project_data)
-            del server_list
-        data = {"name": pdt.name, "open": False, "children": project_list}
-        del project_list
-        product_node.append(data)
-    return product_node
+# def product_tree():
+#     product_node = []
+#     for pdt in Product.objects.all():
+#         project_list = []
+#         projects = pdt.project_set.all()
+#         for pjs in projects:
+#             server_list = []
+#             p2 = Delivery.objects.get(job_name_id=pjs.id)
+#             servers = p2.serverList.all()
+#             for server in servers:
+#                 server_data = {'name': server.hostname, 'url': "/monitor/system/{}/0/".format(server.hostname), 'target':"myframe"}
+#                 server_list.append(server_data)
+#             project_data = {'name': pjs.name, 'children': server_list}
+#             project_list.append(project_data)
+#             del server_list
+#         data = {"name": pdt.name, "open": False, "children": project_list}
+#         del project_list
+#         product_node.append(data)
+#     return product_node
 
 
 @login_required
 @csrf_exempt
 def tree_node(request):
-    all_node = host_tree() + group_tree() + product_tree()
+    all_node = host_tree() + group_tree() #+ product_tree()
     return HttpResponse(json.dumps(all_node))
