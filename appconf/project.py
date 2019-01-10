@@ -10,7 +10,7 @@ from accounts.permission import permission_verify
 import csv
 import datetime
 from cmdb.api import str2gb
-
+from delivery.models import Delivery
 
 @login_required()
 @permission_verify()
@@ -107,10 +107,13 @@ def project_export(request):
                      str2gb(u'程序部署路径'), str2gb(u'配置文件路径'),
                      str2gb(u'所属产品线'), str2gb(u'项目负责人'), str2gb(u'服务器')])
     for p in project_find:
-        server_array = p.serverList
         server_result = ""
-        for server in p.serverList.all():
-            server_result += server.hostname+"\n"
+        try:
+            p2 = Delivery.objects.get(job_name_id=p.id)
+            for server in p2.serverList.all():
+                server_result += server.hostname+"\n"
+        except:
+            server_result = ""
         writer.writerow([str2gb(p.name), str2gb(p.description), p.language_type, p.app_type, p.server_type,
                         p.app_arch, p.source_type, p.source_address, p.appPath, p.configPath, str2gb(p.product),
                          str2gb(p.owner), str2gb(server_result)])
