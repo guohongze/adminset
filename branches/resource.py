@@ -15,10 +15,8 @@ from cmdb.api import str2gb
 @login_required()
 @permission_verify()
 def resource_list(request):
-    temp_name = "branches/header.html"
     resources = Resource.objects.all()
     results = {
-        'temp_name': temp_name,
         'resources':  resources,
     }
     return render(request, 'branches/resource_list.html', results)
@@ -42,7 +40,6 @@ def resource_del(request):
 @login_required
 @permission_verify()
 def resource_add(request):
-    temp_name = "branches/header.html"
     if request.method == 'POST':
         form = ResourceForm(request.POST)
         if form.is_valid():
@@ -54,7 +51,6 @@ def resource_add(request):
     results = {
         'form': form,
         'request': request,
-        'temp_name': temp_name,
     }
     return render(request, 'branches/resource_base.html', results)
 
@@ -63,7 +59,6 @@ def resource_add(request):
 @permission_verify()
 def resource_edit(request, resource_id):
     resource_obj = Resource.objects.get(id=resource_id)
-    temp_name = "branches/header.html"
     if request.method == 'POST':
         form = ResourceForm(request.POST, instance=resource_obj)
         if form.is_valid():
@@ -76,7 +71,6 @@ def resource_edit(request, resource_id):
         'form': form,
         'resource_id': resource_id,
         'request': request,
-        'temp_name': temp_name,
     }
     return render(request, 'branches/resource_base.html', results)
 

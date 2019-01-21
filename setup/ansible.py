@@ -44,7 +44,6 @@ def write_role_vars(roles, vargs):
 @login_required()
 @permission_verify()
 def index(request):
-    temp_name = "setup/setup-header.html"
     all_host = Host.objects.all()
     all_dir = get_roles(roles_dir)
     all_pbook = get_playbook(playbook_dir)
@@ -56,7 +55,6 @@ def index(request):
 @permission_verify()
 def playbook(request):
     ret = []
-    temp_name = "setup/setup-header.html"
     if os.path.exists(ansible_dir + '/gexec.yml'):
         os.remove(ansible_dir + '/gexec.yml')
     else:
@@ -164,7 +162,6 @@ def ansible_command(request):
     command_list = []
     ret = []
     count = 1
-    temp_name = "setup/setup-header.html"
     if request.method == 'POST':
         mcommand = request.POST.get('mcommand')
         command_list = mcommand.split('\n')

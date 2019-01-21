@@ -44,7 +44,7 @@
           </div>
         </div>
         <div class="box-body">
-      <form action="{% url 'add' %}" method="post">
+      <form action="{% url 'naviadd' %}" method="post">
         {% csrf_token %}
         {{ n_form.as_p }}
         <input type="submit" class="btn btn-primary" style="width: 60pt" value="提交">&nbsp;&nbsp;&nbsp;&nbsp;

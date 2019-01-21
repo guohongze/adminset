@@ -14,6 +14,15 @@
   <![endif]-->
 {%endblock%}
 {% block content %}
+
+
+    <script>
+        window.onload=init;
+        function init() {
+            var box = document.getElementById("mfile");
+            box.className="active";
+        }
+    </script>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">

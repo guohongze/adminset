@@ -14,7 +14,7 @@
         function init() {
             var box = document.getElementById("branches");
             box.className="active";
-            var box2 = document.getElementById("resource_list");
+            var box2 = document.getElementById("resource");
             box2.className="active";
         }
     </script>
@@ -30,10 +30,14 @@
                 {% csrf_token %}
             <div class="box">
                 <div class="box-header">
-                    <div class="col-sm-2" style="padding-left: 0">
-						 <a href="{% url 'resource_add' %}"><li class="btn btn-success" ><b>添加资源</b></li></a>
-                         <a class="btn btn-info" target="_blank" href="{% url 'resource_export' %}">导出资源</a>
+                    <div class="col-sm-1" style="padding-left: 0;">
+						 <a href="{% url 'resource_add' %}" class="btn btn-default">添加资源</a>
                   </div>
+                    <div class="col-sm-1" style="padding-left: 0;">
+                    <a class="btn btn-default" target="_blank" href="{% url 'resource_export' %}">导出资源</a>
+
+                    </div>
+
                 </div>
 
                 <!-- /.box-header -->
@@ -75,8 +79,9 @@
                             {% endfor %}
                             </tbody>
                   </table>
+                <br>
                   <div class="btn-group">
-                      <input type="button" id="resource_del" class="btn btn-danger"   name="del_button" value="删除资源"/>
+                      <input type="button" id="resource_del" class="btn btn-default"   name="del_button" value="删除资源"/>
                   </div>
                 </div>
             </div>

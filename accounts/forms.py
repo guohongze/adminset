@@ -159,6 +159,9 @@ class RoleListForm(forms.ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'permission': forms.SelectMultiple(attrs={'class': 'form-control', 'size':'10', 'multiple': 'multiple'}),
+            'webssh': forms.SelectMultiple(attrs={'class': 'form-control', 'size':'10', 'multiple': 'multiple'}),
+            'delivery': forms.SelectMultiple(attrs={'class': 'form-control', 'size':'10', 'multiple': 'multiple'}),
+
         }
 
     def __init__(self,*args,**kwargs):
@@ -167,6 +170,10 @@ class RoleListForm(forms.ModelForm):
         self.fields['name'].error_messages = {'required': u'请输入名称'}
         self.fields['permission'].label = u'URL'
         self.fields['permission'].required = False
+        self.fields['webssh'].label = u'授权组'
+        self.fields['webssh'].required = False
+        self.fields['delivery'].label = u'授权部署'
+        self.fields['delivery'].required = False
 
 
 class PermissionListForm(forms.ModelForm):

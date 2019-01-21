@@ -12,10 +12,8 @@ from accounts.permission import permission_verify
 @login_required()
 @permission_verify()
 def region_list(request):
-    temp_name = "branches/header.html"
     regions = Region.objects.all()
     results = {
-        'temp_name': temp_name,
         'regions':  regions,
     }
     return render(request, 'branches/region_list.html', results)
@@ -39,7 +37,6 @@ def region_del(request):
 @login_required
 @permission_verify()
 def region_add(request):
-    temp_name = "branches/header.html"
     if request.method == 'POST':
         form = RegionForm(request.POST)
         if form.is_valid():
@@ -51,7 +48,6 @@ def region_add(request):
     results = {
         'form': form,
         'request': request,
-        'temp_name': temp_name,
     }
     return render(request, 'branches/region_base.html', results)
 
@@ -60,7 +56,6 @@ def region_add(request):
 @permission_verify()
 def region_edit(request, region_id):
     region_obj = get_object_or_404(Region, pk=region_id)
-    temp_name = "branches/header.html"
     if request.method == 'POST':
         form = RegionForm(request.POST, instance=region_obj)
         if form.is_valid():
@@ -73,7 +68,6 @@ def region_edit(request, region_id):
         'form': form,
         'region_id': region_id,
         'request': request,
-        'temp_name': temp_name,
     }
     return render(request, 'branches/region_base.html', results)
 
@@ -81,11 +75,9 @@ def region_edit(request, region_id):
 @login_required
 @permission_verify()
 def branch_detail(request, region_id):
-    temp_name = "branches/header.html"
     region = Region.objects.get(id=region_id)
     branches = region.branch_set.all()
     results = {
-        'temp_name': temp_name,
         'branches':  branches,
     }
     return render(request, 'branches/region_branch_list.html', results)

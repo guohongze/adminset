@@ -11,8 +11,8 @@
     function showhide(n) {
         var box = document.getElementById("setup");
         box.className="active";
-        var box = document.getElementById("job_list");
-        box.className="active";
+        var box2 = document.getElementById("job_list");
+        box2.className="active";
     }
 </script>
 
@@ -138,7 +138,7 @@ function tanchu(n){
   title: '信息修改',
   area: ['600px', '350px'],
   shadeClose: true, //点击遮罩关闭
-  content: ['/setup/job/result/edit/' + n,],
+  content: ['/setup/resultedit/' + n],
   end:function(){
         var handle_status = $("#handle_status").val();
         if ( handle_status == '1' ) {

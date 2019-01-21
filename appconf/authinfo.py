@@ -12,10 +12,8 @@ from accounts.permission import permission_verify
 @login_required()
 @permission_verify()
 def authinfo_list(request):
-    temp_name = "appconf/appconf-header.html"
     all_authinfo = AuthInfo.objects.all()
     results = {
-        'temp_name': temp_name,
         'all_authinfo':  all_authinfo,
     }
     return render(request, 'appconf/authinfo_list.html', results)
@@ -37,7 +35,6 @@ def authinfo_del(request):
 @login_required
 @permission_verify()
 def authinfo_add(request):
-    temp_name = "appconf/appconf-header.html"
     if request.method == 'POST':
         form = AuthInfoForm(request.POST)
         if form.is_valid():
@@ -49,7 +46,6 @@ def authinfo_add(request):
     results = {
         'form': form,
         'request': request,
-        'temp_name': temp_name,
         'page_type': "whole"
     }
     return render(request, 'appconf/authinfo_add_edit.html', results)
@@ -88,7 +84,6 @@ def authinfo_add_mini(request):
 @permission_verify()
 def authinfo_edit(request, authinfo_id, mini=False):
     authinfo = AuthInfo.objects.get(id=authinfo_id)
-    temp_name = "appconf/appconf-header.html"
     if request.method == 'POST':
         form = AuthInfoForm(request.POST, instance=authinfo)
         if form.is_valid():
@@ -101,7 +96,6 @@ def authinfo_edit(request, authinfo_id, mini=False):
         'form': form,
         'authinfo_id': authinfo_id,
         'request': request,
-        'temp_name': temp_name,
         'page_type': "whole"
     }
     return render(request, 'appconf/authinfo_add_edit.html', results)

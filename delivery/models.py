@@ -20,7 +20,7 @@ class Delivery(models.Model):
     version = models.CharField(max_length=255, verbose_name=u"版本信息", blank=True)
     build_clean = models.BooleanField(verbose_name=u"清理构建", default=False)
     rsync_delete = models.BooleanField(verbose_name=u"同步删除", default=True)
-    shell = models.CharField(max_length=255, verbose_name=u"shell", blank=True)
+    shell = models.CharField(max_length=2048, verbose_name=u"shell", blank=True)
     shell_position = models.BooleanField(verbose_name=u"本地执行", default=False)
     status = models.BooleanField(verbose_name=u"部署状态", default=False)
     deploy_num = models.IntegerField(verbose_name=u"部署次数", default=0)

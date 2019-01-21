@@ -17,8 +17,8 @@
     function showhide(n) {
         var box = document.getElementById("accounts");
         box.className="active";
-        var box = document.getElementById("user_list");
-        box.className="active";
+        var box2 = document.getElementById("userlist");
+        box2.className="active";
     }
 </script>
 
@@ -113,7 +113,7 @@ function tanchu(n){
     closeBtn: 1,
     area: ['700px', '550px'],
     shadeClose: true, //点击遮罩关闭
-    content: ['/accounts/user/edit/' + n,],
+    content: ['/accounts/useredit/' + n],
     end:function(){
             var handle_status = $("#handle_status").val();
             if ( handle_status == '1' ) {

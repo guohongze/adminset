@@ -12,10 +12,8 @@ from accounts.permission import permission_verify
 @login_required()
 @permission_verify()
 def appowner_list(request):
-    temp_name = "appconf/appconf-header.html"
     all_app_owner = AppOwner.objects.all()
     results = {
-        'temp_name': temp_name,
         'all_app_owner':  all_app_owner,
     }
     return render(request, 'appconf/appowner_list.html', results)
@@ -39,7 +37,6 @@ def appowner_del(request):
 @login_required
 @permission_verify()
 def appowner_add(request):
-    temp_name = "appconf/appconf-header.html"
     if request.method == 'POST':
         form = AppOwnerForm(request.POST)
         if form.is_valid():
@@ -51,7 +48,6 @@ def appowner_add(request):
     results = {
         'form': form,
         'request': request,
-        'temp_name': temp_name,
         'page_type': "whole"
     }
     return render(request, 'appconf/appowner_add_edit.html', results)
@@ -90,7 +86,6 @@ def appowner_add_mini(request):
 @permission_verify()
 def appowner_edit(request, appowner_id, mini=False):
     appowner = AppOwner.objects.get(id=appowner_id)
-    temp_name = "appconf/appconf-header.html"
     if request.method == 'POST':
         form = AppOwnerForm(request.POST, instance=appowner)
         if form.is_valid():
@@ -103,7 +98,6 @@ def appowner_edit(request, appowner_id, mini=False):
         'form': form,
         'appowner_id': appowner_id,
         'request': request,
-        'temp_name': temp_name,
         'page_type': "whole"
     }
     return render(request, 'appconf/appowner_add_edit.html', results)

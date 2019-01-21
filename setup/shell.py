@@ -19,7 +19,6 @@ log("setup.log", level, log_path)
 @login_required()
 @permission_verify()
 def index(request):
-    temp_name = "setup/setup-header.html"
     all_host = Host.objects.all()
     all_group = HostGroup.objects.all()
     all_scripts = get_scripts(scripts_dir)
@@ -30,7 +29,6 @@ def index(request):
 @permission_verify()
 def exec_scripts(request):
     ret = []
-    temp_name = "setup/setup-header.html"
     if request.method == 'POST':
         server = request.POST.getlist('mserver', [])
         group = request.POST.getlist('mgroup', [])

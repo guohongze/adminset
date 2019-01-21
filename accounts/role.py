@@ -13,7 +13,6 @@ from accounts.permission import permission_verify
 @login_required
 @permission_verify()
 def role_add(request):
-    temp_name = "accounts/accounts-header.html"
     if request.method == "POST":
         form = RoleListForm(request.POST)
         if form.is_valid():
@@ -23,7 +22,6 @@ def role_add(request):
         form = RoleListForm()
 
     kwvars = {
-        'temp_name': temp_name,
         'form': form,
         'request': request,
     }
@@ -34,7 +32,6 @@ def role_add(request):
 @login_required
 @permission_verify()
 def role_list(request):
-    temp_name = "accounts/accounts-header.html"
     all_role = RoleList.objects.all()
     return render(request, 'accounts/role_list.html', locals())
 
@@ -43,7 +40,6 @@ def role_list(request):
 @permission_verify()
 def role_edit(request, ids):
     iRole = RoleList.objects.get(id=ids)
-    temp_name = "accounts/accounts-header.html"
     if request.method == "POST":
         form = RoleListForm(request.POST, instance=iRole)
         if form.is_valid():
@@ -53,7 +49,6 @@ def role_edit(request, ids):
         form = RoleListForm(instance=iRole)
 
     kwvars = {
-        'temp_name': temp_name,
         'ids': ids,
         'form': form,
         'request': request,

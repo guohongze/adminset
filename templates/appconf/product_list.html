@@ -14,8 +14,8 @@
         function init() {
             var box = document.getElementById("appconf");
             box.className="active";
-            var box = document.getElementById("product_list");
-            box.className="active";
+            var box2 = document.getElementById("product");
+            box2.className="active";
         }
     </script>
 
@@ -115,7 +115,7 @@ function popWin(product_id){
       title: '项目列表',
       area: ['700px', '500px'],
       shadeClose: true, //点击遮罩关闭
-      content: ['/appconf/product/project_list/' + product_id]
+      content: ['/appconf/productplist/' + product_id]
   });
 }
 </script>

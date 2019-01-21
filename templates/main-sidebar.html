@@ -5,7 +5,11 @@
         if (data) {
             var obj = data.split(",");
             for (var i=0;i<obj.length;i++){
-                document.getElementById(obj[i]).style.display = "block";
+                try {
+                    document.getElementById(obj[i]).style.display = "block";
+                    } catch (e) {
+                    // Handle all the error things
+                    }
             }
         }
     });
@@ -28,23 +32,100 @@
         <!-- Optionally, you can add icons to the links -->
 {#        <li><a href="{% url 'index' %}"><i class="fa fa-dashboard"></i> <span>首页面板</span></a></li>#}
           {% if request.user.is_superuser %}
-        <li id="navi"><a href="{% url 'navi' %}"><i class="fa fa-link"></i> <span>站点导航</span></a></li>
-        <li id="cmdb"><a href="{% url 'cmdb' %}"><i class="fa fa-database"></i> <span>资产管理</span></a></li>
-        <li id="appconf"><a href="{% url 'appconf' %}"><i class="fa fa-outdent"></i> <span>应用管理</span></a></li>
-        <li id="branches"><a href="{% url 'branches' %}"><i class="fa fa-building"></i> <span>分支管理</span></a></li>
-        <li id="setup"><a href="{% url 'job_list' %}"><i class="fa fa-cogs"></i> <span>任务编排</span></a></li>
-        <li id="delivery"><a href="{% url 'delivery' %}"><i class="fa fa-retweet"></i> <span>持续交付</span></a></li>
-        <li id="monitor"><a href="{% url 'monitor' %}"><i class="fa fa-television"></i> <span>监控平台</span></a></li>
+        <li id="navi" style="display: block"><a href="{% url 'navi' %}"><i class="fa fa-link"></i> <span>站点导航</span></a></li>
+        <li class="treeview" id="cmdb">
+          <a href="#"><i class="fa fa-database"></i> <span>资产管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+              <li id="asset"><a href="{% url 'cmdb' %}"><span>&nbsp;&nbsp;&nbsp;&nbsp;主机管理</span></a></li>
+              <li id="idc"><a href="{% url 'idc' %}"><span>&nbsp;&nbsp;&nbsp;&nbsp;机房管理</span></a></li>
+              <li id="cabinet"><a href="{% url 'cabinet' %}"><span>&nbsp;&nbsp;&nbsp;&nbsp;机柜管理</span></a></li>
+              <li id="group"><a href="{% url 'group' %}"><span>&nbsp;&nbsp;&nbsp;&nbsp;属组管理</span></a></li>
+          </ul>
+        </li>
+        <li class="treeview" id="appconf">
+          <a href="#"><i class="fa fa-outdent"></i> <span>应用管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li id="product"><a href="{% url 'product_list' %}"><span>&nbsp;&nbsp;&nbsp;&nbsp;产品线管理</span></a></li>
+            <li id="project"><a href="{% url 'project_list' %}"><span>&nbsp;&nbsp;&nbsp;&nbsp;工程管理</span></a></li>
+            <li id="appowner"><a href="{% url 'appowner_list' %}"><span>&nbsp;&nbsp;&nbsp;&nbsp;人员管理</span></a></li>
+            <li id="authinfo"><a href="{% url 'authinfo_list' %}"><span>&nbsp;&nbsp;&nbsp;&nbsp;认证中心</span></a></li>
+          </ul>
+        </li>
+        <li class="treeview" id="branches">
+          <a href="#"><i class="fa fa-building"></i> <span>分支管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li id="region"><a href="{% url 'region_list' %}"><span>&nbsp;&nbsp;&nbsp;&nbsp;区域管理</span></a></li>
+            <li id="branch"><a href="{% url 'branch_list' %}"><span>&nbsp;&nbsp;&nbsp;&nbsp;分支机构</span></a></li>
+            <li id="resource"><a href="{% url 'resource_list' %}"><span>&nbsp;&nbsp;&nbsp;&nbsp;资源管理</span></a></li>
+          </ul>
+        </li>
+        <li class="treeview" id="setup">
+          <a href="#"><i class="fa fa-cogs"></i> <span>任务管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li id="job_list"><a href="{% url 'job_list' %}"><span>&nbsp;&nbsp;&nbsp;&nbsp;Crontab</span></a></li>
+            <li id="ansible"><a href="{% url 'ansible' %}"><span>&nbsp;&nbsp;&nbsp;&nbsp;Ansible</span></a></li>
+            <li id="shell"><a href="{% url 'shell' %}"><span>&nbsp;&nbsp;&nbsp;&nbsp;Shell</span></a></li>
+          </ul>
+        </li>
+        <li id="delivery"><a href="{% url 'delivery_list' %}"><i class="fa fa-retweet"></i> <span>持续交付</span></a></li>
+        <li class="treeview" id="monitor">
+          <a href="{% url 'monitor' %}"><i class="fa fa-television"></i> <span>监控平台</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li id="system"><a href="{% url 'monitor' %}"><span>&nbsp;&nbsp;&nbsp;&nbsp;系统监控</span></a></li>
+            <li id="manage"><a href="{% url 'monitor_manage' %}"><span>&nbsp;&nbsp;&nbsp;&nbsp;监控管理</span></a></li>
+            <li id="alert"><a href="#"><span>&nbsp;&nbsp;&nbsp;&nbsp;报警管理</span></a></li>
+          </ul>
+        </li>
         <li id="mfile"><a href="{% url 'mfile' %}"><i class="fa fa-folder-open"></i> <span>文件管理</span></a></li>
-        <li id="accounts"><a href="{% url 'user_list' %}"><i class="fa fa-users"></i> <span>用户管理</span></a></li>
+        <li class="treeview" id="accounts">
+          <a href="#"><i class="fa fa-users"></i> <span>用户管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li id="userlist"><a href="{% url 'user_list' %}"><span>&nbsp;&nbsp;&nbsp;&nbsp;用户管理</span></a></li>
+            <li id="rolelist"><a href="{% url 'role_list' %}"><span>&nbsp;&nbsp;&nbsp;&nbsp;角色管理</span></a></li>
+            <li id="permlist"><a href="{% url 'permission_list' %}"><span>&nbsp;&nbsp;&nbsp;&nbsp;权限管理</span></a></li>
+          </ul>
+        </li>
         <li id="config"><a href="{% url 'config' %}"><i class="fa fa fa-cog"></i> <span>系统配置</span></a></li>
         {% else %}
         <li id="navi" style="display: none"><a href="{% url 'navi' %}"><i class="fa fa-link"></i> <span>站点导航</span></a></li>
-        <li id="cmdb" style="display: none"><a href="{% url 'cmdb' %}"><i class="fa fa-database"></i> <span>资产管理</span></a></li>
-        <li id="appconf" style="display: none"><a href="{% url 'appconf' %}"><i class="fa fa-outdent"></i> <span>应用管理</span></a></li>
+        <li class="treeview" id="cmdb">
+          <a href="#"><i class="fa fa-cog"></i> <span>资产管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+              <li id="assetlist"><a href="{% url 'cmdb' %}"><i class="fa fa-database"></i> <span>主机管理</span></a></li>
+          </ul>
+        </li>
+        <li id="appconf" style="display: none"><a href="{% url 'product_list' %}"><i class="fa fa-outdent"></i> <span>应用管理</span></a></li>
         <li id="branches" style="display: none"><a href="{% url 'branches' %}"><i class="fa fa-building"></i> <span>分支管理</span></a></li>
         <li id="setup" style="display: none"><a href="{% url 'job_list' %}"><i class="fa fa-cogs"></i> <span>任务编排</span></a></li>
-        <li id="delivery" style="display: none"><a href="{% url 'delivery' %}"><i class="fa fa-retweet"></i> <span>持续交付</span></a></li>
+        <li id="delivery" style="display: none"><a href="{% url 'delivery_list' %}"><i class="fa fa-retweet"></i> <span>持续交付</span></a></li>
         <li id="monitor" style="display: none"><a href="{% url 'monitor' %}"><i class="fa fa-television"></i> <span>监控平台</span></a></li>
         <li id="mfile" style="display: none"><a href="{% url 'mfile' %}"><i class="fa fa-folder-open"></i> <span>文件管理</span></a></li>
         <li id="accounts" style="display: none"><a href="{% url 'user_list' %}"><i class="fa fa-users"></i> <span>用户管理</span></a></li>

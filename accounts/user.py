@@ -45,10 +45,8 @@ def logout(request):
 @login_required()
 @permission_verify()
 def user_list(request):
-    temp_name = "accounts/accounts-header.html"
     all_user = get_user_model().objects.all()
     kwargs = {
-        'temp_name': temp_name,
         'all_user':  all_user,
     }
     return render(request, 'accounts/user_list.html', kwargs)
@@ -57,7 +55,6 @@ def user_list(request):
 @login_required
 @permission_verify()
 def user_add(request):
-    temp_name = "accounts/accounts-header.html"
     if request.method == 'POST':
         form = AddUserForm(request.POST)
         if form.is_valid():
@@ -70,7 +67,6 @@ def user_add(request):
     kwargs = {
         'form': form,
         'request': request,
-        'temp_name': temp_name,
     }
     return render(request, 'accounts/user_add.html', kwargs)
 
@@ -118,7 +114,6 @@ def reset_password(request, ids):
 
 @login_required
 def change_password(request):
-    temp_name = "accounts/accounts-header.html"
     if request.method == 'POST':
         form = ChangePasswordForm(user=request.user, data=request.POST)
         if form.is_valid():
@@ -129,14 +124,12 @@ def change_password(request):
     kwargs = {
         'form': form,
         'request': request,
-        'temp_name': temp_name,
     }
     return render(request, 'accounts/change_password.html', kwargs)
 
 
 @login_required
 def change_ldap(request):
-    temp_name = "accounts/accounts-header.html"
     if request.method == 'POST':
         form = ChangeLdapPasswordForm(user=request.user, data=request.POST)
         if form.is_valid():
@@ -148,6 +141,5 @@ def change_ldap(request):
     kwargs = {
         'form': form,
         'request': request,
-        'temp_name': temp_name,
     }
     return render(request, 'accounts/change_ldap_password.html', kwargs)

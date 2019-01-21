@@ -14,7 +14,7 @@
         function init() {
             var box = document.getElementById("branches");
             box.className="active";
-            var box2 = document.getElementById("branch_list");
+            var box2 = document.getElementById("branch");
             box2.className="active";
         }
     </script>
@@ -116,7 +116,7 @@ function popWin(branch_id){
       title: '项目列表',
       area: ['700px', '500px'],
       shadeClose: true, //点击遮罩关闭
-      content: ['/branches/branch/resource_detail/' + branch_id]
+      content: ['/branches/branchresourceinfo/' + branch_id]
   });
 }
 </script>

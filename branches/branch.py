@@ -15,10 +15,8 @@ from cmdb.api import str2gb
 @login_required()
 @permission_verify()
 def branch_list(request):
-    temp_name = "branches/header.html"
     all_branch = Branch.objects.all()
     results = {
-        'temp_name': temp_name,
         'all_branch':  all_branch,
     }
     return render(request, 'branches/branch_list.html', results)
@@ -42,7 +40,6 @@ def branch_del(request):
 @login_required
 @permission_verify()
 def branch_add(request):
-    temp_name = "branches/header.html"
     if request.method == 'POST':
         form = BranchForm(request.POST)
         if form.is_valid():
@@ -54,7 +51,6 @@ def branch_add(request):
     results = {
         'form': form,
         'request': request,
-        'temp_name': temp_name,
     }
     return render(request, 'branches/branch_base.html', results)
 
@@ -63,7 +59,6 @@ def branch_add(request):
 @permission_verify()
 def branch_edit(request, branch_id):
     branch_obj = Branch.objects.get(id=branch_id)
-    temp_name = "branches/header.html"
     if request.method == 'POST':
         form = BranchForm(request.POST, instance=branch_obj)
         if form.is_valid():
@@ -76,7 +71,6 @@ def branch_edit(request, branch_id):
         'form': form,
         'branch_id': branch_id,
         'request': request,
-        'temp_name': temp_name,
     }
     return render(request, 'branches/branch_base.html', results)
 
@@ -113,11 +107,9 @@ def branch_export(request):
 @login_required
 @permission_verify()
 def resource_detail(request, branch_id):
-    temp_name = "branches/header.html"
     branch = Branch.objects.get(id=branch_id)
     resources = branch.resource_set.all()
     results = {
-        'temp_name': temp_name,
         'resources':  resources,
     }
     return render(request, 'branches/branch_resource_list.html', results)

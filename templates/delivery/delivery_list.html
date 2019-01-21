@@ -14,8 +14,8 @@
         function init() {
             var box = document.getElementById("delivery");
             box.className="active";
-            var box = document.getElementById("delivery_list");
-            box.className="active";
+            var box2 = document.getElementById("delivery_list");
+            box2.className="active";
         }
     </script>
 <style type="text/css">
@@ -176,7 +176,7 @@ function tanchu(n){
     closeBtn: 1,
     area: ['600px', '400px'],
     shadeClose: true, //点击遮罩关闭
-    content: ['/delivery/log/' + n]
+    content: ['/delivery/delilog/' + n]
   });
 }
 function logs_history(n){
@@ -186,7 +186,7 @@ function logs_history(n){
     closeBtn: 1,
     area: ['600px', '400px'],
     shadeClose: true, //点击遮罩关闭
-    content: ['/delivery/logs/history/' + n]
+    content: ['/delivery/delilogshistory/' + n]
   });
 }
 </script>
@@ -199,7 +199,7 @@ function tanchu_edit(n){
   title: '信息修改',
   area: ['600px', '450px'],
   shadeClose: true, //点击遮罩关闭
-  content: ['/delivery/edit/' + n],
+  content: ['/delivery/deliedit/' + n],
   end:function(){
         var handle_status = $("#handle_status").val();
         if ( handle_status == '1' ) {
@@ -222,7 +222,7 @@ function deploy(args) {
     if (confirm("确定部署？")) {
         var pb = document.getElementById("progress_bar_"+args);
         pb.style.display = "block";
-        $.get("/delivery/deploy/"+args+"/",function(data,status){
+        $.get("/delivery/delideploy/"+args+"/",function(data,status){
         });
     }
 }
@@ -230,7 +230,7 @@ function taskstop(args) {
     if (confirm("确定清理任务状态？")) {
         var pb = document.getElementById("progress_bar_"+args);
         pb.style.display = "none";
-        $.get("/delivery/taskstop/"+args+"/",function(data,status){
+        $.get("/delivery/delitaskstop/"+args+"/",function(data,status){
         });
     }
 }
@@ -240,7 +240,7 @@ function taskstop(args) {
 
     function status() {
         {% for project in all_project %}
-            $.get("/delivery/status/{{ project.job_name_id }}/",function(data){
+            $.get("/delivery/delistatus/{{ project.job_name_id }}/",function(data){
                 var ret = JSON.parse(data);
                 var width = parseInt(ret.bar_data);
                 var progress_bar = document.getElementById("pb_{{ project.job_name.id }}");
@@ -252,7 +252,7 @@ function taskstop(args) {
 <script>
     function change_info(){
         var args = $("#project_form").serialize();
-        window.location = "{% url 'delivery' %}?" + args
+        window.location = "{% url 'delivery_list' %}?" + args
     }
 </script>
 {% endblock %}

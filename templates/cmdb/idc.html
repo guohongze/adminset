@@ -123,7 +123,7 @@ function popWin(idc_id){
       title: '机柜列表',
       area: ['700px', '500px'],
       shadeClose: true, //点击遮罩关闭
-      content: ['/cmdb/idc/cabinetlist/' + idc_id]
+      content: ['/cmdb/idccabinetlist/' + idc_id]
   });
 }
 </script>
@@ -134,7 +134,7 @@ function tanchu(n){
   title: '机房信息修改',
   area: ['600px', '450px'],
   shadeClose: true, //点击遮罩关闭
-  content: ['/cmdb/idc/edit/' + n,],
+  content: ['/cmdb/idcedit/' + n,],
   end:function(){
         var handle_status = $("#handle_status").val();
         if ( handle_status == '1' ) {

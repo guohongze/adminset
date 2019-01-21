@@ -28,7 +28,7 @@
                             <tbody>
                             {% for log in logs_history %}
                                 <tr class="even gradeX">
-                                    <td><a href="/delivery/get/logs/{{ project_id }}/{{ log }}/">{{ log }}</a></td>
+                                    <td><a href="/delivery/deligetlogs/{{ project_id }}/{{ log }}/">{{ log }}</a></td>
                                     <td><a href="{% url "log_del" %}?project_id={{ project.id }}&logname={{ log }}" onclick="return confirm('确认删除项目吗？')"><span class="btn btn-sm btn-danger ">删除</span></a></td>
                                 </tr>
                             {% endfor %}

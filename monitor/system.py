@@ -105,7 +105,6 @@ def get_net(request, hostname, timing, net_id):
 @login_required()
 @permission_verify()
 def index(request):
-    temp_name = "monitor/monitor-header.html"
     all_host = Host.objects.all()
     idcs = Idc.objects.all()
     return render(request, "monitor/index.html", locals())
@@ -114,7 +113,6 @@ def index(request):
 @login_required()
 @permission_verify()
 def host_info(request, hostname, timing):
-    temp_name = "monitor/monitor-header.html"
     # 传递磁盘号给前端JS,用以迭代分区图表
     disk = GetSysData(hostname, "disk", 3600, 1)
     disk_data = disk.get_data()

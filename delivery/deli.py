@@ -19,7 +19,6 @@ from cmdb.api import pages
 @permission_verify()
 def delivery_list(request):
     all_project = []
-    temp_name = "delivery/delivery-header.html"
     all_project = Delivery.objects.all()
     page_len = request.GET.get('page_len', '')
     deploys_list, p, deploys, page_range, current_page, show_first, show_end, end_page = pages(all_project, request)
@@ -44,7 +43,6 @@ def delivery_del(request):
 @login_required
 @permission_verify()
 def delivery_add(request):
-    temp_name = "delivery/delivery-header.html"
     if request.method == 'POST':
         form = DeliveryFrom(request.POST)
         if form.is_valid():
@@ -56,7 +54,6 @@ def delivery_add(request):
     results = {
         'form': form,
         'request': request,
-        'temp_name': temp_name,
     }
     return render(request, 'delivery/delivery_base.html', results)
 
@@ -65,7 +62,6 @@ def delivery_add(request):
 @permission_verify()
 def delivery_edit(request, project_id):
     project = Delivery.objects.get(job_name_id=project_id)
-    temp_name = "delivery/delivery-header.html"
     if request.method == 'POST':
         form = DeliveryFrom(request.POST, instance=project)
         if form.is_valid():
@@ -80,7 +76,6 @@ def delivery_edit(request, project_id):
         'form': form,
         'project_id': project_id,
         'request': request,
-        'temp_name': temp_name,
     }
     return render(request, 'delivery/delivery_edit.html', locals())
 

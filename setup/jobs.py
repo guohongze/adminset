@@ -14,7 +14,6 @@ import os, time
 @login_required
 @permission_verify()
 def index(request):
-    temp_name = "setup/setup-header.html"
     jobs_info = PeriodicTask.objects.all()
     return render(request, 'setup/job_list.html', locals())
 
@@ -41,7 +40,6 @@ def job_edit(request, ids):
 @login_required()
 @permission_verify()
 def job_add(request):
-    temp_name = "setup/setup-header.html"
     if request.method == "POST":
         a_form = PeriodicTaskForm(request.POST)
         if a_form.is_valid():
@@ -62,7 +60,6 @@ def job_add(request):
 @login_required()
 @permission_verify()
 def job_del(request):
-    temp_name = "setup/setup-header.html"
     if request.method == 'POST':
         jobs = request.POST.getlist('idc_check', [])
         if jobs:
@@ -75,7 +72,6 @@ def job_del(request):
 @login_required()
 @permission_verify()
 def job_interval_list(request):
-    temp_name = "setup/setup-header.html"
     interval_info = IntervalSchedule.objects.all()
     return render(request, 'setup/interval_list.html', locals())
 
@@ -102,7 +98,6 @@ def job_interval_edit(request, ids):
 @login_required
 @permission_verify()
 def job_interval_del(request):
-    temp_name = "setup/setup-header.html"
     if request.method == 'POST':
         intervals = request.POST.getlist('idc_check', [])
         if intervals:
@@ -115,7 +110,6 @@ def job_interval_del(request):
 @login_required()
 @permission_verify()
 def job_interval_add(request):
-    temp_name = "setup/setup-header.html"
     if request.method == "POST":
         a_form = IntervalForm(request.POST)
         if a_form.is_valid():
@@ -136,7 +130,6 @@ def job_interval_add(request):
 @login_required()
 @permission_verify()
 def job_crontab_list(request):
-    temp_name = "setup/setup-header.html"
     crontab_info = CrontabSchedule.objects.all()
     return render(request, 'setup/crontab_list.html', locals())
 
@@ -163,7 +156,6 @@ def job_crontab_edit(request, ids):
 @login_required
 @permission_verify()
 def job_crontab_del(request):
-    temp_name = "setup/setup-header.html"
     if request.method == 'POST':
         crontabs = request.POST.getlist('idc_check', [])
         if crontabs:
@@ -176,7 +168,6 @@ def job_crontab_del(request):
 @login_required()
 @permission_verify()
 def job_crontab_add(request):
-    temp_name = "setup/setup-header.html"
     if request.method == "POST":
         a_form = CrontabForm(request.POST)
         if a_form.is_valid():
@@ -197,7 +188,6 @@ def job_crontab_add(request):
 @login_required()
 @permission_verify()
 def job_result_list(request):
-    temp_name = "setup/setup-header.html"
     result_info = TaskResult.objects.all().order_by("-id")
     return render(request, 'setup/result_list.html', locals())
 
@@ -224,7 +214,6 @@ def job_result_edit(request, ids):
 @login_required
 @permission_verify()
 def job_result_del(request):
-    temp_name = "setup/setup-header.html"
     if request.method == 'POST':
         results = request.POST.getlist('idc_check', [])
         if results:
@@ -237,7 +226,6 @@ def job_result_del(request):
 @login_required
 @permission_verify()
 def job_backend(request):
-    temp_name = "setup/setup-header.html"
     celery_file = os.path.exists('/var/opt/adminset/pid/w1.pid')
     beat_file = os.path.exists('/var/opt/adminset/pid/beat.pid')
     if celery_file:
@@ -261,4 +249,4 @@ def job_backend_task(request, name, action):
     cmd = "service "+name+" "+action
     Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
     time.sleep(3)
-    return redirect("/setup/job/backend/")
+    return redirect("/setup/jobbackend/")

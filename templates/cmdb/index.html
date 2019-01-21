@@ -180,7 +180,7 @@
                                         <td>{{ host.memory }}</td>
                                         <td>{{ host.idc }}</td>
                                         <td class="text-center" data-editable='false'>
-                                        <a class="btn btn-sm btn-info" target="_blank" href="{% url 'webssh' host.id %}" class="btn btn-xs btn-info">WebSSH</a>
+                                        <a class="btn btn-sm btn-info" target="_blank" href="{% url 'webssh' host.id %}" class="btn btn-xs btn-info">SSH</a>
                                         <a href="#"><li class="btn btn-sm btn-info" onclick="return tanchu(this.value)" value="{{ host.id }}">编辑</li></a>
                                         <a value="{% url 'asset_del' %}?id={{ host.id }}" class="btn btn-sm btn-danger asset_del">删除</a>
                                     </td>
@@ -231,7 +231,7 @@ function tanchu(n){
     closeBtn: 1,
     area: ['700px', '550px'],
     shadeClose: true, //点击遮罩关闭
-    content: ['/cmdb/asset/edit/' + n,],
+    content: ['/cmdb/assetedit/' + n,],
     end:function(){
             var handle_status = $("#handle_status").val();
             if ( handle_status == '1' ) {
@@ -257,7 +257,7 @@ function detail(n){
     closeBtn: 1,
     area: ['700px', '550px'],
     shadeClose: true, //点击遮罩关闭
-    content: ['/cmdb/asset/detail/' + n]
+    content: ['/cmdb/assetdetail/' + n]
   });
 }
 </script>
@@ -269,7 +269,7 @@ function asset_import(){
     closeBtn: 1,
     area: ['450px', '350px'],
     shadeClose: true, //点击遮罩关闭
-    content: ['/cmdb/asset/import/'],
+    content: ['/cmdb/assetimport/'],
 {#    end:function(){#}
 {#                layer.msg('导入成功！',{#}
 {#                    icon: 1,#}

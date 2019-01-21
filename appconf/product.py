@@ -12,10 +12,8 @@ from accounts.permission import permission_verify
 @login_required()
 @permission_verify()
 def product_list(request):
-    temp_name = "appconf/appconf-header.html"
     all_product = Product.objects.all()
     results = {
-        'temp_name': temp_name,
         'all_product':  all_product,
     }
     return render(request, 'appconf/product_list.html', results)
@@ -39,7 +37,6 @@ def product_del(request):
 @login_required
 @permission_verify()
 def product_add(request):
-    temp_name = "appconf/appconf-header.html"
     if request.method == 'POST':
         form = ProductForm(request.POST)
         if form.is_valid():
@@ -51,7 +48,6 @@ def product_add(request):
     results = {
         'form': form,
         'request': request,
-        'temp_name': temp_name,
     }
     return render(request, 'appconf/product_base.html', results)
 
@@ -60,7 +56,6 @@ def product_add(request):
 @permission_verify()
 def product_edit(request, product_id):
     product = Product.objects.get(id=product_id)
-    temp_name = "appconf/appconf-header.html"
     if request.method == 'POST':
         form = ProductForm(request.POST, instance=product)
         if form.is_valid():
@@ -73,7 +68,6 @@ def product_edit(request, product_id):
         'form': form,
         'product_id': product_id,
         'request': request,
-        'temp_name': temp_name,
     }
     return render(request, 'appconf/product_base.html', results)
 
@@ -81,11 +75,9 @@ def product_edit(request, product_id):
 @login_required
 @permission_verify()
 def project_list(request, product_id):
-    temp_name = "appconf/appconf-header.html"
     product = Product.objects.get(id=product_id)
     projects = product.project_set.all()
     results = {
-        'temp_name': temp_name,
         'project_list':  projects,
     }
     return render(request, 'appconf/product_project_list.html', results)

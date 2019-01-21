@@ -13,10 +13,8 @@ from django.core.urlresolvers import reverse
 @login_required()
 @permission_verify()
 def group(request):
-    temp_name = "cmdb/cmdb-header.html"
     allgroup = HostGroup.objects.all()
     context = {
-        'temp_name': temp_name,
         'allgroup': allgroup
     }
     return render(request, 'cmdb/group.html', context)
@@ -25,7 +23,6 @@ def group(request):
 @login_required()
 @permission_verify()
 def group_add(request):
-    temp_name = "cmdb/cmdb-header.html"
     if request.method == "POST":
         group_form = GroupForm(request.POST)
         if group_form.is_valid():
@@ -45,8 +42,6 @@ def group_add(request):
 @login_required()
 @permission_verify()
 def group_del(request):
-    temp_name = "cmdb/cmdb-header.html"
-
     group_id = request.GET.get('id', '')
     if group_id:
         HostGroup.objects.filter(id=group_id).delete()
@@ -64,7 +59,6 @@ def group_del(request):
 @permission_verify()
 def group_edit(request, group_id):
     project = HostGroup.objects.get(id=group_id)
-    temp_name = "cmdb/cmdb-header.html"
     if request.method == 'POST':
         form = GroupForm(request.POST, instance=project)
         if form.is_valid():
@@ -77,7 +71,6 @@ def group_edit(request, group_id):
         'group_form': form,
         'group_id': group_id,
         'request': request,
-        'temp_name': temp_name,
         'display_control': display_control,
     }
     return render(request, 'cmdb/group_base.html', results)
@@ -86,11 +79,9 @@ def group_edit(request, group_id):
 @login_required
 @permission_verify()
 def server_list(request, group_id):
-    temp_name = "cmdb/cmdb-header.html"
     grp = HostGroup.objects.get(id=group_id)
     servers = grp.serverList.all()
     results = {
-        'temp_name': temp_name,
         'server_list':  servers,
     }
     return render(request, 'cmdb/group_server_list.html', results)

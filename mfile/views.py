@@ -8,5 +8,4 @@ from accounts.permission import permission_verify
 class finder(LoginRequiredMixin,View):
     @method_decorator(permission_verify())
     def get(self,request):
-        temp_name = "mfile/mfile-header.html"
         return render_to_response('mfile/finder.html', locals())

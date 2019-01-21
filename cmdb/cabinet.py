@@ -13,10 +13,8 @@ from django.core.urlresolvers import reverse
 @login_required()
 @permission_verify()
 def cabinet(request):
-    temp_name = "cmdb/cmdb-header.html"
     allcabinet = Cabinet.objects.all()
     context = {
-        'temp_name': temp_name,
         'allcabinet': allcabinet
     }
     return render(request, 'cmdb/cabinet.html', context)
@@ -25,7 +23,6 @@ def cabinet(request):
 @login_required()
 @permission_verify()
 def cabinet_add(request):
-    temp_name = "cmdb/cmdb-header.html"
     if request.method == "POST":
         cabinet_form = CabinetForm(request.POST)
         if cabinet_form.is_valid():
@@ -45,8 +42,6 @@ def cabinet_add(request):
 @login_required()
 @permission_verify()
 def cabinet_del(request):
-    temp_name = "cmdb/cmdb-header.html"
-
     cabinet_id = request.GET.get('id', '')
     if cabinet_id:
         Cabinet.objects.filter(id=cabinet_id).delete()
@@ -86,11 +81,9 @@ def cabinet_edit(request, cabinet_id):
 @login_required
 @permission_verify()
 def server_list(request, cabinet_id):
-    temp_name = "cmdb/cmdb-header.html"
     cab = Cabinet.objects.get(id=cabinet_id)
     servers = cab.serverList.all()
     results = {
-        'temp_name': temp_name,
         'server_list':  servers,
     }
     return render(request, 'cmdb/cabinet_server_list.html', results)

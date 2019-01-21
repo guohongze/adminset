@@ -11,8 +11,8 @@
         function init() {
             var box = document.getElementById("delivery");
             box.className="active";
-            var box = document.getElementById("delivery_list");
-            box.className="active";
+            var box2 = document.getElementById("delivery_list");
+            box2.className="active";
         }
     </script>
 
@@ -81,7 +81,7 @@ function popWin(){
       title: '项目列表',
       area: ['700px', '500px'],
       shadeClose: true, //点击遮罩关闭
-      content: ['/appconf/authinfo/add/mini/'],
+      content: ['/appconf/authinfoaddmini/'],
       end:function(){
             var handle_status = $("#handle_status").val();
             if ( handle_status == '1' ) {

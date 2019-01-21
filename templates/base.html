@@ -20,13 +20,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
 </script>
 
 </head>
-<body class="hold-transition skin-yellow-light sidebar-collapse sidebar-mini">
+<body class="hold-transition skin-yellow-light sidebar-mini">
 <div class="loading"></div>
 <div class="wrapper">
 
   <!-- Main Header -->
-
-  {% include temp_name %}
+{% if temp_name %}
+    {% include temp_name %}
+{% else %}
+    {% include 'main-header.html' %}
+{% endif %}
 <script type="text/javascript">
     $('.loading').animate({'width':'10%'},50);  //第一个进度节点
 </script>

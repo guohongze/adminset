@@ -9,9 +9,9 @@
         showhide(1);
     }
     function showhide(n) {
-        var box = document.getElementById("monitor_manage");
+        var box = document.getElementById("monitor");
         box.className="active";
-        var box2 = document.getElementById("monitor");
+        var box2 = document.getElementById("manage");
         box2.className="active";
     }
 </script>
@@ -102,7 +102,7 @@ function del(){
         $.ajax({
                 type: "post",
                 data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
-                url: "/monitor/manage/del/range/"+selected_value+"/"
+                url: "/monitor/delrange/"+selected_value+"/"
             });
         layer.msg('干的漂亮！');
         }

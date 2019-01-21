@@ -25,7 +25,6 @@ except NameError:
 @login_required()
 @permission_verify()
 def asset(request):
-    temp_name = "cmdb/cmdb-header.html"
     webssh_domain = get_dir("webssh_domain")
     asset_find = []
     idc_info = Idc.objects.all()
@@ -53,13 +52,13 @@ def asset(request):
         cabinet = get_object(Cabinet, id=cabinet_id)
         if cabinet:
             asset_find = Host.objects.filter(cabinet=cabinet)
-
     elif idc_id:
         idc = get_object(Idc, id=idc_id)
         if idc:
             asset_find = Host.objects.filter(idc=idc)
     else:
         asset_find = Host.objects.all()
+
     if idc_name:
         asset_find = asset_find.filter(idc__name__contains=idc_name)
     if group_name:
@@ -157,7 +156,6 @@ def create_asset_excel(export, asset_id_all):
 @login_required()
 @permission_verify()
 def asset_import(request):
-    temp_name = "cmdb/cmdb-header.html"
     if request.method == "POST":
         uf = request.FILES.get('asset_import')
         with open("/var/opt/adminset/data/asset.csv", "wb+") as f:
@@ -224,7 +222,6 @@ def asset_import(request):
 @login_required()
 @permission_verify()
 def asset_add(request):
-    temp_name = "cmdb/cmdb-header.html"
     if request.method == "POST":
         a_form = AssetForm(request.POST)
         if a_form.is_valid():
@@ -295,4 +292,11 @@ def server_detail(request, ids):
 @permission_verify()
 def webssh(request, ids):
     host = Host.objects.get(id=ids)
+    if not request.user.is_superuser:
+        group = host.hostgroup_set.all()
+        perms = request.user.role.webssh.all()
+        for p in perms:
+            if p not in group:
+                return HttpResponse("forbidden! you have no permissions.", status=403)
+
     return render(request, 'cmdb/webssh.html', locals())

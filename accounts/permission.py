@@ -50,9 +50,7 @@ def permission_verify():
 
 @login_required
 def permission_deny(request):
-    temp_name = "main-header.html"
     kwvars = {
-        'temp_name': temp_name,
         'request': request,
     }
 
@@ -62,7 +60,6 @@ def permission_deny(request):
 @login_required
 @permission_verify()
 def permission_add(request):
-    temp_name = "accounts/accounts-header.html"
     if request.method == "POST":
         form = PermissionListForm(request.POST)
         if form.is_valid():
@@ -72,7 +69,6 @@ def permission_add(request):
         form = PermissionListForm()
 
     kwvars = {
-        'temp_name': temp_name,
         'form': form,
         'request': request,
     }
@@ -84,14 +80,12 @@ def permission_add(request):
 @permission_verify()
 def permission_list(request):
     all_permission = PermissionList.objects.all()
-    temp_name = "accounts/accounts-header.html"
     return render(request, 'accounts/permission_list.html', locals())
 
 
 @login_required
 @permission_verify()
 def permission_edit(request, ids):
-    temp_name = "accounts/accounts-header.html"
     iPermission = PermissionList.objects.get(id=ids)
 
     if request.method == "POST":
@@ -103,7 +97,6 @@ def permission_edit(request, ids):
         form = PermissionListForm(instance=iPermission)
 
     kwvars = {
-        'temp_name': temp_name,
         'ids': ids,
         'form': form,
         'request': request,
@@ -123,14 +116,20 @@ def permission_del(request, ids):
 @login_required
 def get_user_permission(request):
     ret = []
+    data_final = []
     iUser = UserInfo.objects.get(username=request.user)
     try:
         role_permission = RoleList.objects.get(name=iUser.role)
         role_permission_list = role_permission.permission.all()
         for p in role_permission_list:
-            d = p.name
+            d = p.url
             ret.append(d.encode('ascii'))
     except:
-        data = "Role list is empty"
+        all_perms = "Role list is empty"
     data = ",".join(ret)
-    return HttpResponse(str(data))
+    data_m = data.split("/")
+    for n in data_m:
+        if n != ',' and n:
+            data_final.append(n)
+    all_perms = ",".join(set(data_final))
+    return HttpResponse(str(all_perms))

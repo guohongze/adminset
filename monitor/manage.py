@@ -19,7 +19,6 @@ TIME_SECTOR = (
 @login_required()
 @permission_verify()
 def index(request):
-    temp_name = "monitor/monitor-header.html"
     return render(request, "monitor/manage.html", locals())
 
 

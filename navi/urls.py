@@ -5,9 +5,9 @@ from navi import views
 
 urlpatterns = [
     url(r'^$', views.index, name='navi'),
-    url(r'^add/', views.add, name='add'),
-    url(r'^manage/', views.manage, name='manage'),
-    url(r'^delete/', views.delete, name='delete'),
-    url(r'^edit/', views.edit, name='edit'),
-    url(r'^save/', views.save, name='save'),
+    url(r'^naviadd/', views.add, name='naviadd'),
+    url(r'^navimanage/', views.manage, name='navimanage'),
+    url(r'^navidelete/', views.delete, name='navidelete'),
+    url(r'^naviedit/', views.edit, name='naviedit'),
+    url(r'^navisave/', views.save, name='navisave'),
 ]
