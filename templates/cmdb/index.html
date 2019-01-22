@@ -111,10 +111,10 @@
                                 <input type="text" style="display: none">
                                 <div class="input-group-btn ">
                                     <button id='search_btn' href="{% url 'cmdb' %}?search=true" type="button" class="btn btn-primary "  onclick="change_info()">
-                                        <b>&nbsp;搜索&nbsp;</b>
+                                        &nbsp;搜索&nbsp;
                                     </button>
-                                    <a href="#" onclick="return export_excel()"><li name="export" class="btn btn-success search-btn-excel"><b>&nbsp;导出&nbsp;</b></li></a>
-                                    <a href="#"><li class="btn btn-info search-btn-excel" onclick="return asset_import()"><b>&nbsp;导入&nbsp;</b></li></a>
+                                    <a href="#" onclick="return export_excel()" class="btn btn-success search-btn-excel">&nbsp;导出&nbsp;</a>
+                                    <a href="#" class="btn btn-info search-btn-excel" onclick="return asset_import()">&nbsp;导入&nbsp;</a>
 
                                 </div>
                             </div>
@@ -180,7 +180,7 @@
                                         <td>{{ host.memory }}</td>
                                         <td>{{ host.idc }}</td>
                                         <td class="text-center" data-editable='false'>
-                                        <a class="btn btn-sm btn-info" target="_blank" href="{% url 'webssh' host.id %}" class="btn btn-xs btn-info">SSH</a>
+                                        <a class="btn btn-sm btn-info" target="_blank" href="{% url 'webssh' host.id %}">SSH</a>
                                         <a href="#"><li class="btn btn-sm btn-info" onclick="return tanchu(this.value)" value="{{ host.id }}">编辑</li></a>
                                         <a value="{% url 'asset_del' %}?id={{ host.id }}" class="btn btn-sm btn-danger asset_del">删除</a>
                                     </td>
@@ -231,21 +231,21 @@ function tanchu(n){
     closeBtn: 1,
     area: ['700px', '550px'],
     shadeClose: true, //点击遮罩关闭
-    content: ['/cmdb/assetedit/' + n,],
-    end:function(){
-            var handle_status = $("#handle_status").val();
-            if ( handle_status == '1' ) {
-                layer.msg('保存成功！',{
-                    icon: 1,
-                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
-                });
-            } else if ( handle_status == '2' ) {
-                layer.msg('修改失败！',{
-                    icon: 2,
-                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
-                });
-            }
-        }
+    content: ['/cmdb/assetedit/' + n],
+{#    end:function(){#}
+{#            var handle_status = $("#handle_status").val();#}
+{#            if ( handle_status == '1' ) {#}
+{#                layer.msg('保存成功！',{#}
+{#                    icon: 1,#}
+{#                    time: 2000 //2秒关闭（如果不配置，默认是3秒）#}
+{#                });#}
+{#            } else if ( handle_status == '2' ) {#}
+{#                layer.msg('修改失败！',{#}
+{#                    icon: 2,#}
+{#                    time: 2000 //2秒关闭（如果不配置，默认是3秒）#}
+{#                });#}
+{#            }#}
+{#        }#}
   });
 }
 </script>
@@ -344,6 +344,7 @@ function asset_import(){
             });
         }
     });
+
 </script>
 
 {% endblock %}
