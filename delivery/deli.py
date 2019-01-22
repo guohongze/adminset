@@ -19,7 +19,12 @@ from cmdb.api import pages
 @permission_verify()
 def delivery_list(request):
     all_project = []
-    all_project = Delivery.objects.all()
+    if request.user.is_superuser:
+        all_project = Delivery.objects.all()
+    else:
+        projects = request.user.role.delivery.all()
+        for p in projects:
+            all_project.append(Delivery.objects.get(job_name=p))
     page_len = request.GET.get('page_len', '')
     deploys_list, p, deploys, page_range, current_page, show_first, show_end, end_page = pages(all_project, request)
     return render(request, 'delivery/delivery_list.html', locals())

@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from cmdb.models import HostGroup
-from delivery.models import Delivery
+from appconf.models import Project
 # Create your models here.
 
 
@@ -20,7 +20,7 @@ class RoleList(models.Model):
     # permission = models.ManyToManyField(PermissionList, null=True, blank=True)
     permission = models.ManyToManyField(PermissionList, blank=True)
     webssh = models.ManyToManyField(HostGroup, blank=True)
-    delivery = models.ManyToManyField(Delivery, blank=True)
+    delivery = models.ManyToManyField(Project, blank=True)
 
     def __unicode__(self):
         return self.name
