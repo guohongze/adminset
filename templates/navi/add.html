@@ -6,7 +6,7 @@
         showhide(1);
     }
     function showhide(n) {
-        var box = document.getElementById("navi");
+        var box = document.getElementById("navilist");
         box.className="active";
     }
 </script>
@@ -48,7 +48,7 @@
         {% csrf_token %}
         {{ n_form.as_p }}
         <input type="submit" class="btn btn-primary" style="width: 60pt" value="提交">&nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="{% url 'navi' %}"><li style="width: 60pt" class="btn btn-primary" value="">返回</li></a><br>
+        <a href="{% url 'navi' %}" style="width: 60pt" class="btn btn-primary" value="">返回</a><br>
       </form>
         </div>
         <!-- /.box-body -->

@@ -16,7 +16,11 @@
       </a>
         <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
           <ul class="nav navbar-nav">
+          {% if request.user.is_superuser %}
             <li id="navimanage" style="font-size: medium"><a href="{% url 'navimanage' %}"><b>管理站点</b></a></li>
+          {% else %}
+            <li id="navimanage" style="font-size: medium; display: none"><a href="{% url 'navimanage' %}"><b>管理站点</b></a></li>
+          {% endif %}
           </ul>
         </div>
       <!-- Navbar Right Menu -->
