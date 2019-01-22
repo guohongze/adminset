@@ -27,7 +27,7 @@
             <div class="box">
                 <div class="box-header">
                   <div class="btn-group">
-						 <a href="{% url 'naviadd' %}" class="btn btn-default">添加</a>
+						 <a id="naviadd" style="display: none" href="{% url 'naviadd' %}" class="btn btn-default">添加</a>
                   </div>
                 </div>
                 <!-- /.box-header -->
@@ -61,7 +61,7 @@
                             </tbody>
                   </table>
                 <div class="btn-group">
-						 <button class="btn btn-default" onclick="return checkSubmit()">删除</button>
+						 <button id="navidel" class="btn btn-default" onclick="return checkSubmit()">删除</button>
                   </div>
                 </div>
             </div>
@@ -112,7 +112,7 @@ function tanchu(n){
     closeBtn: 1,
     area: ['600px', '400px'],
     shadeClose: true, //点击遮罩关闭
-    content: ['/naviedit?id=' + n,],
+    content: ['/navi/naviedit?id=' + n],
     end:function(){
             var handle_status = $("#handle_status").val();
             if ( handle_status == '1' ) {
