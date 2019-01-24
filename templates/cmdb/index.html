@@ -49,10 +49,10 @@
         {% csrf_token %}
             <div class="box">
                 <div class="box-header">
-                    <div class="col-sm-2" style="padding-left: 0">
-						 <a href="{% url 'asset_add' %}"><li class="btn btn-success" ><b>添加设备</b></li></a>
+                    <div class="col-md-2" style="padding-left: 0">
+						 <a id="assetadd" style="display: none" href="{% url 'asset_add' %}" class="btn btn-success">添加设备</a>
                   </div>
-                <div class="col-sm-5" style="padding-left: 0px">
+                <div class="btn-group col-md-6" style="padding-left: 0">
                             <label>
                                 <select name="idc" class="form-control m-b input-sm" onchange="change_info()">
                                     <option value="">机房</option>
@@ -105,20 +105,20 @@
                                 </select>
                             </label>
                         </div>
-                    <div class="col-sm-4" style="padding-right: 0;">
+                    <div class="btn-group col-md-4" style="padding-right: 0;">
                              <div class="input-group inline-group padding-right: 10px">
                                 <input type="text" class="form-control m-b " id="search_input" name="keyword" value="{{ keyword }}" placeholder="Search">
-                                <input type="text" style="display: none">
-                                <div class="input-group-btn ">
-                                    <button id='search_btn' href="{% url 'cmdb' %}?search=true" type="button" class="btn btn-primary "  onclick="change_info()">
+{#                                <input type="text" style="display: none">#}
+                                <div class="input-group-btn">
+                                    <button href="{% url 'cmdb' %}?search=true" type="button" class="btn btn-primary "  onclick="change_info()">
                                         &nbsp;搜索&nbsp;
                                     </button>
-                                    <a href="#" onclick="return export_excel()" class="btn btn-success search-btn-excel">&nbsp;导出&nbsp;</a>
-                                    <a href="#" class="btn btn-info search-btn-excel" onclick="return asset_import()">&nbsp;导入&nbsp;</a>
-
+                                    <a id="assetexport" style="display: none" href="#" onclick="return export_excel()" class="btn btn-success">&nbsp;导出&nbsp;</a>
+                                    <a id="assetimport" style="display: none" href="#" class="btn btn-info" onclick="return asset_import()">&nbsp;导入&nbsp;</a>
                                 </div>
-                            </div>
                         </div>
+                        <div></div>
+                            </div>
                         <div id="export"></div>
                 </div>
 
@@ -180,11 +180,13 @@
                                         <td>{{ host.memory }}</td>
                                         <td>{{ host.idc }}</td>
                                         <td class="text-center" data-editable='false'>
-                                        <a class="btn btn-sm btn-info" target="_blank" href="{% url 'webssh' host.id %}">SSH</a>
-                                        <a href="#" class="btn btn-sm btn-info" onclick="return tanchu({{ host.id }})">编辑</a>
-                                        <a value="{% url 'asset_del' %}?id={{ host.id }}" class="btn btn-sm btn-danger asset_del">删除</a>
-                                    </td>
-                                    </tr>
+                                            <div align="center">
+                                            <a id="webssh" style="display: none; float: left; margin: auto;" class="btn btn-sm btn-info" target="_blank" href="{% url 'webssh' host.id %}">SSH</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <a id="assetedit" style="display: none; float:left; margin: auto;" href="#" class="btn btn-sm btn-info" onclick="return tanchu({{ host.id }})">编辑</a>
+{#                                        <a value="{% url 'asset_del' %}?id={{ host.id }}" class="btn btn-sm btn-danger asset_del">删除</a>#}
+                                            </div>
+                                        </td>
+                                        </tr>
                                 {% endfor %}
                             </tbody>
                   </table>
@@ -192,7 +194,7 @@
                     {% include 'paginator.html' %}
                 </div>
                     <div class="btn-group">
-                        <input type="button" id="asset_del" class="btn btn-danger"   name="del_button" value="删除设备"/>
+                        <a id="assetdel" class="btn btn-danger" style="display: none"  name="del_button">删除设备</a>
                     </div>
                 </div>
             </div>
@@ -327,7 +329,7 @@ function asset_import(){
         });
 </script>
 <script>
-    $('#asset_del').click(function () {
+    $('#assetdel').click(function () {
         var asset_id_all = getIDall();
         if (asset_id_all == ''){
             alert("请至少选择一行!");

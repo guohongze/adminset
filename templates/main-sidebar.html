@@ -12,16 +12,40 @@
             $(this).css('display','block');
         }
       });
+      $("button").each(function(){
+        if($(this).attr('id')){
+            $(this).css('display','block');
+        }
+      });
     {% else %}
         $.get('/accounts/permission/user_permission/',function(data){
             if (data) {
                 var obj = data.split(",");
-                for (var i=0;i<obj.length;i++){
-                    try {
-                        document.getElementById(obj[i]).style.display="block";
-                        } catch (e) {
-                        // Handle all the error things
-                        }
+{#                for (var i=0;i<obj.length;i++){#}
+{#                    try {#}
+{#                        document.getElementById(obj[i]).style.display="block";#}
+{#                        } catch (e) {#}
+{#                        // Handle all the error things#}
+{#                        }#}
+{#                }#}
+                var x;
+                for (x in obj) {
+                  $("a").each(function(){
+                    if($(this).attr('id') == obj[x]){
+                        $(this).css('display','block');
+                    }
+                  });
+                  $("li").each(function(){
+                    if($(this).attr('id') == obj[x]){
+                        $(this).css('display','block');
+                    }
+                  });
+                  $("button").each(function(){
+                    if($(this).attr('id') == obj[x]){
+                        $(this).css('display','block');
+                    }
+                  });
+
                 }
             }
         });

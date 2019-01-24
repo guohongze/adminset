@@ -41,6 +41,7 @@
                                     <th>名称</th>
                                     <th>注释</th>
                                     <th>URL</th>
+                                    <th>操作</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -49,9 +50,10 @@
                                     <tr class="even gradeA">
                                         <td><input type="checkbox" id="u_id" class="item1" value="{{ navi.id }}" name="navi_check" /></td>
                                         <input type="hidden" name="u_name" value="{{ navi.name }}">
-                                        <td><a href="#"><li style="list-style-type:none" onclick="return tanchu(this.value)" value="{{ navi.id }}">{{ navi.name }}</li></a></td>
+                                        <td>{{ navi.name }}</td>
                                         <td>{{ navi.description }}</td>
                                         <td>{{ navi.url }}</td>
+                                        <td><a id="naviedit" style="display: none" class="btn btn-sm btn-info" href="#" onclick="return tanchu({{ navi.id }})">编辑</a></td>
                                     </tr>
                                 {% endfor %}
                                 {% else %}
@@ -61,7 +63,7 @@
                             </tbody>
                   </table>
                 <div class="btn-group">
-						 <button id="navidel" class="btn btn-default" onclick="return checkSubmit()">删除</button>
+						 <button id="navidel" style="display: none" class="btn btn-default" onclick="return checkSubmit()">删除</button>
                   </div>
                 </div>
             </div>
