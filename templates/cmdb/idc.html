@@ -29,7 +29,7 @@
             <div class="box">
                 <div class="box-header">
                     <div class="btn-group">
-						 <a href="{% url 'idc_add' %}"><li class="btn btn-success" ><b>添加机房</b></li></a>
+						 <a id="idcadd" href="{% url 'idc_add' %}" class="btn btn-success" style="display: none">添加机房</a>
                   </div>
                 </div>
                 <!-- /.box-header -->
@@ -61,8 +61,8 @@
                                         <td>{{ idc.contact_phone }}</td>
                                         <td>{{ idc.memo }}</td>
                                         <td>
-                                            <a href="{% url "idc_edit" idc.id %}"><span class="btn btn-sm btn-info">编辑</span></a>
-                                            <a href="{% url "idc_del"%}?id={{ idc.id }}" onclick="return confirm('确认删除？')"><span class="btn btn-sm btn-danger ">删除</span></a>
+                                            <a id="idcedit" href="{% url "idc_edit" idc.id %}" class="btn btn-sm btn-info" style="display: none;margin: auto;float: left">编辑</a>
+{#                                            <a href="{% url "idc_del"%}?id={{ idc.id }}" onclick="return confirm('确认删除？')"><span class="btn btn-sm btn-danger ">删除</span></a>#}
                                         </td>
                                     </tr>
                                 {% endfor %}
@@ -72,7 +72,7 @@
                             </tbody>
                   </table>
                     <div class="btn-group">
-						 <button class="btn btn-danger" style="width: 60pt;font-size: medium" onclick="return checkSubmit()"><b>删除</b></button>
+						 <button id="idcdel" class="btn btn-danger" style="width: 60pt;display: none" onclick="return checkSubmit()">删除机房</button>
                     </div>
                 </div>
             </div>
