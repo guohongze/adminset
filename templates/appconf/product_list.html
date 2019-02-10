@@ -30,8 +30,8 @@
                 {% csrf_token %}
             <div class="box">
                 <div class="box-header">
-                    <div class="col-sm-2" style="padding-left: 0">
-						 <a href="{% url 'product_add' %}"><li class="btn btn-success" ><b>添加产品线</b></li></a>
+                    <div class="btn btn-group" style="padding-left: 0">
+						 <a id="productadd" style="display: none;" class="btn btn-success" href="{% url 'product_add' %}">添加产品线</a>
                   </div>
                 </div>
 
@@ -59,15 +59,16 @@
                                     <td>{{ product.owner.name }} </td>
                                     <td>{{ product.owner.phone }} </td>
                                     <td>
-                                        <a href="{% url "product_edit" product.id %}"><span class="btn btn-sm btn-info">编辑</span></a>
-                                        <a href="{% url "product_del"%}?id={{ product.id }}" onclick="return confirm('确认删除产品线吗？')"><span class="btn btn-sm btn-danger ">删除</span></a>
+                                        <a id="productedit" style="display: none; float:left; margin: auto;" href="{% url "product_edit" product.id %}"><span class="btn btn-sm btn-info">编辑</span></a>
+                                        <a id="productdel" style="display: none; float:left; margin: auto;" href="{% url "product_del"%}?id={{ product.id }}"><span class="btn btn-sm btn-danger ">删除</span></a>
+{#                                        onclick="return confirm('确认删除？')"#}
                                     </td>
                                 </tr>
                             {% endfor %}
                             </tbody>
                   </table>
                   <div class="btn-group">
-                      <input type="button" id="product_del" class="btn btn-danger"   name="del_button" value="删除产品线"/>
+                      <input type="button" id="productdel" class="btn btn-danger"   name="del_button" value="删除产品线"/>
                   </div>
                 </div>
             </div>
@@ -83,18 +84,18 @@
       "searching": true,
       "ordering": true,
       "info": true,
-      "autoWidth": true
+      "bAutoWidth": false
     });
   });
 </script>
 
 <script>
-    $('#product_del').click(function () {
+    $('#productdel').click(function () {
         var product_id_all = getIDall();
-        if (product_id_all == ''){
-            alert("请至少选择一行!");
-            return false;
-        }
+{#        if (product_id_all == ''){#}
+{#            alert("请至少选择一行!");#}
+{#            return false;#}
+{#        }#}
         if (confirm("确定删除?")) {
             $.ajax({
                 type: "post",
