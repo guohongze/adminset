@@ -12,6 +12,7 @@ import datetime
 from cmdb.api import str2gb
 from delivery.models import Delivery
 
+
 @login_required()
 @permission_verify()
 def project_list(request):
@@ -25,15 +26,16 @@ def project_list(request):
 @login_required
 @permission_verify()
 def project_del(request):
-    project_id = request.GET.get('project_id', '')
+    project_id = request.GET.get('id', '')
     if project_id:
         Project.objects.filter(id=project_id).delete()
 
-    project_id_all = str(request.POST.get('project_id_all', ''))
-    if project_id_all:
-        for project_id in project_id_all.split(','):
-            Project.objects.filter(id=project_id).delete()
-
+    if request.method == 'POST':
+        project_items = request.POST.getlist('g_check', [])
+        if project_items:
+            for n in project_items:
+                Project.objects.filter(id=n).delete()
+    # all_product = Project.objects.all()
     return HttpResponseRedirect(reverse('project_list'))
 
 

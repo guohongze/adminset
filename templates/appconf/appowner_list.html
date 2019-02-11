@@ -67,7 +67,7 @@
                             </tbody>
                   </table>
                   <div class="btn-group">
-                      <button id="appownerdel" class="btn btn-danger"   name="del_button">删除负责人</button>
+{#                      <button id="appownerdel" class="btn btn-danger"   name="del_button">删除负责人</button>#}
                   </div>
                 </div>
             </div>
@@ -83,26 +83,26 @@
       "searching": true,
       "ordering": true,
       "info": true,
-      "autoWidth": true
+      "bAutoWidth": false
     });
   });
 </script>
 
-<script>
-    $('#appownerdel').click(function () {
-        var appowner_id_all = getIDall();
-
-            if (confirm("确定删除?")) {
-                $.ajax({
-                    type: "post",
-                    data: {appowner_id_all: appowner_id_all,csrfmiddlewaretoken: '{{ csrf_token }}'},
-                    url: "{% url 'appowner_del' %}",
-                    success: function () {
-                        parent.location.reload();
-                    }
-                });
-            }
-    });
-</script>
+{#<script>#}
+{#    $('#appownerdel').click(function () {#}
+{#        var appowner_id_all = getIDall();#}
+{##}
+{#            if (confirm("确定删除?")) {#}
+{#                $.ajax({#}
+{#                    type: "post",#}
+{#                    data: {appowner_id_all: appowner_id_all,csrfmiddlewaretoken: '{{ csrf_token }}'},#}
+{#                    url: "{% url 'appowner_del' %}",#}
+{#                    success: function () {#}
+{#                        parent.location.reload();#}
+{#                    }#}
+{#                });#}
+{#            }#}
+{#    });#}
+{#</script>#}
 
 {% endblock %}
