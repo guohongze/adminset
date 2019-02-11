@@ -40,7 +40,8 @@
                 {{ field.errors }}
                 {% if field.html_name == "owner" %}
                     {{ field.label_tag }} {{ field }}
-                    <a href="#" onclick="return popWin()"><li class="btn btn-success" ><b>添加负责人</b></li></a>
+                    <div class="btn btn-group"></div>
+                    <a id="appowneraddmini" style="display: none;" href="#" onclick="return popWin()"><li class="btn btn-success" ><b>添加负责人</b></li></a>
                 {% else %}
                     {{ field.label_tag }} {{ field }}
                 {% endif %}

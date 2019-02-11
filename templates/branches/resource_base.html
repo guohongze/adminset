@@ -47,7 +47,9 @@
                 {{ field.errors }}
                 {% if field.html_name == "owner" %}
                     {{ field.label_tag }} {{ field }}
-                    <a href="#" onclick="return popWin()"><li class="btn btn-success" ><b>添加负责人</b></li></a>
+                    <div class="btn btn-group">
+                        <a href="#" onclick="return popWin()"><li class="btn btn-success" ><b>添加负责人</b></li></a>
+                    </div>
                 {% else %}
                     {{ field.label_tag }} {{ field }}
                 {% endif %}
@@ -79,7 +81,7 @@ function popWin(){
       title: '项目列表',
       area: ['700px', '500px'],
       shadeClose: true, //点击遮罩关闭
-      content: ['/appconf/appowner/add/mini/'],
+      content: ['/appconf/appowneraddmini/'],
       end:function(){
             var handle_status = $("#handle_status").val();
             if ( handle_status == '1' ) {
