@@ -198,6 +198,7 @@
                         <a id="assetdel" class="btn btn-danger" style="display: none"  name="del_button">删除设备</a>
                     </div>
                 </div>
+            </div>
         </form>
     </section>
         <!-- /.content -->
@@ -331,10 +332,10 @@ function asset_import(){
 <script>
     $('#assetdel').click(function () {
         var asset_id_all = getIDall();
-{#        if (asset_id_all == ''){#}
-{#            alert("请至少选择一行!");#}
-{#            return false;#}
-{#        }#}
+        if (asset_id_all == ''){
+            alert("请至少选择一行!");
+            return false;
+        }
         if (confirm("确定删除?")) {
             $.ajax({
                 type: "post",

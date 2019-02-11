@@ -26,12 +26,13 @@ def product_del(request):
     if product_id:
         Product.objects.filter(id=product_id).delete()
 
-    product_id_all = str(request.POST.get('product_id_all', ''))
-    if product_id_all:
-        for product_id in product_id_all.split(','):
-            Product.objects.filter(id=product_id).delete()
-
-    return HttpResponseRedirect(reverse('product_list'))
+    if request.method == 'POST':
+        product_items = request.POST.getlist('g_check', [])
+        if product_items:
+            for n in product_items:
+                Product.objects.filter(id=n).delete()
+    all_product = Product.objects.all()
+    return render(request, "appconf/product_list.html", locals())
 
 
 @login_required
