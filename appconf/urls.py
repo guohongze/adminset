@@ -23,5 +23,5 @@ urlpatterns = [
     url(r'^authinfoaddmini/$', authinfo.authinfo_add_mini, name='authinfo_add_mini'),
     url(r'^authinfo/$', authinfo.authinfo_list, name='authinfo_list'),
     url(r'^authinfoedit/(?P<authinfo_id>\d+)/$', authinfo.authinfo_edit, name='authinfo_edit'),
-    url(r'^authinfodelete/$', authinfo.authinfo_del, name='authinfo_del'),
+    url(r'^authinfodel/$', authinfo.authinfo_del, name='authinfo_del'),
 ]
