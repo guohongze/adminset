@@ -34,8 +34,8 @@
                 {% csrf_token %}
             <div class="box">
                 <div class="box-header">
-                    <div class="col-sm-2" style="padding-left: 0">
-						 <a href="{% url 'role_add' %}"><li class="btn btn-success" ><b>添加角色</b></li></a>
+                    <div class="btn btn-group" style="padding-left: 0">
+						 <a id="roleadd" class="btn btn-success" style="display: none;" href="{% url 'role_add' %}">添加角色</a>
                   </div>
                 </div>
 
@@ -54,8 +54,8 @@
                                     <td>{{ i.name }} </td>
 
                                     <td>
-                                        <a href="{% url "role_edit" i.id %}"><span class="btn btn-sm btn-info">编辑</span></a>
-                                        <a href="{% url "role_del" i.id %}" onclick="return confirm('确认删除角色吗？？')"><span class="btn btn-sm btn-danger ">删除</span></a>
+                                        <a id="roleedit" style="display: none; float: left; margin: auto;" href="{% url "role_edit" i.id %}"><span class="btn btn-sm btn-info">编辑</span></a>
+                                        <a id="roledel" style="display: none; float: left; margin: auto;" href="{% url "role_del" i.id %}" onclick="return confirm('确认删除？')"><span class="btn btn-sm btn-danger ">删除</span></a>
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -78,7 +78,7 @@
       "searching": true,
       "ordering": true,
       "info": true,
-      "autoWidth": true
+      "bAutoWidth": false
     });
   });
 </script>

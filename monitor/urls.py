@@ -5,9 +5,9 @@ from monitor import system, manage, api
 
 urlpatterns = [
     url(r'^system/$', system.index, name='monitor'),
-    url(r'^delall/$', manage.drop_sys_info, name='drop_all'),
+    url(r'^manage/delall/$', manage.drop_sys_info, name='drop_all'),
     url(r'^hosttree/$', system.tree_node, name='host_tree'),
-    url(r'^delrange/(?P<timing>[0-9])/$', manage.del_monitor_data, name='del_monitor_data'),
+    url(r'^manage/delrange/(?P<timing>[0-9])/$', manage.del_monitor_data, name='del_monitor_data'),
     url(r'^manage/$', manage.index, name='monitor_manage'),
     url(r'^system/(?P<hostname>.+)/(?P<timing>\d+)/$', system.host_info, name='host_info'),
     url(r'^getcpu/(?P<hostname>.+)/(?P<timing>\d+)/$', system.get_cpu, name='get_cpu'),

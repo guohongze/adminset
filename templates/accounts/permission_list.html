@@ -33,8 +33,8 @@
         <form action="" method="post" id="permission_form">
             <div class="box">
                 <div class="box-header">
-                    <div class="col-sm-2" style="padding-left: 0">
-						 <a href="{% url 'permission_add' %}"><li class="btn btn-success" ><b>添加权限</b></li></a>
+                    <div class="btn btn-group" style="padding-left: 0">
+						 <a id="permadd" style="display: none;" href="{% url 'permission_add' %}"><li class="btn btn-success" ><b>添加权限</b></li></a>
                   </div>
                 </div>
 
@@ -55,8 +55,8 @@
                                     <td>{{ i.url }} </td>
 
                                     <td>
-                                        <a href="{% url "permission_edit" i.id %}"><span class="btn btn-sm btn-info">编辑</span></a>
-                                        <a href="{% url "permission_del" i.id %}" onclick="return confirm('确认删除角色吗？？')"><span class="btn btn-sm btn-danger">删除</span></a>
+                                        <a id="permedit" style="display: none; float: left; margin: auto;" href="{% url "permission_edit" i.id %}"><span class="btn btn-sm btn-info">编辑</span></a>
+                                        <a id="permdel" style="display: none; float: left; margin: auto;" href="{% url "permission_del" i.id %}" onclick="return confirm('确认删除？')"><span class="btn btn-sm btn-danger">删除</span></a>
                                     </td>
                                 </tr>
                             {% endfor %}
