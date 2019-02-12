@@ -11,7 +11,7 @@
     function showhide(n) {
         var box = document.getElementById("setup");
         box.className="active";
-        var box2 = document.getElementById("job_list");
+        var box2 = document.getElementById("joblist");
         box2.className="active";
     }
 </script>
@@ -24,21 +24,8 @@
 
     <!-- Main content -->
     <section class="content">
-        <div class="btn-group btn-group-lg">
-             <a href="{% url 'job_list' %}"><li class="btn btn-default .btn-flat"><b>任务列表</b></li></a>
-        </div>
-        <div class="btn-group btn-group-lg">
-             <a href="{% url 'job_interval_list' %}"><li class="btn btn-default .btn-flat" ><b>Interval</b></li></a>
-        </div>
-        <div class="btn-group btn-group-lg">
-             <a href="{% url 'job_crontab_list' %}"><li class="btn btn-default .btn-flat" ><b>Crontab</b></li></a>
-        </div>
-        <div class="btn-group btn-group-lg">
-             <a href="{% url 'job_result_list' %}"><li class="btn btn-default .btn-flat" ><b>任务结果</b></li></a>
-        </div>
-        <div class="btn-group btn-group-lg">
-             <a href="{% url 'job_backend' %}"><li class="btn btn-default .btn-flat active" ><b>后台管理</b></li></a>
-        </div>
+    {% include 'setup/setup_navbar.html' %}
+
       <div class="row">
         <div class="col-md-12">
           <div class="box box-info">

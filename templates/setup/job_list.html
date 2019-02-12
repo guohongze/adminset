@@ -8,10 +8,10 @@
     function init() {
         showhide(2);
     }
-    function showhide(n) {
+    function showhide() {
         var box = document.getElementById("setup");
         box.className="active";
-        var box2 = document.getElementById("job_list");
+        var box2 = document.getElementById("joblist");
         box2.className="active";
     }
 </script>
@@ -24,21 +24,7 @@
 
     <!-- Main content -->
     <section class="content">
-        <div class="btn-group btn-group-lg">
-             <a href="{% url 'job_list' %}"><li class="btn btn-default .btn-flat active"><b>任务列表</b></li></a>
-        </div>
-        <div class="btn-group btn-group-lg">
-             <a href="{% url 'job_interval_list' %}"><li class="btn btn-default .btn-flat" ><b>Interval</b></li></a>
-        </div>
-        <div class="btn-group btn-group-lg">
-             <a href="{% url 'job_crontab_list' %}"><li class="btn btn-default .btn-flat" ><b>Crontab</b></li></a>
-        </div>
-        <div class="btn-group btn-group-lg">
-             <a href="{% url 'job_result_list' %}"><li class="btn btn-default .btn-flat" ><b>任务结果</b></li></a>
-        </div>
-        <div class="btn-group btn-group-lg">
-             <a href="{% url 'job_backend' %}"><li class="btn btn-default .btn-flat" ><b>后台管理</b></li></a>
-        </div>
+    {% include 'setup/setup_navbar.html' %}
         <form action="{% url 'job_del' %}" method="post">
                     {% csrf_token %}
             <div class="box box-info">
@@ -46,7 +32,7 @@
                 </div>
                 <div class="box-header">
                     <div class="btn-group">
-						 <a href="{% url 'job_add' %}"><li class="btn btn-success" ><b>新建任务</b></li></a>
+						 <a id="jobadd" style="display: none;" class="btn btn-success" href="{% url 'job_add' %}">新建任务</a>
                   </div>
                 </div>
                 <!-- /.box-header -->
@@ -84,7 +70,7 @@
                             </tbody>
                   </table>
                     <div class="btn-group">
-						 <button class="btn btn-danger" style="width: 60pt;font-size: medium" onclick="return checkSubmit()"><b>删除</b></button>
+						 <button id="jobdel" class="btn btn-danger" style="display: none" onclick="return checkSubmit()">删除任务</button>
                     </div>
                 </div>
             </div>

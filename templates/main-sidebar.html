@@ -21,13 +21,6 @@
         $.get('/accounts/permission/user_permission/',function(data){
             if (data) {
                 var obj = data.split(",");
-{#                for (var i=0;i<obj.length;i++){#}
-{#                    try {#}
-{#                        document.getElementById(obj[i]).style.display="block";#}
-{#                        } catch (e) {#}
-{#                        // Handle all the error things#}
-{#                        }#}
-{#                }#}
                 var x;
                 for (x in obj) {
                   $("a").each(function(){
@@ -111,7 +104,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li id="job_list" style="display: none"><a href="{% url 'job_list' %}"><span>&nbsp;&nbsp;&nbsp;&nbsp;Crontab</span></a></li>
+            <li id="joblist" style="display: none"><a href="{% url 'job_list' %}"><span>&nbsp;&nbsp;&nbsp;&nbsp;Crontab</span></a></li>
             <li id="ansible" style="display: none"><a href="{% url 'ansible' %}"><span>&nbsp;&nbsp;&nbsp;&nbsp;Ansible</span></a></li>
             <li id="shell" style="display: none"><a href="{% url 'shell' %}"><span>&nbsp;&nbsp;&nbsp;&nbsp;Shell</span></a></li>
           </ul>

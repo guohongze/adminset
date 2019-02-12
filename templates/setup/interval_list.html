@@ -11,7 +11,7 @@
     function showhide(n) {
         var box = document.getElementById("setup");
         box.className="active";
-        var box2 = document.getElementById("job_list");
+        var box2 = document.getElementById("joblist");
         box2.className="active";
     }
 </script>
@@ -24,21 +24,8 @@
 
     <!-- Main content -->
     <section class="content">
-                    <div class="btn-group btn-group-lg">
-						 <a href="{% url 'job_list' %}"><li class="btn btn-default .btn-flat" ><b>任务列表</b></li></a>
-                    </div>
-                    <div class="btn-group btn-group-lg">
-						 <a href="{% url 'job_interval_list' %}"><li class="btn btn-default .btn-flat active" ><b>Interval</b></li></a>
-                    </div>
-                    <div class="btn-group btn-group-lg">
-						 <a href="{% url 'job_crontab_list' %}"><li class="btn btn-default .btn-flat" ><b>Crontab</b></li></a>
-                    </div>
-                    <div class="btn-group btn-group-lg">
-                         <a href="{% url 'job_result_list' %}"><li class="btn btn-default .btn-flat" ><b>任务结果</b></li></a>
-                    </div>
-                    <div class="btn-group btn-group-lg">
-                         <a href="{% url 'job_backend' %}"><li class="btn btn-default .btn-flat" ><b>后台管理</b></li></a>
-                    </div>
+    {% include 'setup/setup_navbar.html' %}
+
         <form action="{% url 'job_interval_del' %}" method="post">
                     {% csrf_token %}
             <div class="box box-info">
@@ -46,7 +33,7 @@
                 </div>
                 <div class="box-header">
                     <div class="btn-group">
-						 <a href="{% url 'job_interval_add' %}"><li class="btn btn-success" ><b>新建间隔</b></li></a>
+						 <a id="jobintervaladd" style="display: none;" class="btn btn-success" href="{% url 'job_interval_add' %}">新建间隔</a>
                   </div>
                 </div>
                 <!-- /.box-header -->
@@ -76,7 +63,7 @@
                             </tbody>
                   </table>
                     <div class="btn-group">
-						 <button class="btn btn-danger" style="width: 60pt;font-size: medium" onclick="return checkSubmit()"><b>删除</b></button>
+						 <button id="jobintervaldel" class="btn btn-danger" style="width: 60pt;font-size: medium" onclick="return checkSubmit()">删除间隔</button>
                     </div>
                 </div>
             </div>
@@ -127,7 +114,7 @@ function tanchu(n){
   title: '信息修改',
   area: ['600px', '350px'],
   shadeClose: true, //点击遮罩关闭
-  content: ['/setup/intervaledit/' + n],
+  content: ['/setup/jobintervaledit/' + n],
   end:function(){
         var handle_status = $("#handle_status").val();
         if ( handle_status == '1' ) {
