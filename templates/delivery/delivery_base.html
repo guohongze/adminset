@@ -11,8 +11,6 @@
         function init() {
             var box = document.getElementById("delivery");
             box.className="active";
-            var box2 = document.getElementById("delivery_list");
-            box2.className="active";
         }
     </script>
 
@@ -42,7 +40,9 @@
                 {{ field.errors }}
                 {% if field.html_name == "auth" %}
                     {{ field.label_tag }} {{ field }}
-                    <a href="#" onclick="return popWin()"><li class="btn btn-success" ><b>添加认证</b></li></a>
+                    <div class="btn btn-group">
+                        <a id="authinfoaddmini" style="display: none;" href="#" onclick="return popWin()"><li class="btn btn-success" ><b>添加认证</b></li></a>
+                    </div>
                 {% else %}
                     {{ field.label_tag }} {{ field }}
                 {% endif %}

@@ -14,7 +14,7 @@
         function init() {
             var box = document.getElementById("delivery");
             box.className="active";
-            var box2 = document.getElementById("delivery_list");
+            var box2 = document.getElementById("delivery");
             box2.className="active";
         }
     </script>
@@ -38,8 +38,8 @@
                 {% csrf_token %}
             <div class="box">
                 <div class="box-header">
-                    <div class="col-sm-2" style="padding-left: 0">
-						 <a href="{% url 'delivery_add' %}"><li class="btn btn-success" ><b>添加项目</b></li></a>
+                    <div class="btn btn-group" style="padding-left: 0">
+						 <a id="deliadd" style="display: none;" href="{% url 'delivery_add' %}"><li class="btn btn-success" ><b>添加项目</b></li></a>
                   </div>
                 </div>
             <div class="col-md-5">
@@ -112,12 +112,12 @@
                                     </td>
                                     <td>{{ project.deploy_policy }} </td>
                                     <td>
-                                        <a href="#"><li onclick="return deploy(this.value);" class="btn btn-sm btn-default" value="{{ project.job_name_id }}">部署</li></a>
-                                        <a href="#"><li style="list-style-type:none" class="btn btn-sm btn-default" onclick="return tanchu(this.value)" value="{{ project.job_name_id  }}">日志</li></a>
-                                        <a href="#"><li style="list-style-type:none" class="btn btn-sm btn-default" onclick="return logs_history(this.value)" value="{{ project.job_name_id  }}">历史</li></a>
-                                        <a href="#"><li onclick="return tanchu_edit(this.value) " value="{{ project.job_name_id  }}" class="btn btn-sm btn-default">编辑</li></a>
-                                        <a href="#"><li onclick="return taskstop(this.value);" class="btn btn-sm btn-default" value="{{ project.job_name_id }}">清理</li></a>
-                                        <a href="{% url "delivery_del"%}?project_id={{ project.id }}" onclick="return confirm('确认删除项目吗？')"><span class="btn btn-sm btn-danger ">删除</span></a>
+                                        <a id="delideploy" style="display: none; float: left; margin: auto;" href="#"><li onclick="return deploy(this.value);" class="btn btn-sm btn-default" value="{{ project.job_name_id }}">部署</li></a>
+                                        <a id="delilog" style="display: none; float: left; margin: auto;" href="#"><li style="list-style-type:none" class="btn btn-sm btn-default" onclick="return tanchu(this.value)" value="{{ project.job_name_id  }}">日志</li></a>
+                                        <a id="delilogshistory" style="display: none; float: left; margin: auto;" href="#"><li style="list-style-type:none" class="btn btn-sm btn-default" onclick="return logs_history(this.value)" value="{{ project.job_name_id  }}">历史</li></a>
+                                        <a id="deliedit" style="display: none; float: left; margin: auto;" href="#"><li onclick="return tanchu_edit(this.value) " value="{{ project.job_name_id  }}" class="btn btn-sm btn-default">编辑</li></a>
+                                        <a id="delitaskstop" style="display: none; float: left; margin: auto;" href="#"><li onclick="return taskstop(this.value);" class="btn btn-sm btn-default" value="{{ project.job_name_id }}">清理</li></a>
+                                        <a id="delidel" style="display: none; float: left; margin: auto;" href="{% url "delivery_del"%}?project_id={{ project.id }}" onclick="return confirm('确认删除项目吗？')"><span class="btn btn-sm btn-danger ">删除</span></a>
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -127,7 +127,7 @@
                     {% include 'paginator.html' %}
                 </div>
                   <div class="btn-group">
-                      <input type="button" id="project_del" class="btn btn-danger"   name="del_button" value="删除项目"/>
+{#                      <input type="button" id="project_del" class="btn btn-danger"   name="del_button" value="删除项目"/>#}
                   </div>
                 </div>
             </div>
@@ -144,7 +144,7 @@
         "searching": true,
         "ordering": true,
         "info": false,
-        "autoWidth": true
+        "bAutoWidth": false
     });
   });
 </script>

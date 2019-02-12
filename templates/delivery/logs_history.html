@@ -29,13 +29,13 @@
                             {% for log in logs_history %}
                                 <tr class="even gradeX">
                                     <td><a href="/delivery/deligetlogs/{{ project_id }}/{{ log }}/">{{ log }}</a></td>
-                                    <td><a href="{% url "log_del" %}?project_id={{ project.id }}&logname={{ log }}" onclick="return confirm('确认删除项目吗？')"><span class="btn btn-sm btn-danger ">删除</span></a></td>
+                                    <td><a id="logdel" style="display: none;" href="{% url "log_del" %}?project_id={{ project.id }}&logname={{ log }}" onclick="return confirm('确认删除项目吗？')"><span class="btn btn-sm btn-danger ">删除</span></a></td>
                                 </tr>
                             {% endfor %}
                             </tbody>
                   </table>
                   <div class="btn-group">
-                      <a href="{% url "log_delall" %}?project_id={{ project_id }}" onclick="return confirm('删除所有？')"><span class="btn btn-sm btn-danger ">删除全部</span></a>
+                      <a id="logdelall" style="logdelall" href="{% url "log_delall" %}?project_id={{ project_id }}" onclick="return confirm('删除所有？')"><span class="btn btn-sm btn-danger ">删除全部</span></a>
                   </div>
                 </div>
         </div>
