@@ -168,11 +168,11 @@ class RoleListForm(forms.ModelForm):
         super(RoleListForm,self).__init__(*args, **kwargs)
         self.fields['name'].label = u'名 称'
         self.fields['name'].error_messages = {'required': u'请输入名称'}
-        self.fields['permission'].label = u'URL'
+        self.fields['permission'].label = u'用户授权'
         self.fields['permission'].required = False
-        self.fields['webssh'].label = u'授权组'
+        self.fields['webssh'].label = u'WEBSSH授权'
         self.fields['webssh'].required = False
-        self.fields['delivery'].label = u'授权部署'
+        self.fields['delivery'].label = u'部署授权'
         self.fields['delivery'].required = False
 
 
