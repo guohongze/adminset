@@ -1,4 +1,4 @@
-django==1.11.19
+django==1.11.18
 tornado==5.1.1
 sh==1.12.9
 mysqlclient==1.3.12
