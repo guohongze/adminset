@@ -46,7 +46,7 @@ def job_add(request):
             a_form.save()
             tips = u"增加成功！"
             display_control = ""
-            return redirect("/setup/job/list/")
+            return redirect("/setup/joblist/")
         else:
             tips = u"增加失败！"
             display_control = ""
@@ -116,7 +116,7 @@ def job_interval_add(request):
             a_form.save()
             tips = u"增加成功！"
             display_control = ""
-            return redirect("/setup/job/interval/list/")
+            return redirect("/setup/jobintervallist/")
         else:
             tips = u"增加失败！"
             display_control = ""
@@ -174,7 +174,7 @@ def job_crontab_add(request):
             a_form.save()
             tips = u"增加成功！"
             display_control = ""
-            return redirect("/setup/job/crontab/list/")
+            return redirect("/setup/jobcrontablist/")
         else:
             tips = u"增加失败！"
             display_control = ""
