@@ -9,12 +9,13 @@
     一、服务器安装：
         1.1、下载代码
             git clone https://github.com/guohongze/adminset.git
-        1.2、执行安装脚本-自动
+        1.2、执行安装脚本-自动（推荐安装方式）
             adminset/install/server/auto_install.sh
-            如果使用自动安装则手动安装跳过,如果手动安装则跳过此步。
+            如果手动安装则跳过此步。
+            关闭防火墙
             访问：http://your_server_ip
             使用用户名admin 密码Adminset123
-        1.3、执行安装脚本-手动(不建议)
+        1.3、执行安装脚本-手动(不建议，如果使用自动安装则跳过此步骤)
             1.3.1 adminset/install/server/server_install.sh
             安装过程需要输入管理员数据库等交互信息，如果安装中断再次执行server_install.sh即可.
             安装过程中会生成rsa密钥，位于/root/.ssh 目录下，如果已经存在，忽略即可。
