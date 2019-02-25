@@ -49,13 +49,25 @@
     </section>
 
   </div>
+
     <script>
         var demo1 = $('select[name="permission"]').bootstrapDualListbox({
               nonSelectedListLabel: '可选择权限',
               selectedListLabel: '已选择权限',
               preserveSelectionOnMove: 'moved',
-              moveOnSelect: false,
+              moveOnSelect: false
+        });
+        var demo2 = $('select[name="webssh"]').bootstrapDualListbox({
+              nonSelectedListLabel: '可选属组',
+              selectedListLabel: '已选属组',
+              preserveSelectionOnMove: 'moved',
+              moveOnSelect: false
+        });
+        var demo3 = $('select[name="delivery"]').bootstrapDualListbox({
+              nonSelectedListLabel: '可选部署',
+              selectedListLabel: '已选部署',
+              preserveSelectionOnMove: 'moved',
+              moveOnSelect: false
         });
     </script>
-
 {% endblock %}
