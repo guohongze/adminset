@@ -10,7 +10,7 @@ class AuthInfo(models.Model):
     username = models.CharField(u"用户名", max_length=50, blank=True)
     password = models.CharField(u"密码", max_length=50, blank=True)
     deploy_port = models.IntegerField(u"端口", default=22)
-    private_key = models.CharField(u"密钥", max_length=100, blank=True)
+    private_key = models.CharField(u"密钥", max_length=2048, blank=True)
     memo = models.TextField(u"备注信息", max_length=200, blank=True)
 
     def __unicode__(self):
