@@ -82,7 +82,7 @@ def playbook(request):
                             logging.info("Role:"+r)
                         f.writelines(flist)
                     cmd = "ansible-playbook"+" " + ansible_dir+'/gexec.yml'
-                    p = Popen(cmd, stderr=PIPE, stdout=PIPE)
+                    p = Popen(cmd, stderr=PIPE, stdout=PIPE, shell=True)
                     data = p.communicate()
                     ret.append(data)
                     for d in data:
@@ -98,7 +98,7 @@ def playbook(request):
                         f.writelines(flist)
                         f.close()
                         cmd = "ansible-playbook"+" " + playbook_dir + p
-                        pcmd = Popen(cmd, stdout=PIPE, stderr=PIPE)
+                        pcmd = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
                         data = pcmd.communicate()
                         ret.append(data)
                         logging.info("==========ansible tasks start==========")
