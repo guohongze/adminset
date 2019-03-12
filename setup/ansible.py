@@ -72,9 +72,8 @@ def playbook(request):
         pbook = request.POST.getlist('splaybook', [])
         roles = request.POST.getlist('mroles', [])
         role_vars = request.POST.get('mvars')
-        r = GetRedis()
-        res = r.connect()
-        res.set("ansible_status", 1)
+        res = GetRedis.connect()
+        res.set("ansible_{0}".format(request.user.username), 1)
         task_exec(request, host, group, pbook, roles, role_vars, write_role_vars)
 
     return HttpResponse("ok")
@@ -99,12 +98,11 @@ def execlog2(request):
 
 @login_required()
 def exec_status(request, exec_type):
-    r = GetRedis()
-    res = r.connect()
+    r = GetRedis.connect()
     if exec_type == "1":
-        data = res.get("ansible_status")
+        data = r.get("ansible_{0}".format(request.user.username))
     elif exec_type == "2":
-        data = res.get("shell_status")
+        data = r.get("shell_{0}".format(request.user.username))
     else:
         data = False
     return HttpResponse(data)

@@ -85,7 +85,9 @@
                 <textarea id="mvars" name="mvars" class="form-control" placeholder="enter key for spilting vars" rows="3"></textarea>
               </div>
               <!-- /.form-group -->
-            <input type="button" id="playbook_submit" class="btn btn-primary" value="执行">
+            <div class="btn btn-group" style="padding-left: 0">
+            <a id="playbook_submit" class="btn btn-primary" href="{% url 'execlog2' %}" target="myframe">执行任务</a>
+               </div>
                 <!-- /.form-group -->
 
             <div class="btn btn-group" style="padding-left: 0">
@@ -99,9 +101,7 @@
               <div class="form-group">
               <!-- /.form-group -->
                 <div class="right">
-{#                    {% include 'setup/results.html' %}#}
-{#                    <a href="{% url 'execlog2' %}" target="myframe"><li id="execlink">显示结果</li></a>#}
-                    <iframe name="myframe" id="myframe" style="display: none" width="550" height="400" frameborder="0" src="{% url 'execlog2' %}"></iframe>
+                    <iframe name="myframe" id="myframe" style="display: none" width="550" height="400" frameborder="0"></iframe>
                 </div>
             </div>
             <!-- /.col -->

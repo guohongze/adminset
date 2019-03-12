@@ -35,7 +35,9 @@ class GetRedis(object):
     port = get_dir("redis_port")
     db = get_dir("redis_db")
     password = get_dir("redis_password")
-    def connect(self):
-        conn = redis.StrictRedis(host=self.host, port=self.port,
-                                 password=self.password, db=self.db)
+
+    @classmethod
+    def connect(cls):
+        conn = redis.StrictRedis(host=cls.host, port=cls.port,
+                                 password=cls.password, db=cls.db)
         return conn

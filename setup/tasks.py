@@ -38,9 +38,7 @@ def script(host, name):
 @shared_task
 def task_exec(request, host, group, pbook, roles, role_vars, write_role_vars):
     ret = []
-    r = GetRedis()
-    res = r.connect()
-    res.set("ansible_status", 1)
+    res = GetRedis.connect()
     if host:
         if roles:
             if role_vars:
@@ -82,7 +80,7 @@ def task_exec(request, host, group, pbook, roles, role_vars, write_role_vars):
                     for d in data:
                         logging.info(d)
                     logging.info("==========ansible tasks end============")
-        res.set("ansible_status", 0)
+        res.set("ansible_{0}".format(request.user.username), 0)
         return True
 
     if group:
@@ -128,5 +126,5 @@ def task_exec(request, host, group, pbook, roles, role_vars, write_role_vars):
                     for d in data:
                         logging.info(d)
                     logging.info("==========ansible tasks end============")
-        res.set("ansible_status", 0)
+        res.set("ansible_{0}".format(request.user.username), 0)
         return True
