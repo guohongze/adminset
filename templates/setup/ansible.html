@@ -215,7 +215,8 @@ function sync(){
     layer.open({
     title: '同步数据',
     content: '将资产管理中的数据同步到Ansible Hosts文件',
-    btn: '确定同步',
+{#    btn: '确定同步',#}
+{#    closeBtn: 1, #}
     yes:function(){
         $.ajax({
                 type: "post",

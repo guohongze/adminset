@@ -5,7 +5,7 @@ from subprocess import Popen, PIPE
 from cmdb.models import Host, HostGroup
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-import os, json
+import os, json, sh, datetime
 from config.views import get_dir
 from django.contrib.auth.decorators import login_required
 from accounts.permission import permission_verify
@@ -137,6 +137,11 @@ def ansible_command(request):
 @login_required()
 @permission_verify()
 def host_sync(request):
+    # backup old ansible hosts file
+    old_hosts = ansible_dir + "/hosts"
+    now = datetime.datetime.now().strftime('%Y_%m_%d_%H_%M')
+    sh.scp(old_hosts, ansible_dir +"/hosts_adminset_backup_{0}".format(now))
+
     group = HostGroup.objects.all()
     ansible_file = open(ansible_dir+"/hosts", "wb")
     all_host = Host.objects.all()
