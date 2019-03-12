@@ -39,13 +39,17 @@ def script(host, name):
 def task_exec(request, host, group, pbook, roles, role_vars, write_role_vars):
     ret = []
     res = GetRedis.connect()
+    #write real time ansible display log
+    logging.info("==========ansible tasks start==========")
+    logging.info("User:"+request.user.username)
+    with open(log_path + "/ansible.log", 'wb+') as f:
+        f.writelines("==========ansible tasks start==========\n")
     if host:
         if roles:
             if role_vars:
                 write_role_vars(roles, role_vars)
             for h in host:
-                with open(log_path + "/ansible.log", 'wb+') as f:
-                    f.writelines("==========ansible tasks start==========\n")
+                # wirte ansible-play yaml file
                 with open(ansible_dir + '/gexec.yml', 'w+') as f:
                     flist = ['- hosts: '+h+'\n', '  remote_user: root\n', '  gather_facts: true\n', '  roles:\n']
                     for r in roles:
@@ -57,9 +61,10 @@ def task_exec(request, host, group, pbook, roles, role_vars, write_role_vars):
                 p = Popen(cmd, stderr=PIPE, stdout=PIPE, shell=True)
                 data = p.communicate()
                 ret.append(data)
+                for d in data:
+                    logging.info(d)
                 with open(log_path + "/ansible.log", 'ab+') as f1:
                     f1.writelines(data)
-                    f1.writelines("==========ansible tasks end============")
         else:
             for h in host:
                 for p in pbook:
@@ -73,13 +78,13 @@ def task_exec(request, host, group, pbook, roles, role_vars, write_role_vars):
                     pcmd = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
                     data = pcmd.communicate()
                     ret.append(data)
-                    logging.info("==========ansible tasks start==========")
-                    logging.info("User:"+request.user.username)
-                    logging.info("host:"+h)
-                    logging.info("Playbook:"+p)
+                    with open(log_path + "/ansible.log", 'ab+') as f2:
+                        f2.writelines(data)
                     for d in data:
                         logging.info(d)
-                    logging.info("==========ansible tasks end============")
+        with open(log_path + "/ansible.log", 'ab+') as f3:
+            f3.writelines("==========ansible tasks end============")
+        logging.info("==========ansible tasks end============")
         res.set("ansible_{0}".format(request.user.username), 0)
         return True
 
