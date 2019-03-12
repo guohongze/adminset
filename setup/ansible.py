@@ -22,11 +22,6 @@ level = get_dir("log_level")
 log_path = get_dir("log_path")
 log("setup.log", level, log_path)
 
-redis_host = get_dir("redis_host")
-redis_password = get_dir("redis_password")
-redis_port = get_dir("redis_port")
-redis_db = get_dir("redis_db")
-
 def write_role_vars(roles, vargs):
 
     r_vars = vargs.split('\r\n')
@@ -79,7 +74,7 @@ def playbook(request):
     return HttpResponse("ok")
 
 @login_required()
-def execlog(request):
+def ansibleinfo(request):
     ret = []
     try:
         log_file = "/var/opt/adminset/logs/ansible.log"
@@ -93,7 +88,7 @@ def execlog(request):
     return HttpResponse(ret)
 
 @login_required()
-def execlog2(request):
+def logpage(request):
     return render(request, 'setup/results.html')
 
 @login_required()

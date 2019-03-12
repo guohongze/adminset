@@ -166,7 +166,7 @@
     ssh-copy-id -i /root/.ssh/id_rsa.pub {客户机IP}
     输入客户机密码后认证成功可以ssh免密登入
 
-    CMDB自动上报主机以后，在ansible页面执行"同步数据"按钮 将主机信息写入ansible的hosts文件
+    CMDB自动上报主机以后，在ansible页面执行"同步数据"按钮 将主机信息写入ansible的hosts文件(源hosts文件会被备份到ansible所在目录)
     然后将playbook 或是role脚本上传到/var/opt/adminset/data/playbook 或/var/opt/adminset/data/roles
 
 #   shell用法

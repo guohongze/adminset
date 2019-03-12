@@ -73,7 +73,7 @@
     var v1 = window.setInterval("status()",2000);
 
     function status() {
-            $.get("/setup/execlog/",function(data){
+            $.get("/setup/ansibleinfo/",function(data){
                 document.getElementById("log_ret").innerHTML = data;
                 //滚动条自动向下滑动
                 $(function(){

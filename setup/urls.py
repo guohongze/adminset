@@ -28,7 +28,7 @@ urlpatterns = [
     url(r'^playbook/$', ansible.playbook, name='playbook'),
     url(r'^ansiblecmd/$', ansible.ansible_command, name='acommand'),
     url(r'^hostsync/$', ansible.host_sync, name='host_sync'),
-    url(r'^execlog/$', ansible.execlog, name='execlog'),
-    url(r'^execlog2/$', ansible.execlog2, name='execlog2'),
+    url(r'^ansibleinfo/$', ansible.ansibleinfo, name='ansibleinfo'),
+    url(r'^logpage/$', ansible.logpage, name='logpage'),
     url(r'^execstatus/(?P<exec_type>\d+)/$', ansible.exec_status, name='exec_status'),
 ]
