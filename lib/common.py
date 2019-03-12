@@ -3,7 +3,7 @@
 from django.http import HttpResponse
 from config.views import get_dir
 import json
-
+import redis
 
 def token_verify():
 
@@ -28,3 +28,14 @@ def token_verify():
         return _wrapped_view
 
     return decorator
+
+
+class GetRedis(object):
+    host = get_dir("redis_host")
+    port = get_dir("redis_port")
+    db = get_dir("redis_db")
+    password = get_dir("redis_password")
+    def connect(self):
+        conn = redis.StrictRedis(host=self.host, port=self.port,
+                                 password=self.password, db=self.db)
+        return conn

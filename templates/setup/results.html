@@ -1,0 +1,77 @@
+{#{% load mytags %}#}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% include 'link_css.html' %}
+    {% include 'head_script.html' %}
+</head>
+<body>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+    </section>
+
+    <!-- Main content -->
+
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="box">
+
+        <div class="box-body">
+
+        <div id="log_ret">
+        </div>
+        <div id="loading" style="display: block;">
+            <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+            <span class="sr-only">Loading...</span>
+
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+          <i class="fa fa-info-circle"></i>
+        </div>
+        <!-- /.box-footer-->
+      </div>
+      <!-- /.box -->
+</div>
+    </section>
+
+  </div>
+</body>
+<script>
+    var v1 = window.setInterval("status()",2000);
+    var v2 = window.setInterval("get_status()",2000);
+
+
+    function get_status() {
+        $.get("/setup/execstatus/1/",function(data){
+            if (data == "0") {
+                window.clearInterval(v1);
+                document.getElementById("loading").style.display="none";
+            }
+            else if (data == "1") {
+                var v1 = window.setInterval("status()",2000);
+                document.getElementById("loading").style.display="block";
+            }
+        });
+    }
+
+    function status() {
+            $.get("/setup/execlog/",function(data){
+                document.getElementById("log_ret").innerHTML = data;
+                //滚动条自动向下滑动
+                $(function(){
+                      var h = $(document).height()-$(window).height();
+                      $(document).scrollTop(h);
+                });
+            });
+
+    }
+
+</script>
+</html>
+
+

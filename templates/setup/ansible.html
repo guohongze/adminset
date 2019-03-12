@@ -28,9 +28,6 @@
     <section class="content">
       <div class="box box-default">
         <div class="box-header with-border">
-            <div class="btn btn-group" style="padding-left: 0">
-                 <a id="hostsync" style="display: none;" class="btn btn-success" href="#" onclick="return sync();">同步数据</a>
-            </div>
           <div class="box-tools pull-right">
           </div>
         </div>
@@ -38,8 +35,8 @@
         <div class="box-body">
           <div class="row">
 
-            <div class="col-md-6">
-            <form action="{% url 'playbook' %}" method="post">
+            <div class="col-md-5">
+            <form id="form1" action="#" method="post">
                     {% csrf_token %}
               <div class="form-group">
                 <label>选择主机</label>
@@ -85,11 +82,15 @@
                                   password: 1234567<br>
                                   webport: 8080<br>
                                   shutdown: 8005"></span>
-                <textarea id="mvars" name="mvars" class="form-control" placeholder="enter key for spilting vars" rows="4"></textarea>
+                <textarea id="mvars" name="mvars" class="form-control" placeholder="enter key for spilting vars" rows="3"></textarea>
               </div>
               <!-- /.form-group -->
-            <input type="submit" id="playbook_submit" class="btn btn-primary" style="width: 60pt; font-size: medium;" value="执行">
+            <input type="button" id="playbook_submit" class="btn btn-primary" value="执行">
                 <!-- /.form-group -->
+
+            <div class="btn btn-group" style="padding-left: 0">
+                 <a id="hostsync" style="display: none;" class="btn btn-success" href="#" onclick="return sync();">同步数据</a>
+            </div>
             </form>
             </div>
             <!-- /.col -->
@@ -97,15 +98,11 @@
             <div class="col-md-6">
               <div class="form-group">
               <!-- /.form-group -->
-              <form action="{% url 'acommand' %}" method="post">
-                          {% csrf_token %}
-              <div class="form-group ">
-                  <label>Ansible Command</label>
-                  <textarea style="padding-bottom: 15px;" id="mcommand" name="mcommand" rows="11" class="form-control" placeholder="use enter spilt and command like: ansible web -a 'ls'"></textarea>
+                <div class="right">
+{#                    {% include 'setup/results.html' %}#}
+{#                    <a href="{% url 'execlog2' %}" target="myframe"><li id="execlink">显示结果</li></a>#}
+                    <iframe name="myframe" id="myframe" style="display: none" width="550" height="400" frameborder="0" src="{% url 'execlog2' %}"></iframe>
                 </div>
-                  <input type="submit" id="command_submit" class="btn btn-primary" style="width: 60pt; font-size: medium;" value="执行">
-                <!-- /.form-group -->
-                  </form>
             </div>
             <!-- /.col -->
           </div>
@@ -148,10 +145,13 @@
         }
         var obj = $('#mcommand').val();
 
-        if(confirm("确认执行"+obj+'?'))
+        if(confirm("确认执行"+obj+'?')){
+
             var index = layer.load(1, {
                 shade: [0.5,'#f4f4f4'] //0.1透明度的白色背景
             });
+        }
+
         else
             return false;
     });
@@ -169,10 +169,25 @@
     var obj = $('#mserver').val() || $('#mgroup').val();
     var act = $('#mroles').val() || $('#splaybook').val();
 
-    if(confirm("确定在"+obj+"上执行"+act+"？"))
-        var index = layer.load(1, {
-            shade: [0.5,'#f4f4f4'] //0.1透明度的白色背景
-        });
+    if(confirm("确定在"+obj+"上执行"+act+"？")) {
+{#        var index = layer.load(1, {#}
+{#            shade: [0.5,'#f4f4f4'] //0.1透明度的白色背景#}
+{#        });#}
+            document.getElementById("myframe").style.display="block";
+        $.ajax({
+            //几个参数需要注意一下
+                type: "POST",//方法类型
+                dataType: "json",//预期服务器返回的数据类型
+                url: "{% url 'playbook' %}",
+                data: $('#form1').serialize(),
+                success: function (result) {
+                    console.log(result);//打印服务端返回的数据(调试用)
+                },
+                error : function() {
+{#                    alert("执行异常！");#}
+                }
+            });
+    }
     else
         return false;
 
@@ -211,5 +226,10 @@ function sync(){
         }
     });
 }
+</script>
+<script>
+function login() {
+
+        }
 </script>
 {% endblock %}
