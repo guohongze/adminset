@@ -1,15 +1,15 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 from cmdb.models import Host, HostGroup
-from django.shortcuts import render
-from subprocess import Popen, PIPE
-import sh
+from django.shortcuts import render, HttpResponse
 from config.views import get_dir
 from django.contrib.auth.decorators import login_required
 from accounts.permission import permission_verify
 from lib.log import log
 from lib.setup import get_scripts
-import logging
+from lib.common import GetRedis
+from setup.tasks import shell_task
+import os
 scripts_dir = get_dir("s_path")
 level = get_dir("log_level")
 log_path = get_dir("log_path")
@@ -28,94 +28,37 @@ def index(request):
 @login_required()
 @permission_verify()
 def exec_scripts(request):
-    ret = []
+    if os.path.exists(log_path + '/shell.log'):
+        os.remove(log_path + '/shell.log')
     if request.method == 'POST':
         server = request.POST.getlist('mserver', [])
         group = request.POST.getlist('mgroup', [])
         scripts = request.POST.getlist('mscripts', [])
         args = request.POST.getlist('margs')
-        command = request.POST.get('mcommand')
-        if server:
-            if scripts:
-                for name in server:
-                    host = Host.objects.get(hostname=name)
-                    ret.append(host.hostname)
-                    logging.info("==========Shell Start==========")
-                    logging.info("User:"+request.user.username)
-                    logging.info("Host:"+host.hostname)
-                    for s in scripts:
-                        try:
-                            sh.scp(scripts_dir+s, "root@{}:/tmp/".format(host.ip)+s)
-                        except:
-                            pass
-                        cmd = "ssh root@"+host.ip+" "+'"sh /tmp/{} {}"'.format(s, args)
-                        p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
-                        data = p.communicate()
-                        ret.append(data)
-                        logging.info("Scripts:"+s)
-                        for d in data:
-                            logging.info(d)
-                    logging.info("==========Shell End============")
-            else:
-                for name in server:
-                    host = Host.objects.get(hostname=name)
-                    ret.append(host.hostname)
-                    logging.info("==========Shell Start==========")
-                    logging.info("User:"+request.user.username)
-                    logging.info("Host:"+host.hostname)
-                    command_list = command.split('\n')
-                    for cmd in command_list:
-                        cmd = "ssh root@"+host.ip+" "+'"{}"'.format(cmd)
-                        p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
-                        data = p.communicate()
-                        ret.append(data)
-                        logging.info("command:"+cmd)
-                        for d in data:
-                            logging.info(d)
-                    logging.info("==========Shell End============")
-        if group:
-            if scripts:
-                for g in group:
-                    logging.info("==========Shell Start==========")
-                    logging.info("User:"+request.user.username)
-                    logging.info("Group:"+g)
-                    get_group = HostGroup.objects.get(name=g)
-                    hosts = get_group.serverList.all()
-                    ret.append(g)
-                    for host in hosts:
-                        ret.append(host.hostname)
-                        for s in scripts:
-                            try:
-                                sh.scp(scripts_dir+s, "root@{}:/tmp/".format(host.ip)+s)
-                            except:
-                                pass
-                            cmd = "ssh root@"+host.ip+" "+'"sh /tmp/{} {}"'.format(s, args)
-                            p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
-                            data = p.communicate()
-                            ret.append(data)
-                            logging.info("command:"+cmd)
-                            for d in data:
-                                logging.info(d)
-                    logging.info("==========Shell End============")
-            else:
-                command_list = []
-                command_list = command.split('\n')
-                for g in group:
-                    logging.info("==========Shell Start==========")
-                    logging.info("User:"+request.user.username)
-                    logging.info("Group:"+g)
-                    get_group = HostGroup.objects.get(name=g)
-                    hosts = get_group.serverList.all()
-                    ret.append(g)
-                    for host in hosts:
-                        ret.append(host.hostname)
-                        for cmd in command_list:
-                            cmd = "ssh root@"+host.ip+" "+'"{}"'.format(cmd)
-                            p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
-                            data = p.communicate()
-                            ret.append(data)
-                            logging.info("command:"+cmd)
-                            for d in data:
-                                logging.info(d)
-                    logging.info("==========Shell End============")
-        return render(request, 'setup/shell_result.html', locals())
+        shell_command = request.POST.get('mcommand')
+
+        #connect redis for record shell running status
+        res = GetRedis.connect()
+        res.set("shell_{0}".format(request.user.username), 1)
+        # run async shell tasks
+        shell_task(request, server, group, scripts, args, shell_command)
+
+        return HttpResponse("ok")
+
+@login_required()
+def shellinfo(request):
+    ret = []
+    try:
+        log_file = "/var/opt/adminset/logs/shell.log"
+        with open(log_file, 'r+') as f:
+            line = f.readlines()
+        for l in line:
+            a = l + "<br>"
+            ret.append(a)
+    except IOError:
+        ret = "Shell is running please waiting<br>"
+    return HttpResponse(ret)
+
+@login_required()
+def logpage(request):
+    return render(request, 'setup/shell_result.html')

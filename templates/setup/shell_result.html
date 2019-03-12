@@ -1,20 +1,13 @@
-{% extends 'base.html' %}
-{% load mytags %}
-{% block content %}
-<script>
-    window.onload=init;
-    function init() {
-        showhide(3);
-    }
-    function showhide(n) {
-        var box = document.getElementById("setup");
-        box.className="active";
-        var box2 = document.getElementById("shell");
-        box2.className="active";
-    }
-</script>
-
-  <div class="content-wrapper">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% include 'link_css.html' %}
+    {% include 'head_script.html' %}
+</head>
+<body>
+<div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
     </section>
@@ -25,27 +18,53 @@
 
       <!-- Default box -->
       <div class="box">
-        <div class="box-header with-border">
-          <h3 class="box-title">执行结果</h3>
 
-          <div class="box-tools pull-right">
-          </div>
-        </div>
         <div class="box-body">
-        {% for d in ret %}
-        <p>{{ d|res_splict|safe }}</p><br>
-        {% endfor %}
+
+        <div id="log_ret">
+        </div>
+        <div id="loading" style="display: block;">
+            <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
+            <span class="sr-only">Loading...</span>
+
         </div>
         <!-- /.box-body -->
-       <a href="{% url 'shell' %}"> <li class="btn btn-primary" style="width: 60pt">返回</li></a>
         <div class="box-footer">
           <i class="fa fa-info-circle"></i>
         </div>
         <!-- /.box-footer-->
       </div>
       <!-- /.box -->
-
+</div>
     </section>
 
   </div>
-{% endblock %}
+</body>
+<script>
+    var v1 = window.setInterval("status()",2000);
+
+    function status() {
+            $.get("/setup/shellinfo/",function(data){
+                document.getElementById("log_ret").innerHTML = data;
+                //滚动条自动向下滑动
+                $(function(){
+                      var h = $(document).height()-$(window).height();
+                      $(document).scrollTop(h);
+                });
+            });
+
+            $.get("/setup/execstatus/2/",function(data){
+                var ret = JSON.parse(data);
+                if (ret == "0") {
+                    // stop the v1 timer 停用计时器以减少查询
+                    window.clearInterval(v1);
+                    document.getElementById("loading").innerHTML = "<hr>";
+
+                }
+
+            });
+    }
+</script>
+</html>
+
+

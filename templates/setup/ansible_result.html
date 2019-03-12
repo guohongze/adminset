@@ -1,4 +1,3 @@
-{#{% load mytags %}#}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,34 +41,6 @@
   </div>
 </body>
 <script>
-{#    var v1 = window.setInterval("status()",2000);#}
-{#    var v2 = window.setInterval("get_status()",2000);#}
-{##}
-{##}
-{#    function get_status() {#}
-{#        $.get("/setup/execstatus/1/",function(data){#}
-{#            if (data == "0") {#}
-{#                window.clearInterval(v1);#}
-{#                document.getElementById("loading").style.display="none";#}
-{#            }#}
-{#            else if (data == "1") {#}
-{#                var v1 = window.setInterval("status()",2000);#}
-{#                document.getElementById("loading").style.display="block";#}
-{#            }#}
-{#        });#}
-{#    }#}
-{##}
-{#    function status() {#}
-{#            $.get("/setup/execlog/",function(data){#}
-{#                document.getElementById("log_ret").innerHTML = data;#}
-{#                //滚动条自动向下滑动#}
-{#                $(function(){#}
-{#                      var h = $(document).height()-$(window).height();#}
-{#                      $(document).scrollTop(h);#}
-{#                });#}
-{#            });#}
-{##}
-{#    }#}
     var v1 = window.setInterval("status()",2000);
 
     function status() {

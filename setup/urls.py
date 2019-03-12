@@ -26,9 +26,10 @@ urlpatterns = [
     url(r'^jobresultedit/(?P<ids>\d+)/$', jobs.job_result_edit, name='job_result_edit'),
     url(r'^scriptsexec/$', shell.exec_scripts, name='exec_scripts'),
     url(r'^playbook/$', ansible.playbook, name='playbook'),
-    url(r'^ansiblecmd/$', ansible.ansible_command, name='acommand'),
     url(r'^hostsync/$', ansible.host_sync, name='host_sync'),
     url(r'^ansibleinfo/$', ansible.ansibleinfo, name='ansibleinfo'),
-    url(r'^logpage/$', ansible.logpage, name='logpage'),
+    url(r'^ansiblepage/$', ansible.logpage, name='ansiblepage'),
+    url(r'^shellinfo/$', shell.shellinfo, name='shellinfo'),
+    url(r'^shellpage/$', shell.logpage, name='shellpage'),
     url(r'^execstatus/(?P<exec_type>\d+)/$', ansible.exec_status, name='exec_status'),
 ]

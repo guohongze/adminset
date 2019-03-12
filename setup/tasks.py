@@ -3,8 +3,8 @@
 from __future__ import absolute_import, unicode_literals
 from celery import shared_task
 from subprocess import Popen, PIPE
-from cmdb.models import Host
-import sh, os
+from cmdb.models import Host, HostGroup
+import sh
 from config.views import get_dir
 import logging
 from lib.log import log
@@ -36,7 +36,7 @@ def script(host, name):
 
 
 @shared_task
-def task_exec(request, host, group, pbook, roles, role_vars, write_role_vars):
+def ansible_task(request, host, group, pbook, roles, role_vars, write_role_vars):
     ret = []
     res = GetRedis.connect()
     #write real time ansible display log
@@ -65,7 +65,7 @@ def task_exec(request, host, group, pbook, roles, role_vars, write_role_vars):
                     logging.info(d)
                 with open(log_path + "/ansible.log", 'ab+') as f1:
                     f1.writelines("===============================\n")
-                    f1.writelines("==========Host: {0}============\n".format(h))
+                    f1.writelines("Host: {0}\n".format(h))
                     f1.writelines("===============================\n")
                     f1.writelines(data)
         else:
@@ -83,7 +83,7 @@ def task_exec(request, host, group, pbook, roles, role_vars, write_role_vars):
                     ret.append(data)
                     with open(log_path + "/ansible.log", 'ab+') as f2:
                         f2.writelines("===============================\n")
-                        f2.writelines("==========Host: {0}============\n".format(h))
+                        f2.writelines("Host: {0}\n".format(h))
                         f2.writelines("===============================\n")
                         f2.writelines(data)
                     for d in data:
@@ -113,7 +113,7 @@ def task_exec(request, host, group, pbook, roles, role_vars, write_role_vars):
                 ret.append(data)
                 with open(log_path + "/ansible.log", 'ab+') as f4:
                     f4.writelines("===============================\n")
-                    f4.writelines("==========Group: {0}============\n".format(g))
+                    f4.writelines("Group: {0}\n".format(g))
                     f4.writelines("===============================\n")
                     f4.writelines(data)
                 for d in data:
@@ -133,13 +133,113 @@ def task_exec(request, host, group, pbook, roles, role_vars, write_role_vars):
                     ret.append(data)
                     with open(log_path + "/ansible.log", 'ab+') as f5:
                         f5.writelines("===============================\n")
-                        f5.writelines("==========Group: {0}============\n".format(g))
+                        f5.writelines("Group: {0}\n".format(g))
                         f5.writelines("===============================\n")
                         f5.writelines(data)
                     for d in data:
                         logging.info(d)
-        with open(log_path + "/ansible.log", 'ab+') as f3:
-            f3.writelines("==========ansible tasks end============")
+        with open(log_path + "/ansible.log", 'ab+') as f6:
+            f6.writelines("==========ansible tasks end============")
         logging.info("==========ansible tasks end============")
         res.set("ansible_{0}".format(request.user.username), 0)
         return True
+
+@shared_task()
+def shell_task(request, server, group, scripts, args, shell_command):
+    ret = []
+    res = GetRedis.connect()
+    #write real time ansible display log
+    logging.info("==========Shell Tasks Start==========\n")
+    logging.info("User:"+request.user.username)
+    with open(log_path + "/shell.log", 'wb+') as f:
+        f.writelines("==========Shell Tasks Start==========\n")
+    if server:
+        if scripts:
+            for name in server:
+                host = Host.objects.get(hostname=name)
+                ret.append(host.hostname)
+                logging.info("Host:"+host.hostname)
+                with open(log_path + "/shell.log", 'ab+') as f7:
+                    f7.writelines("===============================\n")
+                    f7.writelines("Host: {0}\n".format(host.hostname))
+                    f7.writelines("===============================\n")
+                for s in scripts:
+                    try:
+                        sh.scp(scripts_dir+s, "root@{}:/tmp/".format(host.ip)+s)
+                    except:
+                        pass
+                    cmd = "ssh root@"+host.ip+" "+'"sh /tmp/{} {}"'.format(s, args)
+                    p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
+                    data = p.communicate()
+                    ret.append(data)
+                    logging.info("Scripts:"+s)
+                    for d in data:
+                        logging.info(d)
+                    with open(log_path + "/shell.log", 'ab+') as f7:
+                        f7.writelines(data)
+        else:
+            for name in server:
+                host = Host.objects.get(hostname=name)
+                ret.append(host.hostname)
+                command_list = shell_command.split('\n')
+                with open(log_path + "/shell.log", 'ab+') as f8:
+                    f8.writelines("=====Host: {0}=====\n".format(host.hostname))
+                for cmd in command_list:
+                    dcmd = "ssh root@"+host.ip+" "+'"{}"'.format(cmd.strip())
+                    p = Popen(dcmd, stdout=PIPE, stderr=PIPE, shell=True)
+                    data = p.communicate()
+                    ret.append(data)
+                    logging.info("command:"+cmd)
+                    for d in data:
+                        logging.info(d)
+                    with open(log_path + "/shell.log", 'ab+') as f10:
+                        f10.writelines(data)
+    if group:
+        if scripts:
+            for g in group:
+                get_group = HostGroup.objects.get(name=g)
+                hosts = get_group.serverList.all()
+                ret.append(g)
+                for host in hosts:
+                    ret.append(host.hostname)
+                    for s in scripts:
+                        try:
+                            sh.scp(scripts_dir+s, "root@{}:/tmp/".format(host.ip)+s)
+                        except:
+                            pass
+                        cmd = "ssh root@"+host.ip+" "+'"sh /tmp/{} {}"'.format(s, args)
+                        p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
+                        data = p.communicate()
+                        ret.append(data)
+                        with open(log_path + "/shell.log", 'ab+') as f11:
+                            f11.writelines(data)
+                        logging.info("command:"+cmd)
+                        for d in data:
+                            logging.info(d)
+        else:
+            command_list = []
+            command_list = shell_command.split('\n')
+            for g in group:
+                logging.info("==========Shell Start==========")
+                logging.info("User:"+request.user.username)
+                logging.info("Group:"+g)
+                get_group = HostGroup.objects.get(name=g)
+                hosts = get_group.serverList.all()
+                ret.append(g)
+                for host in hosts:
+                    ret.append(host.hostname)
+                    for cmd in command_list:
+                        cmd = "ssh root@"+host.ip+" "+'"{}"'.format(cmd)
+                        p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
+                        data = p.communicate()
+                        ret.append(data)
+                        with open(log_path + "/shell.log", 'ab+') as f12:
+                            f12.writelines(data)
+                        logging.info("command:"+cmd)
+                        for d in data:
+                            logging.info(d)
+    with open(log_path + "/shell.log", 'ab+') as f6:
+        f6.writelines("==========Shell Tasks Finished==========")
+    logging.info("==========Shell Tasks Finished==========")
+    res.set("shell_{0}".format(request.user.username), 0)
+    return True

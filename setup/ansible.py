@@ -12,7 +12,7 @@ from accounts.permission import permission_verify
 import logging
 from lib.log import log
 from lib.setup import get_playbook, get_roles
-from setup.tasks import task_exec
+from setup.tasks import ansible_task
 from lib.common import GetRedis
 # var info
 ansible_dir = get_dir("a_path")
@@ -54,7 +54,6 @@ def index(request):
 @login_required()
 @permission_verify()
 def playbook(request):
-    ret = []
     if os.path.exists(ansible_dir + '/gexec.yml'):
         os.remove(ansible_dir + '/gexec.yml')
     if os.path.exists(log_path + '/ansible.log'):
@@ -69,7 +68,7 @@ def playbook(request):
         role_vars = request.POST.get('mvars')
         res = GetRedis.connect()
         res.set("ansible_{0}".format(request.user.username), 1)
-        task_exec(request, host, group, pbook, roles, role_vars, write_role_vars)
+        ansible_task(request, host, group, pbook, roles, role_vars, write_role_vars)
 
     return HttpResponse("ok")
 
@@ -89,7 +88,7 @@ def ansibleinfo(request):
 
 @login_required()
 def logpage(request):
-    return render(request, 'setup/results.html')
+    return render(request, 'setup/ansible_result.html')
 
 @login_required()
 def exec_status(request, exec_type):
@@ -101,33 +100,6 @@ def exec_status(request, exec_type):
     else:
         data = False
     return HttpResponse(data)
-
-@login_required()
-@permission_verify()
-def ansible_command(request):
-    command_list = []
-    ret = []
-    count = 1
-    if request.method == 'POST':
-        mcommand = request.POST.get('mcommand')
-        command_list = mcommand.split('\n')
-        for command in command_list:
-            if command.startswith("ansible"):
-                p = Popen(command, stdout=PIPE, stderr=PIPE,shell=True)
-                data = p.communicate()
-                ret.append(data)
-            else:
-                data = "your command " + str(count) + "  is invalid!"
-                ret.append(data)
-            count += 1
-            logging.info("==========ansible tasks start==========")
-            logging.info("User:"+request.user.username)
-            logging.info("command:"+command)
-            for d in data:
-                logging.info(d)
-            logging.info("==========ansible tasks end============")
-        return render(request, 'setup/result.html', locals())
-
 
 @login_required()
 @permission_verify()
