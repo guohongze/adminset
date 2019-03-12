@@ -133,9 +133,12 @@ def ansible_command(request):
 @permission_verify()
 def host_sync(request):
     # backup old ansible hosts file
-    old_hosts = ansible_dir + "/hosts"
     now = datetime.datetime.now().strftime('%Y_%m_%d_%H_%M')
-    sh.scp(old_hosts, ansible_dir +"/hosts_adminset_backup_{0}".format(now))
+    try:
+        old_hosts = ansible_dir + "/hosts"
+        sh.scp(old_hosts, ansible_dir +"/hosts_adminset_backup_{0}".format(now))
+    except:
+        pass
 
     group = HostGroup.objects.all()
     ansible_file = open(ansible_dir+"/hosts", "wb")

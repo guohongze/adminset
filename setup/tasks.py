@@ -40,7 +40,7 @@ def task_exec(request, host, group, pbook, roles, role_vars, write_role_vars):
     ret = []
     res = GetRedis.connect()
     #write real time ansible display log
-    logging.info("==========ansible tasks start==========")
+    logging.info("==========ansible tasks start==========\n")
     logging.info("User:"+request.user.username)
     with open(log_path + "/ansible.log", 'wb+') as f:
         f.writelines("==========ansible tasks start==========\n")
@@ -64,6 +64,9 @@ def task_exec(request, host, group, pbook, roles, role_vars, write_role_vars):
                 for d in data:
                     logging.info(d)
                 with open(log_path + "/ansible.log", 'ab+') as f1:
+                    f1.writelines("===============================\n")
+                    f1.writelines("==========Host: {0}============\n".format(h))
+                    f1.writelines("===============================\n")
                     f1.writelines(data)
         else:
             for h in host:
@@ -79,6 +82,9 @@ def task_exec(request, host, group, pbook, roles, role_vars, write_role_vars):
                     data = pcmd.communicate()
                     ret.append(data)
                     with open(log_path + "/ansible.log", 'ab+') as f2:
+                        f2.writelines("===============================\n")
+                        f2.writelines("==========Host: {0}============\n".format(h))
+                        f2.writelines("===============================\n")
                         f2.writelines(data)
                     for d in data:
                         logging.info(d)
@@ -93,9 +99,6 @@ def task_exec(request, host, group, pbook, roles, role_vars, write_role_vars):
             if role_vars:
                 write_role_vars(roles, role_vars)
             for g in group:
-                logging.info("==========ansible tasks start==========")
-                logging.info("User:"+request.user.username)
-                logging.info("group:"+g)
                 f = open(ansible_dir + '/gexec.yml', 'w+')
                 flist = ['- hosts: '+g+'\n', '  remote_user: root\n', '  gather_facts: true\n', '  roles:\n']
                 for r in roles:
@@ -108,9 +111,13 @@ def task_exec(request, host, group, pbook, roles, role_vars, write_role_vars):
                 p = Popen(cmd, stderr=PIPE, stdout=PIPE, shell=True)
                 data = p.communicate()
                 ret.append(data)
+                with open(log_path + "/ansible.log", 'ab+') as f4:
+                    f4.writelines("===============================\n")
+                    f4.writelines("==========Group: {0}============\n".format(g))
+                    f4.writelines("===============================\n")
+                    f4.writelines(data)
                 for d in data:
                     logging.info(d)
-                logging.info("==========ansible tasks end============")
         else:
             for g in group:
                 for p in pbook:
@@ -124,12 +131,15 @@ def task_exec(request, host, group, pbook, roles, role_vars, write_role_vars):
                     pcmd = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
                     data = pcmd.communicate()
                     ret.append(data)
-                    logging.info("==========ansible tasks start==========")
-                    logging.info("User:"+request.user.username)
-                    logging.info("Group:"+g)
-                    logging.info("Playbook:"+p)
+                    with open(log_path + "/ansible.log", 'ab+') as f5:
+                        f5.writelines("===============================\n")
+                        f5.writelines("==========Group: {0}============\n".format(g))
+                        f5.writelines("===============================\n")
+                        f5.writelines(data)
                     for d in data:
                         logging.info(d)
-                    logging.info("==========ansible tasks end============")
+        with open(log_path + "/ansible.log", 'ab+') as f3:
+            f3.writelines("==========ansible tasks end============")
+        logging.info("==========ansible tasks end============")
         res.set("ansible_{0}".format(request.user.username), 0)
         return True
