@@ -56,7 +56,7 @@ def shellinfo(request):
             a = l + "<br>"
             ret.append(a)
     except IOError:
-        ret = "Shell is running please waiting<br>"
+        ret = "Log file is empty waiting for created<br>"
     return HttpResponse(ret)
 
 @login_required()
