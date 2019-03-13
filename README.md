@@ -18,7 +18,7 @@ centos 7.2(1511) django 1.11.16 python 2.7<br>
 ## 服务端安装
 生产服务器建议 4核CPU，6G内存以上.<br>
 学习测试建议 2核CPU，2G内存以上.<br>
-服务器操作系统版本要求 centos7.2及以上<br>
+服务器操作系统版本要求 centos7.2 centos7.4<br>
 安装之前请关闭防火墙<br>
 ```
 git clone https://github.com/guohongze/adminset.git
