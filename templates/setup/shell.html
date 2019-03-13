@@ -66,11 +66,13 @@
               </div>
             <div class="form-group ">
                   <label>Shell Command</label>
-                  <textarea onblur="return checkBlur()" onfocus="checkFocus()" style="padding-bottom: 15px;" id="mcommand" name="mcommand" rows="6" class="form-control" placeholder="use enter spilt and command"></textarea>
+                  <textarea onblur="return checkBlur()" onfocus="checkFocus()" style="padding-bottom: 15px;" id="mcommand" name="mcommand" rows="3" class="form-control" placeholder="use enter spilt and command"></textarea>
                 </div>
               <!-- /.form-group -->
+                        <div class="btn btn-group" style="padding-left: 0">
             <a id="shell_submit" class="btn btn-primary" href="{% url 'shellpage' %}" target="myframe">执行任务</a>
-                <!-- /.form-group -->
+               </div>
+                            <!-- /.form-group -->
             </form>
             </div>
                       <div class="col-md-6">
