@@ -63,7 +63,7 @@ def ansible_task(request, host, group, pbook, roles, role_vars, write_role_vars)
                 ret.append(data)
                 for d in data:
                     logging.info(d)
-                with open(log_path + "/ansible.log", 'ab+') as f1:
+                with open(log_path + "/execlog/ansible_{0}.log".format(request.user.username), 'ab+') as f1:
                     f1.writelines("===============================\n")
                     f1.writelines("Host: {0}\n".format(h))
                     f1.writelines("===============================\n")
@@ -81,14 +81,14 @@ def ansible_task(request, host, group, pbook, roles, role_vars, write_role_vars)
                     pcmd = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
                     data = pcmd.communicate()
                     ret.append(data)
-                    with open(log_path + "/ansible.log", 'ab+') as f2:
+                    with open(log_path + "/execlog/ansible_{0}.log".format(request.user.username), 'ab+') as f2:
                         f2.writelines("===============================\n")
                         f2.writelines("Host: {0}\n".format(h))
                         f2.writelines("===============================\n")
                         f2.writelines(data)
                     for d in data:
                         logging.info(d)
-        with open(log_path + "/ansible.log", 'ab+') as f3:
+        with open(log_path + "/execlog/ansible_{0}.log".format(request.user.username), 'ab+') as f3:
             f3.writelines("==========ansible tasks end============")
         logging.info("==========ansible tasks end============")
         res.set("ansible_{0}".format(request.user.username), 0)
@@ -111,7 +111,7 @@ def ansible_task(request, host, group, pbook, roles, role_vars, write_role_vars)
                 p = Popen(cmd, stderr=PIPE, stdout=PIPE, shell=True)
                 data = p.communicate()
                 ret.append(data)
-                with open(log_path + "/ansible.log", 'ab+') as f4:
+                with open(log_path + "/execlog/ansible_{0}.log".format(request.user.username), 'ab+') as f4:
                     f4.writelines("===============================\n")
                     f4.writelines("Group: {0}\n".format(g))
                     f4.writelines("===============================\n")
@@ -131,14 +131,14 @@ def ansible_task(request, host, group, pbook, roles, role_vars, write_role_vars)
                     pcmd = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
                     data = pcmd.communicate()
                     ret.append(data)
-                    with open(log_path + "/ansible.log", 'ab+') as f5:
+                    with open(log_path + "/execlog/ansible_{0}.log".format(request.user.username), 'ab+') as f5:
                         f5.writelines("===============================\n")
                         f5.writelines("Group: {0}\n".format(g))
                         f5.writelines("===============================\n")
                         f5.writelines(data)
                     for d in data:
                         logging.info(d)
-        with open(log_path + "/ansible.log", 'ab+') as f6:
+        with open(log_path + "/execlog/ansible_{0}.log".format(request.user.username), 'ab+') as f6:
             f6.writelines("==========ansible tasks end============")
         logging.info("==========ansible tasks end============")
         res.set("ansible_{0}".format(request.user.username), 0)
@@ -151,7 +151,7 @@ def shell_task(request, server, group, scripts, args, shell_command):
     #write real time ansible display log
     logging.info("==========Shell Tasks Start==========\n")
     logging.info("User:"+request.user.username)
-    with open(log_path + "/shell.log", 'wb+') as f:
+    with open(log_path + "/execlog/shell_{0}.log".format(request.user.username), 'wb+') as f:
         f.writelines("==========Shell Tasks Start==========\n")
     if server:
         if scripts:
@@ -159,7 +159,7 @@ def shell_task(request, server, group, scripts, args, shell_command):
                 host = Host.objects.get(hostname=name)
                 ret.append(host.hostname)
                 logging.info("Host:"+host.hostname)
-                with open(log_path + "/shell.log", 'ab+') as f7:
+                with open(log_path + "/execlog/shell_{0}.log".format(request.user.username), 'ab+') as f7:
                     f7.writelines("===============================\n")
                     f7.writelines("Host: {0}\n".format(host.hostname))
                     f7.writelines("===============================\n")
@@ -175,14 +175,14 @@ def shell_task(request, server, group, scripts, args, shell_command):
                     logging.info("Scripts:"+s)
                     for d in data:
                         logging.info(d)
-                    with open(log_path + "/shell.log", 'ab+') as f7:
+                    with open(log_path + "/execlog/shell_{0}.log".format(request.user.username), 'ab+') as f7:
                         f7.writelines(data)
         else:
             for name in server:
                 host = Host.objects.get(hostname=name)
                 ret.append(host.hostname)
                 command_list = shell_command.split('\n')
-                with open(log_path + "/shell.log", 'ab+') as f8:
+                with open(log_path + "/execlog/shell_{0}.log".format(request.user.username), 'ab+') as f8:
                     f8.writelines("=====Host: {0}=====\n".format(host.hostname))
                 for cmd in command_list:
                     dcmd = "ssh root@"+host.ip+" "+'"{}"'.format(cmd.strip())
@@ -192,7 +192,7 @@ def shell_task(request, server, group, scripts, args, shell_command):
                     logging.info("command:"+cmd)
                     for d in data:
                         logging.info(d)
-                    with open(log_path + "/shell.log", 'ab+') as f10:
+                    with open(log_path + "/execlog/shell_{0}.log".format(request.user.username), 'ab+') as f10:
                         f10.writelines(data)
     if group:
         if scripts:
@@ -211,7 +211,7 @@ def shell_task(request, server, group, scripts, args, shell_command):
                         p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
                         data = p.communicate()
                         ret.append(data)
-                        with open(log_path + "/shell.log", 'ab+') as f11:
+                        with open(log_path + "/execlog/shell_{0}.log".format(request.user.username), 'ab+') as f11:
                             f11.writelines(data)
                         logging.info("command:"+cmd)
                         for d in data:
@@ -233,12 +233,12 @@ def shell_task(request, server, group, scripts, args, shell_command):
                         p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
                         data = p.communicate()
                         ret.append(data)
-                        with open(log_path + "/shell.log", 'ab+') as f12:
+                        with open(log_path + "/execlog/shell_{0}.log".format(request.user.username), 'ab+') as f12:
                             f12.writelines(data)
                         logging.info("command:"+cmd)
                         for d in data:
                             logging.info(d)
-    with open(log_path + "/shell.log", 'ab+') as f6:
+    with open(log_path + "/execlog/shell_{0}.log".format(request.user.username), 'ab+') as f6:
         f6.writelines("==========Shell Tasks Finished==========")
     logging.info("==========Shell Tasks Finished==========")
     res.set("shell_{0}".format(request.user.username), 0)

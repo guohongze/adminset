@@ -56,8 +56,8 @@ def index(request):
 def playbook(request):
     if os.path.exists(ansible_dir + '/gexec.yml'):
         os.remove(ansible_dir + '/gexec.yml')
-    if os.path.exists(log_path + '/ansible.log'):
-        os.remove(log_path + '/ansible.log')
+    if os.path.exists(log_path + "/execlog/ansible_{0}.log".format(request.user.username)):
+        os.remove(log_path + "/execlog/ansible_{0}.log".format(request.user.username))
     else:
         pass
     if request.method == 'POST':
@@ -76,7 +76,7 @@ def playbook(request):
 def ansibleinfo(request):
     ret = []
     try:
-        log_file = "/var/opt/adminset/logs/ansible.log"
+        log_file = "/var/opt/adminset/logs/execlog/ansible_{0}.log".format(request.user.username)
         with open(log_file, 'r+') as f:
             line = f.readlines()
         for l in line:
@@ -133,19 +133,3 @@ def host_sync(request):
     logging.info("Task: sync cmdb info to ansible hosts")
     logging.info("==========ansible tasks end============")
     return HttpResponse("ok")
-
-
-@login_required()
-@permission_verify()
-def ansible_log(request, project_id):
-    ret = []
-    try:
-        log_file = "/var/opt/adminset/logs/ansible.log"
-        with open(log_file, 'r+') as f:
-            line = f.readlines()
-        for l in line:
-            a = l + "<br>"
-            ret.append(a)
-    except IOError:
-        ret = "ansible is executing Please waiting<br>"
-    return HttpResponse(ret)

@@ -18,6 +18,7 @@ mkdir -p $data_dir/ansible/roles
 mkdir -p $config_dir
 mkdir -p $config_dir/webssh
 mkdir -p $logs_dir
+mkdir -p $logs_dir/execlog
 mkdir -p $main_dir/pid
 
 # 关闭selinux

@@ -28,8 +28,8 @@ def index(request):
 @login_required()
 @permission_verify()
 def exec_scripts(request):
-    if os.path.exists(log_path + '/shell.log'):
-        os.remove(log_path + '/shell.log')
+    if os.path.exists(log_path + "/execlog/shell_{0}.log".format(request.user.username)):
+        os.remove(log_path + "/execlog/shell_{0}.log".format(request.user.username))
     if request.method == 'POST':
         server = request.POST.getlist('mserver', [])
         group = request.POST.getlist('mgroup', [])
@@ -49,7 +49,7 @@ def exec_scripts(request):
 def shellinfo(request):
     ret = []
     try:
-        log_file = "/var/opt/adminset/logs/shell.log"
+        log_file = "/var/opt/adminset/logs/execlog/shell_{0}.log".format(request.user.username)
         with open(log_file, 'r+') as f:
             line = f.readlines()
         for l in line:
