@@ -98,7 +98,9 @@ def exec_status(request, exec_type):
     elif exec_type == "2":
         data = r.get("shell_{0}".format(request.user.username))
     else:
-        data = False
+        data = None
+    if not data:
+        data = 0
     return HttpResponse(data)
 
 @login_required()
