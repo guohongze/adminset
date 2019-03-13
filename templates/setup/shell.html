@@ -86,6 +86,9 @@
                         <div class="btn btn-group" style="padding-left: 0">
             <a id="shell_submit" class="btn btn-primary" href="{% url 'shellpage' %}" target="myframe">执行任务</a>
                </div>
+            <div class="btn btn-group" style="padding-left: 0">
+            <a class="btn btn-default" href="{% url 'shellpage' %}" target="myframe">上次结果</a>
+               </div>
                             <!-- /.form-group -->
             </form>
             </div>
@@ -93,7 +96,7 @@
               <div class="form-group">
               <!-- /.form-group -->
                 <div class="right" id="frame1">
-                    <iframe name="myframe" id="myframe" style="display: none" width="550" height="400" frameborder="0"></iframe>
+                    <iframe name="myframe" id="myframe" width="550" height="400" frameborder="0"></iframe>
                 </div>
             </div>
             <!-- /.col -->
@@ -133,8 +136,6 @@
 {#            layer.load(1, {#}
 {#                shade: [0.5,'#f4f4f4'] //0.1透明度的白色背景#}
 {#            });#}
-            document.getElementById("myframe").style.display="block";
-
                 $.ajax({
             //几个参数需要注意一下
                 type: "POST",//方法类型
