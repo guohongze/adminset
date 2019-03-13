@@ -1,4 +1,4 @@
-django==1.11.18
+django==1.11.20
 tornado==5.1.1
 ansible==2.7.8
 sh==1.12.9
