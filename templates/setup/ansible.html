@@ -9,12 +9,28 @@
     window.onload=init;
     function init() {
         showhide(3);
+        showlog();
     }
     function showhide(n) {
         var box = document.getElementById("setup");
         box.className="active";
         var box2 = document.getElementById("ansible");
         box2.className="active";
+    }
+    //showlog function is for get ansible exec status for real time log continuous display
+    function showlog() {
+        $.get("/setup/execstatus/1/",function(data){
+            var ret = JSON.parse(data);
+            if (ret == "1") {
+{#            $(function(){#}
+{#                $("#playbook_submit").trigger("click");#}
+{##}
+{#            });#}
+{#                document.getElementById("frame1").innerHTML = "{% include 'setup/ansible_result.html' %}";#}
+                document.getElementById("frame1").innerHTML = "<iframe name='myframe' id='myframe' width='550' height=400 frameborder='0' src='{% url 'ansiblepage' %}'></iframe>";
+            }
+
+        });
     }
 </script>
 
@@ -100,8 +116,8 @@
             <div class="col-md-6">
               <div class="form-group">
               <!-- /.form-group -->
-                <div class="right">
-                    <iframe name="myframe" id="myframe" style="display: none" width="550" height="400" frameborder="0"></iframe>
+                <div class="right" id="frame1">
+                    <iframe name="myframe" id="myframe" style="display: block" width="550" height="400" frameborder="0"></iframe>
                 </div>
             </div>
             <!-- /.col -->
@@ -173,7 +189,7 @@
 {#        var index = layer.load(1, {#}
 {#            shade: [0.5,'#f4f4f4'] //0.1透明度的白色背景#}
 {#        });#}
-            document.getElementById("myframe").style.display="block";
+{#            document.getElementById("myframe").style.display="block";#}
         $.ajax({
             //几个参数需要注意一下
                 type: "POST",//方法类型
@@ -227,10 +243,5 @@ function sync(){
         }
     });
 }
-</script>
-<script>
-function login() {
-
-        }
 </script>
 {% endblock %}

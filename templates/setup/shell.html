@@ -9,12 +9,26 @@
     window.onload=init;
     function init() {
         showhide(3);
+        showlog();
     }
     function showhide(n) {
         var box = document.getElementById("setup");
         box.className="active";
         var box2 = document.getElementById("shell");
         box2.className="active";
+    }
+    function showlog() {
+        $.get("/setup/execstatus/2/",function(data){
+            var ret = JSON.parse(data);
+            if (ret == "1") {
+{#            $(function(){#}
+{#                $("#playbook_submit").trigger("click");#}
+{##}
+{#            });#}
+                document.getElementById("frame1").innerHTML = "<iframe name='myframe' id='myframe' width='550' height=400 frameborder='0' src='{% url 'shellpage' %}'></iframe>";
+            }
+
+        });
     }
 </script>
 
@@ -78,7 +92,7 @@
                       <div class="col-md-6">
               <div class="form-group">
               <!-- /.form-group -->
-                <div class="right">
+                <div class="right" id="frame1">
                     <iframe name="myframe" id="myframe" style="display: none" width="550" height="400" frameborder="0"></iframe>
                 </div>
             </div>
