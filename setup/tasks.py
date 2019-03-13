@@ -64,8 +64,8 @@ def ansible_task(request, host, group, pbook, roles, role_vars, write_role_vars)
                 for d in data:
                     logging.info(d)
                 with open(log_path + "/execlog/ansible_{0}.log".format(request.user.username), 'ab+') as f1:
-                    f1.writelines("===============================\n")
                     f1.writelines("***Host: {0} ***\n".format(h))
+                    f1.writelines("=================================\n")
                     f1.writelines(data)
         else:
             for h in host:
@@ -81,8 +81,8 @@ def ansible_task(request, host, group, pbook, roles, role_vars, write_role_vars)
                     data = pcmd.communicate()
                     ret.append(data)
                     with open(log_path + "/execlog/ansible_{0}.log".format(request.user.username), 'ab+') as f2:
-                        f2.writelines("===============================\n")
                         f2.writelines("*** Host: {0} ***\n".format(h))
+                        f2.writelines("=================================\n")
                         f2.writelines(data)
                     for d in data:
                         logging.info(d)
@@ -110,8 +110,8 @@ def ansible_task(request, host, group, pbook, roles, role_vars, write_role_vars)
                 data = p.communicate()
                 ret.append(data)
                 with open(log_path + "/execlog/ansible_{0}.log".format(request.user.username), 'ab+') as f4:
-                    f4.writelines("===============================\n")
                     f4.writelines("*** Group: {0} ***\n".format(g))
+                    f4.writelines("=================================\n")
                     f4.writelines(data)
                 for d in data:
                     logging.info(d)
@@ -129,8 +129,8 @@ def ansible_task(request, host, group, pbook, roles, role_vars, write_role_vars)
                     data = pcmd.communicate()
                     ret.append(data)
                     with open(log_path + "/execlog/ansible_{0}.log".format(request.user.username), 'ab+') as f5:
-                        f5.writelines("===============================\n")
                         f5.writelines("*** Group: {0} ***\n".format(g))
+                        f5.writelines("=================================\n")
                         f5.writelines(data)
                     for d in data:
                         logging.info(d)
@@ -156,8 +156,9 @@ def shell_task(request, server, group, scripts, args, shell_command):
                 ret.append(host.hostname)
                 logging.info("Host:"+host.hostname)
                 with open(log_path + "/execlog/shell_{0}.log".format(request.user.username), 'ab+') as f7:
-                    f7.writelines("===============================\n")
                     f7.writelines("*** Host: {0} ***\n".format(host.hostname))
+                    f7.writelines("=================================\n")
+
                 for s in scripts:
                     try:
                         sh.scp(scripts_dir+s, "root@{}:/tmp/".format(host.ip)+s)
@@ -179,6 +180,7 @@ def shell_task(request, server, group, scripts, args, shell_command):
                 command_list = shell_command.split('\n')
                 with open(log_path + "/execlog/shell_{0}.log".format(request.user.username), 'ab+') as f8:
                     f8.writelines("*** Host: {0} ***\n".format(host.hostname))
+                    f8.writelines("=================================\n")
                 for cmd in command_list:
                     dcmd = "ssh root@"+host.ip+" "+'"{}"'.format(cmd.strip())
                     p = Popen(dcmd, stdout=PIPE, stderr=PIPE, shell=True)
