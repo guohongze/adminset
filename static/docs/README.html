@@ -1,0 +1,319 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="zh-CN" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="zh-CN" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>AdminSet QuickStart &mdash; adminset v0.53 文档</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/translations.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="搜索" href="search.html" />
+    <link rel="next" title="AdminSet 用户手册" href="Manual.html" />
+    <link rel="prev" title="Welcome to adminset’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> adminset
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">AdminSet QuickStart</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#v0-50">v0.50 新功能</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">开发环境</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">服务端安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">客户端安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">访问</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#demo">demo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">安全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">开发者交流</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Manual.html">AdminSet 用户手册</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Manual.html#id16">安全</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Manual.html#id17">开发者交流</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">adminset</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>AdminSet QuickStart</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/README.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="adminset-quickstart">
+<h1>AdminSet QuickStart<a class="headerlink" href="#adminset-quickstart" title="永久链接至标题">¶</a></h1>
+<p><img src="https://travis-ci.org/guohongze/adminset.svg?branch=master"></img>
+<img src="https://img.shields.io/hexpm/l/plug.svg"></img>
+<a class="reference external" href="https://github.com/guohongze/adminset/releases"><img alt="https://img.shields.io/github/release/guohongze/adminset.svg" src="https://img.shields.io/github/release/guohongze/adminset.svg" />release</a>
+<br>
+Adminset基于DevOps理念开发，以整合全部运维场景为己任。Adminset是一个真正的基于运维思维而开发的全自动化运维平台。<br></p>
+<div class="section" id="v0-50">
+<h2>v0.50 新功能<a class="headerlink" href="#v0-50" title="永久链接至标题">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">全新用户权限系统</span>
+<span class="n">基于用户角色的部署权限关联</span>
+<span class="n">基于用户权限的功能按钮自动显示隐藏</span>
+<span class="n">基于用户的WEBSSH授权</span>
+<span class="n">django安全更新</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id1">
+<h2>开发环境<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">centos</span> <span class="mf">7.2</span><span class="p">(</span><span class="mi">1511</span><span class="p">)</span> <span class="n">django</span> <span class="mf">1.11</span><span class="o">.</span><span class="mi">16</span> <span class="n">python</span> <span class="mf">2.7</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>服务端安装<a class="headerlink" href="#id2" title="永久链接至标题">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>生产服务器建议 4核CPU，6G内存以上.
+学习测试建议 2核CPU，2G内存以上.&lt;
+服务器操作系统版本要求 centos7.2 centos7.4
+安装之前请关闭防火墙
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">guohongze</span><span class="o">/</span><span class="n">adminset</span><span class="o">.</span><span class="n">git</span>
+<span class="n">adminset</span><span class="o">/</span><span class="n">install</span><span class="o">/</span><span class="n">server</span><span class="o">/</span><span class="n">auto_install</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>说明：手动自定义安装请使用
+adminset/install/server/server_install.sh</p>
+</div>
+<div class="section" id="id3">
+<h2>客户端安装<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>客户端脚本目前rhel/centos6、centos7,ubuntu16.04
+客户端python版本支持2.6.6及以上
+说明：为保证注册IP是管理IP（后续会被ansible等调用），客户端的IP抓取目前使用主机名解析，否则报错。
+如：主机名为cn-bj-web01 请在/etc/hosts中加入相应的解析 192.168.x.x cn-bj-web01，这样再执行adminset_agent.py 可以保证正常运行。
+</pre></div>
+</div>
+<p>step1: 修改文件install/client/adminset_agent.py :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>客户端正常使用需要修改脚本中的两个字段：
+token = &#39;HPcWR7l4NJNJ&#39;        #token是上传到服务器的密钥可以在WEB界面的系统配置中自定义
+server_ip = &#39;192.168.47.130&#39;  #此项目为adminset server的IP地址
+</pre></div>
+</div>
+<p>step2: 拷贝install/client/ 目录到客户机的任意位置并执行:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">client</span>
+<span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">bash</span> <span class="n">install</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>step3: 客户端管理</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">service</span> <span class="n">adminsetd</span> <span class="n">start</span><span class="o">|</span><span class="n">stop</span><span class="o">|</span><span class="n">restart</span><span class="o">|</span><span class="n">status</span>
+</pre></div>
+</div>
+<p>注意：客户端全部功能需要配置服务器到客户端的ssh免密登录。</p>
+</div>
+<div class="section" id="id4">
+<h2>访问<a class="headerlink" href="#id4" title="永久链接至标题">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">关闭防火墙或开通80端口</span>
+<span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">your_server_ip</span>
+<span class="n">自动安装的用户名admin</span> <span class="n">密码Adminset123</span>
+<span class="n">手动安装使用自定义创建的super</span> <span class="n">admin用户名密码</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>说明<a class="headerlink" href="#id5" title="永久链接至标题">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>使用参考，&lt;a href=&quot;https://github.com/guohongze/adminset/blob/master/docs/Manual.md&quot;&gt;使用说明&lt;/a&gt;
+功能参考，&lt;a href=&quot;https://github.com/guohongze/adminset/wiki/AdminSet&quot;&gt;功能预览&lt;/a&gt;
+FAQ参考，&lt;a href=&quot;https://github.com/guohongze/adminset/wiki/FAQ&quot;&gt;常见问题&lt;/a&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="demo">
+<h2>demo<a class="headerlink" href="#demo" title="永久链接至标题">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">每2小时重置一次数据</span>
+<span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">115.28</span><span class="o">.</span><span class="mf">147.154</span>
+<span class="n">用户名admin</span> <span class="n">密码Adminset123</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h2>安全<a class="headerlink" href="#id6" title="永久链接至标题">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>强烈建议您不要将程序对公网开放
+如果需要公网访问请使用VPN
+建议生产环境中使用https配置服务器，并对命令执行、webssh等模块进行安全强化
+由于开发方便，在django的settings中开启了DEBUG，在生产中需要关闭并指定自己的域名。
+</pre></div>
+</div>
+</div>
+<div class="section" id="id7">
+<h2>开发者交流<a class="headerlink" href="#id7" title="永久链接至标题">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">请加入开发者群</span>
+<span class="mi">3</span><span class="n">号群</span> <span class="mi">730232593</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="Manual.html" class="btn btn-neutral float-right" title="AdminSet 用户手册" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to adminset’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, guohongze
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
