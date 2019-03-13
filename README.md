@@ -60,8 +60,7 @@ service adminsetd start|stop|restart|status
     手动安装使用自定义创建的super admin用户名密码
 
 ## 说明
-    使用参考，<a href="https://github.com/guohongze/adminset/blob/master/docs/Manual.md">使用说明</a>
-    功能参考，<a href="https://github.com/guohongze/adminset/wiki/AdminSet">功能预览</a>
+    使用手册，<a href="http://115.28.147.154/static/docs/">使用手册</a>
     FAQ参考，<a href="https://github.com/guohongze/adminset/wiki/FAQ">常见问题</a>
 
 ## demo
