@@ -17,7 +17,7 @@ Adminset基于DevOps理念开发，以整合全部运维场景为己任。Admins
 
 ## 服务端安装
     生产服务器建议 4核CPU，6G内存以上.
-    学习测试建议 2核CPU，2G内存以上.<
+    学习测试建议 2核CPU，2G内存以上.
     服务器操作系统版本要求 centos7.2 centos7.4
     安装之前请关闭防火墙
 ```
@@ -60,9 +60,8 @@ service adminsetd start|stop|restart|status
     手动安装使用自定义创建的super admin用户名密码
 
 ## 说明
-    使用参考，<a href="https://github.com/guohongze/adminset/blob/master/docs/Manual.md">使用说明</a>
-    功能参考，<a href="https://github.com/guohongze/adminset/wiki/AdminSet">功能预览</a>
-    FAQ参考，<a href="https://github.com/guohongze/adminset/wiki/FAQ">常见问题</a>
+使用手册，<a href="http://115.28.147.154/static/docs/">使用手册</a><br>
+FAQ参考，<a href="https://github.com/guohongze/adminset/wiki/FAQ">常见问题</a>
 
 ## demo
     每2小时重置一次数据
