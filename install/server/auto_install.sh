@@ -143,7 +143,7 @@ scp $adminset_dir/install/server/ssh/config ~/.ssh/config
 
 
 # 完成安装
-echo "##############install finished###################"
+echo "#######Waiting Starting Service##############"
 /bin/systemctl daemon-reload
 /bin/systemctl restart mariadb
 /bin/systemctl restart celery
