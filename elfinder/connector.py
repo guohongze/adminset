@@ -426,7 +426,7 @@ class ElfinderConnector:
                         dirs = dirs[1:]                    
                     dir_ = volume.mkdir(target, dirs)
                     result['added'].append(dir_)
-                except Exception, e:
+                except Exception as e:
                     result['warning'] = self.error(ElfinderErrorMessages.ERROR_UPLOAD_FILE, dirs, e)
             return result
         except NamedError as e:
@@ -460,7 +460,7 @@ class ElfinderConnector:
         """
         try:
             volume = self._volume(target)
-        except (VolumeNotFoundError):
+        except VolumeNotFoundError:
             return { 'error' : self.error(ElfinderErrorMessages.ERROR_RENAME, '#%s' % target, ElfinderErrorMessages.ERROR_FILE_NOT_FOUND) }
 
         try:
@@ -565,7 +565,7 @@ class ElfinderConnector:
                     else:
                         file_ = volume.upload(uploaded_file, target)
                         result['added'].append(file_)
-                except Exception, e:
+                except Exception as e:
                     result['warning'] = self.error(ElfinderErrorMessages.ERROR_UPLOAD_FILE, uploaded_file.name, e)
                     self._uploadDebug = 'Upload error: Django handler error'
         else:  # directory
@@ -608,7 +608,7 @@ class ElfinderConnector:
                             else:
                                 file_ = volume.upload(files[file_index], target)
                         result['added'].append(file_)
-                    except Exception, e:
+                    except Exception as e:
                         result['warning'] = self.error(ElfinderErrorMessages.ERROR_UPLOAD_FILE, files[file_index].name, e)
                         self._uploadDebug = 'Upload error: Django handler error'
         return result
