@@ -3,9 +3,13 @@ from django.utils.translation import ugettext as _
 from exceptions import ElfinderErrorMessages, VolumeNotFoundError, DirNotFoundError, FileNotFoundError, NamedError, NotAnImageError
 from utils.volumes import instantiate_driver
 import sys
-reload(sys)
-sys.setdefaultencoding("utf-8")#fix ascii code bug
+try:
+    reload(sys)
+    sys.setdefaultencoding("utf-8")  # fix a Python 2 ascii code bug
+except NameError:
+    pass  # Python 3
 from collections import defaultdict
+from six import string_types
 
 class ElfinderConnector:
     """
@@ -119,7 +123,7 @@ class ElfinderConnector:
         """
         errors = []
         for msg in args:
-            if not isinstance(msg, basestring):
+            if not isinstance(msg, string_types):
                 errors += msg
             else:
                 errors.append(msg)
@@ -195,10 +199,10 @@ class ElfinderConnector:
         method must be used.
         """
 
-        if isinstance(init, basestring):
+        if isinstance(init, string_types):
             init = int(init)
             
-        if isinstance(tree, basestring):
+        if isinstance(tree, string_types):
             tree = int(tree)
 
         if not init and not target:
@@ -329,7 +333,7 @@ class ElfinderConnector:
         method must be used.
         """
         
-        if isinstance(download, basestring):
+        if isinstance(download, string_types):
             download = int(download)
         
         try:
@@ -353,7 +357,7 @@ class ElfinderConnector:
             disp  = 'inline' if re.match('(image|text)', file_['mime'], re.IGNORECASE) or file_['mime'] == 'application/x-shockwave-flash' else 'attachment'  
             mime = file_['mime']
 
-        filenameEncoded = urllib.quote(file_['name'].encode('utf-8')) #unicode filename support
+        filenameEncoded = urllib.quote(file_['name'].encode('utf-8'))  # Unicode filename support
         if not '%' in filenameEncoded: #ASCII only
             filename = 'filename="%s"' % file_['name']
         elif request and hasattr(request, 'META') and 'HTTP_USER_AGENT' in request.META:
@@ -374,7 +378,7 @@ class ElfinderConnector:
             'header' : {
                 'Content-Type' : mime, 
                 'Content-Disposition' : '%s; %s' % (disp, filename),
-                'Content-Location' : file_['name'].encode('utf-8'),  #unicode filename support
+                'Content-Location' : file_['name'].encode('utf-8'),  # Unicode filename support
                 'Content-Transfer-Encoding' : 'binary',
                 'Content-Length' : file_['size'],
                 #'Connection' : 'close'
@@ -522,6 +526,7 @@ class ElfinderConnector:
 
         return result
     
+    # TODO: 'range' is a builtin in both Python 2 and Python 3 so it should not be used as variable name
     def _upload(self, target, FILES, html=False, upload_path=False, chunk=False, range=False, cid=False):
         """
         **Command**: Save uploaded files. This method should not be invoked 
@@ -529,12 +534,12 @@ class ElfinderConnector:
         method must be used.
         """
         chunk_flag = False
-        if isinstance(range,(unicode,basestring)):
+        if isinstance(range, string_types):
             chunk_range = range.rsplit(',')
             chunk_file_size = chunk_range[2]
             if chunk_range[0] == '0' or chunk_range[0] == 0:
                 chunk_flag = True
-        if isinstance(html, basestring):
+        if isinstance(html, string_types):
             html = int(html)
         
         header = { 'Content-Type' : 'text/html; charset=utf-8' } if html else {}
@@ -622,7 +627,7 @@ class ElfinderConnector:
         method must be used.
         """
         
-        if isinstance(cut, basestring):
+        if isinstance(cut, string_types):
             cut = int(cut)
 
         error = ElfinderErrorMessages.ERROR_MOVE if cut else ElfinderErrorMessages.ERROR_COPY
@@ -750,7 +755,7 @@ class ElfinderConnector:
         method must be used.
         """
         
-        if isinstance(options, basestring):
+        if isinstance(options, string_types):
             options = int(options)
         
         files = []
