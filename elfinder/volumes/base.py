@@ -8,6 +8,7 @@ from string import maketrans
 from tarfile import TarFile
 from django.core.cache import cache
 from django.utils.translation import ugettext as _
+from six import text_type
 from elfinder.exceptions import ElfinderErrorMessages, FileNotFoundError, DirNotFoundError, PermissionDeniedError, NamedError, NotAnImageError
 from elfinder.utils.archivers import ZipFileArchiver
 
@@ -196,7 +197,7 @@ class ElfinderVolumeDriver(object):
         else:
             raise Exception(_('No volume id found'))
         
-        self._root = self._normpath(unicode(self._options['path']))
+        self._root = self._normpath(text_type(self._options['path']))
         self._separator = self._options['separator'] if 'separator' in self._options else os.sep
 
         #default file attribute
@@ -1099,7 +1100,7 @@ class ElfinderVolumeDriver(object):
             hash_ = self._crypt(p)
             #hash is used as id in HTML that means it must contain vaild chars
             #make base64 html safe and append prefix in begining
-            hash_ = hash_.encode('utf-8') # unicode filename support
+            hash_ = hash_.encode('utf-8')  # Unicode filename support
             hash_ = b64encode(hash_).translate(maketrans('+/=', '-_.'))
 
             #remove dots '.' at the end (used to be '=' in base64, before the translation)
@@ -1120,7 +1121,7 @@ class ElfinderVolumeDriver(object):
             #put cut = at the end
             h += "=" * ((4 - len(h) % 4) % 4)
             h = b64decode(h)
-            h = h.decode('utf-8') # unicode filename support
+            h = h.decode('utf-8')  # Unicode filename support
 
             path = self._uncrypt(h) 
             #append ROOT to path after it was cut in encode
