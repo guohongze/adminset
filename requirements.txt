@@ -33,4 +33,4 @@ pycparser==2.18
 PyNaCl==1.2.0
 python-magic==0.4.3
 pytz==2017.3
-six==1.11.0
+six==1.12.0
