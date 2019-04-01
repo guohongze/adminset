@@ -60,12 +60,12 @@ service adminsetd start|stop|restart|status
     手动安装使用自定义创建的super admin用户名密码
 
 ## 说明
-使用手册，<a href="http://115.28.147.154/static/docs/">使用手册</a><br>
+使用手册，<a href="http://docs.adminset.cn/">使用手册</a><br>
 FAQ参考，<a href="https://github.com/guohongze/adminset/wiki/FAQ">常见问题</a>
 
 ## demo
     每2小时重置一次数据
-    http://115.28.147.154
+    http://adminset.cn
     用户名admin 密码Adminset123
 
 ## 安全
