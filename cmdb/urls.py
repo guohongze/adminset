@@ -31,5 +31,5 @@ urlpatterns = [
     url(r'^collect', api.collect, name='update_api'),
     url(r'^gethost/', api.get_host, name='get_host'),
     url(r'^getgroup/', api.get_group, name='get_group'),
-    url(r'^nodestatus/(?P<hostname>.+)/$', asset.node_status, name='node_status'),
+    url(r'^nodestatus/(?P<ids>\d+)/$', asset.node_status, name='node_status'),
 ]

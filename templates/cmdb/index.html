@@ -24,17 +24,19 @@
     $(document).ready(function(){
     $("span").each(function(){
         if($(this).attr('id')){
-            var host = $(this).attr('id');
+            var hostid = $(this).attr('id');
+            var host = hostid.substr(5);
+            alert(host);
             $.get("/cmdb/nodestatus/"+host+"/",function(data,status){
               if ( data == "1" ) {
-                  document.getElementById(host).style.color="green";
-                  document.getElementById(host).title="Normal";
+                  document.getElementById(hostid).style.color="green";
+                  document.getElementById(hostid).title="Normal";
                   {#                      $(this).css('display','block');#}
 
               }
               else if (data == "2") {
-                  document.getElementById(host).style.color="red";
-                  document.getElementById(host).title="Error";
+                  document.getElementById(hostid).style.color="red";
+                  document.getElementById(hostid).title="Error";
               }
   });
         }
@@ -197,7 +199,7 @@
                                     <tr class="even gradeX">
                                         <td><input type="checkbox" id="id" class="i-checks" value="{{ host.id }}" name="id" /></td>
                                         <td>
-                                            <span id="{{ host.hostname }}" class="fa fa-circle" aria-hidden="true" style="color: lightgray" data-toggle="tooltip" data-placement="right" title="Unknow"></span>
+                                            <span id="node_{{ host.id }}" class="fa fa-circle" aria-hidden="true" style="color: lightgray" data-toggle="tooltip" data-placement="right" title="Unknow"></span>
                                         </td>
                                         <td><a href="#"><li style="list-style-type:none" onclick="return detail(this.value)" value="{{ host.id }}"> {{ host.hostname }}</li></a></td>
                                         <td>{{ host.ip }}</td>

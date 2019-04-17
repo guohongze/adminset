@@ -305,10 +305,10 @@ def webssh(request, ids):
 
 
 @login_required()
-def node_status(request, hostname):
+def node_status(request, ids):
     data = 2
-    # host = Host.objects.get(id=ids)
-    cpu_data = GetSysData(hostname, "cpu", 1800)
+    host = Host.objects.get(id=ids)
+    cpu_data = GetSysData(host.hostname, "cpu", 1800)
     for doc in cpu_data.get_data():
         if doc:
             data = 1
