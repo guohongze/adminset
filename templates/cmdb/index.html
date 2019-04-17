@@ -26,7 +26,6 @@
         if($(this).attr('id')){
             var hostid = $(this).attr('id');
             var host = hostid.substr(5);
-            alert(host);
             $.get("/cmdb/nodestatus/"+host+"/",function(data,status){
               if ( data == "1" ) {
                   document.getElementById(hostid).style.color="green";
