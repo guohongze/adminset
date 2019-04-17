@@ -29,13 +29,13 @@
             $.get("/cmdb/nodestatus/"+host+"/",function(data,status){
               if ( data == "1" ) {
                   document.getElementById(hostid).style.color="green";
-                  document.getElementById(hostid).title="Normal";
+                  document.getElementById(hostid).title="Online";
                   {#                      $(this).css('display','block');#}
 
               }
               else if (data == "2") {
-                  document.getElementById(hostid).style.color="red";
-                  document.getElementById(hostid).title="Error";
+                  document.getElementById(hostid).style.color="black";
+                  document.getElementById(hostid).title="Offline";
               }
   });
         }
