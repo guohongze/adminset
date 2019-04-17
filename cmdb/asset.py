@@ -5,6 +5,7 @@ import csv
 import datetime
 import sys
 import os
+import json
 
 from accounts.permission import permission_verify
 from cmdb.api import get_object, pages, str2gb, str2gb2utf8
@@ -14,6 +15,7 @@ from django.db.models import Q
 from django.shortcuts import HttpResponse, render
 from cmdb.forms import AssetForm
 from cmdb.models import ASSET_STATUS, ASSET_TYPE, Host, HostGroup, Idc, Cabinet
+from monitor.api import GetSysData
 
 try:
     reload(sys)  # Python 2
@@ -300,3 +302,15 @@ def webssh(request, ids):
                 return HttpResponse("forbidden! you have no permissions.", status=403)
 
     return render(request, 'cmdb/webssh.html', locals())
+
+
+@login_required()
+def node_status(request, hostname):
+    data = 2
+    # host = Host.objects.get(id=ids)
+    cpu_data = GetSysData(hostname, "cpu", 1800)
+    for doc in cpu_data.get_data():
+        if doc:
+            data = 1
+            break
+    return HttpResponse(data)

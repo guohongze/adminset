@@ -20,6 +20,24 @@
         var box2 = document.getElementById("asset");
         box2.className="active";
     }
+    //node status
+    $(document).ready(function(){
+    $("span").each(function(){
+        if($(this).attr('id')){
+            var host = $(this).attr('id');
+            $.get("/cmdb/nodestatus/"+host+"/",function(data,status){
+              if ( data == "1" ) {
+                  document.getElementById(host).style.color="green";
+                  {#                      $(this).css('display','block');#}
+
+              }
+              else if (data == "2") {
+                  document.getElementById(host).style.color="red";
+              }
+  });
+        }
+  });
+});
 </script>
 <script>
     $(document).ready(function(){
@@ -163,6 +181,7 @@
                             <th>
                                 <input id="checkall" type="checkbox" class="i-checks" name="checkall" value="checkall" data-editable='false' onclick="check_all('asset_form')">
                             </th>
+                                    <th>节点状态</th>
                                     <th>主机名</th>
                                     <th>管理IP</th>
                                     <th>CPU</th>
@@ -175,6 +194,9 @@
                                 {% for host in assets.object_list %}
                                     <tr class="even gradeX">
                                         <td><input type="checkbox" id="id" class="i-checks" value="{{ host.id }}" name="id" /></td>
+                                        <td>
+                                            <span id="{{ host.hostname }}" class="fa fa-circle" aria-hidden="true" style="color: lightgray"></span>
+                                        </td>
                                         <td><a href="#"><li style="list-style-type:none" onclick="return detail(this.value)" value="{{ host.id }}"> {{ host.hostname }}</li></a></td>
                                         <td>{{ host.ip }}</td>
                                         <td>{{ host.cpu_num }}</td>
@@ -347,6 +369,21 @@ function asset_import(){
             });
         }
     });
+
+</script>
+<script>
+function node_status(args) {
+      $.get("/cmdb/nodestatus/"+args+"/",function(data,status){
+          var res = JSON.parse(data);
+          if ( res.data == "1" ) {
+              document.getElementById("node_"+res.hostname).style.color="green";
+          }
+          else if (res.data == "2") {
+              document.getElementById("node_"+res.hostname).style.color="red";
+
+          }
+      });
+}
 
 </script>
 
