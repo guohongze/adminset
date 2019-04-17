@@ -46,14 +46,16 @@ then
         pip install virtualenv==14.0.0
         pip install setuptools==28.5.0
         scp $cur_dir/adminset_agent.py $work_dir
+        scp $cur_dir/uninstall.sh $work_dir
         scp $cur_dir/adminsetd /etc/init.d/
         dos2unix $work_dir/adminset_agent.py
         dos2unix /etc/init.d/adminsetd
         chmod +x /etc/init.d/adminsetd
     else
-        pip install -U pip==9.0.3
+        pip install -U pip==19.0.3
         pip install virtualenv==15.2.0
         scp $cur_dir/adminset_agent.py $work_dir
+        scp $cur_dir/uninstall.sh $work_dir
         scp $cur_dir/adminsetd.service /usr/lib/systemd/system/
         dos2unix $work_dir/adminset_agent.py
         dos2unix /usr/lib/systemd/system/adminsetd.service
@@ -62,9 +64,10 @@ then
     chkconfig adminsetd on
 elif (echo $os|grep Ubuntu)
 then
-    pip install -U pip==9.0.3
+    pip install -U pip==19.0.3
     pip install virtualenv==15.2.0
     scp $cur_dir/adminset_agent.py $work_dir
+    scp $cur_dir/uninstall.sh $work_dir
     scp $cur_dir/adminsetd.service /etc/systemd/system/
     fromdos $work_dir/adminset_agent.py
     fromdos /etc/systemd/system/adminsetd.service
