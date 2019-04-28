@@ -37,7 +37,7 @@ fi
 # 安装依赖
 echo "####install depandencies####"
 yum install -y epel-release
-yum install -y gcc expect python-pip python-devel smartmontools dmidecode libselinux-python git rsync dos2unix
+yum install -y gcc expect ansible python-pip python-devel smartmontools dmidecode libselinux-python git rsync dos2unix
 yum install -y openssl openssl-devel openldap-devel
 
 # 分发代码
