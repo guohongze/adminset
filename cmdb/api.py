@@ -25,6 +25,14 @@ def str2gb(args):
     """
     return str(args).encode('gb2312')
 
+def str2gbk(args):
+    """
+    :参数 args:
+    :返回: GB2312编码
+    """
+    return str(args).encode('gbk')
+
+
 
 def str2gb2utf8(args):
     """
