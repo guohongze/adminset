@@ -26,27 +26,27 @@
 
     <!-- Main content -->
     <section class="content">
-        <form action="" method="post" id="branch_form">
+        <form action="" method="post" id="region_form">
                 {% csrf_token %}
             <div class="box">
                 <div class="box-header">
                     <div class="btn btn-group" style="padding-left: 0">
-						 <a id="branchadd" style="display: none;" class="btn btn-success" href="{% url 'branch_add' %}">添加分支</a>
+						 <a id="branchadd" style="display: none;" href="{% url 'branch_add' %}" class="btn btn-success">添加分支</a>
                   </div>
                 </div>
 
                 <!-- /.box-header -->
                 <div class="box-body">
-                  <table class="table table-striped table-bordered" id="branchform">
+                  <table class="table table-striped table-bordered" id="regionform">
                       <thead>
                         <tr>
                             <th>
-                                <input id="checkall" type="checkbox" class="i-checks" name="checkall" value="checkall" data-editable='false' onclick="check_all('branch_form')">
+                                <input id="checkall" type="checkbox" class="i-checks" name="checkall" value="checkall" data-editable='false' onclick="check_all('region_form')">
                             </th>
                             <th>分支名称</th>
-                            <th>分支描述</th>
+                            <th>分支地址</th>
                             <th>负责人</th>
-                            <th>电话</th>
+                            <th>联系电话</th>
                             <th>操作</th>
                         </tr>
                       </thead>
@@ -57,18 +57,17 @@
                                     <td><a href="#"><li style="list-style-type:none" onclick="return popWin(this.value)" value="{{ branch.id }}">{{ branch.name }}</li></a> </td>
                                     <td>{{ branch.address }} </td>
                                     <td>{{ branch.owner.phone }} </td>
-                                    <td>{{ branch.description }} </td>
                                     <td>{{ branch.owner.name }} </td>
                                     <td>
                                         <a id="branchedit" style="display: none; float:left; margin: auto;" href="{% url "branch_edit" branch.id %}"><span class="btn btn-sm btn-info">编辑</span></a>
-                                        <a id="branchdel" style="display: none; float:left; margin: auto;" href="{% url "branch_del"%}?id={{ branch.id }}" onclick="return confirm('确认删除？')"><span class="btn btn-sm btn-danger ">删除</span></a>
+                                        <a id="branchdel" style="display: none; float:left; margin: auto;" href="{% url "branch_del"%}?id={{ branch.id }}" onclick="return confirm('删除分支？')"><span class="btn btn-sm btn-danger ">删除</span></a>
                                     </td>
                                 </tr>
                             {% endfor %}
                             </tbody>
                   </table>
                   <div class="btn-group">
-{#                      <input type="button" id="branch_del" class="btn btn-danger"   name="del_button" value="删除分支"/>#}
+{#                      <input type="button" id="region_del" class="btn btn-danger"   name="del_button" value="删除区域"/>#}
                   </div>
                 </div>
             </div>
@@ -78,29 +77,29 @@
 </div>
 <script>
   $(function () {
-    $('#branchform').DataTable({
+    $('#regionform').DataTable({
       "paging": true,
       "lengthChange": true,
       "searching": true,
       "ordering": true,
       "info": true,
-      "autoWidth": true
+      "bAutoWidth": false
     });
   });
 </script>
 
 <script>
-    $('#branch_del').click(function () {
-        var branch_id_all = getIDall();
-        if (branch_id_all == ''){
+    $('#region_del').click(function () {
+        var region_id_all = getIDall();
+        if (region_id_all == ''){
             alert("请至少选择一行!");
             return false;
         }
         if (confirm("确定删除?")) {
             $.ajax({
                 type: "post",
-                data: {branch_id_all: branch_id_all,csrfmiddlewaretoken: '{{ csrf_token }}'},
-                url: "{% url 'branch_del' %}",
+                data: {region_id_all: region_id_all,csrfmiddlewaretoken: '{{ csrf_token }}'},
+                url: "{% url 'region_del' %}",
                 success: function () {
                     parent.location.reload();
                 }
@@ -110,13 +109,13 @@
 </script>
 
 <script>
-function popWin(branch_id){
+function popWin(region_id){
   layer.open({
       type: 2,
       title: '项目列表',
       area: ['700px', '500px'],
       shadeClose: true, //点击遮罩关闭
-      content: ['/branches/branchresourceinfo/' + branch_id]
+      content: ['/branches/branchresourceinfo/' + region_id]
   });
 }
 </script>
