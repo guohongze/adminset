@@ -61,8 +61,8 @@
                                         <td>{{ idc.contact_phone }}</td>
                                         <td>{{ idc.memo }}</td>
                                         <td>
-                                            <a id="idcedit" href="{% url "idc_edit" idc.id %}" class="btn btn-sm btn-info" style="display: none;margin: auto;float: left">编辑</a>
-                                            <a id="idcdel" style="display: none; float:left; margin: auto;" href="{% url "idc_del"%}?id={{ idc.id }}" onclick="return checkSubmit()"><span class="btn btn-sm btn-danger ">删除</span></a>
+                                            <a id="idcedit" href="{% url "idc_edit" idc.id %}" class="btn btn-sm btn-info" style="display: block;margin: auto;float: left">编辑</a>
+                                            <a id="idcdel" style="display: block; float:left; margin: auto;" href="{% url "idc_del"%}?id={{ idc.id }}" onclick="return checkSubmit()"><span class="btn btn-sm btn-danger ">删除</span></a>
                                         </td>
                                     </tr>
                                 {% endfor %}

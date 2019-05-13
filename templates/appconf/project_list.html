@@ -63,8 +63,8 @@
                                     <td>{{ project.owner.name }} </td>
                                     <td>{{ project.owner.phone }} </td>
                                     <td>
-                                        <a id="projectedit" style="display: none; float:left; margin: auto;"  href="{% url "project_edit" project.id %}"><span class="btn btn-sm btn-info">编辑</span></a>
-                                        <a id="projectdel" style="display: none; float:left; margin: auto;"  href="{% url "project_del"%}?id={{ project.id }}" onclick="return checkSubmit()"><span class="btn btn-sm btn-danger ">删除</span></a>
+                                        <a id="projectedit" style="display: block; float:left; margin: auto;"  href="{% url "project_edit" project.id %}"><span class="btn btn-sm btn-info">编辑</span></a>
+                                        <a id="projectdel" style="display: block; float:left; margin: auto;"  href="{% url "project_del"%}?id={{ project.id }}" onclick="return checkSubmit()"><span class="btn btn-sm btn-danger ">删除</span></a>
                                     </td>
                                 </tr>
                             {% endfor %}

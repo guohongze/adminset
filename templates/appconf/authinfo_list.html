@@ -54,8 +54,8 @@
                                     <td>{{ auth.dis_name }} </td>
                                     <td>{{ auth.memo }} </td>
                                     <td>
-                                        <a id="authinfoedit" style="display: none; float:left; margin: auto;" href="{% url "authinfo_edit" auth.id %}"><span class="btn btn-sm btn-info">编辑</span></a>
-                                        <a id="authinfodel" style="display: none; float:left; margin: auto;" href="{% url "authinfo_del"%}?id={{ auth.id }}" onclick="return confirm('确认删除认证？')"><span class="btn btn-sm btn-danger ">删除</span></a>
+                                        <a id="authinfoedit" style="display: block; float:left; margin: auto;" href="{% url "authinfo_edit" auth.id %}"><span class="btn btn-sm btn-info">编辑</span></a>
+                                        <a id="authinfodel" style="display: block; float:left; margin: auto;" href="{% url "authinfo_del"%}?id={{ auth.id }}" onclick="return confirm('确认删除认证？')"><span class="btn btn-sm btn-danger ">删除</span></a>
                                     </td>
                                 </tr>
                             {% endfor %}

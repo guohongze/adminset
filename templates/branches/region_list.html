@@ -59,8 +59,8 @@
                                     <td>{{ region.owner.name }} </td>
                                     <td>{{ region.owner.phone }} </td>
                                     <td>
-                                        <a id="regionedit" style="display: none; float:left; margin: auto;" href="{% url "region_edit" region.id %}"><span class="btn btn-sm btn-info">编辑</span></a>
-                                        <a id="regiondel" style="display: none; float:left; margin: auto;" href="{% url "region_del"%}?id={{ region.id }}" onclick="return confirm('确认删除区域吗？')"><span class="btn btn-sm btn-danger ">删除</span></a>
+                                        <a id="regionedit" style="display: block; float:left; margin: auto;" href="{% url "region_edit" region.id %}"><span class="btn btn-sm btn-info">编辑</span></a>
+                                        <a id="regiondel" style="display: block; float:left; margin: auto;" href="{% url "region_del"%}?id={{ region.id }}" onclick="return confirm('确认删除区域吗？')"><span class="btn btn-sm btn-danger ">删除</span></a>
                                     </td>
                                 </tr>
                             {% endfor %}
