@@ -71,7 +71,7 @@
                                         <td class="text-center" data-editable='false'>
 {#                                        <a href="{% url 'user_edit' %}?id={{ host.id }}" class="btn btn-xs btn-info">编辑</a>#}
                                         <a id="useredit" style="display: block; float: left; margin: auto;" href="#"><li class="btn btn-sm btn-info" onclick="return tanchu(this.value)" value="{{ i.id }}">编辑</li></a>
-                                        <a id="userdel" style="display: block; float: left; margin: auto;" value="{% url 'user_del' i.id %}" class="btn btn-sm btn-danger user_del">删除</a>
+                                        <a id="userdel" onclick="return checkSubmit()" style="display: block; float: left; margin: auto;" href="{% url 'user_del' i.id %}" class="btn btn-sm btn-danger user_del">删除</a>
                                     </td>
                                     </tr>
                                 {% endfor %}
