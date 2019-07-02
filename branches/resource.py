@@ -95,6 +95,6 @@ def resource_export(request):
         writer.writerow([str2gb(br_name), str2gbk(r.branch.name if r.branch else None), str2gb(r.sn),
                          str2gb(r.name), str2gb(r.spec), str2gb(r.budget), str2gb(r.paid), str2gb(r.contract),
                          str2gb(r.contract_start), str2gb(r.contract_end),
-                         str2gb(r.supplier), str2gb(r.service_phone), str2gb(r.owner if r.owner else None),
+                         str2gb(r.supplier), r.service_phone, str2gb(r.owner if r.owner else None),
                          str2gb(r.owner.phone if r.owner else None),])
     return response
