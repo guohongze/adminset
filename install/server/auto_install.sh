@@ -81,7 +81,7 @@ pip install --ignore-installed ipaddress==1.0.18
 pip install kombu==4.2.1
 pip install celery==4.2.1
 pip install billiard==3.5.0.3
-pip install pytz==2017.3
+pip install --ignore-installed pytz==2017.3
 pip install setuptools==39.2.0
 cd $adminset_dir/vendor/django-celery-results-master
 python setup.py build

@@ -76,3 +76,13 @@ class Resource(models.Model):
 
     def __unicode__(self):
         return self.name
+
+
+class People(models.Model):
+    name = models.CharField(u"负责人姓名", max_length=50, unique=True, null=False, blank=False)
+    phone = models.CharField(u"负责人手机", max_length=50, null=False, blank=False)
+    qq = models.CharField(u"负责人QQ", max_length=100, null=True, blank=True)
+    weChat = models.CharField(u"负责人微信", max_length=100, null=True, blank=True)
+
+    def __unicode__(self):
+        return self.name

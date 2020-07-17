@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load mytags %}
+{% block self_head_css_js %}
+    <script src="/static/layer/layer.js"></script>
+    <script src="/static/js/base.js"></script>
+    <script src="/static/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="/static/plugins/datatables/dataTables.bootstrap.min.js"></script>
+    <script src="/static/plugins/datatables/dataTables.bootstrap.css"></script>
+{% endblock %}
+{% block content %}
+
+    <script>
+        window.onload=init;
+        function init() {
+            var box = document.getElementById("branches");
+            box.className="active";
+            var box2 = document.getElementById("people");
+            box2.className="active";
+        }
+    </script>
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <form action="" method="post" id="people_form">
+                {% csrf_token %}
+            <div class="box">
+                <div class="box-header">
+                    <div class="btn btn-group" style="padding-left: 0">
+						 <a id="peopleadd" style="display: none;"  href="{% url 'people_add' %}" class="btn btn-success">添加负责人</a>
+                  </div>
+                </div>
+
+                <!-- /.box-header -->
+                <div class="box-body">
+                  <table class="table table-striped table-bordered" id="peopleform">
+                      <thead>
+                        <tr>
+                            <th>
+                                <input id="checkall" type="checkbox" class="i-checks" name="checkall" value="checkall" data-editable='false' onclick="check_all('people_form')">
+                            </th>
+                            <th>负责人姓名</th>
+                            <th>负责人手机</th>
+                            <th>负责人QQ</th>
+                            <th>负责人微信</th>
+                            <th>操作</th>
+                        </tr>
+                      </thead>
+                            <tbody>
+                            {% for p in all_people %}
+                                <tr class="even gradeX">
+                                    <td><input type="checkbox" id="id" class="i-checks" value="{{ p.id }}" name="id" /></td>
+                                    <td>{{ p.name }} </td>
+                                    <td>{{ p.phone }} </td>
+                                    <td>{{ p.qq }} </td>
+                                    <td>{{ p.weChat }} </td>
+                                    <td>
+                                        <a id="peopleedit" style="display: block; float:left; margin: auto;"  href="{% url "people_edit" p.id %}"><span class="btn btn-sm btn-info">编辑</span></a>
+                                        <a id="peopledel" style="display: block; float:left; margin: auto;"  href="{% url "people_del"%}?id={{ p.id }}" onclick="return confirm('确认删除？')"><span class="btn btn-sm btn-danger ">删除</span></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                  </table>
+                  <div class="btn-group">
+{#                      <button id="appownerdel" class="btn btn-danger"   name="del_button">删除负责人</button>#}
+                  </div>
+                </div>
+            </div>
+        </form>
+    </section>
+
+</div>
+<script>
+  $(function () {
+    $('#peopleform').DataTable({
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "bAutoWidth": false
+    });
+  });
+</script>
+
+{#<script>#}
+{#    $('#appownerdel').click(function () {#}
+{#        var appowner_id_all = getIDall();#}
+{##}
+{#            if (confirm("确定删除?")) {#}
+{#                $.ajax({#}
+{#                    type: "post",#}
+{#                    data: {appowner_id_all: appowner_id_all,csrfmiddlewaretoken: '{{ csrf_token }}'},#}
+{#                    url: "{% url 'appowner_del' %}",#}
+{#                    success: function () {#}
+{#                        parent.location.reload();#}
+{#                    }#}
+{#                });#}
+{#            }#}
+{#    });#}
+{#</script>#}
+
+{% endblock %}

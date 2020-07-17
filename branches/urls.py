@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 from django.conf.urls import url, include
-from branches import region, branch, resource
+from branches import region, branch, resource, people
 
 urlpatterns = [
     url(r'^$', region.region_list, name='branches'),
@@ -21,4 +21,8 @@ urlpatterns = [
     url(r'^resourceedit/(?P<resource_id>\d+)/$', resource.resource_edit, name='resource_edit'),
     url(r'^resourcedel/$', resource.resource_del, name='resource_del'),
     url(r'^resourceexport/$', resource.resource_export, name='resource_export'),
+    url(r'^people/$', people.people_list, name='people_list'),
+    url(r'^peopleadd/$', people.people_add, name='people_add'),
+    url(r'^peopleedit/(?P<people_id>\d+)/$', people.people_edit, name='people_edit'),
+    url(r'^peopledel/$', people.people_del, name='people_del'),
 ]

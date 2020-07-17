@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from django.forms.widgets import *
-from branches.models import Branch, Region, Resource
+from branches.models import Branch, Region, Resource, People
 from django.contrib.admin import widgets
 
 
@@ -56,4 +56,16 @@ class ResourceForm(forms.ModelForm):
             'owner': Select(attrs={'class': 'form-control', 'style': 'width:450px;'}),
             'description': Textarea(attrs={'class': 'form-control', 'style': 'width:450px;'}),
 
+        }
+
+class PeopleForm(forms.ModelForm):
+
+    class Meta:
+        model = People
+        exclude = ("id",)
+        widgets = {
+            'name': TextInput(attrs={'class': 'form-control','style': 'width:450px;'}),
+            'phone': TextInput(attrs={'class': 'form-control','style': 'width:450px'}),
+            'qq': TextInput(attrs={'class': 'form-control','style': 'width:450px;'}),
+            'weChat': TextInput(attrs={'class': 'form-control','style': 'width:450px;'}),
         }
