@@ -78,3 +78,4 @@ FAQ参考，<a href="https://github.com/guohongze/adminset/wiki/FAQ">常见问�
     请加入开发者群
     3号群 730232593
 
+hello,adminset
