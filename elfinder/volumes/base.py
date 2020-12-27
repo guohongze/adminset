@@ -1092,7 +1092,7 @@ class ElfinderVolumeDriver(object):
             #cut ROOT from path for security reason, even if hacker decodes the path he will not know the root
             #files hashes will also be valid, even if root changes
             p = self._relpath(path)
-            #if reqesting root dir path will be empty, then assign '/' as we cannot leave it blank for crypt
+            #if requesting root dir path will be empty, then assign '/' as we cannot leave it blank for crypt
             if not p:
                 p = self._separator
 
