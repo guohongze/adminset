@@ -61,7 +61,7 @@ service adminsetd start|stop|restart|status
 
 ## 说明
 使用手册，<a href="https://github.com/guhongze/adminset/blob/master/docs/Manual.md/">使用手册</a><br>
-详细使用说明：自动化安装完成后打开 http://your_server_ip/static/docs/ <br.
+详细使用说明：自动化安装完成后打开 http://your_server_ip/static/docs/ <br>
 FAQ参考，<a href="https://github.com/guohongze/adminset/wiki/FAQ">常见问题</a>
 
 ## demo
