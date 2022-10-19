@@ -14,7 +14,7 @@ from accounts.permission import permission_verify
 def people_list(request):
     p = People.objects.all()
     results = {
-        'people':  p,
+        'all_people':  p,
     }
     return render(request, 'branches/people_list.html', results)
 
@@ -41,7 +41,7 @@ def people_add(request):
         form = PeopleForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('peple_list'))
+            return HttpResponseRedirect(reverse('people_list'))
     else:
         form = PeopleForm()
 
@@ -55,7 +55,7 @@ def people_add(request):
 @login_required
 @permission_verify()
 def people_edit(request, people_id):
-    people_obj = get_object_or_404(people, pk=people_id)
+    people_obj = get_object_or_404(People, pk=people_id)
     if request.method == 'POST':
         form = PeopleForm(request.POST, instance=people_obj)
         if form.is_valid():
