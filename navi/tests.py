@@ -1,5 +1,3 @@
-#! /usr/bin/env python
-# -*- coding: utf-8 -*-
 # Create your tests here.
 from django.test import TestCase, Client
 

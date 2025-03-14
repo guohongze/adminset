@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
 
 from django.db import models
 from appconf.models import AppOwner
@@ -15,11 +13,11 @@ class Region(models.Model):
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        verbose_name=u"负责人"
+        verbose_name="负责人"
     )
     description = models.CharField(max_length=255, verbose_name="备注信息", blank=True, null=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -32,18 +30,18 @@ class Branch(models.Model):
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        verbose_name=u"负责人"
+        verbose_name="负责人"
     )
     region = models.ForeignKey(
         Region,
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        verbose_name=u"所属大区"
+        verbose_name="所属大区"
     )
     description = models.CharField(max_length=255, verbose_name="备注", blank=True, null=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -63,16 +61,16 @@ class Resource(models.Model):
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        verbose_name=u"所属机构"
+        verbose_name="所属机构"
     )
     owner = models.ForeignKey(
         AppOwner,
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
-        verbose_name=u"供应商联系人"
+        verbose_name="供应商联系人"
     )
     description = models.CharField(max_length=255, verbose_name="合同说明", blank=True, null=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name

@@ -1,20 +1,57 @@
-#!/usr/bin/env python
-# coding=utf-8
+# -*- coding: utf-8 -*-
+from __future__ import print_function, unicode_literals, absolute_import
+
 import os, re, platform, socket, time, json, threading
-import psutil, schedule, requests
+import sys
+
+# Python 2 和 3 兼容性导入
+try:
+    import psutil
+    import schedule
+    import requests
+except ImportError:
+    print("Please install required packages: psutil, schedule, requests")
+    sys.exit(1)
+
 from subprocess import Popen, PIPE
 import logging
+
+# Python 2.6+ 兼容性
+try:
+    json.loads
+except AttributeError:
+    import simplejson as json
+
+# Python 2/3 兼容函数
+def to_unicode(data):
+    if sys.version_info[0] >= 3:
+        # Python 3
+        if isinstance(data, bytes):
+            return data.decode('utf-8', errors='replace')
+        return str(data)
+    else:
+        # Python 2
+        if isinstance(data, str):
+            return data.decode('utf-8', errors='replace')
+        return unicode(data)
+
 AGENT_VERSION = "1.0"
 token = 'HPcWR7l4NJNJ'
-server_ip = '192.168.47.130'
+# 更新服务器IP地址为日志显示的实际地址
+server_ip = '192.168.110.100'
+# 是否使用HTTPS
+use_https = True
+# 是否验证SSL证书
+verify_ssl = False
 
 
 def log(log_name, path=None):
+    # 为了Python 3兼容性，使用文本模式而不是二进制模式
     logging.basicConfig(level=logging.INFO,
                 format='%(asctime)s %(levelname)s %(message)s',
                 datefmt='%Y%m%d %H:%M:%S',
                 filename=path+log_name,
-                filemode='ab+')
+                filemode='a+')  # 修改为'a+'模式
     return logging.basicConfig
 
 log("agent.log", "/var/opt/adminset/client/")
@@ -33,7 +70,7 @@ def get_ip():
 def get_dmi():
     p = Popen('dmidecode', stdout=PIPE, shell=True)
     stdout, stderr = p.communicate()
-    return stdout
+    return to_unicode(stdout) if stdout else ""
 
 
 def parser_dmi(dmidata):
@@ -55,7 +92,9 @@ def get_mem_total():
     cmd = "grep MemTotal /proc/meminfo"
     p = Popen(cmd, stdout=PIPE, shell = True)
     data = p.communicate()[0]
-    mem_total = data.split()[1]
+    # 解码二进制数据
+    data_str = to_unicode(data)
+    mem_total = data_str.split()[1]
     memtotal = int(round(int(mem_total)/1024.0/1024.0, 0))
     return memtotal
 
@@ -73,11 +112,18 @@ def get_cpu_cores():
 
 
 def parser_cpu(stdout):
+    if not stdout:
+        return {}
+    stdout = to_unicode(stdout)
     groups = [i for i in stdout.split('\n\n')]
-    group = groups[-2]
+    if not groups:
+        return {}
+    group = groups[-2] if len(groups) >= 2 else groups[0]
     cpu_list = [i for i in group.split('\n')]
     cpu_info = {}
     for x in cpu_list:
+        if ':' not in x:
+            continue
         k, v = [i.strip() for i in x.split(':')]
         cpu_info[k] = v
     return cpu_info
@@ -85,10 +131,11 @@ def parser_cpu(stdout):
 
 def get_disk_info():
     ret = []
-    cmd = "fdisk -l|egrep '^Disk\s/dev/[a-z]+:\s\w*'"
+    cmd = r"fdisk -l|egrep '^Disk\s/dev/[a-z]+:\s\w*'"
     p = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
     stdout, stderr = p.communicate()
-    for i in stdout.split('\n'):
+    stdout_str = to_unicode(stdout)
+    for i in stdout_str.split('\n'):
         disk_info = i.split(",")
         if disk_info[0]:
             ret.append(disk_info[0])
@@ -97,33 +144,58 @@ def get_disk_info():
 
 def post_data(url, data):
     try:
-        r = requests.post(url, data)
+        headers = {'Content-Type': 'application/json'}
+        
+        # 如果是相对URL而不是完整URL，则添加协议和服务器地址
+        if not url.startswith('http'):
+            protocol = 'https' if use_https else 'http'
+            url = "{0}://{1}{2}".format(protocol, server_ip, url)
+        
+        # 添加verify参数控制是否验证SSL证书
+        r = requests.post(url, data=data, headers=headers, verify=verify_ssl)
+        
         if r.text:
-            logging.info(r.text)
+            logging.info(to_unicode(r.text))
         else:
             logging.info("Server return http status code: {0}".format(r.status_code))
     except Exception as msg:
-        logging.info(msg)
+        logging.info(str(msg))
     return True
 
 
 def asset_info():
     data_info = dict()
-    data_info['memory'] = get_mem_total()
-    data_info['disk'] = str(get_disk_info())
-    cpuinfo = parser_cpu(get_cpu_model())
-    cpucore = get_cpu_cores()
-    data_info['cpu_num'] = cpucore['logical']
-    data_info['cpu_physical'] = cpucore['physical']
-    data_info['cpu_model'] = cpuinfo['model name']
-    data_info['ip'] = get_ip()
-    data_info['sn'] = parser_dmi(get_dmi())['Serial Number']
-    data_info['vendor'] = parser_dmi(get_dmi())['Manufacturer']
-    data_info['product'] = parser_dmi(get_dmi())['Version']
-    data_info['osver'] = platform.linux_distribution()[0] + " " + platform.linux_distribution()[1] + " " + platform.machine()
-    data_info['hostname'] = platform.node()
-    data_info['token'] = token
-    data_info['agent_version'] = AGENT_VERSION
+    try:
+        data_info['memory'] = get_mem_total()
+        data_info['disk'] = str(get_disk_info())
+        cpuinfo = parser_cpu(get_cpu_model())
+        cpucore = get_cpu_cores()
+        data_info['cpu_num'] = cpucore['logical']
+        data_info['cpu_physical'] = cpucore['physical']
+        data_info['cpu_model'] = cpuinfo.get('model name', '')
+        data_info['ip'] = get_ip()
+        dmi_info = parser_dmi(get_dmi())
+        data_info['sn'] = dmi_info.get('Serial Number', '')
+        data_info['vendor'] = dmi_info.get('Manufacturer', '')
+        data_info['product'] = dmi_info.get('Version', '')
+        
+        # 处理platform.linux_distribution()在Python 3.8+中的弃用
+        try:
+            if hasattr(platform, 'linux_distribution'):
+                dist = platform.linux_distribution()
+            else:
+                import distro
+                # 使用现代的distro API
+                dist = (distro.id(), distro.version(), distro.codename())
+            data_info['osver'] = " ".join([dist[0], dist[1], platform.machine()])
+        except:
+            data_info['osver'] = platform.platform()
+            
+        data_info['hostname'] = platform.node()
+        data_info['token'] = token
+        data_info['agent_version'] = AGENT_VERSION
+    except Exception as e:
+        logging.error("Error collecting asset info: %s", str(e))
     return json.dumps(data_info)
 
 
@@ -136,7 +208,7 @@ def asset_info_post():
     logging.info('Get the hardwave infos from host:')
     logging.info(asset_info())
     logging.info('----------------------------------------------------------')
-    post_data("http://{0}/cmdb/collect".format(server_ip), asset_info())
+    post_data("/cmdb/collect", asset_info())
     if not pv:
         os.environ["LANG"] = osenv
     return True
@@ -235,7 +307,6 @@ def get_net_info():
 
 
 def agg_sys_info():
-
     logging.info('Get the system infos from host:')
     sys_info = {'hostname': platform.node(),
                 'cpu': get_sys_cpu(),
@@ -247,7 +318,7 @@ def agg_sys_info():
     logging.info(sys_info)
     json_data = json.dumps(sys_info)
     logging.info('----------------------------------------------------------')
-    post_data("http://{0}/monitor/received/sys/info/".format(server_ip), json_data)
+    post_data("/monitor/received/sys/info/", json_data)
     return True
 
 
@@ -260,21 +331,34 @@ def get_pid():
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     pid = str(os.getpid())
     with open(BASE_DIR+"/adminsetd.pid", "wb+") as pid_file:
-        pid_file.writelines(pid)
+        pid_file.write(pid.encode('utf-8'))
 
 
 def clean_log():
-    os.system("> /var/opt/adminset/agent.log")
-    logging.info("clean agent log")
+    # 确保目录存在
+    log_dir = "/var/opt/adminset"
+    log_file = log_dir + "/agent.log"
+    
+    # 检查目录是否存在，如果不存在则创建
+    if not os.path.exists(log_dir):
+        os.makedirs(log_dir)
+    
+    # 清空日志文件
+    try:
+        with open(log_file, 'w') as f:
+            pass  # 只需打开并关闭文件即可清空它
+        logging.info("clean agent log")
+    except Exception as e:
+        logging.error("Failed to clean log: %s", str(e))
 
 
 if __name__ == "__main__":
     get_pid()
     asset_info_post()
     time.sleep(1)
-    agg_sys_info()
-    schedule.every(3600).seconds.do(run_threaded, asset_info_post)
-    schedule.every(300).seconds.do(run_threaded, agg_sys_info)
+    #agg_sys_info()
+    schedule.every(300).seconds.do(run_threaded, asset_info_post)
+    #schedule.every(300).seconds.do(run_threaded, agg_sys_info)
     schedule.every().monday.at("00:20").do(run_threaded, clean_log)
     while True:
         schedule.run_pending()

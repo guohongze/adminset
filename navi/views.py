@@ -1,5 +1,3 @@
-#! /usr/bin/env python
-# -*- coding: utf-8 -*-
 
 from .models import navi
 from django.shortcuts import render

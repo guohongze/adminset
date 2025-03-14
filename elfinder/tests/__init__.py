@@ -1,2 +1,2 @@
-from connector import *
-from volumes import *
+from .connector import *
+from .volumes import *

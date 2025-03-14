@@ -1,8 +1,6 @@
-#! /usr/bin/env python
-# -*- coding: utf-8 -*-
 
 from django.shortcuts import render, HttpResponseRedirect
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from appconf.models import Product
 from appconf.forms import ProductForm
@@ -82,6 +80,7 @@ def project_list(request, product_id):
         'project_list':  projects,
     }
     return render(request, 'appconf/product_project_list.html', results)
+
 
 
 

@@ -1,8 +1,5 @@
-#! /usr/bin/env python
-# -*- coding: utf-8 -*-
-from __future__ import absolute_import
 from django.shortcuts import render, HttpResponseRedirect, HttpResponse
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from delivery.models import Delivery
 from delivery.forms import DeliveryFrom

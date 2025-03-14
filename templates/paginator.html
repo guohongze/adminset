@@ -10,19 +10,19 @@
                      <a class="page" href="?page=1&page_len={{ page_len }}">Start</a>
                 </li>
             {% endif %}
-            {% ifequal show_first 1 %}
+            {% if show_first == 1 %}
                 <li class="paginate_button" aria-controls="editable" tabindex="0"><a class="page" href="?page=1&page_len={{ page_len }}"  title="第1页">1...</a></li>
-            {% endifequal %}
+            {% endif %}
             {% for page in page_range %}
-                {% ifequal current_page page %}
+                {% if current_page == page %}
                     <li class="paginate_button active"  aria-controls="editable" tabindex="0"><a class="page" href="?page={{ page }}&page_len={{ page_len }}"  title="第{{ page }}页">{{ page }}</a></li>
                 {% else %}
                     <li class="paginate_button" aria-controls="editable" tabindex="0"><a class="page" href="?page={{ page }}&page_len={{ page_len }}"  title="第{{ page }}页">{{ page }}</a></li>
-                {% endifequal %}
+                {% endif %}
             {% endfor %}
-            {% ifequal show_end 1 %}
+            {% if show_end == 1 %}
                 <li class="paginate_button" aria-controls="editable" tabindex="0"><a class="page" href="?page={{ p.num_pages }}&page_len={{ page_len }}"  title="第{{ page }}页">...{{ p.num_pages }}</a></li>
-            {% endifequal %}
+            {% endif %}
             {% if contacts.has_next %}
                 <li class="paginate_button next" aria-controls="editable" tabindex="0">
                     <a class="page" href="?page={{ contacts.next_page_number }}&page_len={{ page_len }}">Next</a>
@@ -59,7 +59,8 @@
             if (searchArray.length > 1) {
                 $(this).attr('href', searchArray.join('&'));
             }
-{#            sleep(1000)#}
+            // 睡眠函数暂时不需要
+            // sleep(1000)
         })
     });
 

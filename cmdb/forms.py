@@ -1,6 +1,3 @@
-#! /usr/bin/env python
-# -*- coding: utf-8 -*-
-
 from django import forms
 from django.forms.widgets import *
 
@@ -13,8 +10,8 @@ class AssetForm(forms.ModelForm):
         model = Host
         exclude = ("id",)
         widgets = {
-            'hostname': TextInput(attrs={'class': 'form-control', 'style': 'width:530px;', 'placeholder': u'必填项'}),
-            'ip': TextInput(attrs={'class': 'form-control', 'style': 'width:530px;', 'placeholder': u'必填项'}),
+            'hostname': TextInput(attrs={'class': 'form-control', 'style': 'width:530px;', 'placeholder': '必填项'}),
+            'ip': TextInput(attrs={'class': 'form-control', 'style': 'width:530px;', 'placeholder': '必填项'}),
             'account': Select(attrs={'class': 'form-control', 'style': 'width:530px;'}),
             'other_ip': TextInput(attrs={'class': 'form-control', 'style': 'width:530px;'}),
             'group': Select(attrs={'class': 'form-control', 'style': 'width:530px;'}),
@@ -30,7 +27,7 @@ class AssetForm(forms.ModelForm):
             'disk': TextInput(attrs={'class': 'form-control', 'style': 'width:530px;'}),
             'sn': TextInput(attrs={'class': 'form-control', 'style': 'width:530px;'}),
             'idc': Select(attrs={'class': 'form-control', 'style': 'width:530px;'}),
-            'position': TextInput(attrs={'class': 'form-control', 'style': 'width:530px;', 'placeholder': u'物理机写位置，虚机写宿主'}),
+            'position': TextInput(attrs={'class': 'form-control', 'style': 'width:530px;', 'placeholder': '物理机写位置，虚机写宿主'}),
             'memo': Textarea(attrs={'rows': 4, 'cols': 15, 'class': 'form-control', 'style': 'width:530px;'}),
         }
 

@@ -1,8 +1,6 @@
-#! /usr/bin/env python
-# -*- coding: utf-8 -*-
 
 from django.shortcuts import render, HttpResponseRedirect, HttpResponse
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from branches.models import Branch
 from branches.forms import BranchForm
@@ -96,8 +94,8 @@ def branch_export(request):
     file_name = 'adminset_branch_' + now + '.csv'
     response['Content-Disposition'] = "attachment; filename="+file_name
     writer = csv.writer(response)
-    writer.writerow([str2gb(u'机构名称'), str2gb(u'机构地址'), str2gb(u'负责人'), str2gb(u'电话'),
-                     str2gb(u'说明'),])
+    writer.writerow([str2gb('机构名称'), str2gb('机构地址'), str2gb('负责人'), str2gb('电话'),
+                     str2gb('说明'),])
     for p in branch_find:
         writer.writerow([str2gb(p.name), str2gb(p.address), p.owner, p.telphone,
                          str2gb(p.owner)])

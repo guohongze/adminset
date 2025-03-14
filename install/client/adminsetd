@@ -1,68 +1,100 @@
 #!/bin/sh
 #
-# Simple Redis init.d script conceived to work on Linux systems
-# as it does use of the /proc filesystem.
+# Adminset Agent init.d script
 # chkconfig: - 85 15
 . /etc/init.d/functions
 
 WORK_DIR="/var/opt/adminset/client"
-EXEC="$WORK_DIR/venv/bin/python $WORK_DIR/adminset_agent.py"
+PYTHON_BIN="$WORK_DIR/venv/bin/python"
+AGENT_SCRIPT="$WORK_DIR/adminset_agent.py"
+EXEC="$PYTHON_BIN $AGENT_SCRIPT"
+PIDFILE="$WORK_DIR/adminsetd.pid"
 
-PIDFILE=$WORK_DIR/adminsetd.pid
+check_python() {
+    if [ ! -f "$PYTHON_BIN" ]; then
+        echo "Python virtual environment not found at $PYTHON_BIN"
+        exit 1
+    fi
+}
 
 start() {
-	if [ -f $PIDFILE ]
-	then
-			echo "$PIDFILE exists, process is already running or crashed"
-	else
-			echo "Starting Adminset Agent..."
-			nohup $EXEC >/dev/null 2>&1 &
-	fi
+    check_python
+    if [ -f $PIDFILE ]; then
+        echo "$PIDFILE exists, process is already running or crashed"
+    else
+        echo "Starting Adminset Agent..."
+        cd $WORK_DIR
+        nohup $EXEC >/dev/null 2>&1 &
+        sleep 1
+        if [ -f $PIDFILE ]; then
+            echo "Adminset Agent started successfully"
+        else
+            echo "Failed to start Adminset Agent"
+            exit 1
+        fi
+    fi
 }
 
 stop() {
-	if [ ! -f $PIDFILE ]
-	then
-			echo "$PIDFILE does not exist, process is not running"
-	else
-			PID=$(cat $PIDFILE)
-			echo "Stopping ..."
-			kill -9 $PID
-			rm -rf $WORK_DIR/adminsetd.pid
-			while [ -x /proc/${PID} ]
-			do
-				echo "Waiting for Adminset Agent to shutdown ..."
-				sleep 1
-			done
-			echo "adminset agent stopped"
-	fi
+    if [ ! -f $PIDFILE ]; then
+        echo "$PIDFILE does not exist, process is not running"
+    else
+        PID=$(cat $PIDFILE)
+        echo "Stopping Adminset Agent..."
+        kill -15 $PID
+        TIMEOUT=30
+        while [ -x /proc/${PID} ]; do
+            if [ $TIMEOUT -le 0 ]; then
+                echo "Force killing process..."
+                kill -9 $PID
+                break
+            fi
+            echo "Waiting for Adminset Agent to shutdown..."
+            sleep 1
+            let TIMEOUT=$TIMEOUT-1
+        done
+        rm -f $PIDFILE
+        echo "Adminset Agent stopped"
+    fi
+}
+
+status() {
+    if [ -f $PIDFILE ]; then
+        PID=$(cat $PIDFILE)
+        if [ -x /proc/${PID} ]; then
+            echo "Adminset Agent is running (pid: $PID)"
+        else
+            echo "Adminset Agent is not running (stale pid file)"
+            rm -f $PIDFILE
+        fi
+    else
+        echo "Adminset Agent is not running"
+    fi
 }
 
 restart() {
     stop
-    sleep 1
+    sleep 2
     start
 }
 
 case "$1" in
     start)
-	start
-	;;
+        start
+        ;;
     stop)
-	stop
+        stop
         ;;
     status)
-	if [ -f $PIDFILE ]
-	then
-		echo "adminset agent is running....."
-	else
-		echo "adminset agent is stopped"
-	fi
-	;;
+        status
+        ;;
     restart)
-	restart
-	;;
+        restart
+        ;;
     *)
-        echo "service status or stop or start"
+        echo "Usage: $0 {start|stop|status|restart}"
+        exit 1
         ;;
 esac
+
+exit 0

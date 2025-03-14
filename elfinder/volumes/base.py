@@ -4,10 +4,9 @@ try:
 except ImportError:
     import Image
 from base64 import b64encode, b64decode
-from string import maketrans
 from tarfile import TarFile
 from django.core.cache import cache
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 from elfinder.exceptions import ElfinderErrorMessages, FileNotFoundError, DirNotFoundError, PermissionDeniedError, NamedError, NotAnImageError
 from elfinder.utils.archivers import ZipFileArchiver
 
@@ -183,8 +182,8 @@ class ElfinderVolumeDriver(object):
     
     def mount(self, opts):
         """
-        "Mount" volume. Return ``True`` if volume available for read 
-        or write, ``False`` otherwise.
+        "Mount" volume. Return True if volume available for read 
+        or write, False otherwise.
         
         It is common for drivers to override this method.
         """
@@ -196,7 +195,7 @@ class ElfinderVolumeDriver(object):
         else:
             raise Exception(_('No volume id found'))
         
-        self._root = self._normpath(unicode(self._options['path']))
+        self._root = self._normpath(str(self._options['path']))
         self._separator = self._options['separator'] if 'separator' in self._options else os.sep
 
         #default file attribute
@@ -309,6 +308,22 @@ class ElfinderVolumeDriver(object):
         
         It is common for drivers to override this method.
         """
+        self._root = self._normpath(str(self._options['path']))
+        
+        for cmd in self._disabled:
+            if cmd in self._commands:
+                del self._commands[cmd]
+        
+        if self._options['URL'] and self._options['URL'] != '':
+            self._URL = self._options['URL'] if self._options['URL'].endswith('/') else self._options['URL']+'/'
+        
+        if 'alias' in self._options and self._options['alias']:
+            self._root_name = self._options['alias']
+        elif 'path' in self._options:
+            self._root_name = os.path.basename(self._options['path']) if self._options['path'] != '/' else self._separator
+        else:
+            self._root_name = 'ROOT'
+            
         #set thumbnails path
         if self._options['tmbPath']:
             path = self._join_path(self._root, self._options['tmbPath'])
@@ -358,15 +373,14 @@ class ElfinderVolumeDriver(object):
         Return volume options required by client. The returned dictionary
         contains the following keys:
         
-            :path:    the path to the root as it will be displayed to the end user
-            :url:    the root volume url 
-            :pathUrl:   url of the path provided in the ``hash_`` argument
-            :tmbUrl:    the root thumbnail url
-            :disabled:    a list of the disabled commands
-            :separator:    the path separator for this volume
-            :copyOverwrite:    whether it is allowed or not to overwrite a file
-            :archivers:    the available create and extract archives (e.g. tar, gzip etc.)
-            
+        - path: the path to the root as it will be displayed to the end user
+        - url: the root volume url 
+        - pathUrl: url of the path provided in the 'hash_' argument
+        - tmbUrl: the root thumbnail url
+        - disabled: a list of the disabled commands
+        - separator: the path separator for this volume
+        - copyOverwrite: whether it is allowed or not to overwrite a file
+        - archivers: the available create and extract archives (e.g. tar, gzip etc.)
         """
         path = self.decode(hash_)
         return {
@@ -379,14 +393,14 @@ class ElfinderVolumeDriver(object):
             'separator' : self._separator,
             'copyOverwrite' : int(self._options['copyOverwrite']),
             'archivers' : {
-                'create' : self._archivers['create'].keys(),
-                'extract' : self._archivers['extract'].keys()
+                'create' : list(self._archivers['create'].keys()),
+                'extract' : list(self._archivers['extract'].keys())
             }
         }
     
     def command_disabled(self, cmd):
         """
-        Return ``True`` if command ``cmd`` is disabled.
+        Return True if command 'cmd' is disabled.
         """
         return cmd in self._options['disabled']
     
@@ -398,7 +412,7 @@ class ElfinderVolumeDriver(object):
 
     def mime_accepted(self, mime, mimes = [], empty = True):
         """
-        Return ``True`` if ``mime`` is in required mimes list.
+        Return True if mime is in required mimes list.
         """
         mimes = mimes if mimes else self._options['onlyMimes']
         if not mimes:
@@ -408,13 +422,13 @@ class ElfinderVolumeDriver(object):
     
     def is_readable(self):
         """
-        Return ``True`` if root is readable.
+        Return True if root is readable.
         """
         return self.stat(self._root)['read']
     
     def copy_from_allowed(self):
         """
-        Return ``True`` if copy from this volume is allowed.
+        Return True if copy from this volume is allowed.
         """
         return self._options['copyFrom']
     
@@ -439,14 +453,14 @@ class ElfinderVolumeDriver(object):
     def closest(self, hash_, attr, val):
         """
         Return the file/directory hash or the first found child hash 
-        for which ``attr`` == ``val``.
+        for which attr == val.
         """
         path = self._closest_by_attr(self.decode(hash_), attr, val)
         return self.encode(path) if path else False
     
     def file(self, hash_):
         """
-        Return file info or raises a ``FileNotFoundError`` if file was
+        Return file info or raises a FileNotFoundError if file was
         not found.
         """
         try:
@@ -456,8 +470,8 @@ class ElfinderVolumeDriver(object):
 
     def dir(self, hash_, resolve_link=False):
         """
-        Return folder info. Raises a ``DirNotFoundError`` if ``hash_`` path
-        is not a directory, or ``FileNotFoundError`` if the ``hash_`` 
+        Return folder info. Raises a DirNotFoundError if hash_ path
+        is not a directory, or FileNotFoundError if the hash_ 
         path is not a valid file at all.
         """
         dir_ = self.file(hash_)
@@ -472,8 +486,8 @@ class ElfinderVolumeDriver(object):
     def scandir(self, hash_):
         """
         Return directory contents. 
-        Raises a ``DirNotFoundError`` if ``hash_`` is not a valid dir, 
-        or a ``PermissionDenied Error`` if the user cannot access the data.
+        Raises a DirNotFoundError if hash_ is not a valid dir, 
+        or a PermissionDenied Error if the user cannot access the data.
         """
         if not self.dir(hash_)['read']:
             raise PermissionDeniedError
@@ -482,7 +496,7 @@ class ElfinderVolumeDriver(object):
     def ls(self, hash_):
         """
         List directory files. Can raise
-        ``PermissionDeniedError``, ``FileNotFoundError``, ``DirNotFoundError``
+        PermissionDeniedError, FileNotFoundError, DirNotFoundError
         If a mime filter is set, use it to return only accepted listings.
         """
         if not self.dir(hash_)['read']:
@@ -499,8 +513,8 @@ class ElfinderVolumeDriver(object):
 
     def tree(self, hash_='', deep=0, exclude=''):
         """
-        Return sub-directories for the required folder ``has_``,
-        or raise an ``Exception``.
+        Return sub-directories for the required folder has_,
+        or raise an Exception.
         """
         path = self.decode(hash_) if hash_ else self._root
 
@@ -518,7 +532,7 @@ class ElfinderVolumeDriver(object):
     def parents(self, hash_):
         """
         Return part of dirs tree from required dir up to the root dir.
-        Raises ``DirNotFoundError``, ``FileNotFoundError``, ``PermissionDeniedError``.
+        Raises DirNotFoundError, FileNotFoundError, PermissionDeniedError.
         """
         current = self.dir(hash_)
         path = self.decode(hash_)
@@ -540,8 +554,8 @@ class ElfinderVolumeDriver(object):
     
     def tmb(self, hash_):
         """
-        Create thumbnail for the required file ``hash_`` and return
-        its name. It will raise an ``Exception`` on fail.
+        Create thumbnail for the required file hash_ and return
+        its name. It will raise an Exception on fail.
         """
         
         path = self.decode(hash_)
@@ -729,10 +743,10 @@ class ElfinderVolumeDriver(object):
 
     def duplicate(self, hash_, suffix='copy'):
         """
-        Create file copy with suffix "copy `<number>`"
+        Create file copy with suffix "copy <number>"
         and return its info.
         """
-
+        
         if self.command_disabled('duplicate'):
             raise PermissionDeniedError
         
@@ -990,7 +1004,7 @@ class ElfinderVolumeDriver(object):
                 raise PermissionDeniedError
 
             path = self.decode(hash_)
-            if not vars().has_key('dir'):
+            if 'dir' not in vars():
                 dir_ = self._dirname(path)
                 stat = self.stat(dir_)
                 if not stat['write']:
@@ -1061,7 +1075,7 @@ class ElfinderVolumeDriver(object):
     
     def search(self, q):
         """
-        Search files based on query ``q``.
+        Search files based on query q.
         """
         return self._search(self._root, q)
 
@@ -1095,38 +1109,35 @@ class ElfinderVolumeDriver(object):
             #if reqesting root dir path will be empty, then assign '/' as we cannot leave it blank for crypt
             if not p:
                 p = self._separator
-
+                
             hash_ = self._crypt(p)
-            #hash is used as id in HTML that means it must contain vaild chars
-            #make base64 html safe and append prefix in begining
-            hash_ = hash_.encode('utf-8') # unicode filename support
-            hash_ = b64encode(hash_).translate(maketrans('+/=', '-_.'))
-
-            #remove dots '.' at the end (used to be '=' in base64, before the translation)
-            hash_ = hash_.rstrip('.')
-
+            # 移除 unicode filename support 注释和编码
+            
             #append volume id to make hash unique
-            return self.id()+hash_
+            return self.id() + hash_
+        
+        return ''
     
     def decode(self, hash_):
         """
-        Decode path from hash.
+        Decode path from hash
         """
         if hash_.startswith(self.id()):
             #cut volume id after it was prepended in encode
             h = hash_[len(self.id()):]
-            #replace HTML safe base64 to normal
-            h = h.encode('ascii').translate(maketrans('-_.', '+/='))
-            #put cut = at the end
-            h += "=" * ((4 - len(h) % 4) % 4)
-            h = b64decode(h)
-            h = h.decode('utf-8') # unicode filename support
-
+            # 移除 unicode filename support 注释和解码
+            
             path = self._uncrypt(h) 
-            #append ROOT to path after it was cut in encode
-            return self._abspath(path)
-
-        raise FileNotFoundError
+            
+            if not path:
+                return ''
+                
+            path = self._abspath(path)
+            
+            if os.path.exists(path):
+                return path
+        
+        return ''
     
     def _crypt(self, path):
         """
@@ -1229,25 +1240,31 @@ class ElfinderVolumeDriver(object):
     
     def _attr(self, path, attr, val=False):
         """
-        Check a file attribute. ``attr`` can be one of `'read'`, `'write'`
-        `'hidden'` or `'locked'`.
+        Check a file attribute. attr can be one of 'read', 'write',
+        'hidden' or 'locked'.
         """
         
         if not attr in self._defaults:
             return False
-
-        #TODO: replace this with signals??
-        if self._options['accessControl'] and hasattr(self._options['accessControl'], '__call__'):
-            perm = self._options['accessControl'](attr, path, self)
-            if perm != None:
-                return perm
-
-        for attrs in self._attributes:
-            if attr in attrs and re.search(attrs['pattern'], '%s%s' % (self._separator, self._relpath(path))):
-                return attrs[attr]
+        
+        if attr == 'read' or attr == 'write':
+            if self._options['accessControl'] and callable(self._options['accessControl']):
+                return self._options['accessControl'](attr, path, self, val)
                 
-        return self._defaults[attr] if not val else val
-    
+        for attrs in self._attributes:
+            if not 'pattern' in attrs:
+                continue
+                
+            if not re.search(attrs['pattern'], '%s%s' % (self._separator, self._relpath(path))):
+                continue
+                    
+            if not attr in attrs:
+                continue
+                    
+            return attrs[attr] if val == False else val and attrs[attr]
+                    
+        return self._defaults[attr] if val == False else val and self._defaults[attr]
+
     def _size(self, path):
         """
         Return file or directory total size.
@@ -1334,7 +1351,7 @@ class ElfinderVolumeDriver(object):
     def _search(self, path, q):
         """
         Recursively search for files in the specified path,
-        based on the ``q`` query.
+        based on the q query.
         """
         result = []
         for p in self._get_cached_dir(path):
@@ -1611,7 +1628,7 @@ class ElfinderVolumeDriver(object):
 
     def _img_rotate(self, im, target, degree, bgcolor = '#ffffff', destformat = None):
         """
-        Rotate image. The ``degree`` argument is measured clock-wise.
+        Rotate image. The degree argument is measured clock-wise.
         """
         #rotated = im.convert('RGBA').rotate(angle=360-degree)
         alpha = Image.new('RGBA', im.size, bgcolor)
@@ -1665,7 +1682,7 @@ class ElfinderVolumeDriver(object):
         
         #manualy add archivers
         if 'create' in self._options['archivers']:
-            for mime, archiver in self._options['archivers']['create'].items():
+            for mime, archiver in list(self._options['archivers']['create'].items()):
                 try:
                     conf = archiver['archiver']
                     archiver['ext']
@@ -1676,7 +1693,7 @@ class ElfinderVolumeDriver(object):
                     self._archivers['create'][mime] = archiver
 
         if 'extract' in self._options['archivers']:
-            for mime, archiver in self._options['archivers']['extract'].items():
+            for mime, archiver in list(self._options['archivers']['extract'].items()):
                 try:
                     conf = archiver['archiver']
                     archiver['ext']
@@ -1725,20 +1742,19 @@ class ElfinderVolumeDriver(object):
         """
         
         ext  = ''
-        m = re.search(r'\.((tar\.(gz|bz|bz2|z|lzo))|cpio\.gz|ps\.gz|xcf\.(gz|bz2)|[a-z0-9]{1,4})$', name, re.IGNORECASE)
-        if m:
-            ext  = '.%s' % m.group(1)
-            name = name[0:len(name)-len(m.group(0))] 
-        
-        m = re.search('(%s)(\d*)$' % suffix, name, re.IGNORECASE)
-        if check_num and m and m.group(2):
+        mime = ''
+        if '.' in name: 
+            ext  = '.%s' % name.split('.')[-1]
+            mime = self.mimetype(dir_ + name)
+            name = name[:len(name)-len(ext)]
+            
+        if check_num and re.search(r'%s(\d+)$' % suffix, name, re.IGNORECASE):
+            m = re.search(r'(%s)(\d+)$' % suffix, name, re.IGNORECASE)
+            name = name[0:len(name)-len(m.group(2))-len(m.group(1))]
             i = int(m.group(2))
-            name = name[0:len(name)-len(m.group(2))]
         else:
             i = 1
-            name += suffix
-
-        return self._get_available_name(dir_, name, ext, i)
+        return self._get_available_name(dir_, name + suffix + (str(i) if i > 0 else '') + ext, ext, i)
     
     def _is_hidden(self, stat):
         """
@@ -1765,7 +1781,7 @@ class ElfinderVolumeDriver(object):
 
     def _abspath(self, path):
         """
-        Convert ``path`` (that should be relative to the volume root) into a real path.
+        Convert path (that should be relative to the volume root) into a real path.
         """
         return self._root if path == self._separator else self._join_path(self._root, path)
 
@@ -1778,27 +1794,27 @@ class ElfinderVolumeDriver(object):
      
     def _inpath(self, path, parent):
         """
-        Return ``True`` if ``path`` is child of ``parent``.
+        Return True if path is child of parent.
         """
         return path == parent or path.startswith('%s%s' % (parent, self._separator))
         
     def _isabs(self, path):
         """
-        Check if ``path`` is absolute.
+        Check if path is absolute.
         """
         if self._separator =='\\':
-            return not re.match(r'([a-zA-Z]+:)?\\$') is None
+            return not re.match(r'([a-zA-Z]+:)?\\$', path) is None
         return path.startswith(os.sep)
     
     def _clear_cached_stat(self, path):
         """
-        Clear the cache for this file ``path``.
+        Clear the cache for this file path.
         """
         cache.delete('elfinder::stat::%s' % self.encode(path))
         
     def _get_cached_dir(self, path):
         """
-        Get the cached stat info for this directory ``path``, if any.
+        Get the cached stat info for this directory path, if any.
         """
         cache_key = 'elfinder::listdir::%s' % self.encode(path)
         dir_cache = cache.get(cache_key, None)
@@ -1816,7 +1832,7 @@ class ElfinderVolumeDriver(object):
     
     def _clear_cached_dir(self, path):
         """
-        Clear cache for this directory ``path``.
+        Clear cache for this directory path.
         """
         cache.delete('elfinder::listdir::%s' % self.encode(path))
         #clear the stat record as well
@@ -1829,24 +1845,24 @@ class ElfinderVolumeDriver(object):
     def _dirname(self, path):
         """
         Return parent directory path. This method
-        should behave like :py:func:`os.path.dirname` does.
+        should behave like os.path.dirname does.
         
         .. warning::
         
-            **Not implemented**, each driver must provide its own
-            imlementation. 
+            Not implemented, each driver must provide its own
+            implementation.
         """
         raise NotImplementedError
 
     def _basename(self, path):
         """
         Return file name. This method
-        should behave like :py:func:`os.path.basename` does.
+        should behave like os.path.basename does.
         
         .. warning::
         
-            **Not implemented**, each driver must provide its own
-            imlementation. 
+            Not implemented, each driver must provide its own
+            implementation.
         """
         raise NotImplementedError
 
@@ -1854,25 +1870,25 @@ class ElfinderVolumeDriver(object):
         """
         Join two paths and return full path. If the latter path is
         absolute, return it. This method
-        should behave like :py:func:`os.path.join` does, but accept
+        should behave like os.path.join does, but accept
         only two paths.
         
         .. warning::
         
-            **Not implemented**, each driver must provide its own
-            imlementation.
+            Not implemented, each driver must provide its own
+            implementation.
         """
         raise NotImplementedError
 
     def _normpath(self, path):
         """
         Return normalized path. This method
-        should behave like :py:func:`os.path.normpath` does.
+        should behave like os.path.normpath does.
         
         .. warning::
         
-            **Not implemented**, each driver must provide its own
-            imlementation.
+            Not implemented, each driver must provide its own
+            implementation.
         """
         raise NotImplementedError
     
@@ -1883,26 +1899,26 @@ class ElfinderVolumeDriver(object):
         Return stat for given path. The returned dictionary must contain
         the following keys:
         
-            :size:    file size in b. **Required**
-            :ts:      file modification time in unix time. **Required**
-            :mime:    mimetype. required for folders, others. Optional
-            :read:    read permissions. **Required**
-            :write:   write permissions. **Required**
-            :alias:   link target path relative to root path (for symlinks). Optional
-            :target:  link target path (for symlinks). Optional
+        - size: file size in b. Required
+        - ts: file modification time in unix time. Required
+        - mime: mimetype. required for folders, others. Optional
+        - read: read permissions. Required
+        - write: write permissions. Required
+        - alias: link target path relative to root path (for symlinks). Optional
+        - target: link target path (for symlinks). Optional
         
         This method should raise an os.error on fail.
         
         .. warning::
         
-            **Not implemented**, each driver must provide its own
-            imlementation.
+            Not implemented, each driver must provide its own
+            implementation.
         """
         raise NotImplementedError
 
     def _subdirs(self, path):
         """
-        Return ``True`` if path is dir and has at least one child directory.
+        Return True if path is dir and has at least one child directory.
         
        .. warning::
         
@@ -1928,7 +1944,7 @@ class ElfinderVolumeDriver(object):
 
     def _mimetype(self, path):
         """
-        Attempt to read the file's mimetype. Should return ``None``
+        Attempt to read the file's mimetype. Should return None
         on fail.
         
         .. warning::
@@ -1999,7 +2015,7 @@ class ElfinderVolumeDriver(object):
 
     def _mkdir(self, path, mode):
         """
-        Create directory and return the path or raise an ``os.error``
+        Create directory and return the path or raise an os.error
         on fail.
         
         .. warning::
@@ -2011,7 +2027,7 @@ class ElfinderVolumeDriver(object):
 
     def _mkfile(self, path, name):
         """
-        Create file and return it's path or raise an ``os.error`` on fail.
+        Create file and return it's path or raise an os.error on fail.
         
         .. warning::
         
@@ -2046,7 +2062,7 @@ class ElfinderVolumeDriver(object):
     def _move(self, source, target_dir, name):
         """
         Move file into another parent directory.
-        Return the new file path or raise ``os.error``.
+        Return the new file path or raise os.error.
         
         .. warning::
         

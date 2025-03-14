@@ -1,5 +1,3 @@
-#! /usr/bin/env python
-# -*- coding: utf-8 -*-
 from django import forms
 from django.forms.widgets import *
 from branches.models import Branch, Region, Resource

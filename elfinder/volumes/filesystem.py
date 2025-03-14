@@ -6,7 +6,7 @@ except ImportError:
 from hashlib import md5
 from django.conf import settings
 from elfinder.exceptions import ElfinderErrorMessages, NotAnImageError, DirNotFoundError
-from base import ElfinderVolumeDriver
+from .base import ElfinderVolumeDriver
 
 class ElfinderVolumeLocalFileSystem(ElfinderVolumeDriver):
     """
@@ -26,8 +26,8 @@ class ElfinderVolumeLocalFileSystem(ElfinderVolumeDriver):
         #Required to count total archive files size
         self._archiveSize = 0
         
-        self._options['dirMode']  = 0755 #new dirs mode
-        self._options['fileMode'] = 0644 #new files mode
+        self._options['dirMode']  = 0o755 #new dirs mode
+        self._options['fileMode'] = 0o644 #new files mode
         
     #*********************************************************************#
     #*                        INIT AND CONFIGURE                         *#
@@ -174,9 +174,19 @@ class ElfinderVolumeLocalFileSystem(ElfinderVolumeDriver):
 
     def _mimetype(self, path):
         """
-        Attempt to read the file's mimetype
+        Return file mimetype.
         """
-        return magic.Magic(mime=True).from_file(path.encode('utf-8')) #unicode filename support
+        try:
+            import mimetypes
+            return mimetypes.guess_type(path)[0]
+        except ImportError:
+            try:
+                import magic
+                return magic.Magic(mime=True).from_file(path) #unicode filename support
+            except ImportError:
+                if os.path.isdir(path):
+                    return 'directory'
+                return mimetypes.guess_type(path)[0] or 'application/octet-stream'
     
     def _readlink(self, path):
         """
@@ -198,7 +208,7 @@ class ElfinderVolumeLocalFileSystem(ElfinderVolumeDriver):
         Return files list in directory.
         The '.' and '..' special directories are omitted.
         """
-        return map(lambda x: self._join_path(path, x), os.listdir(path))
+        return [self._join_path(path, x) for x in os.listdir(path)]
 
     def _fopen(self, path, mode='rb'):
         """
@@ -350,7 +360,7 @@ class ElfinderVolumeLocalFileSystem(ElfinderVolumeDriver):
             raise Exception('Could not create archive')
 
         os.chdir(cwd)
-        path = u'%s%s%s' % (dir_, self._separator, name)
+        path = '%s%s%s' % (dir_, self._separator, name)
         
         if not os.path.isfile(path):
             raise Exception('Could not create archive')
@@ -399,7 +409,7 @@ class ElfinderVolumeLocalFileSystem(ElfinderVolumeDriver):
                 
         archive_name = self._basename(path)
         archive_dir = self._dirname(path)
-        quarantine_dir = self._join_path(self._quarantine, u'%s%s' % (str(time.time()).replace(' ', '_'), archive_name))
+        quarantine_dir = self._join_path(self._quarantine, '%s%s' % (str(time.time()).replace(' ', '_'), archive_name))
         archive_copy = self._join_path(quarantine_dir, archive_name)
         
         self._mkdir(quarantine_dir)

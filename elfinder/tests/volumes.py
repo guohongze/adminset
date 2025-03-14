@@ -35,7 +35,7 @@ class ElfinderVolumeLocalFileSystemTestCase(unittest.TestCase):
         self.realPath = self.driver.decode(self.default_path)
     
     def test_defaultpath(self):
-        self.assertEqual(isinstance(self.default_path, basestring), True)
+        self.assertEqual(isinstance(self.default_path, str), True)
         self.assertEqual(len(self.default_path) > 0, True)
     
     def test_dir(self):
@@ -78,10 +78,10 @@ class ElfinderVolumeLocalFileSystemTestCase(unittest.TestCase):
         
     def test_tree(self):
         tree = self.driver.tree(self.default_path, 2)
-        self.assertEquals(len(tree), 3)
-        self.assertEquals(tree[0]['hash'], self.default_path)
-        self.assertEquals(tree[1]['hash'], self.driver.encode(self.driver._join_path(self.driver._options['path'],'files')))
-        self.assertEquals(tree[2]['hash'], self.driver.encode(self.driver._join_path(self.driver._options['path'],'test')))
+        self.assertEqual(len(tree), 3)
+        self.assertEqual(tree[0]['hash'], self.default_path)
+        self.assertEqual(tree[1]['hash'], self.driver.encode(self.driver._join_path(self.driver._options['path'],'files')))
+        self.assertEqual(tree[2]['hash'], self.driver.encode(self.driver._join_path(self.driver._options['path'],'test')))
         
     def test_open_close(self):
         hash_ = self.driver.encode(self.driver._join_path(self.options['path'], self.driver._join_path('files','2bytes.txt')))
@@ -188,10 +188,10 @@ class ElfinderVolumeStorageTestCase(ElfinderVolumeLocalFileSystemTestCase):
     
     def test_tree(self):
         tree = self.driver.tree(self.default_path, 2)
-        self.assertEquals(len(tree), 3)
-        self.assertEquals(tree[0]['hash'], self.default_path)
-        self.assertEquals(tree[1]['hash'], self.driver.encode(self.driver._join_path(self.driver._options['path'],'files')))
-        self.assertEquals(tree[2]['hash'], self.driver.encode(self.driver._join_path(self.driver._options['path'],'test')))
+        self.assertEqual(len(tree), 3)
+        self.assertEqual(tree[0]['hash'], self.default_path)
+        self.assertEqual(tree[1]['hash'], self.driver.encode(self.driver._join_path(self.driver._options['path'],'files')))
+        self.assertEqual(tree[2]['hash'], self.driver.encode(self.driver._join_path(self.driver._options['path'],'test')))
 
 class ElfinderVolumeFilePermissionTestcase(unittest.TestCase):
     

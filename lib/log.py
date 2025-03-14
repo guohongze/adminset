@@ -1,5 +1,3 @@
-#! /usr/bin/env python
-# -*- coding: utf-8 -*-
 import logging
 from adminset.settings import BASE_DIR
 
@@ -23,5 +21,5 @@ def log(log_name, level="info", path=None):
                 format='%(asctime)s %(levelname)s %(message)s',
                 datefmt='%Y%m%d %H:%M:%S',
                 filename=log_path+log_name,
-                filemode='ab+')
+                filemode='a')
     return logging.basicConfig

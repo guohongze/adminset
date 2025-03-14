@@ -1,14 +1,6 @@
-#! /usr/bin/env python
-# -*- coding: utf-8 -*-
-
-from __future__ import absolute_import, unicode_literals
 import os
 from celery import Celery
-try:
-    import configparser as cf
-except Exception as msg:
-    print(msg)
-    import ConfigParser as cf
+import configparser as cf  # 直接使用Python 3的configparser模块
 
 # set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'adminset.settings')
@@ -40,4 +32,4 @@ app.autodiscover_tasks()
 
 @app.task(bind=True)
 def debug_task(self):
-    print('Request: {0!r}'.format(self.request))
+    print(('Request: {0!r}'.format(self.request)))

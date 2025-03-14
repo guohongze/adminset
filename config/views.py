@@ -1,11 +1,5 @@
-#! /usr/bin/env python
-# -*- coding: utf-8 -*-
 from django.shortcuts import render, HttpResponse
-try:
-    import configparser as cp
-except Exception as msg:
-    print(msg)
-    import ConfigParser as cp
+import configparser as cp  # ֱ��ʹ��Python 3��configparserģ��
 import os
 from django.contrib.auth.decorators import login_required
 from accounts.permission import permission_verify
@@ -24,7 +18,7 @@ def index(request):
     all_filter = ("OpenLDAP", "WindowsAD")
     ldap_choice = ("True", "False")
     with open(dirs+'/adminset.conf', 'r') as cfgfile:
-        config.readfp(cfgfile)
+        config.read_file(cfgfile)
         a_path = config.get('config', 'ansible_path')
         r_path = config.get('config', 'roles_path')
         p_path = config.get('config', 'playbook_path')
@@ -157,12 +151,12 @@ def config_save(request):
         config.set('ldap', 'nickname', nickname)
         config.set('ldap', 'is_active', is_active)
         config.set('ldap', 'is_superuser', is_superuser)
-        tips = u"保存成功！"
+        tips = "保存成功"
         display_control = ""
-        with open(dirs+'/adminset.conf', 'wb') as cfgfile:
+        with open(dirs+'/adminset.conf', 'w') as cfgfile:
             config.write(cfgfile)
         with open(dirs+'/adminset.conf', 'r') as cfgfile:
-            config.readfp(cfgfile)
+            config.read_file(cfgfile)
             a_path = config.get('config', 'ansible_path')
             r_path = config.get('config', 'roles_path')
             p_path = config.get('config', 'playbook_path')
@@ -206,7 +200,7 @@ def get_dir(args):
     config = cp.RawConfigParser()
     dirs = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     with open(dirs+'/adminset.conf', 'r') as cfgfile:
-        config.readfp(cfgfile)
+        config.read_file(cfgfile)
         a_path = config.get('config', 'ansible_path')
         r_path = config.get('config', 'roles_path')
         p_path = config.get('config', 'playbook_path')
@@ -236,7 +230,7 @@ def get_dir(args):
         nickname = config.get('ldap', 'nickname')
         is_active = config.get('ldap', 'is_active')
         is_superuser = config.get('ldap', 'is_superuser')
-    # 根据传入参数返回变量以获取配置，返回变量名与参数名相同
+    # 根据传入参数返回变量以获取配置，返回变量名与参数名相�?
     if args:
         return vars()[args]
     else:
@@ -251,3 +245,4 @@ def get_token(request):
         return HttpResponse(new_token)
     else:
         return True
+

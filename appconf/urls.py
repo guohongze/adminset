@@ -1,27 +1,25 @@
-#! /usr/bin/env python
-# -*- coding: utf-8 -*-
-from django.conf.urls import url, include
+from django.urls import path, include
 from appconf import product, project, appowner, authinfo
 
 urlpatterns = [
-    url(r'^appowneradd/$', appowner.appowner_add, name='appowner_add'),
-    url(r'^appowneraddmini/$', appowner.appowner_add_mini, name='appowner_add_mini'),
-    url(r'^appowner/$', appowner.appowner_list, name='appowner_list'),
-    url(r'^appowneredit/(?P<appowner_id>\d+)/$', appowner.appowner_edit, name='appowner_edit'),
-    url(r'^appownerdel/$', appowner.appowner_del, name='appowner_del'),
-    url(r'^productadd/$', product.product_add, name='product_add'),
-    url(r'^product/$', product.product_list, name='product_list'),
-    url(r'^productplist/(?P<product_id>\d+)/$', product.project_list, name='product_project_list'),
-    url(r'^productedit/(?P<product_id>\d+)/$', product.product_edit, name='product_edit'),
-    url(r'^productdel/$', product.product_del, name='product_del'),
-    url(r'^projectadd/$', project.project_add, name='project_add'),
-    url(r'^project/$', project.project_list, name='project_list'),
-    url(r'^projectedit/(?P<project_id>\d+)/$', project.project_edit, name='project_edit'),
-    url(r'^projectdel/$', project.project_del, name='project_del'),
-    url(r'^projectexport/$', project.project_export, name='project_export'),
-    url(r'^authinfoadd/$', authinfo.authinfo_add, name='authinfo_add'),
-    url(r'^authinfoaddmini/$', authinfo.authinfo_add_mini, name='authinfo_add_mini'),
-    url(r'^authinfo/$', authinfo.authinfo_list, name='authinfo_list'),
-    url(r'^authinfoedit/(?P<authinfo_id>\d+)/$', authinfo.authinfo_edit, name='authinfo_edit'),
-    url(r'^authinfodel/$', authinfo.authinfo_del, name='authinfo_del'),
+    path('appowneradd/', appowner.appowner_add, name='appowner_add'),
+    path('appowneraddmini/', appowner.appowner_add_mini, name='appowner_add_mini'),
+    path('appowner/', appowner.appowner_list, name='appowner_list'),
+    path('appowneredit/<int:appowner_id>/', appowner.appowner_edit, name='appowner_edit'),
+    path('appownerdel/', appowner.appowner_del, name='appowner_del'),
+    path('productadd/', product.product_add, name='product_add'),
+    path('product/', product.product_list, name='product_list'),
+    path('productplist/<int:product_id>/', product.project_list, name='product_project_list'),
+    path('productedit/<int:product_id>/', product.product_edit, name='product_edit'),
+    path('productdel/', product.product_del, name='product_del'),
+    path('projectadd/', project.project_add, name='project_add'),
+    path('project/', project.project_list, name='project_list'),
+    path('projectedit/<int:project_id>/', project.project_edit, name='project_edit'),
+    path('projectdel/', project.project_del, name='project_del'),
+    path('projectexport/', project.project_export, name='project_export'),
+    path('authinfoadd/', authinfo.authinfo_add, name='authinfo_add'),
+    path('authinfoaddmini/', authinfo.authinfo_add_mini, name='authinfo_add_mini'),
+    path('authinfo/', authinfo.authinfo_list, name='authinfo_list'),
+    path('authinfoedit/<int:authinfo_id>/', authinfo.authinfo_edit, name='authinfo_edit'),
+    path('authinfodel/', authinfo.authinfo_del, name='authinfo_del'),
 ]

@@ -1,10 +1,8 @@
-import os, re, time, urllib
-from django.utils.translation import ugettext as _
-from exceptions import ElfinderErrorMessages, VolumeNotFoundError, DirNotFoundError, FileNotFoundError, NamedError, NotAnImageError
-from utils.volumes import instantiate_driver
-import sys
-reload(sys)
-sys.setdefaultencoding("utf-8")#fix ascii code bug
+import os, re, time
+import urllib.parse
+from django.utils.translation import gettext as _
+from .exceptions import ElfinderErrorMessages, VolumeNotFoundError, DirNotFoundError, FileNotFoundError, NamedError, NotAnImageError
+from .utils.volumes import instantiate_driver
 from collections import defaultdict
 
 class ElfinderConnector:
@@ -67,7 +65,7 @@ class ElfinderConnector:
             try:
                 volume = instantiate_driver(o)
             except Exception as e:
-                self._mountErrors.append(e.__unicode__())
+                self._mountErrors.append(str(e))
                 continue
 
             id_ = volume.id()
@@ -119,7 +117,7 @@ class ElfinderConnector:
         """
         errors = []
         for msg in args:
-            if not isinstance(msg, basestring):
+            if not isinstance(msg, str):
                 errors += msg
             else:
                 errors.append(msg)
@@ -139,7 +137,7 @@ class ElfinderConnector:
             return { 'error' : self.error(ElfinderErrorMessages.ERROR_UNKNOWN_CMD, cmd)}
         
         #check all required arguments are provided
-        for arg, req in self.commandArgsList(cmd).items():
+        for arg, req in list(self.commandArgsList(cmd).items()):
             if req and (not arg in kwargs or not kwargs[arg]):
                 return {'error' : self.error(ElfinderErrorMessages.ERROR_INV_PARAMS, cmd)}
         
@@ -172,7 +170,7 @@ class ElfinderConnector:
                 'connector' : 'yawd-elfinder',
                 'time' : time.time() - self._time,
                 'upload' : self._uploadDebug,
-                'volumes' : [v.debug() for v in self._volumes.values()],
+                'volumes' : [v.debug() for v in list(self._volumes.values())],
                 'mountErrors' : self._mountErrors
             }
         return result
@@ -195,10 +193,10 @@ class ElfinderConnector:
         method must be used.
         """
 
-        if isinstance(init, basestring):
+        if isinstance(init, str):
             init = int(init)
             
-        if isinstance(tree, basestring):
+        if isinstance(tree, str):
             tree = int(tree)
 
         if not init and not target:
@@ -259,7 +257,7 @@ class ElfinderConnector:
 
         if init:
             result['api'] = self._version
-            result['netDrivers'] = self._netDrivers.keys()
+            result['netDrivers'] = list(self._netDrivers.keys())
             result['uplMaxSize'] = volume.upload_max_size()
         
         return result
@@ -295,7 +293,7 @@ class ElfinderConnector:
         try:
             return {'tree' : self._volume(target).parents(target) }
         except:
-            return { 'error' : self.error(ElfinderErrorMessages.ERROR_OPEN, u'#%s' % target) }
+            return { 'error' : self.error(ElfinderErrorMessages.ERROR_OPEN, '#%s' % target) }
 
     def _tmb(self, targets):
         """
@@ -329,7 +327,7 @@ class ElfinderConnector:
         method must be used.
         """
         
-        if isinstance(download, basestring):
+        if isinstance(download, str):
             download = int(download)
         
         try:
@@ -353,7 +351,7 @@ class ElfinderConnector:
             disp  = 'inline' if re.match('(image|text)', file_['mime'], re.IGNORECASE) or file_['mime'] == 'application/x-shockwave-flash' else 'attachment'  
             mime = file_['mime']
 
-        filenameEncoded = urllib.quote(file_['name'].encode('utf-8')) #unicode filename support
+        filenameEncoded = urllib.parse.quote(file_['name'].encode('utf-8')) #unicode filename support
         if not '%' in filenameEncoded: #ASCII only
             filename = 'filename="%s"' % file_['name']
         elif request and hasattr(request, 'META') and 'HTTP_USER_AGENT' in request.META:
@@ -401,7 +399,7 @@ class ElfinderConnector:
                 file_ = { 'read' : 0 }
                 
             if not file_['read']:
-                return { 'error' : self.error(ElfinderErrorMessages.ERROR_OPEN, u'#%s' % target) }
+                return { 'error' : self.error(ElfinderErrorMessages.ERROR_OPEN, '#%s' % target) }
             
             size += volume.size(target)
 
@@ -426,7 +424,7 @@ class ElfinderConnector:
                         dirs = dirs[1:]                    
                     dir_ = volume.mkdir(target, dirs)
                     result['added'].append(dir_)
-                except Exception, e:
+                except Exception as e:
                     result['warning'] = self.error(ElfinderErrorMessages.ERROR_UPLOAD_FILE, dirs, e)
             return result
         except NamedError as e:
@@ -488,7 +486,7 @@ class ElfinderConnector:
                 volume = self._volume(target)
                 volume.file(target)
             except (VolumeNotFoundError, FileNotFoundError):
-                result['warning'] = self.error(ElfinderErrorMessages.ERROR_COPY, u'#%s' % target, ElfinderErrorMessages.ERROR_FILE_NOT_FOUND)
+                result['warning'] = self.error(ElfinderErrorMessages.ERROR_COPY, '#%s' % target, ElfinderErrorMessages.ERROR_FILE_NOT_FOUND)
                 continue
             
             try:
@@ -529,12 +527,12 @@ class ElfinderConnector:
         method must be used.
         """
         chunk_flag = False
-        if isinstance(range,(unicode,basestring)):
+        if isinstance(range,(str,bytes)):
             chunk_range = range.rsplit(',')
             chunk_file_size = chunk_range[2]
             if chunk_range[0] == '0' or chunk_range[0] == 0:
                 chunk_flag = True
-        if isinstance(html, basestring):
+        if isinstance(html, str):
             html = int(html)
         
         header = { 'Content-Type' : 'text/html; charset=utf-8' } if html else {}
@@ -565,7 +563,7 @@ class ElfinderConnector:
                     else:
                         file_ = volume.upload(uploaded_file, target)
                         result['added'].append(file_)
-                except Exception, e:
+                except Exception as e:
                     result['warning'] = self.error(ElfinderErrorMessages.ERROR_UPLOAD_FILE, uploaded_file.name, e)
                     self._uploadDebug = 'Upload error: Django handler error'
         else:  # directory
@@ -578,7 +576,7 @@ class ElfinderConnector:
             except Exception as e:
                 return {'error': 'get directory error, %s' % e, 'header': header}
 
-            for item in all_.keys():
+            for item in list(all_.keys()):
                 real_path = "%s/%s" % (volume.decode(target), item)  # get real path
                 new_target = volume.encode(real_path)  # get new target
                 try:
@@ -608,7 +606,7 @@ class ElfinderConnector:
                             else:
                                 file_ = volume.upload(files[file_index], target)
                         result['added'].append(file_)
-                    except Exception, e:
+                    except Exception as e:
                         result['warning'] = self.error(ElfinderErrorMessages.ERROR_UPLOAD_FILE, files[file_index].name, e)
                         self._uploadDebug = 'Upload error: Django handler error'
         return result
@@ -622,7 +620,7 @@ class ElfinderConnector:
         method must be used.
         """
         
-        if isinstance(cut, basestring):
+        if isinstance(cut, str):
             cut = int(cut)
 
         error = ElfinderErrorMessages.ERROR_MOVE if cut else ElfinderErrorMessages.ERROR_COPY
@@ -631,13 +629,13 @@ class ElfinderConnector:
         try:
             dstVolume = self._volume(dst)
         except VolumeNotFoundError:
-            return { 'error' : self.error(error, u'#%s' % targets[0], ElfinderErrorMessages.ERROR_TRGDIR_NOT_FOUND, u'#%s' % dst) }
+            return { 'error' : self.error(error, '#%s' % targets[0], ElfinderErrorMessages.ERROR_TRGDIR_NOT_FOUND, '#%s' % dst) }
         
         for target in targets:
             try:
                 srcVolume = self._volume(target)
             except VolumeNotFoundError:
-                result['warning'] = self.error(error, u'#%s' % target, ElfinderErrorMessages.ERROR_FILE_NOT_FOUND)
+                result['warning'] = self.error(error, '#%s' % target, ElfinderErrorMessages.ERROR_FILE_NOT_FOUND)
                 continue
 
             try:
@@ -659,7 +657,7 @@ class ElfinderConnector:
             volume = self._volume(target)
             volume.file(target)
         except (VolumeNotFoundError, FileNotFoundError):
-            return {'error' : self.error(ElfinderErrorMessages.ERROR_OPEN, u'#%s' % target, ElfinderErrorMessages.ERROR_FILE_NOT_FOUND)}
+            return {'error' : self.error(ElfinderErrorMessages.ERROR_OPEN, '#%s' % target, ElfinderErrorMessages.ERROR_FILE_NOT_FOUND)}
         
         try:
             content = volume.get_contents(target)
@@ -686,7 +684,7 @@ class ElfinderConnector:
             volume = self._volume(target)
             volume.file(target)
         except (VolumeNotFoundError, FileNotFoundError):
-            return {'error' : self.error(ElfinderErrorMessages.ERROR_SAVE, u'#%s' % target, ElfinderErrorMessages.ERROR_FILE_NOT_FOUND)}
+            return {'error' : self.error(ElfinderErrorMessages.ERROR_SAVE, '#%s' % target, ElfinderErrorMessages.ERROR_FILE_NOT_FOUND)}
         
         try:
             return {'changed' : [volume.put_contents(target, content)]} 
@@ -704,7 +702,7 @@ class ElfinderConnector:
             volume = self._volume(target)
             volume.file(target)
         except (VolumeNotFoundError, FileNotFoundError):
-            return { 'error' : self.error(ElfinderErrorMessages.ERROR_EXTRACT, u'#%s' % target, ElfinderErrorMessages.ERROR_FILE_NOT_FOUND) }
+            return { 'error' : self.error(ElfinderErrorMessages.ERROR_EXTRACT, '#%s' % target, ElfinderErrorMessages.ERROR_FILE_NOT_FOUND) }
 
         try:
             return {'added' : [volume.extract(target)] }
@@ -739,7 +737,7 @@ class ElfinderConnector:
         """
         q = q.strip()
         result = []
-        for volume in self._volumes.values():
+        for volume in list(self._volumes.values()):
             result += volume.search(q)
         return {'files' : result}
 
@@ -750,7 +748,7 @@ class ElfinderConnector:
         method must be used.
         """
         
-        if isinstance(options, basestring):
+        if isinstance(options, str):
             options = int(options)
         
         files = []
@@ -804,7 +802,7 @@ class ElfinderConnector:
         Return root - file's owner
         """
         if hash_:
-            for id_, v in self._volumes.items():
+            for id_, v in list(self._volumes.items()):
                 if hash_.find(id_) == 0:
                     return v
         raise VolumeNotFoundError()

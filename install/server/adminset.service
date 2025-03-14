@@ -1,14 +1,17 @@
 [Unit]
-Description=adminset
+Description=Adminset Web Service
 After=network.target
+Wants=redis.service mariadb.service mongodb.service
 
 [Service]
-WorkingDirectory=/var/opt/adminset/main
-ExecStart=/usr/bin/gunicorn -c gunicorn_conf.py adminset.wsgi
-ExecReload=/bin/kill -s HUP $MAINPID
-ExecStop=/bin/kill -s TERM $MAINPID
+Type=simple
 User=root
 Group=root
+WorkingDirectory=/var/opt/adminset/main
+Environment=PYTHONPATH=/var/opt/adminset/main
+ExecStart=/usr/bin/env python3 /var/opt/adminset/main/manage.py runserver 0.0.0.0:8000
+Restart=always
+RestartSec=3
 
 [Install]
 WantedBy=multi-user.target

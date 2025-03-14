@@ -25,9 +25,22 @@ server {
 
     root /var/opt/adminset/main;
 
-    location /static {
+    location /static/ {
+        alias /var/opt/adminset/main/static/;
+        expires 30d;
+        access_log off;
+        add_header Cache-Control "public";
+        
+        # 针对不同类型文件的优化
+        location ~* \.(css|js)$ {
+            expires 7d;
+        }
+        
+        location ~* \.(jpg|jpeg|png|gif|ico|svg|webp)$ {
+            expires 90d;
+        }
+        
         autoindex on;
-        alias /var/opt/adminset/main/static;
     }
 	location / {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;

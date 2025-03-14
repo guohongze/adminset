@@ -224,6 +224,15 @@ $(function () {
     });
 
   });
+
+  $(".content-wrapper").click(function () {
+    //Enable hide menu when clicking on the content-wrapper on small screens
+    if ($(window).width() <= (screenSizes.sm - 1) && $("body").hasClass("sidebar-open")) {
+      $("body").removeClass('sidebar-open');
+      // 在小屏幕上点击内容区域关闭侧边栏时，也保存状态
+      sessionStorage.setItem('sidebarCollapsed', 'true');
+    }
+  });
 });
 
 /* ----------------------------------
@@ -321,8 +330,31 @@ function _init() {
     activate: function (toggleBtn) {
       //Get the screen sizes
       var screenSizes = $.AdminLTE.options.screenSizes;
+      
+      // 检查是否已经有自定义处理
+      if ($("#sidebarToggle").length > 0) {
+        // 如果已经添加了自定义处理，则不再绑定默认事件
+        // 但仍然保留小屏幕上的内容点击处理
+        $(".content-wrapper").click(function () {
+          //Enable hide menu when clicking on the content-wrapper on small screens
+          if ($(window).width() <= (screenSizes.sm - 1) && $("body").hasClass("sidebar-open")) {
+            $("body").removeClass('sidebar-open');
+            // 更新sessionStorage
+            sessionStorage.setItem('sidebarCollapsed', 'true');
+          }
+        });
+        
+        // 仍然启用悬停展开功能
+        if ($.AdminLTE.options.sidebarExpandOnHover
+          || ($('body').hasClass('fixed')
+          && $('body').hasClass('sidebar-mini'))) {
+          this.expandOnHover();
+        }
+        
+        return; // 不再执行下面的默认事件绑定
+      }
 
-      //Enable sidebar toggle
+      //Enable sidebar toggle (原始代码)
       $(document).on('click', toggleBtn, function (e) {
         e.preventDefault();
 
@@ -330,16 +362,24 @@ function _init() {
         if ($(window).width() > (screenSizes.sm - 1)) {
           if ($("body").hasClass('sidebar-collapse')) {
             $("body").removeClass('sidebar-collapse').trigger('expanded.pushMenu');
+            // 保存侧边栏展开状态到sessionStorage
+            sessionStorage.setItem('sidebarCollapsed', 'false');
           } else {
             $("body").addClass('sidebar-collapse').trigger('collapsed.pushMenu');
+            // 保存侧边栏折叠状态到sessionStorage
+            sessionStorage.setItem('sidebarCollapsed', 'true');
           }
         }
         //Handle sidebar push menu for small screens
         else {
           if ($("body").hasClass('sidebar-open')) {
             $("body").removeClass('sidebar-open').removeClass('sidebar-collapse').trigger('collapsed.pushMenu');
+            // 保存侧边栏折叠状态到sessionStorage
+            sessionStorage.setItem('sidebarCollapsed', 'true');
           } else {
             $("body").addClass('sidebar-open').trigger('expanded.pushMenu');
+            // 保存侧边栏展开状态到sessionStorage
+            sessionStorage.setItem('sidebarCollapsed', 'false');
           }
         }
       });
@@ -348,6 +388,8 @@ function _init() {
         //Enable hide menu when clicking on the content-wrapper on small screens
         if ($(window).width() <= (screenSizes.sm - 1) && $("body").hasClass("sidebar-open")) {
           $("body").removeClass('sidebar-open');
+          // 在小屏幕上点击内容区域关闭侧边栏时，也保存状态
+          sessionStorage.setItem('sidebarCollapsed', 'true');
         }
       });
 

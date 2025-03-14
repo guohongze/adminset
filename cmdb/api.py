@@ -1,5 +1,3 @@
-#! /usr/bin/env python
-# -*- coding: utf-8 -*-
 # 2017.3 update by guohongze@126.com
 from django.http import HttpResponse
 from cmdb.models import Host, HostGroup, ASSET_TYPE, ASSET_STATUS
@@ -10,36 +8,38 @@ from lib.deploy_key import deploy_key
 import logging
 from lib.log import log
 from config.views import get_dir
-
-
-try:
-    import json
-except ImportError:
-    import simplejson as json
+import json
 
 
 def str2gb(args):
     """
     :参数 args:
-    :返回: GB2312编码
+    :返回: GB2312编码的字节
     """
     return str(args).encode('gb2312')
+
 
 def str2gbk(args):
     """
     :参数 args:
-    :返回: GB2312编码
+    :返回: GBK编码的字节
     """
     return str(args).encode('gbk')
-
 
 
 def str2gb2utf8(args):
     """
     :参数 args:
-    :返回: GB2312编码
+    :返回: 从GB2312转为UTF-8编码的字节
     """
-    return str(args).decode('gb2312').encode('utf-8')
+    # 在Python 3中，需要先确保args是字节字符串，如果不是，则先编码为gb2312
+    if isinstance(args, str):
+        args_bytes = args.encode('gb2312')
+    else:
+        args_bytes = args
+    
+    # 然后解码为字符串，再编码为utf-8
+    return args_bytes.decode('gb2312').encode('utf-8')
 
 
 def get_object(model, **kwargs):
@@ -47,7 +47,7 @@ def get_object(model, **kwargs):
     use this function for query
     使用改封装函数查询数据库
     """
-    for value in kwargs.values():
+    for value in list(kwargs.values()):
         if not value:
             return None
 
@@ -67,7 +67,7 @@ def page_list_return(total, current=1):
     min_page = current - 4 if current - 6 > 0 else 1
     max_page = min_page + 6 if min_page + 6 < total else total
 
-    return range(min_page, max_page + 1)
+    return list(range(min_page, max_page + 1))
 
 
 def pages(post_objects, request):

@@ -1,0 +1,24 @@
+检查accounts目录是否有python2.7语法，将其删除，并改造为兼容python3.12。
+检查adminset主程序目录是否有python2.7语法，将其删除，并改造为兼容python3.12。
+检查appconf目录是否有python2.7语法，将其删除，并改造为兼容python3.12。
+检查branches目录是否有python2.7语法，将其删除，并改造为兼容python3.12。
+检查cmdb目录是否有python2.7语法，将其删除，并改造为兼容python3.12。
+检查elfinder目录是否有python2.7语法，将其删除，并改造为兼容python3.12。
+检查elfinder目录是否有python2.7语法，将其删除，并改造为兼容python3.12。
+检查elfinder目录是否有python2.7语法，将其删除，并改造为兼容python3.12。
+检查elfinder目录是否有python2.7语法，将其删除，并改造为兼容python3.12。
+检查elfinder目录是否有python2.7语法，将其删除，并改造为兼容python3.12。
+检查elfinder目录是否有python2.7语法，将其删除，并改造为兼容python3.12。
+检查elfinder目录是否有python2.7语法，将其删除，并改造为兼容python3.12。
+检查lib目录是否有python2.7语法，将其删除，并改造为兼容python3.12。
+检查mfile目录是否有python2.7语法，将其删除，并改造为兼容python3.12。
+检查monitor目录是否有python2.7语法，将其删除，并改造为兼容python3.12。
+检查navi目录是否有python2.7语法，将其删除，并改造为兼容python3.12。
+
+
+#! /usr/bin/env python
+# -*- coding: utf-8 -*-
+
+
+
+

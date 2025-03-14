@@ -1,8 +1,6 @@
-#! /usr/bin/env python
-# -*- coding: utf-8 -*-
 
 from django.shortcuts import render, HttpResponseRedirect, HttpResponse
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from appconf.models import Project
 from appconf.forms import ProjectForm
@@ -98,10 +96,10 @@ def project_export(request):
     file_name = 'adminset_project_' + now + '.csv'
     response['Content-Disposition'] = "attachment; filename="+file_name
     writer = csv.writer(response)
-    writer.writerow([str2gb(u'项目名称'), str2gb(u'项目描述'), str2gb(u'语言类型'), str2gb(u'程序类型'),
-                     str2gb(u'服务器类型'), str2gb(u'程序框架'), str2gb(u'源类型'), str2gb(u'源地址'),
-                     str2gb(u'程序部署路径'), str2gb(u'配置文件路径'),
-                     str2gb(u'所属产品线'), str2gb(u'项目负责人'), str2gb(u'服务器')])
+    writer.writerow([str2gb('项目名称'), str2gb('项目描述'), str2gb('语言类型'), str2gb('程序类型'),
+                     str2gb('服务器类型'), str2gb('程序框架'), str2gb('源类型'), str2gb('源地址'),
+                     str2gb('程序部署路径'), str2gb('配置文件路径'),
+                     str2gb('所属产品线'), str2gb('项目负责人'), str2gb('服务器')])
     for p in project_find:
         server_result = ""
         try:

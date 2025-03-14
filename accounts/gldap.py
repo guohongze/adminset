@@ -1,5 +1,3 @@
-#! /usr/bin/env python
-# -*- coding: utf-8 -*-
 
 from ldap3 import Server, Connection, SUBTREE
 from lib.common import get_dir

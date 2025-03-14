@@ -1,14 +1,14 @@
 [Unit]
-Description=Webssh Service
+Description=WebSSH
 After=network.target
 
 [Service]
-Type=simple
-User=root
-Group=root
-WorkingDirectory=/var/opt/adminset/main/vendor/webssh/webssh
-ExecStart=/usr/bin/wssh --xsrf=False --maxconn=100 --log-file-prefix=/var/opt/adminset/logs/webssh.log
+Type=forking
+ExecStart=/var/opt/adminset/venv/bin/wssh --address='0.0.0.0' --port=8888 --fbidhttp=false --xheaders=false --xsrf=true --policy=warning --wpintvl=60 --maxconn=20 --daemon=true --log-to-stderr --log-file-prefix=/var/opt/adminset/logs/webssh.log
+ExecReload=/bin/kill -HUP $MAINPID
 ExecStop=/bin/kill -s TERM $MAINPID
+Restart=on-failure
+RestartSec=5s
 
 [Install]
 WantedBy=multi-user.target

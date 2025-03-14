@@ -1,5 +1,3 @@
-#! /usr/bin/env python
-# -*- coding: utf-8 -*-
 from cmdb.models import Host, HostGroup
 from django.shortcuts import render, HttpResponse
 from config.views import get_dir

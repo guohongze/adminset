@@ -1,11 +1,7 @@
-#! /usr/bin/env python
-# -*- coding: utf-8 -*-
-
-from __future__ import absolute_import, unicode_literals
 
 from django import forms
 from django.forms.widgets import Select
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from celery import current_app
 from celery.utils import cached_property
@@ -14,10 +10,7 @@ from kombu.utils.json import loads
 from django_celery_beat.models import PeriodicTask, IntervalSchedule, CrontabSchedule
 from django_celery_results.models import TaskResult
 
-try:
-    from django.utils.encoding import force_text
-except ImportError:
-    from django.utils.encoding import force_unicode as force_text  # noqa
+from django.utils.encoding import force_str
 
 
 class TaskSelectWidget(Select):
@@ -62,7 +55,7 @@ class PeriodicTaskForm(forms.ModelForm):
     """Form that lets you create and modify periodic tasks."""
     def __init__(self,*args,**kwargs):
         super(PeriodicTaskForm, self).__init__(*args, **kwargs)
-        self.fields['expires'].label = u"过期时间"
+        self.fields['expires'].label = "过期时间"
 
     regtask = TaskChoiceField(
         label=_('Task (registered)'),
@@ -81,7 +74,7 @@ class PeriodicTaskForm(forms.ModelForm):
         max_length=200,
         initial='',
         widget=forms.TextInput(attrs={'class': 'form-control', 'style': 'width:450px;',
-                                      'placeholder': u'{"host":"your_hostname","name":"scritps_name or command"}'})
+                                      'placeholder': '{"host":"your_hostname","name":"scritps_name or command"}'})
     )
 
     class Meta:
@@ -92,13 +85,13 @@ class PeriodicTaskForm(forms.ModelForm):
             'args': forms.TextInput(attrs={'class': 'form-control', 'style': 'width:450px;'}),
             'interval': forms.Select(attrs={'class': 'form-control', 'style': 'width:450px;'}),
             'crontab': forms.Select(attrs={'class': 'form-control', 'style': 'width:450px;'}),
-            'enabled': forms.Select(choices=((True, u'启用'), (False, u'禁用')),
+            'enabled': forms.Select(choices=((True, '启用'), (False, '禁用')),
                                     attrs={'class': 'form-control', 'style': 'width:450px;'}),
             'queue': forms.TextInput(attrs={'class': 'form-control', 'style': 'width:450px;'}),
             'exchange': forms.TextInput(attrs={'class': 'form-control', 'style': 'width:450px;'}),
             'routing_key': forms.TextInput(attrs={'class': 'form-control', 'style': 'width:450px;'}),
             'expires': forms.DateTimeInput(attrs={'class': 'form-control', 'style': 'width:450px;',
-                                                  'placeholder': u'2017-06-23 10:11:11'}),
+                                                  'placeholder': '2017-06-23 10:11:11'}),
             'last_run_at': forms.DateTimeInput(attrs={'class': 'form-control', 'style': 'width:450px;'}),
         }
 

@@ -16,11 +16,24 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script>
     $(document).ready(function(){
     $('.loading').fadeOut();
+    
+    // 页面加载时检查sessionStorage中的侧边栏状态
+    var savedState = sessionStorage.getItem('sidebarCollapsed');
+    if(savedState !== null) {
+        // 如果有保存的状态，应用该状态
+        var isCollapsed = savedState === 'true';
+        if(isCollapsed) {
+            $("body").addClass('sidebar-collapse');
+        } else {
+            $("body").removeClass('sidebar-collapse');
+        }
+    }
 });
 </script>
 
 </head>
-<body class="hold-transition skin-yellow-light sidebar-mini sidebar-collapse">
+<!-- 确保没有sidebar-collapse类，由JavaScript完全控制侧边栏状态 -->
+<body class="hold-transition skin-yellow-light sidebar-mini">
 <div class="loading"></div>
 <div class="wrapper">
 

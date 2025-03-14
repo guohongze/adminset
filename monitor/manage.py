@@ -1,5 +1,3 @@
-#! /usr/bin/env python
-# -*- coding: utf-8 -*-
 
 from django.shortcuts import render, HttpResponse
 from monitor.api import GetSysData
@@ -51,5 +49,5 @@ def del_monitor_data(request, timing):
                 continue
             now_time = int(time.time())
             del_time = now_time-TIME_SECTOR[int(timing)]
-            collection.remove({'timestamp': {'$lte': del_time}}, {"timestamp": 1})
+            collection.delete_many({'timestamp': {'$lte': del_time}})
     return HttpResponse("ok")

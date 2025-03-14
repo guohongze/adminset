@@ -1,5 +1,3 @@
-#! /usr/bin/env python
-# -*- coding: utf-8 -*-
 from django.shortcuts import render, HttpResponse
 from cmdb.models import Host, Idc, HostGroup
 from appconf.product import Product

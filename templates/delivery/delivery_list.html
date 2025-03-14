@@ -46,31 +46,31 @@
 
                 <label for="page_len">
                     <select name="page_len" id="page_len" class="form-control m-b input-sm" onchange="change_info()">
-                        {% ifequal page_len '10' %}
+                        {% if page_len == '10' %}
                             <option value="10" selected>10</option>
                         {% else %}
                             <option value="10">10</option>
-                        {% endifequal %}
-                        {% ifequal page_len '20' %}
+                        {% endif %}
+                        {% if page_len == '20' %}
                             <option value="20" selected>20</option>
                         {% else %}
                             <option value="20">20</option>
-                        {% endifequal %}
-                        {% ifequal page_len '50' %}
+                        {% endif %}
+                        {% if page_len == '50' %}
                             <option value="50" selected>50</option>
                         {% else %}
                             <option value="50">50</option>
-                        {% endifequal %}
-                        {% ifequal page_len '100' %}
+                        {% endif %}
+                        {% if page_len == '100' %}
                             <option value="100" selected>100</option>
                         {% else %}
                             <option value="100">100</option>
-                        {% endifequal %}
-                        {% ifequal page_len '200' %}
+                        {% endif %}
+                        {% if page_len == '200' %}
                             <option value="200" selected>200</option>
                         {% else %}
                             <option value="200">200</option>
-                        {% endifequal %}
+                        {% endif %}
                     </select>
                             </label>
             </div>
@@ -238,15 +238,27 @@ function taskstop(args) {
 <script>
     var v1 = window.setInterval("status()",6000);
 
+    // 使用JavaScript数组预先存储项目ID，避免在JavaScript中直接使用Django模板标签
+    var project_ids = [
+    {% for project in all_project %}
+        "{{ project.job_name_id }}",
+    {% endfor %}
+    ];
+
     function status() {
-        {% for project in all_project %}
-            $.get("/delivery/delistatus/{{ project.job_name_id }}/",function(data){
-                var ret = JSON.parse(data);
-                var width = parseInt(ret.bar_data);
-                var progress_bar = document.getElementById("pb_{{ project.job_name.id }}");
-                progress_bar.style.width = width+"px";
-            });
-        {% endfor %}
+        // 使用JavaScript数组循环替代Django模板循环
+        for (var i=0; i < project_ids.length; i++) {
+            (function(project_id) {
+                $.get("/delivery/delistatus/" + project_id + "/", function(data){
+                    var ret = JSON.parse(data);
+                    var width = parseInt(ret.bar_data);
+                    var progress_bar = document.getElementById("pb_" + project_id);
+                    if (progress_bar) {
+                        progress_bar.style.width = width+"px";
+                    }
+                });
+            })(project_ids[i]);
+        }
     }
 </script>
 <script>

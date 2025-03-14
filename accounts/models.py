@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from cmdb.models import HostGroup
@@ -11,7 +9,7 @@ class PermissionList(models.Model):
     name = models.CharField(max_length=64)
     url = models.CharField(max_length=255)
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s(%s)' % (self.name, self.url)
 
 
@@ -22,7 +20,7 @@ class RoleList(models.Model):
     webssh = models.ManyToManyField(HostGroup, blank=True)
     delivery = models.ManyToManyField(Project, blank=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
 
@@ -58,7 +56,7 @@ class UserInfo(AbstractBaseUser):
     is_active = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     nickname = models.CharField(max_length=64, null=True, blank=True)
-    role = models.ForeignKey(RoleList, null=True, blank=True)
+    role = models.ForeignKey(RoleList, null=True, blank=True, on_delete=models.SET_NULL)
     ldap_name = models.CharField(max_length=64, blank=True)
 
     objects = UserManager()

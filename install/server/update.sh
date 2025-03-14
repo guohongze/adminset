@@ -8,39 +8,68 @@ logs_dir="$main_dir/logs"
 cd "$( dirname "$0"  )"
 cd .. && cd ..
 cur_dir=$(pwd)
-rsync --progress -ra --delete --exclude '.git' $cur_dir/ $adminset_dir
-#scp $adminset_dir/install/server/ansible/ansible.cfg /etc/ansible/ansible.cfg
-cd $adminset_dir
-pip install -r requirements.txt
 
-#sql make migrations
-if [ $1 ]
-then
-    python manage.py makemigrations
+# 检测系统类型
+if [ -f /etc/os-release ]; then
+    . /etc/os-release
+    OS=$ID
+else
+    echo "无法确定操作系统类型，退出安装"
+    exit 1
+fi
+
+# 同步文件
+rsync --progress -ra --delete --exclude '.git' $cur_dir/ $adminset_dir
+
+# 确定Python/pip命令
+if [ "$OS" == "ubuntu" ]; then
+    PIP_CMD="pip3"
+    PYTHON_CMD="python3"
+else
+    PIP_CMD="pip"
+    PYTHON_CMD="python"
+fi
+
+# 安装依赖
+cd $adminset_dir
+$PIP_CMD install -r requirements.txt
+
+# SQL迁移
+if [ $1 ]; then
+    $PYTHON_CMD manage.py makemigrations
     for app in $*
     do
-        python manage.py migrate $app
+        $PYTHON_CMD manage.py migrate $app
     done
 else
-    python manage.py makemigrations
-    python manage.py migrate
+    $PYTHON_CMD manage.py makemigrations
+    $PYTHON_CMD manage.py migrate
 fi
-echo "####update celery####"
+
+echo "####更新celery配置####"
 mkdir -p $config_dir/celery
-scp $adminset_dir/install/server/celery/beat.conf $config_dir/celery/beat.conf
-scp $adminset_dir/install/server/celery/celery.service /usr/lib/systemd/system
-scp $adminset_dir/install/server/celery/start_celery.sh $config_dir/celery/start_celery.sh
-scp $adminset_dir/install/server/celery/beat.service /usr/lib/systemd/system
+cp $adminset_dir/install/server/celery/beat.conf $config_dir/celery/beat.conf
+cp $adminset_dir/install/server/celery/celery.service /usr/lib/systemd/system
+cp $adminset_dir/install/server/celery/start_celery.sh $config_dir/celery/start_celery.sh
+cp $adminset_dir/install/server/celery/beat.service /usr/lib/systemd/system
 chmod +x $config_dir/celery/start_celery.sh
-scp $adminset_dir/install/server/nginx/adminset.conf /etc/nginx/conf.d
-scp $adminset_dir/install/server/nginx/nginx.conf /etc/nginx
-scp $adminset_dir/install/server/nginx/adminset.conf /etc/nginx/conf.d
-scp $adminset_dir/install/server/webssh/webssh.service /usr/lib/systemd/system
+
+# 根据不同系统配置nginx
+if [ "$OS" == "ubuntu" ]; then
+    cp $adminset_dir/install/server/nginx/adminset.conf /etc/nginx/sites-available/
+    ln -sf /etc/nginx/sites-available/adminset.conf /etc/nginx/sites-enabled/
+else
+    cp $adminset_dir/install/server/nginx/adminset.conf /etc/nginx/conf.d
+    cp $adminset_dir/install/server/nginx/nginx.conf /etc/nginx
+fi
+
+cp $adminset_dir/install/server/webssh/webssh.service /usr/lib/systemd/system
 nginx -s reload
-echo "##############install finished###################"
+
+echo "##############更新完成###################"
 systemctl daemon-reload
 nginx -s reload
-service adminset restart
-service celery restart
-echo "you have updated adminset successfully!!!"
+systemctl restart adminset
+systemctl restart celery
+echo "您已成功更新AdminSet!!!"
 echo "################################################"

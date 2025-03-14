@@ -1,13 +1,10 @@
-#! /usr/bin/env python
-# -*- coding: utf-8 -*-
-
 from django.shortcuts import render
 from cmdb.models import Cabinet
 from cmdb.forms import CabinetForm
 from django.contrib.auth.decorators import login_required
 from accounts.permission import permission_verify
 from django.http import HttpResponseRedirect
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 
 @login_required()
@@ -27,10 +24,10 @@ def cabinet_add(request):
         cabinet_form = CabinetForm(request.POST)
         if cabinet_form.is_valid():
             cabinet_form.save()
-            tips = u"增加成功！"
+            tips = "增加成功！"
             display_control = ""
         else:
-            tips = u"增加失败！"
+            tips = "增加失败！"
             display_control = ""
         return render(request, "cmdb/cabinet_base.html", locals())
     else:

@@ -1,5 +1,3 @@
-#! /usr/bin/env python
-# -*- coding: utf-8 -*-
 # update by guohongze@126.com
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
@@ -7,15 +5,15 @@ from django.contrib import auth
 from accounts.forms import LoginUserForm, EditUserForm, ChangePasswordForm, ChangeLdapPasswordForm
 from django.contrib.auth import get_user_model
 from accounts.forms import AddUserForm
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from accounts.permission import permission_verify
 from accounts.gldap import change_ldap_passwd
 
 
 def login(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         return HttpResponseRedirect('/')
-    if request.method == 'GET' and request.GET.has_key('next'):
+    if request.method == 'GET' and 'next' in request.GET:
         next_page = request.GET['next']
     else:
         next_page = '/'
@@ -101,7 +99,7 @@ def user_edit(request, ids):
 def reset_password(request, ids):
     user = get_user_model().objects.get(id=ids)
     newpassword = get_user_model().objects.make_random_password(length=10, allowed_chars='abcdefghjklmnpqrstuvwxyABCDEFGHJKLMNPQRSTUVWXY3456789')
-    print('====>ResetPassword:{}-->{}'.format(user.username, newpassword))
+    print(('====>ResetPassword:{}-->{}'.format(user.username, newpassword)))
     user.set_password(newpassword)
     user.save()
     kwargs = {

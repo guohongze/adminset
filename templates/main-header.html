@@ -11,7 +11,7 @@
     <!-- Header Navbar -->
         <nav class="navbar navbar-static-top" role="navigation">
       <!-- Sidebar toggle button-->
-      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+      <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button" id="sidebarToggle">
         <span class="sr-only">Toggle navigation</span>
       </a>
       <!-- Navbar Right Menu -->
@@ -19,3 +19,48 @@
     </nav>
 
   </header>
+  
+<script>
+// 直接修改侧边栏切换按钮的事件处理
+$(document).ready(function(){
+    // 获取当前body的class状态
+    var isCollapsed = $("body").hasClass('sidebar-collapse');
+    
+    // 侧边栏切换按钮点击事件
+    $("#sidebarToggle").click(function(e){
+        // 阻止默认行为，我们会手动处理
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // 切换侧边栏状态
+        if(isCollapsed) {
+            // 当前是收缩状态，点击后展开
+            $("body").removeClass('sidebar-collapse');
+            isCollapsed = false;
+        } else {
+            // 当前是展开状态，点击后收缩
+            $("body").addClass('sidebar-collapse');
+            isCollapsed = true;
+        }
+        
+        // 设置一个全局变量保存当前状态，切换页面时可以使用
+        window.sidebarCollapsed = isCollapsed;
+        
+        // 将状态保存到sessionStorage，这样页面刷新或切换时能保持状态
+        // sessionStorage是会话级别的存储，浏览器关闭后会清除
+        sessionStorage.setItem('sidebarCollapsed', isCollapsed);
+    });
+    
+    // 页面加载时检查sessionStorage中的状态
+    var savedState = sessionStorage.getItem('sidebarCollapsed');
+    if(savedState !== null) {
+        // 如果有保存的状态，使用保存的状态
+        isCollapsed = savedState === 'true';
+        if(isCollapsed) {
+            $("body").addClass('sidebar-collapse');
+        } else {
+            $("body").removeClass('sidebar-collapse');
+        }
+    }
+});
+</script>

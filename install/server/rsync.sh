@@ -9,5 +9,5 @@ cd "$( dirname "$0"  )"
 cd .. && cd ..
 cur_dir=$(pwd)
 rsync --progress -ra --exclude '.git' $cur_dir/ $adminset_dir
-/bin/systemctl restart  adminset.service
-/bin/systemctl restart  celery.service
+systemctl restart adminset.service
+systemctl restart celery.service

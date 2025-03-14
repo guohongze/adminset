@@ -1,5 +1,3 @@
-#! /usr/bin/env python
-# -*- coding: utf-8 -*-
 from django.shortcuts import render, redirect
 from django_celery_beat.models import PeriodicTask, IntervalSchedule, CrontabSchedule
 from django_celery_results.models import TaskResult
@@ -44,11 +42,11 @@ def job_add(request):
         a_form = PeriodicTaskForm(request.POST)
         if a_form.is_valid():
             a_form.save()
-            tips = u"增加成功！"
+            tips = "增加成功！"
             display_control = ""
             return redirect("/setup/joblist/")
         else:
-            tips = u"增加失败！"
+            tips = "增加失败！"
             display_control = ""
             return render(request, "setup/job_add.html", locals())
     else:
@@ -114,11 +112,11 @@ def job_interval_add(request):
         a_form = IntervalForm(request.POST)
         if a_form.is_valid():
             a_form.save()
-            tips = u"增加成功！"
+            tips = "增加成功！"
             display_control = ""
             return redirect("/setup/jobintervallist/")
         else:
-            tips = u"增加失败！"
+            tips = "增加失败！"
             display_control = ""
             return render(request, "setup/interval_add.html", locals())
     else:
@@ -172,11 +170,11 @@ def job_crontab_add(request):
         a_form = CrontabForm(request.POST)
         if a_form.is_valid():
             a_form.save()
-            tips = u"增加成功！"
+            tips = "增加成功！"
             display_control = ""
             return redirect("/setup/jobcrontablist/")
         else:
-            tips = u"增加失败！"
+            tips = "增加失败！"
             display_control = ""
             return render(request, "setup/crontab_add.html", locals())
     else:
