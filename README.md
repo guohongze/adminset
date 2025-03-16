@@ -1,5 +1,5 @@
 # AdminSet 系统
-<img src="https://travis-ci.org/guohongze/adminset.svg?branch=master"></img> 
+![Build Status]("https://github.com/guohongze/adminset/actions/workflows/django.yml/badge.svg")
 <img src="https://img.shields.io/badge/license-GPL-blue.svg"></img>
 [![release](https://img.shields.io/github/release/guohongze/adminset.svg)](https://github.com/guohongze/adminset/releases)
 
