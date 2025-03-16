@@ -122,6 +122,7 @@ systemctl start|stop|restart|status adminsetd
 - **作业调度**：定时任务和批量作业管理
 - **监控系统**：服务器性能和应用状态监控（使用MySQL存储监控数据）
 - **工单系统**：IT服务请求和问题跟踪
+- **webssh**：直接web免terminal登录
 - **权限管理**：基于角色的访问控制
 
 ## 最新更改
