@@ -795,3 +795,10 @@ echo "WebSSH服务已启动，运行在8888端口"
 echo "请访问网站 http://服务器IP"
 echo "您已成功安装AdminSet!!!"
 echo "################################################"
+
+# 安装 webssh
+pip install webssh
+
+# 备份原文件并强制复制新的 index.html
+cp -f /var/opt/adminset/venv/lib/python3.12/site-packages/webssh/templates/index.html /var/opt/adminset/venv/lib/python3.12/site-packages/webssh/templates/index.html.bak 2>/dev/null || true
+cp -f $adminset_dir/templates/vendor/webssh/index.html /var/opt/adminset/venv/lib/python3.12/site-packages/webssh/templates/index.html
