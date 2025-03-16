@@ -2,98 +2,37 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <title> WebSSH </title>
-    <link href="/static/webssh/img/favicon.png" rel="icon" type="image/png">
-    <link href="/static/webssh/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="/static/webssh/css/xterm.min.css" rel="stylesheet" type="text/css"/>
-    <link href="/static/webssh/css/fullscreen.min.css" rel="stylesheet" type="text/css"/>
-    <style>
-      .row {
-        margin-top: 20px;
-        margin-bottom: 10px;
-      }
-
-      .container {
-        margin-top: 20px;
-      }
-
-      .btn {
-        margin-top: 10px;
-      }
-
-      .btn-danger {
-        margin-left: 5px;
-      }
-    </style>
+    <title>WebSSH</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   </head>
   <body>
-    <div class="container">
-      <form id="connect" action="" style="display: none" method="post" enctype="multipart/form-data"{% if debug %} novalidate{% endif %}>
-      // ... existing code ...
-      </form>
-    </div>
-
-    <div class="container">
-      <div id="status" style="color: red;"></div>
-      <div id="terminal"></div>
-    </div>
-
-    <script src="/static/webssh/js/jquery.min.js"></script>
-    <script src="/static/webssh/js/popper.min.js"></script>
-    <script src="/static/webssh/js/bootstrap.min.js"></script>
-    <script src="/static/webssh/js/xterm.min.js"></script>
-    <script src="/static/webssh/js/fullscreen.min.js"></script>
-    <script src="/static/webssh/js/main.js"></script>
     <script>
       $(document).ready(function(){
-        // 构建基础URL
-        var baseUrl = 'http://' + window.location.host + ':8888';
+        var path = 'http://' + window.location.host + ':8888';
         
-        // 使用更安全的编码方式获取并编码密码
-        var originalPassword = "{{ host.account.password }}";
-        var encodedPassword = btoa(unescape(encodeURIComponent(originalPassword)));
-        
-        // 设置表单值
-        $('#hostname').val("{{ host.ip }}");
-        $('#username').val("{{ host.account.username }}");
-        $('#password').val(encodedPassword);
-        
-        // 构建查询参数
+        // 构建 GET 请求参数，密码进行 base64 编码
         var params = {
-            hostname: $('#hostname').val(),
-            username: $('#username').val(),
-            password: $('#password').val()
+          hostname: "{{ host.ip }}",
+          username: "{{ host.account.username }}",
+          password: btoa("{{ host.account.password }}"),  // 使用 base64 编码
+          port: "{{ host.account.deploy_port }}",
+          privatekey: "{{ host.account.private_key }}"
         };
         
-        // 将参数转换为URL查询字符串
-        var queryString = $.param(params);
-        
-        // 组合完整URL
-        var fullUrl = baseUrl + '/?' + queryString;
-        
-        // 创建iframe并加载URL
-        var iframe = $('<iframe>', {
-            src: fullUrl,
-            id: 'sshFrame',
-            frameborder: 0,
-            style: 'width:100%; height:600px; border:none;'
+        // 输出调试日志
+        console.log('连接信息：', {
+          ...params,
+          password_original: "{{ host.account.password }}", // 显示原始密码用于调试
+          password_encoded: params.password // 显示编码后的密码
         });
         
-        // 将iframe添加到terminal div中
-        $('#terminal').html(iframe);
+        // 构建 URL 查询字符串
+        var queryString = Object.keys(params)
+          .map(key => key + '=' + encodeURIComponent(params[key]))
+          .join('&');
         
-        // 自动调整iframe高度
-        $('#sshFrame').on('load', function() {
-            try {
-                var height = $(this).contents().height();
-                $(this).height(height);
-            } catch(e) {
-                $(this).height(600);
-            }
-        });
-        
-        // 调试用 - 打印URL
-        console.log("加载URL: " + fullUrl);
+        // 直接跳转到带参数的 URL
+        window.location.href = path + '?' + queryString;
       });
     </script>
   </body>
