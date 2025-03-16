@@ -126,7 +126,6 @@ systemctl start|stop|restart|status adminsetd
 
 ## 最新更改
 
-- **已移除WebSSH功能**：为增强系统安全性和简化架构，已移除WebSSH功能
 - **监控数据存储**：监控数据现在支持使用MySQL存储，不再强依赖MongoDB
 - **UI优化**：简化了用户界面，移除了不必要的按钮和功能入口
 - **安全加固**：增强了系统安全性，减少了潜在的攻击面
@@ -159,7 +158,7 @@ systemctl start|stop|restart|status adminsetd
    - 使用systemd管理Celery和Beat服务
    - Celery配置已优化，支持最新版本
 
-## webssh功能
+## **webssh功能**：
    - 为测试功能，严禁在公网使用。
    - webssh功能需要先配置应用管理中-认证中心-添加信息，保存用户名和密码，然后再从主机编辑中账号信息选择关联。
    - 如果不是超管用户，需要在role里进行授权才可使用webssh功能。

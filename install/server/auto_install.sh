@@ -343,9 +343,6 @@ $venv_dir/bin/pip install --upgrade setuptools wheel
 $venv_dir/bin/pip install celery==5.3.6
 $venv_dir/bin/pip install django-celery-results==2.5.1
 
-# 删除不再需要的django-celery-results源码
-echo "删除无用的django-celery-results源码..."
-rm -rf $adminset_dir/vendor/django-celery-results-master
 
 # 安装项目依赖
 cd $adminset_dir
