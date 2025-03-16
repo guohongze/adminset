@@ -104,7 +104,7 @@ fi
 # 配置CSRF信任域名（提前收集用户输入）
 echo "####配置CSRF信任域名####"
 echo "为了确保Django CSRF保护正常工作，需要配置可信任的域名"
-echo "请输入您将用于访问AdminSet的完整域名或IP地址（包括协议，如 https://www.example.com 或 http://192.168.1.100）:"
+echo "请输入您将用于访问AdminSet的完整域名或IP地址（包括协议，如 https://www.example.com 或 http://192.168.110.100）:"
 read -r domain_input
 
 # 去除输入的空格
@@ -791,13 +791,9 @@ fi
 cp -f /var/opt/adminset/venv/lib/python3.12/site-packages/webssh/templates/index.html /var/opt/adminset/venv/lib/python3.12/site-packages/webssh/templates/index.html.bak 2>/dev/null || true
 cp -f $adminset_dir/templates/vendor/webssh/index.html /var/opt/adminset/venv/lib/python3.12/site-packages/webssh/templates/index.html
 systemctl restart webssh
-echo "WebSSH服务已启动，http运行在8888端口,https运行在端口"
-
 systemctl restart nginx
-echo "Nginx服务已启动"
 systemctl restart sshd
-echo "SSH服务已启动"
 echo "请访问网站 http://服务器IP"
 echo "默认管理员账号为admin,密码为admin,请尽快更改"
-echo "您已成功安装AdminSet!!!"
+echo "恭喜，您已成功安装AdminSet!"
 echo "################################################"
