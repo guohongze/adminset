@@ -137,39 +137,18 @@ systemctl start|stop|restart|status adminsetd
     自动安装的用户名admin 密码admin
     手动安装使用自定义创建的super admin用户名密码
 
-## 项目部署建议
-
-在Ubuntu 24.04 LTS上部署时建议：
-
-1. **使用系统包管理器**：使用apt安装依赖，而不是手动编译
-
-2. **数据库选择**：
-   - 核心业务数据使用MariaDB/MySQL存储
-   - 监控数据可使用MariaDB/MySQL或MongoDB存储（根据实际需求配置）
-
-3. **Web服务器配置**：
-   - 生产环境使用Nginx + Gunicorn部署
-   - Nginx配置文件已更新，支持Ubuntu 24.04默认路径
-
-4. **虚拟环境管理**：
-   - 推荐使用Python venv创建隔离环境
-   - 在虚拟环境中安装项目依赖
-
-5. **定时任务处理**：
-   - 使用systemd管理Celery和Beat服务
-   - Celery配置已优化，支持最新版本
 
 ## **webssh功能**：
    - 为测试功能，严禁在公网使用。
    - webssh功能需要先配置应用管理中-认证中心-添加信息，保存用户名和密码，然后再从主机编辑中账号信息选择关联。
    - 如果不是超管用户，需要在role里进行授权才可使用webssh功能。
 
-4. **日志查看**：
+## **日志查看**：
    ```bash
    tail -f /var/opt/adminset/logs/adminset-error.log
    ```
-
-5. **服务状态**：
+   
+   **服务状态**：
    ```bash
    systemctl status adminset.service
    systemctl status celery.service
