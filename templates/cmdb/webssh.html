@@ -4,11 +4,24 @@
     <meta charset="UTF-8">
     <title>WebSSH</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+      }
+      #ssh-container {
+        width: 100%;
+        height: 100vh;
+        border: none;
+      }
+    </style>
   </head>
   <body>
     <script>
       $(document).ready(function(){
-        var path = 'http://' + window.location.host + ':8888';
+        var path = 'https://' + window.location.host + ':4433';
         
         // 构建 GET 请求参数，密码进行 base64 编码
         var params = {
@@ -19,20 +32,19 @@
           privatekey: "{{ host.account.private_key }}"
         };
         
-        // 输出调试日志
-        console.log('连接信息：', {
-          ...params,
-          password_original: "{{ host.account.password }}", // 显示原始密码用于调试
-          password_encoded: params.password // 显示编码后的密码
-        });
         
         // 构建 URL 查询字符串
         var queryString = Object.keys(params)
           .map(key => key + '=' + encodeURIComponent(params[key]))
           .join('&');
         
-        // 直接跳转到带参数的 URL
-        window.location.href = path + '?' + queryString;
+        // 使用iframe嵌入WebSSH
+        $('body').append(
+          $('<iframe>', {
+            id: 'ssh-container',
+            src: path + '?' + queryString
+          })
+        );
       });
     </script>
   </body>
