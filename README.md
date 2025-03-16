@@ -159,15 +159,10 @@ systemctl start|stop|restart|status adminsetd
    - 使用systemd管理Celery和Beat服务
    - Celery配置已优化，支持最新版本
 
-## 故障排除
-
-如果您在Ubuntu 24.04上遇到问题：
-
-1. **依赖问题**：确保已安装libssl-dev和libldap2-dev
-
-2. **数据库连接**：检查MySQL/MariaDB服务是否正常运行
-
-3. **权限问题**：确保应用目录具有正确的所有权和权限
+## webssh功能
+   - 为测试功能，严禁在公网使用。
+   - webssh功能需要先配置应用管理中-认证中心-添加信息，保存用户名和密码，然后再从主机编辑中账号信息选择关联。
+   - 如果不是超管用户，需要在role里进行授权才可使用webssh功能。
 
 4. **日志查看**：
    ```bash
