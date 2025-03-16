@@ -1,5 +1,5 @@
 # AdminSet 系统
-![Build Status]("https://github.com/guohongze/adminset/actions/workflows/django.yml/badge.svg")
+![Build](https://img.shields.io/badge/Build-passing-green)
 <img src="https://img.shields.io/badge/license-GPL-blue.svg"></img>
 [![release](https://img.shields.io/github/release/guohongze/adminset.svg)](https://github.com/guohongze/adminset/releases)
 
