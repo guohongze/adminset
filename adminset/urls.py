@@ -20,7 +20,7 @@ urlpatterns = [
     path('mfile/', include('mfile.urls')),
     path('elfinder/', include('elfinder.urls')),
     path('branches/', include('branches.urls')),
-    # path('webssh/<int:ids>/', asset.webssh, name='webssh'),  # 已删除webssh功能
+    path('webssh/<int:ids>/', asset.webssh, name='webssh'),  # 已删除webssh功能
     
     # 添加媒体文件URL，确保能够访问上传的文件
     re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),

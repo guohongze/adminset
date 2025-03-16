@@ -3,9 +3,10 @@ Description=WebSSH
 After=network.target
 
 [Service]
-Type=forking
-ExecStart=/var/opt/adminset/venv/bin/wssh --address='0.0.0.0' --port=8888 --fbidhttp=false --xheaders=false --xsrf=true --policy=warning --wpintvl=60 --maxconn=20 --daemon=true --log-to-stderr --log-file-prefix=/var/opt/adminset/logs/webssh.log
-ExecReload=/bin/kill -HUP $MAINPID
+Type=simple
+WorkingDirectory=/var/opt/adminset/main
+ExecStart=/var/opt/adminset/venv/bin/wssh --address='0.0.0.0' --port=8888 --certfile='/var/opt/adminset/main/install/server/nginx/nginx.crt' --keyfile='/var/opt/adminset/main/install/server/nginx/nginx.key'
+ExecReload=/bin/kill -s HUP $MAINPID
 ExecStop=/bin/kill -s TERM $MAINPID
 Restart=on-failure
 RestartSec=5s

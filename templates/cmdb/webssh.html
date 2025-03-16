@@ -29,39 +29,8 @@
   <body>
     <div class="container">
       <form id="connect" action="" style="display: none" method="post" enctype="multipart/form-data"{% if debug %} novalidate{% endif %}>
-        <div class="row">
-          <div class="col">
-            <label for="Hostname">Hostname</label>
-            <input class="form-control" type="text" id="hostname" name="hostname" value="" required>
-          </div>
-          <div class="col">
-            <label for="Port">Port</label>
-            <input class="form-control" type="number" id="port" name="port" value="" min=1 max=65535>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <label for="Username">Username</label>
-            <input class="form-control" type="text" id="username" name="username" value="" required>
-          </div>
-          <div class="col">
-            <label for="Username">Private Key</label>
-            <input class="form-control" type="file" id="privatekey" name="privatekey" value="">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <label for="Password">Password</label>
-            <input class="form-control" id="password" type="password" name="password" value="">
-          </div>
-          <div class="col">
-            If Private Key is chosen, password will be used to decrypt the Private Key if it is encrypted, otherwise used as the password of username.
-          </div>
-        </div>
-        <button type="submit" class="btn btn-primary">Connect</button>
-        <button type="reset" class="btn btn-danger">Reset</button>
+      // ... existing code ...
       </form>
-
     </div>
 
     <div class="container">
@@ -75,17 +44,57 @@
     <script src="/static/webssh/js/xterm.min.js"></script>
     <script src="/static/webssh/js/fullscreen.min.js"></script>
     <script src="/static/webssh/js/main.js"></script>
-  <script>
+    <script>
       $(document).ready(function(){
-      var path = 'http://' + window.location.host + ':8888';
-      $('#hostname').val("{{ host.ip }}");
-      $('#username').val("{{ host.account.username }}");
-      $('#password').val("{{ host.account.password }}");
-      $('#port').val("{{ host.account.deploy_port }}");
-      $('#privatekey').val("{{ host.account.private_key }}");
-      $('#connect').attr("action", path).submit();
-{#        $('#connect').submit();#}
-    });
-  </script>
+        // 构建基础URL
+        var baseUrl = 'http://' + window.location.host + ':8888';
+        
+        // 使用更安全的编码方式获取并编码密码
+        var originalPassword = "{{ host.account.password }}";
+        var encodedPassword = btoa(unescape(encodeURIComponent(originalPassword)));
+        
+        // 设置表单值
+        $('#hostname').val("{{ host.ip }}");
+        $('#username').val("{{ host.account.username }}");
+        $('#password').val(encodedPassword);
+        
+        // 构建查询参数
+        var params = {
+            hostname: $('#hostname').val(),
+            username: $('#username').val(),
+            password: $('#password').val()
+        };
+        
+        // 将参数转换为URL查询字符串
+        var queryString = $.param(params);
+        
+        // 组合完整URL
+        var fullUrl = baseUrl + '/?' + queryString;
+        
+        // 创建iframe并加载URL
+        var iframe = $('<iframe>', {
+            src: fullUrl,
+            id: 'sshFrame',
+            frameborder: 0,
+            style: 'width:100%; height:600px; border:none;'
+        });
+        
+        // 将iframe添加到terminal div中
+        $('#terminal').html(iframe);
+        
+        // 自动调整iframe高度
+        $('#sshFrame').on('load', function() {
+            try {
+                var height = $(this).contents().height();
+                $(this).height(height);
+            } catch(e) {
+                $(this).height(600);
+            }
+        });
+        
+        // 调试用 - 打印URL
+        console.log("加载URL: " + fullUrl);
+      });
+    </script>
   </body>
 </html>

@@ -231,8 +231,9 @@
                                         <td>{{ host.idc }}</td>
                                         <td class="text-center" data-editable='false'>
                                             <div align="center">
-                                            <a id="assetedit" style="display: none; float:left; margin: auto;" href="#" class="btn btn-sm btn-info" onclick="return tanchu({{ host.id }})">编辑</a>
-{#                                            <a id="assetdel" value="{% url 'asset_del' %}?id={{ host.id }}" class="btn btn-sm btn-danger asset_del" style="display: none;float:left; margin: auto;">删除</a>#}
+                                                <a id="webssh" style="display: none; float: left; margin: auto;" class="btn btn-sm btn-info" target="_blank" href="{% url 'webssh' host.id %}">SSH</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <a id="assetedit" style="display: none; float:left; margin: auto;" href="#" class="btn btn-sm btn-info" onclick="return tanchu({{ host.id }})">编辑</a>
+{#                                              <a id="assetdel" value="{% url 'asset_del' %}?id={{ host.id }}" class="btn btn-sm btn-danger asset_del" style="display: none;float:left; margin: auto;">删除</a>#}
                                             </div>
                                         </td>
                                         </tr>

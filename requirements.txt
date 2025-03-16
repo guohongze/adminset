@@ -39,3 +39,4 @@ ipaddress>=1.0.18
 kombu>=4.2.1
 billiard>=3.5.0.3
 setuptools>=39.2.0
+webssh==1.6.2

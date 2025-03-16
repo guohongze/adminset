@@ -286,18 +286,15 @@ def server_detail(request, ids):
 @login_required()
 @permission_verify()
 def webssh(request, ids):
-    """webssh功能已禁用"""
-    return HttpResponse("WebSSH功能已被禁用", status=403)
-    # 以下代码已被注释，因为webssh功能已被禁用
-    # host = Host.objects.get(id=ids)
-    # if not request.user.is_superuser:
-    #     group = host.hostgroup_set.all()
-    #     perms = request.user.role.webssh.all()
-    #     for p in perms:
-    #         if p not in group:
-    #             return HttpResponse("forbidden! you have no permissions.", status=403)
-    #
-    # return render(request, 'cmdb/webssh.html', locals())
+    host = Host.objects.get(id=ids)
+    if not request.user.is_superuser:
+        group = host.hostgroup_set.all()
+        perms = request.user.role.webssh.all()
+        for p in perms:
+            if p not in group:
+                return HttpResponse("forbidden! you have no permissions.", status=403)
+
+    return render(request, 'cmdb/webssh.html', locals())
 
 
 @login_required()
